@@ -8,12 +8,12 @@ import subprocess
 import psutil
 from django.utils.translation import gettext_noop
 
-from plinth import action_utils, app
+from plinth import action_utils, app, log
 from plinth.diagnostic_check import (DiagnosticCheck,
                                      DiagnosticCheckParameters, Result)
 
 
-class Daemon(app.LeaderComponent):
+class Daemon(app.LeaderComponent, log.LogEmitter):
     """Component to manage a background daemon or any systemd unit."""
 
     def __init__(self, component_id: str, unit: str,
@@ -130,7 +130,7 @@ class Daemon(app.LeaderComponent):
                                self.component_id)
 
 
-class RelatedDaemon(app.FollowerComponent):
+class RelatedDaemon(app.FollowerComponent, log.LogEmitter):
     """Component to hold information about additional systemd units handled.
 
     Unlike a daemon described by the Daemon component which is enabled/disabled
@@ -202,8 +202,7 @@ def app_is_running(app_):
 
 
 def diagnose_port_listening(
-        port: int, kind: str = 'tcp',
-        listen_address: str | None = None,
+        port: int, kind: str = 'tcp', listen_address: str | None = None,
         component_id: str | None = None) -> DiagnosticCheck:
     """Run a diagnostic on whether a port is being listened on.
 

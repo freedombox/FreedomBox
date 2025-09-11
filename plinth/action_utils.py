@@ -176,6 +176,27 @@ def service_reset_failed(service_name: str, check: bool = False):
     service_action(service_name, 'reset-failed', check=check)
 
 
+def service_get_logs(service_name: str) -> str:
+    """Return the last lines of journal entries for a unit."""
+    command = [
+        'journalctl', '--no-pager', '--lines=200', '--unit', service_name
+    ]
+    process = subprocess.run(command, check=False, stdout=subprocess.PIPE)
+    return process.stdout.decode()
+
+
+def service_show(service_name: str) -> dict[str, str]:
+    """Return the status of the service in dictionary format."""
+    command = ['systemctl', 'show', service_name]
+    process = subprocess.run(command, check=False, stdout=subprocess.PIPE)
+    status = {}
+    for line in process.stdout.decode().splitlines():
+        parts = line.partition('=')
+        status[parts[0]] = parts[2]
+
+    return status
+
+
 def service_action(service_name: str, action: str, check: bool = False):
     """Perform the given action on the service_name."""
     subprocess.run(['systemctl', action, service_name],

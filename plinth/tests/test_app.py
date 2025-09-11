@@ -8,11 +8,14 @@ from unittest.mock import Mock, call, patch
 
 import pytest
 
+from plinth import log
 from plinth.app import (App, Component, EnableState, FollowerComponent, Info,
                         LeaderComponent, apps_init)
 from plinth.diagnostic_check import DiagnosticCheck, Result
 
 # pylint: disable=protected-access
+
+privileged_modules_to_mock = ['plinth.privileged']
 
 
 class AppTest(App):
@@ -30,9 +33,13 @@ class AppSetupTest(App):
         self.add(info)
 
 
-class LeaderTest(FollowerComponent):
+class LeaderTest(FollowerComponent, log.LogEmitter):
     """Test class for using LeaderComponent in tests."""
     is_leader = True
+
+    @property
+    def unit(self):  # For LogEmitter
+        return self.component_id
 
     def diagnose(self) -> list[DiagnosticCheck]:
         """Return diagnostic results."""
@@ -323,6 +330,50 @@ def test_app_repair(_run_setup_on_app, app_with_components):
     component.repair = Mock(return_value=False)
     should_rerun_setup = app_with_components.repair([check3])
     assert not should_rerun_setup
+
+
+def test_app_has_logs(app_with_components):
+    """Test checking if an app has logs."""
+    app = app_with_components
+
+    # App with components that emit logs
+    assert app.has_logs()
+
+    # App with components that don't have diagnostics
+    app.remove('test-leader-1')
+    app.remove('test-leader-2')
+    assert not app.has_diagnostics()
+
+
+@patch('plinth.privileged.service._assert_service_is_managed_by_plinth')
+@patch('plinth.action_utils.service_get_logs')
+@patch('plinth.action_utils.service_show')
+def test_app_get_logs(service_show, service_get_logs, _, app_with_components,
+                      mock_privileged):
+    """Test retrieving logs from an app."""
+    service_show.side_effect = [{
+        'Description': 'Test Desc 1'
+    }, {
+        'Description': 'Test Desc 2'
+    }]
+    service_get_logs.side_effect = ['test-logs-1', 'test-logs-2']
+
+    logs = app_with_components.get_logs()
+    assert logs == [{
+        'unit': 'test-leader-1',
+        'description': 'Test Desc 1',
+        'logs': 'test-logs-1'
+    }, {
+        'unit': 'test-leader-2',
+        'description': 'Test Desc 2',
+        'logs': 'test-logs-2'
+    }]
+    assert service_show.mock_calls == [
+        call('test-leader-1'), call('test-leader-2')
+    ]
+    assert service_get_logs.mock_calls == [
+        call('test-leader-1'), call('test-leader-2')
+    ]
 
 
 def test_component_initialization():
