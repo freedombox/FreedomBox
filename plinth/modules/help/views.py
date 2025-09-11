@@ -19,8 +19,6 @@ from django.utils.translation import gettext as _
 from plinth import __version__, cfg, menu
 from plinth.modules.upgrades import views as upgrades_views
 
-from . import privileged
-
 
 def index(request):
     """Serve the index page"""
@@ -164,10 +162,3 @@ def download_manual(request):
             response['Content-Encoding'] = encoding
 
         return response
-
-
-def status_log(request):
-    """Serve the last 100 lines of plinth's status log."""
-    logs = privileged.get_logs()
-    context = {'num_lines': 100, 'data': logs}
-    return TemplateResponse(request, 'statuslog.html', context)

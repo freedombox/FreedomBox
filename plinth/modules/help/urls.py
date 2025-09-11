@@ -25,6 +25,4 @@ urlpatterns = [
             non_admin_view(views.manual), name='manual-page'),
     re_path(r'^help/manual-download/$', non_admin_view(views.download_manual),
             name='download-manual'),
-    re_path(r'^help/status-log/$', non_admin_view(views.status_log),
-            name='status-log'),
 ]
