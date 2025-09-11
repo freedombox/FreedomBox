@@ -446,6 +446,7 @@ class AppView(FormView):
         context['is_running'] = app_is_running(self.app)
         context['app_info'] = self.app.info
         context['has_diagnostics'] = self.app.has_diagnostics()
+        context['has_logs'] = self.app.has_logs()
         context['port_forwarding_info'] = get_port_forwarding_info(self.app)
         context['app_enable_disable_form'] = self.get_enable_disable_form()
         context['show_rerun_setup'] = True
@@ -645,6 +646,25 @@ class UninstallView(FormView):
         setup.run_uninstall_on_app(self.app.app_id)
 
         return super().form_valid(form)
+
+
+class AppLogsView(TemplateView):
+    """View for an app's logs.
+
+    This view shows logs for all the daemon units involved the app for easy
+    debugging.
+    """
+    template_name = 'app-logs.html'
+
+    def get_context_data(self, *args, **kwargs):
+        """Add additional context data for template."""
+        context = super().get_context_data(*args, **kwargs)
+        app_id = self.kwargs['app_id']
+        app = app_module.App.get(app_id)
+        context['app_info'] = app.info
+        context['logs'] = app.get_logs()
+
+        return context
 
 
 def notification_dismiss(request, id):

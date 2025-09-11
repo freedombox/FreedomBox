@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% comment %}
+# SPDX-License-Identifier: AGPL-3.0-or-later
+{% endcomment %}
+
+{% load i18n %}
+
+{% block content %}
+  <h2>{% trans "Logs" %}: {{ app_info.name }}</h2>
+
+  <p>
+    {% blocktrans trimmed %}
+      These are the last lines of the logs for services involved in this app.
+      If you want to report a bug, please use the <a
+      href="https://salsa.debian.org/freedombox-team/freedombox/issues">bug
+      tracker</a> and attach this log to the bug report.
+    {% endblocktrans %}
+  </p>
+
+  <div class="alert alert-warning d-flex align-items-center">
+    <div class="me-2">
+      <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+      <span class="visually-hidden">{% trans "Caution:" %}</span>
+    </div>
+    <div>
+      {% blocktrans trimmed %}
+        Please remove any personal information from the log before submitting
+        the bug report.
+      {% endblocktrans %}
+    </div>
+  </div>
+
+  {% for component in logs %}
+    <section id="logs-section-{{ component.unit }}">
+      <h3>{{ component.unit }}: {{ component.description }}</h3>
+      <p>
+        <textarea class="log" readonly rows="10">{{ component.logs }}</textarea>
+      </p>
+    </section>
+  {% endfor %}
+
+{% endblock %}
