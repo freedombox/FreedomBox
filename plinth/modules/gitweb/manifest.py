@@ -1,8 +1,10 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
+import pathlib
+
 from django.utils.translation import gettext_lazy as _
 
-GIT_REPO_PATH = '/var/lib/git'
+GIT_REPO_PATH = pathlib.Path('/var/lib/git')
 REPO_DIR_OWNER = 'www-data'
 
 clients = [
@@ -32,6 +34,6 @@ clients = [
     },
 ]
 
-backup = {'data': {'directories': [GIT_REPO_PATH]}}
+backup = {'data': {'directories': [str(GIT_REPO_PATH)]}}
 
 tags = [_('Git hosting'), _('Version control'), _('Developer tool')]

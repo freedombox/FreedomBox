@@ -58,7 +58,11 @@ ROOT_DATA_FILES := $(shell find data -type f $(FIND_ARGS))
 MODULE_DATA_FILES := $(shell find $(wildcard plinth/modules/*/data) -type f $(FIND_ARGS))
 
 update-translations:
-	cd plinth; $(DJANGO_ADMIN) makemessages --all --domain django --keep-pot --verbosity=1
+	$(DJANGO_ADMIN) makemessages --all --domain django --keep-pot \
+		--verbosity=1 --ignore conftest.py --ignore doc --ignore build \
+		--ignore htmlcov --ignore screenshots --ignore debian --ignore \
+		actions --ignore preseed --ignore static --ignore data \
+		--settings plinth.settings --pythonpath .
 
 configure:
 	# Nothing to do
@@ -99,9 +103,7 @@ install:
 	rm -f $(DESTDIR)$${lib_dir}/plinth*.dist-info/direct_url.json && \
         $(INSTALL) -D -t $(BIN_DIR) bin/plinth
 	$(INSTALL) -D -t $(BIN_DIR) bin/freedombox-privileged
-
-	# Actions
-	$(INSTALL) -D -t $(DESTDIR)/usr/share/plinth/actions actions/actions
+	$(INSTALL) -D -t $(BIN_DIR) bin/freedombox-cmd
 
 	# Static web server files
 	rm -rf $(STATIC_FILES_DIRECTORY)
@@ -136,7 +138,7 @@ check-tests-cov:
 
 # Code quality checking using flake8
 check-code:
-	$(PYTHON) -m flake8 plinth actions/actions container
+	$(PYTHON) -m flake8 plinth container
 
 # Static type checking using mypy
 check-type:

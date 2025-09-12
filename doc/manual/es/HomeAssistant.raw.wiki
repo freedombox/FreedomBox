@@ -1,0 +1,69 @@
+#language es
+
+<<Include(FreedomBox/Manual/HomeAssistant, ,from="^##TAG:TRANSLATION-HEADER-START",to="^##TAG:TRANSLATION-HEADER-END")>>
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Home Assistant ==
+||<tablestyle="float: right;"> {{attachment:FreedomBox/Manual/HomeAssistant/homeassistant.png|icono de Home Assistant}} ||
+
+
+'''Disponible desde''': versión 25.10
+
+Home Assistant es un centro de automatización del hogar con énfasis en control local y privacidad. Se integra con centenas de dispositivos inteligentes, incluyendo bombillas, alarmas, sensores de presencia, timbres, termostatos, temporizadores de riego, monitores de energía, etc.
+
+Observa que Home Assistant se instala y ejecuta dentro de un contenedor proporcionado por el proyecto Home Assistant. Las revisiones de seguridad, calidad, privacidad y legislación las hace el proyecto en origen, ni Debian ni FreedomBox. Las actualizaciones también siguen un ciclo independiente.
+
+La app Home Assistant se considera experimental en !FreedomBox, ya que es nueva en nuestro ecosistema. Podrías experimentar problemas y la propia app podría sufrir cambios importantes o disruptivos.
+
+=== Hardware ===
+
+Home Assistant puede detectar, configurar, y usar varios dispositivos de la red local. Por ejemplo, si un dispositivo se conecta mediante Wi-Fi o LAN a la misma red que !FreedomBox, Home Assistant puede detectarlo, configurarlo, y usarlo. También se soportan otros protocolos de automatización como Thread, !ZigBee, y Z-Wave, pero requieren hardware adicional para conectarlos a tu !FreedomBox. Por ejemplo, si tienes un sensor de puerta que habla !ZigBee, necesitas conectar un adaptador !ZigBee USB a tu !FreedomBox. Home Assistant podrá entonces detectar y usar el  sensor de puerta en la red de !ZigBee.
+
+Home Assistant es una solución completa si tu automatización del hogar necesita soportar miles de dispositivos. Puedes consultar si Home Assistant soporta un dispositivo visitando su página de [[https://www.home-assistant.io/integrations/|integraciones]]. Otros dispositivos similares a los soportados podrían estarlo aunque no figuren en la lista. Se recomienda comprar hardware etiquetado como compatible con Home Assistant.
+
+Muchos dispositivos de automatización del hogar se conectan a los servidores de los fabricantes y les envían tus datos. Esto pserious ede suponer una violación muy seria de la privacidad de tu hogar. Estos dispositivos podrían también dejar de funcionar si su fabricante quebrara, decidiera descontinuar la línea de producto, o te forzara a comprar modelos más modernos. Se recomienda decididamente que compres hardware que funcione localmente con un centro de automatización del hogar (en este caso Home Assistant) sin conectarse a los servidores del fabricante. En la página de [[https://www.home-assistant.io/integrations/|integraciones]] de Home Assistant, estos dispositivos aparecen listados en las categorías "Local Push" o "Local Polling".
+
+=== Arranque ===
+
+Tras instalar la app hay que levantar el interfaz web de Home Assistant. Con ello se crea una cuenta de administrador. Home Assistant mantiene su propias cuentas de usuario diferentes de las de la !FreedomBox.
+
+{{attachment:FreedomBox/Manual/HomeAssistant/homeassistant-setup-step-1.png|Setup - Step 1}}
+
+{{attachment:FreedomBox/Manual/HomeAssistant/homeassistant-setup-step-2.png|Setup - Step 2}}
+
+{{attachment:FreedomBox/Manual/HomeAssistant/homeassistant-setup-step-3.png|Setup - Step 3}}
+
+{{attachment:FreedomBox/Manual/HomeAssistant/homeassistant-setup-step-4.png|Setup - Step 4}}
+
+{{attachment:FreedomBox/Manual/HomeAssistant/homeassistant-setup-step-5.png|Setup - Step 5}}
+
+Al añadir los adaptadores USB para que Home Assistant hable con los dispositivos de redes como Thread, !ZigBee, hay que reejecutar la operación en la app. Esta operación está en el menú desplegable Extras con un icono de tuercas en la página de la app de Home Assistant. También hay que reiniciar al quitar hardware. Si no, Home Assistant fallará al iniciarse.
+
+=== Uso ===
+
+Home Assistant proporciona unas aplicaciones para web y movil totalmente functionales. Simplemente ingresa:
+
+{{attachment:FreedomBox/Manual/HomeAssistant/homeassistant-login.png|Login}}
+
+{{attachment:FreedomBox/Manual/HomeAssistant/homeassistant-ui.png|Web UI}}
+
+{{attachment:FreedomBox/Manual/HomeAssistant/homeassistant-app.png|Mobile App}}
+
+=== Enlaces externos ===
+
+ * Sitio web: https://www.home-assistant.io
+ * Código fuente de Home Assistant: https://github.com/home-assistant/core
+ * Código fuente de la imágen del contenedor Home: https://github.com/home-assistant/docker
+
+## END_INCLUDE
+
+Volver a la [[es/FreedomBox/Features|descripción de Funcionalidades]] o a las páginas del [[es/FreedomBox/Manual|manual]].
+
+
+<<Include(es/FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

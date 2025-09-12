@@ -17,6 +17,11 @@ from . import distupgrade, utils
 logger = logging.getLogger(__name__)
 
 BACKPORTS_SOURCES_LIST = '/etc/apt/sources.list.d/freedombox2.list'
+UNSTABLE_SOURCES_LIST = pathlib.Path(
+    '/etc/apt/sources.list.d/freedombox-unstable.list')
+
+UNSTABLE_PREFERENCES = pathlib.Path(
+    '/etc/apt/preferences.d/50freedombox-unstable.pref')
 
 AUTO_CONF_FILE = '/etc/apt/apt.conf.d/20auto-upgrades'
 LOG_FILE = '/var/log/unattended-upgrades/unattended-upgrades.log'
@@ -52,6 +57,52 @@ Explanation: bug report 1099755.
 Package: samba-ad-dc
 Pin: release *
 Pin-Priority: -1
+
+Explanation: Make matrix-synapse package and its dependencies installable from
+Explanation: Debian 'unstable' distribution.
+Package: matrix-synapse
+Pin: release n=sid
+Pin-Priority: 200
+
+Explanation: matrix-synapse depends on python3-python-multipart
+Package: python3-python-multipart
+Pin: release n=sid
+Pin-Priority: 200
+
+Explanation: matrix-synapse recommends python3-pympler
+Package: python3-pympler
+Pin: release n=sid
+Pin-Priority: 200
+'''
+
+APT_PREFERENCES_UNSTABLE = \
+    '''Explanation: This file is managed by FreedomBox, do not edit.
+Explanation: De-prioritize all the packages from Unstable distribution.
+Explanation: The priority of packages in *-backports will be set to 300.
+Explanation: Prioritize unstable lower than packages in backports.
+Package: *
+Pin: release n=sid
+Pin-Priority: -100
+
+Explanation: The priority of packages in *-backports will be 100 by default.
+Explanation: Prioritize them higher than unstable packages.
+Package: *
+Pin: release n=trixie-backports
+Pin-Priority: 300
+
+Explanation: The priority of packages in *-backports will be 100 by default.
+Explanation: Prioritize them higher than unstable packages.
+Package: *
+Pin: release n=bookworm-backports
+Pin-Priority: 300
+'''
+
+APT_UNSTABLE_SOURCES = \
+    '''# This file is managed by FreedomBox, do not edit.
+# Allow carefully selected updates to 'freedombox' from unstable.
+
+deb {protocol}://deb.debian.org/debian unstable main
+deb-src {protocol}://deb.debian.org/debian unstable main
 '''
 
 
@@ -158,8 +209,7 @@ def _check_and_backports_sources(develop=False):
     if os.path.exists(old_sources_list):
         os.remove(old_sources_list)
 
-    from plinth.modules.upgrades import (get_current_release,
-                                         is_backports_current)
+    from plinth.modules.upgrades import is_backports_current
     if is_backports_current():
         logging.info('Repositories list up-to-date. Skipping update.')
         return
@@ -181,15 +231,16 @@ def _check_and_backports_sources(develop=False):
                      'backports.')
         return
 
-    release, dist = get_current_release()
-    if release in ['unstable', 'testing', 'n/a'] and not develop:
-        logging.info(f'System release is {release}. Skip enabling backports.')
+    if utils.is_distribution_rolling() and not develop:
+        logging.info(
+            'System release is unstable/testing. Skip enabling backports.')
         return
 
     protocol = utils.get_http_protocol()
     if protocol == 'tor+http':
         logging.info('Package download over Tor is enabled.')
 
+    _, dist = utils.get_current_release()
     if not utils.is_release_file_available(protocol, dist, backports=True):
         logging.info(
             f'Release file for {dist}-backports is not available yet.')
@@ -212,13 +263,12 @@ def _add_apt_preferences():
     # Don't try to remove 50freedombox3.pref as this file is shipped with the
     # Debian package and is removed using maintainer scripts.
 
-    from plinth.modules.upgrades import get_current_release
-    _, dist = get_current_release()
-    if dist == 'sid':
+    if utils.is_distribution_unstable():
         logging.info(
-            f'System distribution is {dist}. Skip setting apt preferences '
+            'System distribution is "unstable". Skip setting apt preferences '
             'for backports.')
     else:
+        _, dist = utils.get_current_release()
         logging.info(f'Setting apt preferences for {dist}-backports.')
         with open(base_path / '50freedombox4.pref', 'w',
                   encoding='utf-8') as file_handle:
@@ -242,6 +292,35 @@ def activate_backports(develop: bool = False):
     assume that it contains backports.
     """
     _check_and_backports_sources(develop)
+
+
+@privileged
+def activate_unstable():
+    """Setup apt sources for unstable distribution and de-prioritize it.
+
+    Select packages will be made installable from unstable.
+    """
+    # Operation already performed, don't write to files unnecessarily.
+    if UNSTABLE_SOURCES_LIST.exists() and UNSTABLE_PREFERENCES.exists():
+        logging.info('Skipping already added unstable sources.')
+        return
+
+    # If the distribution is already 'unstable', default sources.list already
+    # contains sources for 'unstable'. Also, don't de-prioritize the primary
+    # set of packages.
+    if utils.is_distribution_unstable():
+        logging.info(
+            'Skipping adding unstable sources for unstable distribution.')
+        return
+
+    protocol = utils.get_http_protocol()
+    if protocol == 'tor+http':
+        logging.info('Package download over Tor is enabled.')
+
+    logger.info('Adding unstable sources to apt.')
+    sources = APT_UNSTABLE_SOURCES.format(protocol=protocol)
+    UNSTABLE_SOURCES_LIST.write_text(sources)
+    UNSTABLE_PREFERENCES.write_text(APT_PREFERENCES_UNSTABLE)
 
 
 @privileged

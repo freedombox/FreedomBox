@@ -80,10 +80,20 @@ def test_packages_init():
     assert component.rerun_setup_on_upgrade
 
 
-def test_packages_get_actual_packages():
+@patch('apt.Cache')
+def test_packages_get_actual_packages(cache):
     """Test resolving of package expressions to actual packages."""
+    cache.return_value = {
+        'python3': Mock(name='python3', candidate='1.0'),
+        'janus': Mock(name='janus', candidate=None)
+    }
+
     component = Packages('test-component', ['python3'])
     assert component.get_actual_packages() == ['python3']
+
+    component = Packages('test-component', ['unknown-package'])
+    with pytest.raises(MissingPackageError):
+        component.get_actual_packages()
 
     component = Packages('test-component',
                          [Package('unknown-package') | Package('python3')])
@@ -93,6 +103,10 @@ def test_packages_get_actual_packages():
                          conflicts=['conflict1', 'conflict2'],
                          conflicts_action=Packages.ConflictsAction.IGNORE)
     assert component.get_actual_packages() == []
+
+    component = Packages('test-component', ['janus'])
+    with pytest.raises(MissingPackageError):
+        component.get_actual_packages()
 
 
 @patch('plinth.package.install')
@@ -344,39 +358,69 @@ def test_packages_find_conflicts(packages_installed_):
 @patch('pathlib.Path')
 def test_packages_is_available(path_class, cache, refresh_package_lists):
     """Test checking for available packages."""
-    path = Mock()
-    path_class.return_value = path
+    package_cache = Mock()
+    sources_dir = Mock()
+    sources_dir.glob.return_value = []
+    sources_list = Mock()
+
+    def path_side_effect(path):
+        return {
+            '/var/cache/apt/pkgcache.bin': package_cache,
+            '/etc/apt/sources.list.d': sources_dir,
+            '/etc/apt/sources.list': sources_list
+        }[path]
+
+    def get_cache_packages(packages):
+        return {
+            package: Mock(name=package, candidate='1.0')
+            for package in packages
+        }
+
+    path_class.side_effect = path_side_effect
 
     # Packages found in cache
     component = Packages('test-component', ['package1', 'package2'])
-    cache.return_value = ['package1', 'package2']
+    cache.return_value = get_cache_packages(['package1', 'package2'])
     assert component.is_available()
     path_class.assert_not_called()
     refresh_package_lists.assert_not_called()
 
     # Packages not found, cache exists and is fresh
-    cache.return_value = ['package1']
-    path.exists.return_value = True
-    path.stat.return_value.st_mtime = time.time()
+    cache.return_value = get_cache_packages(['package1'])
+    package_cache.exists.return_value = True
+    package_cache.stat.return_value.st_mtime = time.time()
+    sources_list.stat.return_value.st_mtime = time.time() - 100
     assert not component.is_available()
     refresh_package_lists.assert_not_called()
 
     # Packages not found, cache does not exist
-    cache.return_value = ['package1']
-    path.exists.return_value = False
+    cache.return_value = get_cache_packages(['package1'])
+    package_cache.exists.return_value = False
     assert not component.is_available()
     refresh_package_lists.assert_called_once()
 
-    # Packages not found, cache is stale
-    cache.return_value = ['package1']
+    # Packages not found, cache is stale because it older than 1 hour
+    cache.return_value = get_cache_packages(['package1'])
     refresh_package_lists.reset_mock()
-    path.exists.return_value = True
-    path.stat.return_value.st_mtime = time.time() - 7200
+    package_cache.exists.return_value = True
+    package_cache.stat.return_value.st_mtime = time.time() - 7200
+    assert not component.is_available()
+    refresh_package_lists.assert_called_once()
+
+    # Packages not found, cache is stale because it older than sources.list
+    cache.return_value = get_cache_packages(['package1'])
+    refresh_package_lists.reset_mock()
+    package_cache.exists.return_value = True
+    package_cache.stat.return_value.st_mtime = time.time() - 100
+    sources_list.stat.return_value.st_mtime = time.time()
     assert not component.is_available()
     refresh_package_lists.assert_called_once()
 
     # Packages not found, cache is stale, but packages found after refresh
-    cache.side_effect = [['package1'], ['package1', 'package2']]
+    cache.side_effect = [
+        get_cache_packages(['package1']),
+        get_cache_packages(['package1', 'package2'])
+    ]
     refresh_package_lists.reset_mock()
     assert component.is_available()
 

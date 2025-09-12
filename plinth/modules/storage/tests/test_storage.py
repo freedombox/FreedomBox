@@ -31,7 +31,7 @@ def _is_container():
     return process.returncode == 0
 
 
-pytestmark = pytest.mark.usefixtures('mock_privileged')
+pytestmark = pytest.mark.usefixtures('mock_privileged', 'mock_run_as_user')
 privileged_modules_to_mock = ['plinth.modules.storage.privileged']
 skip_if_container = pytest.mark.skipif(_is_container(),
                                        reason='running inside a container')
@@ -337,9 +337,11 @@ def _assert_validate_directory(path, error, check_writable=False,
         match = None if not error.args else error.args[0]
         with pytest.raises(error.__class__, match=match):
             privileged.validate_directory(path, check_creatable,
-                                          check_writable)
+                                          check_writable,
+                                          for_user='test-non-existent')
     else:
-        privileged.validate_directory(path, check_creatable, check_writable)
+        privileged.validate_directory(path, check_creatable, check_writable,
+                                      for_user='test-non-existent')
 
 
 @pytest.mark.usefixtures('needs_not_root')

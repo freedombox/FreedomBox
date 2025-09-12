@@ -30,7 +30,7 @@ _alert = '''
 _description = [
     _('Home Assistant is a home automation hub with emphasis on local control '
       'and privacy. It integrates with thousands of devices including smart '
-      'bulbs, alarms, presense sensors, door bells, thermostats, irrigation '
+      'bulbs, alarms, presence sensors, door bells, thermostats, irrigation '
       'timers, energy monitors, etc.'),
     _('Home Assistant can detect, configure, and use various devices on the '
       'local network. For devices using other protocols such as ZigBee, it '

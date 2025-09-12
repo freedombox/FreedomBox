@@ -1,6 +1,8 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """The main method for a daemon that runs privileged methods."""
 
+import argparse
+import io
 import json
 import logging
 import os
@@ -11,7 +13,6 @@ import socketserver
 import struct
 import sys
 import time
-import traceback
 
 import systemd.daemon
 
@@ -30,6 +31,9 @@ MAX_REQUEST_LENGTH = 1_000_000
 idle_shutdown_time: int | None = 5 * 60  # 5 minutes
 
 freedombox_develop = False
+
+EXIT_SYNTAX = 10
+EXIT_PERM = 20
 
 
 class RequestHandler(socketserver.StreamRequestHandler):
@@ -52,9 +56,13 @@ class RequestHandler(socketserver.StreamRequestHandler):
 
         return request
 
-    def _write_response(self, response: str):
+    def _write_response(self, response: str | io.BufferedReader):
         """Write a single response to the client."""
-        self.wfile.write(response.encode('utf-8'))
+        if isinstance(response, str):
+            self.wfile.write(response.encode('utf-8'))
+        else:
+            for chunk in response:
+                self.wfile.write(chunk)
 
     def handle(self) -> None:
         """Handle a new connection from a client."""
@@ -63,15 +71,7 @@ class RequestHandler(socketserver.StreamRequestHandler):
             response_string = actions.privileged_handle_json_request(request)
         except Exception as exception:
             logger.exception('Error running privileged request: %s', exception)
-            response = {
-                'result': 'exception',
-                'exception': {
-                    'module': type(exception).__module__,
-                    'name': type(exception).__name__,
-                    'args': exception.args,
-                    'traceback': traceback.format_tb(exception.__traceback__)
-                }
-            }
+            response = actions.get_return_value_from_exception(exception)
             response_string = json.dumps(response)
 
         self._write_response(response_string)
@@ -203,6 +203,46 @@ class Server(socketserver.ThreadingUnixStreamServer):
         self.last_request_time = time.time()
 
         return True
+
+
+def client_main() -> None:
+    """Parse arguments for the client for privileged daemon."""
+    log.action_init()
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('module', help='Module to trigger action in')
+    parser.add_argument('action', help='Action to trigger in module')
+    parser.add_argument('--no-args', default=False, action='store_true',
+                        help='Do not read arguments from stdin')
+    args = parser.parse_args()
+
+    try:
+        try:
+            arguments: dict = {'args': [], 'kwargs': {}}
+            if not args.no_args:
+                input_ = sys.stdin.read()
+                if input_:
+                    arguments = json.loads(input_)
+        except json.JSONDecodeError as exception:
+            raise SyntaxError('Arguments on stdin not JSON.') from exception
+
+        return_value = actions.run_privileged_method(None, args.module,
+                                                     args.action,
+                                                     arguments['args'],
+                                                     arguments['kwargs'])
+        print(json.dumps(return_value, cls=actions.JSONEncoder))
+    except PermissionError as exception:
+        logger.error(exception.args[0])
+        sys.exit(EXIT_PERM)
+    except SyntaxError as exception:
+        logger.error(exception.args[0])
+        sys.exit(EXIT_SYNTAX)
+    except TypeError as exception:
+        logger.error(exception.args[0])
+        sys.exit(EXIT_SYNTAX)
+    except Exception as exception:
+        logger.exception(exception)
+        sys.exit(1)
 
 
 def main() -> None:

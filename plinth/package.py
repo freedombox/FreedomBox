@@ -69,8 +69,11 @@ class Package(PackageExpression):
 
     def actual(self) -> str:
         cache = apt.Cache()
-        if self.name in cache:
-            # TODO: Also return version and suite to install from
+        if self.name in cache and cache[self.name].candidate:
+            # cache[package].candidate returns installation candidate. If the
+            # package is not installable due to the available versions being of
+            # priority less than 0, then .candidate will be None. TODO: Also
+            # return version and suite to install from.
             return self.name
 
         raise MissingPackageError(self.name)
@@ -268,11 +271,23 @@ class Packages(app_module.FollowerComponent):
         except MissingPackageError:
             pass  # We will retry after refreshing package list
 
-        # If the package cache is new, then package is really not available.
         package_cache = pathlib.Path('/var/cache/apt/pkgcache.bin')
-        if (package_cache.exists()
-                and time.time() - package_cache.stat().st_mtime < 3600):
-            return False
+        if package_cache.exists():
+            package_cache_mtime = package_cache.stat().st_mtime
+
+            sources_dir = pathlib.Path('/etc/apt/sources.list.d')
+            source_files = ([pathlib.Path('/etc/apt/sources.list')] +
+                            list(sources_dir.glob('*.list')) +
+                            list(sources_dir.glob('*.sources')))
+            are_sources_newer = any(
+                source_file.stat().st_mtime > package_cache_mtime
+                for source_file in source_files)
+
+            # If the package cache is new, then package is really not
+            # available.
+            if (time.time() - package_cache.stat().st_mtime < 3600
+                    and not are_sources_newer):
+                return False
 
         # Perform 'apt-get update'
         refresh_package_lists()

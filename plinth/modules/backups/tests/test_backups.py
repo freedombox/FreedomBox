@@ -16,7 +16,9 @@ from plinth.modules.backups.repository import BorgRepository, SshBorgRepository
 from plinth.tests import config as test_config
 
 pytestmark = pytest.mark.usefixtures('needs_root', 'needs_borg', 'load_cfg',
-                                     'no_privileged_server')
+                                     'mock_privileged')
+
+privileged_modules_to_mock = ['plinth.modules.backups.privileged']
 
 # try to access a non-existing url and a URL that exists but does not
 # grant access

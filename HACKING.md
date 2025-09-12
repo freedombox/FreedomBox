@@ -114,6 +114,26 @@ development environment inside a systemd-nspawn container.
    host$ ./container ssh --distribution=stable
    ```
 
+#### Using KVM Virtual Machine
+
+The `./container` script, shipped with FreedomBox source code, can manage the
+development environment inside a KVM-based virtual machine using libvirt. This
+is an alternative to using containers described above (but the name of the
+script is still 'container' even when managing virtual machines). Some hardware,
+such as additional disks, can be better tested with virtual machine than with
+containers.
+
+Containers and a virtual machines of the same or different distribution all be
+used simultaneously as they all use different disk images.
+
+1.  To use virtual machines instead of container, append the option
+    '--machine-type=vm' to all the ./container commands described above. For
+    example, to bring up a virtual machine instead of a container run:
+
+    ```bash
+    host$ ./container up --machine-type=vm
+    ```
+
 #### Using after Setup
 
 After logging into the container, the source code is available in `/freedombox`

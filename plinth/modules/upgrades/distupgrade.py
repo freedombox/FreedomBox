@@ -105,30 +105,6 @@ def _sources_list_update(old_codename: str, new_codename: str):
     aug_path.rename(temp_sources_list)
 
 
-def _get_sources_list_codename() -> str | None:
-    """Return the codename set in the /etc/apt/sources.list file."""
-    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
-                        augeas.Augeas.NO_MODL_AUTOLOAD)
-    aug.transform('aptsources', str(sources_list))
-    aug.set('/augeas/context', '/files' + str(sources_list))
-    aug.load()
-
-    dists = set()
-    for match_ in aug.match('*'):
-        dist = aug.get(match_ + '/distribution')
-        if not dist:
-            continue
-
-        dist = dist.removesuffix('-updates')
-        dist = dist.removesuffix('-security')
-        dists.add(dist)
-
-    if len(dists) != 1:
-        return None
-
-    return dists.pop()
-
-
 def get_status() -> dict[str, bool | str | None]:
     """Check if a distribution upgrade be performed.
 
@@ -158,7 +134,7 @@ def get_status() -> dict[str, bool | str | None]:
     has_free_space = utils.is_sufficient_free_space()
     running = action_utils.service_is_running('freedombox-dist-upgrade')
 
-    current_codename = _get_sources_list_codename()
+    current_codename = utils.get_sources_list_codename()
     status = {
         'updates_enabled': updates_enabled,
         'dist_upgrade_enabled': dist_upgrade_enabled,
@@ -177,7 +153,7 @@ def get_status() -> dict[str, bool | str | None]:
     if current_codename in (None, 'testing', 'unstable'):
         return status
 
-    _, base_files_codename = upgrades.get_current_release()
+    _, base_files_codename = utils.get_current_release()
     if current_codename == 'stable':
         current_codename = base_files_codename
 
@@ -247,7 +223,7 @@ def _snapshot_run_and_disable() -> Generator[None, None, None]:
         if snapshot_module.is_apt_snapshots_enabled(aug):
             logger.info('Disabling apt snapshots during dist upgrade...')
             subprocess.run([
-                '/usr/share/plinth/actions/actions',
+                '/usr/bin/freedombox-cmd',
                 'snapshot',
                 'disable_apt_snapshot',
             ], input='{"args": ["yes"], "kwargs": {}}'.encode(), check=True)
@@ -260,8 +236,7 @@ def _snapshot_run_and_disable() -> Generator[None, None, None]:
         if reenable:
             logger.info('Re-enabling apt snapshots...')
             subprocess.run([
-                '/usr/share/plinth/actions/actions', 'snapshot',
-                'disable_apt_snapshot'
+                '/usr/bin/freedombox-cmd', 'snapshot', 'disable_apt_snapshot'
             ], input='{"args": ["no"], "kwargs": {}}'.encode(), check=True)
         else:
             logger.info('Not re-enabling apt snapshots, as they were disabled '
@@ -388,8 +363,8 @@ def _trigger_on_complete():
     subprocess.run([
         'systemd-run', '--unit=freedombox-dist-upgrade-on-complete',
         '--description=Finish up upgrade to new stable Debian release',
-        '/usr/share/plinth/actions/actions', 'upgrades',
-        'dist_upgrade_on_complete', '--no-args'
+        '/usr/bin/freedombox-cmd', 'upgrades', 'dist_upgrade_on_complete',
+        '--no-args'
     ], check=True)
 
 
@@ -443,7 +418,7 @@ def start_service():
         f'--property=BindPaths={temp_sources_list}:{sources_list}'
     ]
     subprocess.run(['systemd-run'] + args + [
-        'systemd-inhibit', '/usr/share/plinth/actions/actions', 'upgrades',
+        'systemd-inhibit', '/usr/bin/freedombox-cmd', 'upgrades',
         'dist_upgrade', '--no-args'
     ], check=True)
 

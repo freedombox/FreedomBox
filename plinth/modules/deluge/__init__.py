@@ -11,7 +11,7 @@ from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import (Firewall,
                                                 FirewallLocalProtection)
-from plinth.modules.upgrades import get_current_release
+from plinth.modules.upgrades.utils import get_current_release
 from plinth.modules.users import add_user_to_share_group
 from plinth.modules.users.components import UsersAndGroups
 from plinth.package import Packages

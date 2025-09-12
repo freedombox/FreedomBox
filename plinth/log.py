@@ -3,7 +3,6 @@
 Setup logging for the application.
 """
 
-import importlib
 import logging
 import logging.config
 import warnings
@@ -77,7 +76,8 @@ def action_init():
     _capture_warnings()
 
     configuration = get_configuration()
-    del configuration['handlers']['console']['formatter']
+    # Don't log to console
+    configuration['root']['handlers'] = ['journal']
     logging.config.dictConfig(configuration)
 
 
@@ -118,10 +118,13 @@ def get_configuration():
             'console': {
                 'class': 'logging.StreamHandler',
                 'formatter': 'color'
+            },
+            'journal': {
+                'class': 'systemd.journal.JournalHandler'
             }
         },
         'root': {
-            'handlers': ['console'],
+            'handlers': ['console', 'journal'],
             'level': default_level or ('DEBUG' if cfg.develop else 'INFO')
         },
         'loggers': {
@@ -133,15 +136,5 @@ def get_configuration():
             }
         }
     }
-
-    try:
-        importlib.import_module('systemd.journal')
-    except ModuleNotFoundError:
-        pass
-    else:
-        configuration['handlers']['journal'] = {
-            'class': 'systemd.journal.JournalHandler'
-        }
-        configuration['root']['handlers'].append('journal')
 
     return configuration

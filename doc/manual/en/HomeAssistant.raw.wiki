@@ -1,0 +1,70 @@
+#language en
+
+##TAG:TRANSLATION-HEADER-START
+~- [[FreedomBox/Manual/HomeAssistant|English]] - [[es/FreedomBox/Manual/HomeAssistant|Español]] - [[DebianWiki/EditorGuide#translation|(+)]]-~
+##TAG:TRANSLATION-HEADER-END
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Home Assistant ==
+||<tablestyle="float: right;"> {{attachment:homeassistant.png|Home Assistant icon}} ||
+
+'''Available since''': version 25.10
+
+Home Assistant is a home automation hub with emphasis on local control and privacy. It integrates with thousands of devices including smart bulbs, alarms, presence sensors, door bells, thermostats, irrigation timers, energy monitors, etc.
+
+Please note that Home Assistant is installed and run inside a container provided by the Home Assistant project. Security, quality, privacy and legal reviews are done by the upstream project and not by Debian/FreedomBox. Updates are performed following an independent cycle.
+
+Home Assistant app is considered experimental in !FreedomBox as it is fairly new to our ecosystem. You may face issues working with it or the app may undergo major breaking changes.
+
+=== Hardware ===
+
+Home Assistant can detect, configure, and use various devices on the local network. For example, if a device is connected using Wi-Fi or LAN to the same network as !FreedomBox, Home Assistant can detect, configure, and use the device. Other home automation protocols such as Thread, !ZigBee, and Z-Wave are also supported but require additional hardware to be connected to your !FreedomBox. For example, if you have a door sensor that speaks !ZigBee, you need to attach a !ZigBee USB dongle to your !FreedomBox. Home Assistant can then detect and use the door sensor on the !ZigBee network.
+
+Home Assistant is a comprehensive solution for your home automation needs supporting thousands of devices. You can check whether a device is supported by Home Assistant by visiting the [[https://www.home-assistant.io/integrations/|integrations]] page. Other devices which are not listed may also be supported when they are similar to supported devices. It is recommended that you purchase hardware that advertises support for Home Assistant.
+
+Many home automation devices connect to or send data to their manufacturers' servers. This can be a serious violation of your home's privacy. These devices may also stop working when their manufacturer goes bankrupt, decides to close the product line, or forces you to purchase newer models. It is strongly recommended that you purchase hardware that works locally with a home automation hub (in this case Home Assistant) without connecting to manufacturer's servers. These are listed under the categories "Local Push" or "Local Polling" in the Home Assistant's integrations page.
+
+=== Setup ===
+
+After the app is installed, Home Assistant web interface must be setup. An administrator account is created at this time. Home Assistant maintains its own user accounts separate from user accounts created on !FreedomBox.
+
+{{attachment:homeassistant-setup-step-1.png|Setup - Step 1}}
+
+{{attachment:homeassistant-setup-step-2.png|Setup - Step 2}}
+
+{{attachment:homeassistant-setup-step-3.png|Setup - Step 3}}
+
+{{attachment:homeassistant-setup-step-4.png|Setup - Step 4}}
+
+{{attachment:homeassistant-setup-step-5.png|Setup - Step 5}}
+
+When new USB dongles are added to make Home Assistant talk to devices on networks like Thread, !ZigBee, and Z-Wave, then setup operation must be re-run on the app. This operation is available in the Extras menu drop down with gears icon in the Home Assistant app page. Setup must also be re-run when the hardware is removed. Otherwise, Home Assistant service will fail to start.
+
+=== Usage ===
+
+Home Assistant provides a fully functional web application and a mobile application. Simply login and start using:
+
+{{attachment:homeassistant-login.png|Login}}
+
+{{attachment:homeassistant-ui.png|Web UI}}
+
+
+{{attachment:homeassistant-app.png|Mobile App}}
+
+=== External links ===
+
+ * Website: https://www.home-assistant.io/
+ * Source code for Home Assistant: https://github.com/home-assistant/core
+ * Source code for Home Assistant container image: https://github.com/home-assistant/docker
+
+## END_INCLUDE
+
+Back to [[FreedomBox/Features|Features introduction]] or [[FreedomBox/Manual|manual]] pages.
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

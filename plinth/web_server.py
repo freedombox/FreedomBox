@@ -22,11 +22,9 @@ logger = logging.getLogger(__name__)
 # is removed from the system leading to change detected by CherryPy. The entire
 # service is then restarted if it is in development mode. This could cause a
 # temporary failure in requests served leading to failures in functional tests.
-# Workaround this by preventing auto-reloading for some python modules.
-MODULES_EXCLUDED_FROM_AUTORELOAD = [
-    'iso3166',
-    'psycopg2',
-]
+# Workaround this by preventing auto-reloading for all but FreedomBox's python
+# modules.
+AUTORELOAD_REGEX = r'^plinth'
 
 _CUSTOM_STATIC_URL = '/custom/static'
 
@@ -63,8 +61,6 @@ def init():
     """Setup CherryPy server"""
     logger.info('Setting up CherryPy server')
 
-    exclude_modules = '|'.join(MODULES_EXCLUDED_FROM_AUTORELOAD)
-    autoreload_regex = rf'^(?!(?:{exclude_modules})).+'
     # Configure default server
     cherrypy.config.update({
         'server.max_request_body_size': 0,
@@ -73,7 +69,7 @@ def init():
         'server.thread_pool': 10,
         # Avoid stating files once per second in production
         'engine.autoreload.on': cfg.develop,
-        'engine.autoreload.match': autoreload_regex,
+        'engine.autoreload.match': AUTORELOAD_REGEX,
     })
 
     application = web_framework.get_wsgi_application()

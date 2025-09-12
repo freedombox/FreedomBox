@@ -80,43 +80,9 @@ deb https://deb.debian.org/debian bookwormish main
         assert temp_sources_list.read_text() == modified
 
 
-def test_get_sources_list_codename(tmp_path):
-    """Test retrieving codename from sources.list file."""
-    list1 = '''
-deb http://deb.debian.org/debian bookworm main non-free-firmware
-deb-src http://deb.debian.org/debian bookworm main non-free-firmware
-
-deb http://deb.debian.org/debian bookworm-updates main non-free-firmware
-deb-src http://deb.debian.org/debian bookworm-updates main non-free-firmware
-
-deb http://security.debian.org/debian-security/ bookworm-security main non-free-firmware
-deb-src http://security.debian.org/debian-security/ bookworm-security main non-free-firmware
-'''  # noqa: E501
-
-    list2 = '''
-deb http://deb.debian.org/debian stable main non-free-firmware
-deb-src http://deb.debian.org/debian stable main non-free-firmware
-
-deb http://deb.debian.org/debian bookworm-updates main non-free-firmware
-deb-src http://deb.debian.org/debian bookworm-updates main non-free-firmware
-
-deb http://security.debian.org/debian-security/ bookworm-security main non-free-firmware
-deb-src http://security.debian.org/debian-security/ bookworm-security main non-free-firmware
-'''  # noqa: E501
-
-    sources_list = tmp_path / 'sources.list'
-    module = 'plinth.modules.upgrades.distupgrade'
-    with patch(f'{module}.sources_list', sources_list):
-        sources_list.write_text(list1)
-        assert distupgrade._get_sources_list_codename() == 'bookworm'
-
-        sources_list.write_text(list2)
-        assert distupgrade._get_sources_list_codename() is None
-
-
 @patch('datetime.datetime')
-@patch('plinth.modules.upgrades.get_current_release')
-@patch('plinth.modules.upgrades.distupgrade._get_sources_list_codename')
+@patch('plinth.modules.upgrades.utils.get_current_release')
+@patch('plinth.modules.upgrades.distupgrade.utils.get_sources_list_codename')
 @patch('plinth.action_utils.service_is_running')
 @patch('plinth.modules.upgrades.utils.is_sufficient_free_space')
 @patch('plinth.modules.upgrades.is_dist_upgrade_enabled')
@@ -266,17 +232,14 @@ def test_snapshot_run_and_disable(is_supported, is_apt_snapshots_enabled, run):
             call(['snapper', 'create', '--description', 'before dist-upgrade'],
                  check=True),
             call([
-                '/usr/share/plinth/actions/actions', 'snapshot',
-                'disable_apt_snapshot'
+                '/usr/bin/freedombox-cmd', 'snapshot', 'disable_apt_snapshot'
             ], input=b'{"args": ["yes"], "kwargs": {}}', check=True)
         ]
         run.reset_mock()
 
     assert run.call_args_list == [
-        call([
-            '/usr/share/plinth/actions/actions', 'snapshot',
-            'disable_apt_snapshot'
-        ], input=b'{"args": ["no"], "kwargs": {}}', check=True)
+        call(['/usr/bin/freedombox-cmd', 'snapshot', 'disable_apt_snapshot'],
+             input=b'{"args": ["no"], "kwargs": {}}', check=True)
     ]
 
 
@@ -419,8 +382,8 @@ def test_trigger_on_complete(run):
     run.assert_called_with([
         'systemd-run', '--unit=freedombox-dist-upgrade-on-complete',
         '--description=Finish up upgrade to new stable Debian release',
-        '/usr/share/plinth/actions/actions', 'upgrades',
-        'dist_upgrade_on_complete', '--no-args'
+        '/usr/bin/freedombox-cmd', 'upgrades', 'dist_upgrade_on_complete',
+        '--no-args'
     ], check=True)
 
 

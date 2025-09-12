@@ -41,35 +41,11 @@ Es importante verificar las imágenes que has descargado para asegurar que el fi
 
   * Primero abre un terminal e importa las claves publicas de los desarrolladores de !FreedomBox que construyeron las imágenes:
   {{{
-$ gpg --keyserver keyserver.ubuntu.com --recv-keys BCBEBD57A11F70B23782BC5736C361440C9BC971
-$ gpg --keyserver keyserver.ubuntu.com --recv-keys 7D6ADB750F91085589484BE677C0C75E7B650808
-# Esta es la clave del servidor de integración contínua de FreedomBox
-$ gpg --keyserver keyserver.ubuntu.com --recv-keys 013D86D8BA32EAB4A6691BF85D4153D6FE188FC8
-# Esta es la clave del uevo servidor de integración contínua de FreedomBox
+# Esta es la clave del nuevo servidor de integración contínua de FreedomBox
 $ gpg --keyserver keyserver.ubuntu.com --recv-keys D4B069124FCF43AA1FCD7FBC2ACFC1E15AF82D8C
 }}}
   * A continuación, verifica la huella de las claves públicas:
   {{{
-$ gpg --fingerprint BCBEBD57A11F70B23782BC5736C361440C9BC971
-pub   4096R/0C9BC971 2011-11-12
-      Key fingerprint = BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971
-uid                  Sunil Mohan Adapa <sunil@medhas.org>
-sub   4096R/4C1D4B57 2011-11-12
-
-$ gpg --fingerprint 7D6ADB750F91085589484BE677C0C75E7B650808
-pub   4096R/7B650808 2015-06-07 [expires: 2020-06-05]
-      Key fingerprint = 7D6A DB75 0F91 0855 8948  4BE6 77C0 C75E 7B65 0808
-uid                  James Valleroy <jvalleroy@mailbox.org>
-uid                  James Valleroy <jvalleroy@freedombox.org>
-sub   4096R/25D22BF4 2015-06-07 [expires: 2020-06-05]
-sub   4096R/DDA11207 2015-07-03 [expires: 2020-07-01]
-sub   2048R/2A624357 2015-12-22
-
-$ gpg --fingerprint 013D86D8BA32EAB4A6691BF85D4153D6FE188FC8
-pub   rsa4096 2018-06-06 [SC]
-      013D 86D8 BA32 EAB4 A669  1BF8 5D41 53D6 FE18 8FC8
-uid           [ unknown] FreedomBox CI (Continuous Integration server) <admin@freedombox.org>
-sub   rsa4096 2018-06-06 [E]
 
 $ gpg --fingerprint D4B069124FCF43AA1FCD7FBC2ACFC1E15AF82D8C
 pub   rsa4096 2022-03-09 [SC]
@@ -202,7 +178,7 @@ cd <directorio_fuente>
 
  1. El código fuente de cualquier paquete se puede ver y buscar usando el interfaz web de [[https://sources.debian.org/|sources.debian.org]]. Por ejemplo, mira el paquete [[https://sources.debian.org/src/plinth/|plinth]].
 
- 1. El código fuente y el binario precompilado de cualquier version de un paquete, incluyendo versiones antigüas, se pueden obtener de [[https://snapshot.debian.org/|snapshot.debian.org]]. Por ejemplo, mira el paquete [[https://snapshot.debian.org/package/plinth/|plinth]].
+ 1. El código fuente y el binario precompilado de cualquier version de un paquete, incluyendo versiones antiguas, se pueden obtener de [[https://snapshot.debian.org/|snapshot.debian.org]]. Por ejemplo, mira el paquete [[https://snapshot.debian.org/package/plinth/|plinth]].
 
  1. También puedes obtener los enlaces a la web del proyecto original, al control de versiones del proyecto original, al control de versiones de Debian, registro de cambios, etc. desde la página de control Debian para el proyecto en [[https://tracker.debian.org/|tracker.debian.org]]. Por ejemplo, mira la página de control para el paquete  [[https://tracker.debian.org/pkg/plinth|plinth]].
 
@@ -243,6 +219,37 @@ dd if=temp/usr/lib/u-boot/A20-OLinuXino-Lime2/u-boot-sunxi-with-spl.bin of=<lime
 }}}
 
 La imagen resultante tendrá el u-boot modificado.
+
+=== Claves de firma antiguas ===
+
+Algunas imágenes de disco de !FreedomBox muy antiguas se firmaron con claves GPG diferentes a las listadas anteriormente. Esas firmas siguen valiendo y se pueden verificar empleando las claves antiguas.
+
+{{{
+$ gpg --keyserver keyserver.ubuntu.com --recv-keys BCBEBD57A11F70B23782BC5736C361440C9BC971
+$ gpg --keyserver keyserver.ubuntu.com --recv-keys 7D6ADB750F91085589484BE677C0C75E7B650808
+# Esta es la clave del servidor de integración contínua de FreedomBox
+$ gpg --keyserver keyserver.ubuntu.com --recv-keys 013D86D8BA32EAB4A6691BF85D4153D6FE188FC8
+$ gpg --fingerprint BCBEBD57A11F70B23782BC5736C361440C9BC971
+pub   4096R/0C9BC971 2011-11-12
+      Key fingerprint = BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971
+uid                  Sunil Mohan Adapa <sunil@medhas.org>
+sub   4096R/4C1D4B57 2011-11-12
+
+$ gpg --fingerprint 7D6ADB750F91085589484BE677C0C75E7B650808
+pub   4096R/7B650808 2015-06-07 [expires: 2020-06-05]
+      Key fingerprint = 7D6A DB75 0F91 0855 8948  4BE6 77C0 C75E 7B65 0808
+uid                  James Valleroy <jvalleroy@mailbox.org>
+uid                  James Valleroy <jvalleroy@freedombox.org>
+sub   4096R/25D22BF4 2015-06-07 [expires: 2020-06-05]
+sub   4096R/DDA11207 2015-07-03 [expires: 2020-07-01]
+sub   2048R/2A624357 2015-12-22
+
+$ gpg --fingerprint 013D86D8BA32EAB4A6691BF85D4153D6FE188FC8
+pub   rsa4096 2018-06-06 [SC]
+      013D 86D8 BA32 EAB4 A669  1BF8 5D41 53D6 FE18 8FC8
+uid           [ unknown] FreedomBox CI (Continuous Integration server) <admin@freedombox.org>
+sub   rsa4096 2018-06-06 [E]
+}}}
 
 
 ## END_INCLUDE

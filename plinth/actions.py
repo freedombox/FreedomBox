@@ -1,30 +1,26 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """Framework to run specified actions with elevated privileges."""
 
-import argparse
 import functools
 import importlib
 import inspect
+import io
 import json
 import logging
-import os
 import pathlib
 import socket
-import subprocess
-import sys
 import threading
 import traceback
 import types
 import typing
 
-from plinth import cfg, log, module_loader
-
-EXIT_SYNTAX = 10
-EXIT_PERM = 20
+from plinth import cfg, module_loader
 
 logger = logging.getLogger(__name__)
 
 socket_path = '/run/freedombox/privileged.socket'
+
+thread_storage = None
 
 
 # An alias for 'str' to mark some strings as sensitive. Sensitive strings are
@@ -71,27 +67,15 @@ def privileged(func):
 
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
+        if getattr(func, '_skip_privileged_call', False):
+            return func(*args, **kwargs)
+
         module_name = _get_privileged_action_module_name(func)
         action_name = func.__name__
-        return _run_privileged_method(func, module_name, action_name, args,
-                                      kwargs)
+        return run_privileged_method(func, module_name, action_name, args,
+                                     kwargs)
 
     return wrapper
-
-
-def _run_privileged_method(func, module_name, action_name, args, kwargs):
-    """Execute a privileged method either using a server or sudo."""
-    try:
-        return _run_privileged_method_on_server(func, module_name, action_name,
-                                                list(args), dict(kwargs))
-    except (
-            NotImplementedError,  # For raw_output and run_as_user flags
-            FileNotFoundError,  # When the .socket file is not present
-            ConnectionRefusedError,  # When is daemon not running
-            ConnectionResetError  # When daemon fails permission check
-    ):
-        return _run_privileged_method_as_process(func, module_name,
-                                                 action_name, args, kwargs)
 
 
 def _read_from_server(client_socket: socket.socket) -> bytes:
@@ -124,27 +108,40 @@ def _request_to_server(request: dict) -> socket.socket:
     return client_socket
 
 
-def _run_privileged_method_on_server(func, module_name, action_name, args,
-                                     kwargs):
+def run_privileged_method(func, module_name, action_name, args, kwargs):
     """Execute a privileged method using a server."""
-    run_as_user = kwargs.pop('_run_as_user', None)
     run_in_background = kwargs.pop('_run_in_background', False)
     raw_output = kwargs.pop('_raw_output', False)
     log_error = kwargs.pop('_log_error', True)
 
-    if raw_output or run_as_user:
-        raise NotImplementedError('Not yet implemented')
-
-    _log_action(func, module_name, action_name, args, kwargs, run_as_user,
-                run_in_background, is_server=True)
+    if func:
+        _log_action(func, module_name, action_name, args, kwargs,
+                    run_in_background)
 
     request = {
         'module': module_name,
         'action': action_name,
         'args': args,
-        'kwargs': kwargs
+        'kwargs': kwargs,
     }
+    if raw_output:
+        request['raw_output'] = raw_output
+
     client_socket = _request_to_server(request)
+
+    if raw_output:
+
+        def _reader_func():
+            while True:
+                chunk = client_socket.recv(4096)
+                if chunk:
+                    yield chunk
+                else:
+                    break
+
+            client_socket.close()
+
+        return _reader_func()
 
     args = (func, module_name, action_name, args, kwargs, log_error,
             client_socket)
@@ -173,8 +170,8 @@ def _wait_for_server_response(func, module_name, action_name, args, kwargs,
     module = importlib.import_module(return_value['exception']['module'])
     exception_class = getattr(module, return_value['exception']['name'])
     exception = exception_class(*return_value['exception']['args'])
-    exception.stdout = b''
-    exception.stderr = b''
+    exception.stdout = return_value['exception']['stdout'].encode()
+    exception.stderr = return_value['exception']['stderr'].encode()
 
     def _get_html_message():
         """Return an HTML format error that can be shown in messages."""
@@ -188,9 +185,10 @@ def _wait_for_server_response(func, module_name, action_name, args, kwargs,
                            return_value['exception']['name'], exception_args,
                            stdout, stderr, traceback)
 
-    exception.get_html_message = _get_html_message
+    if func:
+        exception.get_html_message = _get_html_message
 
-    if log_error:
+    if log_error and func:
         formatted_args = _format_args(func, args, kwargs)
         exception_args, stdout, stderr, traceback = _format_error(
             exception, return_value)
@@ -202,119 +200,49 @@ def _wait_for_server_response(func, module_name, action_name, args, kwargs,
     raise exception
 
 
-def _run_privileged_method_as_process(func, module_name, action_name, args,
-                                      kwargs):
-    """Execute the privileged method in a sub-process with sudo."""
-    run_as_user = kwargs.pop('_run_as_user', None)
-    run_in_background = kwargs.pop('_run_in_background', False)
-    raw_output = kwargs.pop('_raw_output', False)
-    log_error = kwargs.pop('_log_error', True)
+class ProcessBufferedReader(io.BufferedReader):
+    """Improve performance of buffered binary streaming.
 
-    read_fd, write_fd = os.pipe()
-    os.set_inheritable(write_fd, True)
+    Read from the stdout of a process and close the process after reading is
+    completed.
 
-    # Prepare the command
-    command = ['sudo', '--non-interactive', '--close-from', str(write_fd + 1)]
-    if run_as_user:
-        command += ['--user', run_as_user]
+    Iteration calls __next__ over the BufferedReader holding process.stdout.
+    However, this seems to call readline() which looks for \n in binary data
+    which leads to short unpredictably sized chunks which in turn lead to
+    severe performance degradation. So, overwrite this and call read() which is
+    better geared for handling binary data.
+    """
 
-    if cfg.develop:
-        command += [f'PYTHONPATH={cfg.file_root}']
+    def __init__(self, process, extra_cleanup_func=None, *args, **kwargs):
+        """Store the process object."""
+        super().__init__(process.stdout, *args, **kwargs)
+        self.process = process
+        self.extra_cleanup_func = extra_cleanup_func
 
-    command += [
-        os.path.join(cfg.actions_dir, 'actions'), module_name, action_name,
-        '--write-fd',
-        str(write_fd)
-    ]
+    def __next__(self):
+        """Override to call read() instead of readline()."""
+        chunk = self.read(io.DEFAULT_BUFFER_SIZE)
+        if not chunk:
+            self._cleanup_func()
 
-    proc_kwargs = {
-        'stdin': subprocess.PIPE,
-        'stdout': subprocess.PIPE,
-        'stderr': subprocess.PIPE,
-        'shell': False,
-        'pass_fds': [write_fd],
-    }
-    if cfg.develop:
-        # In development mode pass on local pythonpath to access Plinth
-        proc_kwargs['env'] = {'PYTHONPATH': cfg.file_root}
+            raise StopIteration
 
-    _log_action(func, module_name, action_name, args, kwargs, run_as_user,
-                run_in_background, is_server=False)
+        return chunk
 
-    proc = subprocess.Popen(command, **proc_kwargs)
-    os.close(write_fd)
+    def _cleanup_func(self):
+        """After the process has been read from, cleanup the process."""
+        try:
+            if self.process.stdout:
+                self.process.stdout.close()
 
-    if raw_output:
-        input_ = json.dumps({'args': args, 'kwargs': kwargs}).encode()
-        return proc, read_fd, input_
+            if self.process.stderr:
+                self.process.stderr.close()
 
-    buffers = []
-    # XXX: Use async to avoid creating a thread.
-    read_thread = threading.Thread(target=_thread_reader,
-                                   args=(read_fd, buffers))
-    read_thread.start()
-
-    wait_args = (func, module_name, action_name, args, kwargs, log_error, proc,
-                 command, read_fd, read_thread, buffers)
-    if not run_in_background:
-        return _wait_for_return(*wait_args)
-
-    wait_thread = threading.Thread(target=_wait_for_return, args=wait_args)
-    wait_thread.start()
-
-
-def _wait_for_return(func, module_name, action_name, args, kwargs, log_error,
-                     proc, command, read_fd, read_thread, buffers):
-    """Communicate with the subprocess and wait for its return."""
-    json_args = json.dumps({'args': args, 'kwargs': kwargs})
-
-    stdout, stderr = proc.communicate(input=json_args.encode())
-    read_thread.join()
-    if proc.returncode != 0:
-        logger.error('Error executing command - %s, %s, %s', command, stdout,
-                     stderr)
-        raise subprocess.CalledProcessError(proc.returncode, command)
-
-    try:
-        return_value = json.loads(b''.join(buffers))
-    except json.JSONDecodeError:
-        logger.error('Error decoding action return value %s..%s(*%s, **%s)',
-                     module_name, action_name, args, kwargs)
-        raise
-
-    if return_value['result'] == 'success':
-        return return_value['return']
-
-    module = importlib.import_module(return_value['exception']['module'])
-    exception_class = getattr(module, return_value['exception']['name'])
-    exception = exception_class(*return_value['exception']['args'])
-    exception.stdout = stdout
-    exception.stderr = stderr
-
-    def _get_html_message():
-        """Return an HTML format error that can be shown in messages."""
-        from django.utils.html import format_html
-
-        formatted_args = _format_args(func, args, kwargs)
-        exception_args, stdout, stderr, traceback = _format_error(
-            exception, return_value)
-        return format_html('Error running action: {}..{}({}): {}({})\n{}{}{}',
-                           module_name, action_name, formatted_args,
-                           return_value['exception']['name'], exception_args,
-                           stdout, stderr, traceback)
-
-    exception.get_html_message = _get_html_message
-
-    if log_error:
-        formatted_args = _format_args(func, args, kwargs)
-        exception_args, stdout, stderr, traceback = _format_error(
-            exception, return_value)
-        logger.error('Error running action %s..%s(%s): %s(%s)\n'
-                     '%s%s%s', module_name, action_name, formatted_args,
-                     return_value['exception']['name'], exception_args, stdout,
-                     stderr, traceback)
-
-    raise exception
+            self.process.wait(30)
+            if self.extra_cleanup_func:
+                self.extra_cleanup_func()
+        except Exception:
+            logger.exception('Closing process failed after raw output')
 
 
 def _format_args(func, args, kwargs):
@@ -376,18 +304,6 @@ def _format_error(exception, return_value):
     return (exception_args, stdout, stderr, traceback)
 
 
-def _thread_reader(read_fd, buffers):
-    """Read from the pipe in a separate thread."""
-    while True:
-        buffer = os.read(read_fd, 10240)
-        if not buffer:
-            break
-
-        buffers.append(buffer)
-
-    os.close(read_fd)
-
-
 def _check_privileged_action_arguments(func):
     """Check that a privileged action has well defined types."""
     argspec = inspect.getfullargspec(func)
@@ -422,14 +338,10 @@ def _get_privileged_action_module_name(func):
     return module_name.rpartition('.')[2]
 
 
-def _log_action(func, module_name, action_name, args, kwargs, run_as_user,
-                run_in_background, is_server):
+def _log_action(func, module_name, action_name, args, kwargs,
+                run_in_background):
     """Log an action in a compact format."""
-    if is_server:
-        prompt = '»'
-    else:
-        prompt = f'({run_as_user})$' if run_as_user else '#'
-
+    prompt = '»'
     suffix = '&' if run_in_background else ''
     formatted_args = _format_args(func, args, kwargs)
     logger.info('%s %s..%s(%s) %s', prompt, module_name, action_name,
@@ -449,47 +361,49 @@ class JSONEncoder(json.JSONEncoder):
         return super().default(obj)
 
 
-def privileged_main():
-    """Parse arguments for the program spawned as a privileged action."""
-    log.action_init()
-
-    parser = argparse.ArgumentParser()
-    parser.add_argument('module', help='Module to trigger action in')
-    parser.add_argument('action', help='Action to trigger in module')
-    parser.add_argument('--write-fd', type=int, default=1,
-                        help='File descriptor to write output to')
-    parser.add_argument('--no-args', default=False, action='store_true',
-                        help='Do not read arguments from stdin')
-    args = parser.parse_args()
-
-    try:
-        try:
-            arguments = {'args': [], 'kwargs': {}}
-            if not args.no_args:
-                input_ = sys.stdin.read()
-                if input_:
-                    arguments = json.loads(input_)
-        except json.JSONDecodeError as exception:
-            raise SyntaxError('Arguments on stdin not JSON.') from exception
-
-        return_value = _privileged_call(args.module, args.action, arguments)
-        with os.fdopen(args.write_fd, 'w') as write_file_handle:
-            write_file_handle.write(json.dumps(return_value, cls=JSONEncoder))
-    except PermissionError as exception:
-        logger.error(exception.args[0])
-        sys.exit(EXIT_PERM)
-    except SyntaxError as exception:
-        logger.error(exception.args[0])
-        sys.exit(EXIT_SYNTAX)
-    except TypeError as exception:
-        logger.error(exception.args[0])
-        sys.exit(EXIT_SYNTAX)
-    except Exception as exception:
-        logger.exception(exception)
-        sys.exit(1)
+def _setup_thread_storage():
+    """Setup collection of stdout/stderr from any process in this thread."""
+    global thread_storage
+    thread_storage = threading.local()
+    thread_storage.stdout = b''
+    thread_storage.stderr = b''
 
 
-def privileged_handle_json_request(request_string: str) -> str:
+def _clear_thread_storage():
+    """Cleanup memory used for stdout/stderr from processes in this thread.
+
+    Python documentation is silent on whether thread local storage will be
+    cleaned up after a thread terminates.
+    """
+    global thread_storage
+    if thread_storage:
+        thread_storage.stdout = None
+        thread_storage.stderr = None
+        thread_storage = None
+
+
+def get_return_value_from_exception(exception):
+    """Return the value to return from server when an exception is raised."""
+    return_value = {
+        'result': 'exception',
+        'exception': {
+            'module': type(exception).__module__,
+            'name': type(exception).__name__,
+            'args': exception.args,
+            'traceback': traceback.format_tb(exception.__traceback__),
+            'stdout': '',
+            'stderr': ''
+        }
+    }
+    if thread_storage:
+        return_value['exception']['stdout'] = thread_storage.stdout.decode()
+        return_value['exception']['stderr'] = thread_storage.stderr.decode()
+
+    return return_value
+
+
+def privileged_handle_json_request(
+        request_string: str) -> str | io.BufferedReader:
     """Parse arguments for the program spawned as a privileged action."""
 
     def _parse_request() -> dict:
@@ -509,6 +423,10 @@ def privileged_handle_json_request(request_string: str) -> str:
                 raise TypeError(f'Parameter "{parameter}" must be of type'
                                 f'{expected_type.__name__}')
 
+        if 'raw_output' in request and not isinstance(request['raw_output'],
+                                                      bool):
+            raise TypeError('Incorrect "raw_output" parameter')
+
         return request
 
     try:
@@ -516,23 +434,25 @@ def privileged_handle_json_request(request_string: str) -> str:
         logger.info('Received request for %s..%s(..)', request['module'],
                     request['action'])
         arguments = {'args': request['args'], 'kwargs': request['kwargs']}
+        _setup_thread_storage()
         return_value = _privileged_call(request['module'], request['action'],
                                         arguments)
+
+        if isinstance(return_value, io.BufferedReader):
+            raw_output = request.get('raw_output', False)
+            if not raw_output:
+                raise TypeError('Invalid call to raw output API.')
+
+            return return_value
     except (PermissionError, SyntaxError, TypeError, Exception) as exception:
         if isinstance(exception, (PermissionError, SyntaxError, TypeError)):
             logger.error(exception.args[0])
         else:
             logger.exception(exception)
 
-        return_value = {
-            'result': 'exception',
-            'exception': {
-                'module': type(exception).__module__,
-                'name': type(exception).__name__,
-                'args': exception.args,
-                'traceback': traceback.format_tb(exception.__traceback__)
-            }
-        }
+        return_value = get_return_value_from_exception(exception)
+
+    _clear_thread_storage()
 
     return json.dumps(return_value, cls=JSONEncoder)
 
@@ -577,17 +497,12 @@ def _privileged_call(module_name, action_name, arguments):
 
     try:
         return_values = func(*arguments['args'], **arguments['kwargs'])
+        if isinstance(return_values, io.BufferedReader):
+            return return_values
+
         return_value = {'result': 'success', 'return': return_values}
     except Exception as exception:
-        return_value = {
-            'result': 'exception',
-            'exception': {
-                'module': type(exception).__module__,
-                'name': type(exception).__name__,
-                'args': exception.args,
-                'traceback': traceback.format_tb(exception.__traceback__)
-            }
-        }
+        return_value = get_return_value_from_exception(exception)
 
     return return_value
 
