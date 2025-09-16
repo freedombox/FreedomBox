@@ -9,6 +9,7 @@ import subprocess
 
 from plinth import action_utils
 from plinth.actions import privileged
+from plinth.db import mariadb
 
 APACHE_CONF = '/etc/apache2/conf-available/zoph.conf'
 DB_CONF = pathlib.Path('/etc/zoph.ini')
@@ -31,8 +32,17 @@ def pre_install():
 def get_configuration() -> dict[str, str]:
     """Return the current configuration."""
     configuration = {}
-    process = subprocess.run(['zoph', '--dump-config'], stdout=subprocess.PIPE,
-                             check=True)
+    try:
+        process = subprocess.run(['zoph', '--dump-config'],
+                                 stdout=subprocess.PIPE, check=True)
+    except subprocess.CalledProcessError as exception:
+        if exception.returncode != 96:
+            raise
+
+        _zoph_setup_cli_user()
+        process = subprocess.run(['zoph', '--dump-config'],
+                                 stdout=subprocess.PIPE, check=True)
+
     for line in process.stdout.decode().splitlines():
         name, value = line.partition(':')[::2]
         configuration[name.strip()] = value[1:]
@@ -40,9 +50,38 @@ def get_configuration() -> dict[str, str]:
     return configuration
 
 
+def _zoph_setup_cli_user() -> None:
+    """Ensure that Zoph cli user is not set to 'autodetect'.
+
+    When set to 'autodetect', all command line commands will fail unless a user
+    name 'root' exists in zoph database and is an admin user.
+    """
+    query = '''
+UPDATE
+  zoph_conf
+SET
+  value=(
+    SELECT user_id
+    FROM zoph_users
+    WHERE user_class="0"
+    ORDER BY user_id
+    LIMIT 1)
+WHERE
+  conf_id='interface.user.cli';'''
+    database_name = _get_db_config()['db_name']
+    mariadb.run_query(database_name, query)
+
+
 def _zoph_configure(key, value):
     """Set a configure value in Zoph."""
-    subprocess.run(['zoph', '--config', key, value], check=True)
+    try:
+        subprocess.run(['zoph', '--config', key, value], check=True)
+    except subprocess.CalledProcessError as exception:
+        if exception.returncode != 96:
+            raise
+
+        _zoph_setup_cli_user()
+        subprocess.run(['zoph', '--config', key, value], check=True)
 
 
 @privileged
