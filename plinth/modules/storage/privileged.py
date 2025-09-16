@@ -325,7 +325,7 @@ def usage_info() -> str:
         'df', '--exclude-type=tmpfs', '--exclude-type=devtmpfs',
         '--block-size=1', '--output=source,fstype,size,used,avail,pcent,target'
     ]
-    return subprocess.check_output(command).decode()
+    return action_utils.run(command, check=False).stdout.decode()
 
 
 @privileged
