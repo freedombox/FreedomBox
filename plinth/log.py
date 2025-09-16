@@ -90,13 +90,16 @@ def _capture_warnings():
         warnings.filterwarnings('default', '', ImportWarning)
 
 
-def action_init():
+def action_init(console: bool = False):
     """Initialize logging for action scripts."""
     _capture_warnings()
 
     configuration = get_configuration()
-    # Don't log to console
-    configuration['root']['handlers'] = ['journal']
+    if console:
+        configuration['root']['handlers'] = ['console']
+    else:
+        configuration['root']['handlers'] = ['journal']
+
     logging.config.dictConfig(configuration)
 
 

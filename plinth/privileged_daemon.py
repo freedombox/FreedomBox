@@ -207,7 +207,7 @@ class Server(socketserver.ThreadingUnixStreamServer):
 
 def client_main() -> None:
     """Parse arguments for the client for privileged daemon."""
-    log.action_init()
+    log.action_init(console=True)
 
     parser = argparse.ArgumentParser()
     parser.add_argument('module', help='Module to trigger action in')
