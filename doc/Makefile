@@ -13,7 +13,7 @@ SCRIPTS_DIR=scripts
 
 manual-pdfs=$(foreach lang,$(MANUAL_LANGUAGES),manual/$(lang)/freedombox-manual.pdf)
 manual-xmls=$(patsubst %.pdf,%.xml,$(manual-pdfs))
-OUTPUTS=$(manual-pdfs) plinth.1
+OUTPUTS=$(manual-pdfs) plinth.1 freedombox-cmd.1
 
 INSTALL_OPTS=-D --mode=644
 

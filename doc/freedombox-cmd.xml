@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "http://www.docbook.org/xml/4.4/docbookx.dtd">
+<!--
+# SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+<refentry>
+  <refmeta>
+    <refentrytitle><application>freedombox-cmd</application></refentrytitle>
+    <manvolnum>1</manvolnum>
+    <refmiscinfo class="manual">FreedomBox Command Line Utility</refmiscinfo>
+    <refmiscinfo class="version"> </refmiscinfo>
+  </refmeta>
+
+  <refnamediv>
+    <refname><application>freedombox-cmd</application></refname>
+    <refpurpose>
+      command line utility to perform FreedomBox operations
+    </refpurpose>
+  </refnamediv>
+
+  <refsynopsisdiv>
+    <cmdsynopsis>
+      <command>freedombox-cmd</command>
+      <arg><option>-h, </option><option>--help</option></arg>
+      <arg choice="req">module</arg>
+      <arg choice="req">action</arg>
+      <arg><option>--no-args</option></arg>
+    </cmdsynopsis>
+  </refsynopsisdiv>
+
+  <refsect1>
+    <title>Description</title>
+    <para>
+      FreedomBox is a community project to develop, design and promote
+      personal servers running free software for private, personal
+      communications.  It is a networking appliance designed to allow
+      interfacing with the rest of the Internet under conditions of
+      protected privacy and data security.  It hosts applications such
+      as blog, wiki, website, social network, email, web proxy and a
+      Tor relay on a device that can replace a wireless router so that
+      data stays with the users.
+    </para>
+    <para>
+      freedombox-cmd is a command line interface to some of the operations
+      performed by FreedomBox. It is typically not needed by the end users who
+      use FreedomBox's web interface. The command may be used in some cases
+      while debugging problems, especially where the web interface is not
+      accessible or when a piece of functionality that is not provided in the
+      web interface needs to be triggered.
+    </para>
+    <para>
+      The command is simply a client to the FreedomBox's privileged daemon and
+      relays user's request to it. It waits for the request to complete and
+      prints the output of the operation or an error message collected form the
+      daemon. The daemon only allows connections from an pre-allowed list of
+      user accounts. So, be sure to run the command as 'root' superuser.
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>Options</title>
+    <variablelist>
+      <varlistentry>
+        <term><option>module</option></term>
+        <listitem>
+          <para>
+            Name of the module from which to execute an action.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><option>action</option></term>
+        <listitem>
+          <para>
+            Name of the action to execute. It should found in the provided
+            module.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><option>--no-args</option></term>
+        <listitem>
+          <para>
+            Don't try to read the arguments to the command on the standard
+            input. Instead, assume that the operation does not have any
+            arguments and execute the method without arguments.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><option>--help</option></term>
+        <listitem>
+          <para>
+            Show brief help about arguments allowed for this command.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </refsect1>
+
+  <refsect1>
+    <title>Examples</title>
+
+    <example>
+      <title>Re-run FreedomBox network setup</title>
+      <synopsis>$ sudo freedombox-cmd networks setup --no-args</synopsis>
+      <para>
+        When FreedomBox starts for the first time, it will setup Network Manager
+        connections suitable for the hardware found. If you wish to re-create
+        these connections at a later time, you can re-run setup for the Networks
+        app using the web interface or run this command on a terminal.
+      </para>
+    </example>
+
+    <example>
+      <title>Delete a user account from LDAP database</title>
+      <synopsis>$ echo '{"args": ["USERNAME", "AUTH_USER", "AUTH_PASSWORD"], "kwargs": {}}' | sudo freedombox-cmd users remove_user</synopsis>
+      <para>
+        USERNAME is the name of the user account that must be removed. AUTH_USER
+        is name of the user account that is authorizing this operation.
+        AUTH_PASSWORD is the password for user account that is authorizing this
+        operation. This operation may be needed if FreedomBox's sqlite3 database
+        is wiped, removing the user accounts in the database but the
+        corresponding entries from LDAP database are not removed. A new user
+        with that name can't be created until the LDAP account is also removed.
+      </para>
+    </example>
+
+    <example>
+      <title>Set the logging mode to persistent</title>
+      <synopsis>$ echo '{"args": ["persistent"], "kwargs": {}}' | sudo freedombox-cmd config set_logging_mode</synopsis>
+      <para>
+        By default, FreedomBox sets up systemd-journald to 'volatile' logging.
+        This means that logs will not be stored on the disk and will be lost
+        after a reboot. If you are tackling a problem and wish to store the logs
+        persistently, you can change the setting in the web interface or run
+        this command.
+      </para>
+    </example>
+  </refsect1>
+
+  <refsect1>
+    <title>Bugs</title>
+    <para>
+      See <ulink
+      url="https://salsa.debian.org/freedombox-team/freedombox/issues">FreedomBox
+      issue tracker</ulink> for a full list of known issues and TODO items.
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>Author</title>
+    <para>
+      <author>
+        <firstname>FreedomBox Developers</firstname>
+        <contrib>Original author</contrib>
+      </author>
+    </para>
+  </refsect1>
+</refentry>
