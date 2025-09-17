@@ -65,6 +65,9 @@ def _get_icon_url(app_id, icon_name):
     if not icon_name:
         return None
 
+    if icon_name.startswith('/'):
+        return icon_name
+
     if app_id:
         return static(f'{app_id}') + f'/icons/{icon_name}.png'
 
