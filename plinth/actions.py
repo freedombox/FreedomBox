@@ -170,8 +170,8 @@ def _wait_for_server_response(func, module_name, action_name, args, kwargs,
     module = importlib.import_module(return_value['exception']['module'])
     exception_class = getattr(module, return_value['exception']['name'])
     exception = exception_class(*return_value['exception']['args'])
-    exception.stdout = return_value['exception']['stdout'].encode()
-    exception.stderr = return_value['exception']['stderr'].encode()
+    exception.stdout = return_value['exception'].get('stdout', b'').encode()
+    exception.stderr = return_value['exception'].get('stderr', b'').encode()
 
     def _get_html_message():
         """Return an HTML format error that can be shown in messages."""
