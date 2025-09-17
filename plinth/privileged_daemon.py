@@ -8,10 +8,12 @@ import logging
 import os
 import pathlib
 import pwd
+import signal
 import socket
 import socketserver
 import struct
 import sys
+import threading
 import time
 
 import systemd.daemon
@@ -27,6 +29,8 @@ address = pathlib.Path('/run/freedombox/privileged.socket')
 FREEDOMBOX_PROCESS_USER = 'plinth'
 
 MAX_REQUEST_LENGTH = 1_000_000
+
+_server = None
 
 idle_shutdown_time: int | None = 5 * 60  # 5 minutes
 
@@ -245,6 +249,25 @@ def client_main() -> None:
         sys.exit(1)
 
 
+def _on_sigterm(signal_number: int, frame) -> None:
+    """Handle SIGTERM signal. Issue server shutdown."""
+    threading.Thread(target=_shutdown_server).start()
+
+
+def _shutdown_server() -> None:
+    """Issue a shutdown request to the server.
+
+    This must be run in a thread separate from the server.serve_forever()
+    otherwise it will deadlock waiting for the shutdown to complete.
+    """
+    global _server
+    logger.info('SIGTERM received, shutting down the server.')
+    if _server:
+        _server.shutdown()
+
+    logger.info('Shutdown complete, some requests may be running.')
+
+
 def main() -> None:
     """Start the server, listen on socket, and serve forever."""
     global freedombox_develop, idle_shutdown_time
@@ -263,10 +286,15 @@ def main() -> None:
     if not systemd.daemon.listen_fds(unset_environment=False):
         idle_shutdown_time = None
 
+    signal.signal(signal.SIGTERM, _on_sigterm)
+
     module_loader.load_modules()
     app_module.apps_init()
 
     with Server(str(address), RequestHandler) as server:
+        global _server
+        _server = server  # Reference needed to shutdown the server.
+
         # systemd will wait until notification to proceed with other processes.
         # We have service Type=notify.
         systemd.daemon.notify('READY=1')
@@ -282,6 +310,11 @@ def main() -> None:
             sys.exit(-1)
         else:
             logger.info('FreedomBox privileged daemon exiting.')
+
+        # Exit the context manager. This calls server.close() which waits on
+        # all pending request threads to complete.
+
+    logger.info('All requested completed. Exit.')
 
 
 if __name__ == '__main__':
