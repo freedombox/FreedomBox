@@ -431,8 +431,6 @@ def privileged_handle_json_request(
 
     try:
         request = _parse_request()
-        logger.info('Received request for %s..%s(..)', request['module'],
-                    request['action'])
         arguments = {'args': request['args'], 'kwargs': request['kwargs']}
         _setup_thread_storage()
         return_value = _privileged_call(request['module'], request['action'],
@@ -495,6 +493,8 @@ def _privileged_call(module_name, action_name, arguments):
 
     _privileged_assert_valid_arguments(func, arguments)
 
+    _log_action(func, module_name, action_name, arguments['args'],
+                arguments['kwargs'], run_in_background=False)
     try:
         return_values = func(*arguments['args'], **arguments['kwargs'])
         if isinstance(return_values, io.BufferedReader):
