@@ -75,19 +75,26 @@ def get_breadcrumbs(request: HttpRequest) -> dict[str, dict[str, str | bool]]:
             'url_name': url_name
         }
 
-    url_name = request.resolver_match.url_name
-    full_url_name = ':'.join(request.resolver_match.app_names + [url_name])
     try:
-        menu_item = menu.Menu.get_with_url_name(full_url_name)
-    except LookupError:
-        # There is no menu entry for this page, find it's app.
-        _add(request.path, _('Here'), full_url_name)
-        app_url_name = ':'.join(request.resolver_match.app_names + ['index'])
+        url_name = request.resolver_match.url_name
+        full_url_name = ':'.join(request.resolver_match.app_names + [url_name])
+    except AttributeError:
+        # 404 page: unknown URL, resolver_match is None. Index is home.
+        menu_item = menu.Menu.get_with_url_name('index')
+    else:
         try:
-            menu_item = menu.Menu.get_with_url_name(app_url_name)
+            menu_item = menu.Menu.get_with_url_name(full_url_name)
         except LookupError:
-            # Don't know which app this page belongs to, assume parent is Home.
-            menu_item = menu.Menu.get_with_url_name('index')
+            # There is no menu entry for this page, find it's app.
+            _add(request.path, _('Here'), full_url_name)
+            app_url_name = ':'.join(request.resolver_match.app_names +
+                                    ['index'])
+            try:
+                menu_item = menu.Menu.get_with_url_name(app_url_name)
+            except LookupError:
+                # Don't know which app this page belongs to, assume parent is
+                # Home.
+                menu_item = menu.Menu.get_with_url_name('index')
 
     for _number in range(10):
         _add(menu_item.url, menu_item.name, menu_item.url_name)
