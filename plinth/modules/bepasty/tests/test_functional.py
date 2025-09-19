@@ -68,7 +68,7 @@ def _set_default_permissions(browser, permissions=''):
 
 
 def _add_password(browser):
-    functional.visit(browser, '/plinth/apps/bepasty/add')
+    functional.visit(browser, '/plinth/apps/bepasty/add/')
     for permission in ['read', 'create', 'list', 'delete', 'admin']:
         browser.find_by_css('#id_bepasty-permissions input[value="{}"]'.format(
             permission)).check()
