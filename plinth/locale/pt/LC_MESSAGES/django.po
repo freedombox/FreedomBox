@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-08 23:51+0000\n"
+"POT-Creation-Date: 2025-09-23 00:05+0000\n"
 "PO-Revision-Date: 2025-04-09 22:41+0000\n"
 "Last-Translator: tuliogit <wikigeolog@gmx.com>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/freedombox/"
@@ -24,13 +24,13 @@ msgstr ""
 msgid "Static configuration {etc_path} is setup properly"
 msgstr "Configuração estática {etc_path} está estabelecida propriamente"
 
-#: plinth/container.py:137
+#: plinth/container.py:140
 #, fuzzy, python-brace-format
 #| msgid "Service {service_name} is running"
 msgid "Container {container_name} is running"
 msgstr "O serviço {service_name} está em execução"
 
-#: plinth/context_processors.py:21 plinth/views.py:168
+#: plinth/context_processors.py:21 plinth/views.py:175
 msgid "FreedomBox"
 msgstr "Freedombox"
 
@@ -39,22 +39,22 @@ msgstr "Freedombox"
 msgid "Service {service_name} is running"
 msgstr "O serviço {service_name} está em execução"
 
-#: plinth/daemon.py:222
+#: plinth/daemon.py:221
 #, python-brace-format
 msgid "Listening on {kind} port {listen_address}:{port}"
 msgstr "Escutando á porta {kind} {listen_address}:{port}"
 
-#: plinth/daemon.py:225
+#: plinth/daemon.py:224
 #, python-brace-format
 msgid "Listening on {kind} port {port}"
 msgstr "À escuta de {kind} na porta {port}"
 
-#: plinth/daemon.py:296
+#: plinth/daemon.py:295
 #, python-brace-format
 msgid "Connect to {host}:{port}"
 msgstr "Ligar a {host}:{port}"
 
-#: plinth/daemon.py:304
+#: plinth/daemon.py:303
 #, python-brace-format
 msgid "Cannot connect to {host}:{port}"
 msgstr "Não é possível ligar a {host}:{port}"
@@ -474,7 +474,7 @@ msgstr "Seleccione a chave pública de SSH verificada"
 #: plinth/modules/backups/templates/backups_repository.html:92
 #: plinth/modules/backups/templates/backups_restore.html:27
 #: plinth/modules/backups/views.py:238 plinth/modules/snapshot/manifest.py:14
-#: plinth/templates/toolbar.html:44 plinth/templates/toolbar.html:45
+#: plinth/templates/toolbar.html:51 plinth/templates/toolbar.html:52
 msgid "Restore"
 msgstr "Restaurar"
 
@@ -604,7 +604,6 @@ msgstr "Cópias de segurança existentes"
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:27
 #: plinth/modules/diagnostics/templates/diagnostics_full.html:102
 #: plinth/modules/help/templates/help_about.html:22
-#: plinth/modules/help/templates/statuslog.html:24
 #: plinth/modules/homeassistant/__init__.py:48
 #: plinth/modules/kiwix/templates/kiwix-add-package.html:26
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:28
@@ -619,8 +618,9 @@ msgstr "Cópias de segurança existentes"
 #: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:45
 #: plinth/modules/upgrades/templates/upgrades_configure.html:84
 #: plinth/modules/users/templates/users_firstboot.html:34
-#: plinth/templates/app.html:31 plinth/templates/messages.html:17
-#: plinth/templates/setup.html:40 plinth/templates/setup.html:69
+#: plinth/templates/app-logs.html:23 plinth/templates/app.html:31
+#: plinth/templates/messages.html:17 plinth/templates/setup.html:40
+#: plinth/templates/setup.html:69
 msgid "Caution:"
 msgstr "Cuidado:"
 
@@ -1385,7 +1385,7 @@ msgstr "Rede"
 msgid "Services"
 msgstr "Serviços"
 
-#: plinth/modules/cockpit/manifest.py:28
+#: plinth/modules/cockpit/manifest.py:28 plinth/templates/app-logs.html:9
 msgid "Logs"
 msgstr "Registros"
 
@@ -1660,7 +1660,7 @@ msgstr "Cliente web"
 msgid "P2P"
 msgstr "Ponto a ponto"
 
-#: plinth/modules/diagnostics/__init__.py:29
+#: plinth/modules/diagnostics/__init__.py:32
 msgid ""
 "The system diagnostic test will run a number of checks on your system to "
 "confirm that applications and services are working as expected."
@@ -1669,54 +1669,61 @@ msgstr ""
 "sistema para confirmar se as aplicações e serviços estão a funcionar "
 "conforme o esperado."
 
-#: plinth/modules/diagnostics/__init__.py:53
-#: plinth/modules/diagnostics/__init__.py:239
+#: plinth/modules/diagnostics/__init__.py:36
+#, python-brace-format
+msgid ""
+"This app also shows the <a href=\"{logs_url}\">logs</a> for {box_name} "
+"services."
+msgstr ""
+
+#: plinth/modules/diagnostics/__init__.py:60
+#: plinth/modules/diagnostics/__init__.py:254
 msgid "Diagnostics"
 msgstr "Diagnóstico"
 
-#: plinth/modules/diagnostics/__init__.py:99
+#: plinth/modules/diagnostics/__init__.py:114
 msgid "skipped"
 msgstr "pulou"
 
-#: plinth/modules/diagnostics/__init__.py:100
+#: plinth/modules/diagnostics/__init__.py:115
 msgid "passed"
 msgstr "passou"
 
-#: plinth/modules/diagnostics/__init__.py:101
+#: plinth/modules/diagnostics/__init__.py:116
 #: plinth/modules/networks/views.py:51
 msgid "failed"
 msgstr "fracassado"
 
-#: plinth/modules/diagnostics/__init__.py:102
+#: plinth/modules/diagnostics/__init__.py:117
 msgid "error"
 msgstr "erro"
 
-#: plinth/modules/diagnostics/__init__.py:103
+#: plinth/modules/diagnostics/__init__.py:118
 msgid "warning"
 msgstr "aviso"
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: plinth/modules/diagnostics/__init__.py:205
+#: plinth/modules/diagnostics/__init__.py:220
 msgid "MiB"
 msgstr "MiB"
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: plinth/modules/diagnostics/__init__.py:210
+#: plinth/modules/diagnostics/__init__.py:225
 msgid "GiB"
 msgstr "GiB"
 
-#: plinth/modules/diagnostics/__init__.py:217
+#: plinth/modules/diagnostics/__init__.py:232
 msgid "You should disable some apps to reduce memory usage."
 msgstr ""
 "Você deve desabilitar alguns aplicativos para reduzir o uso de memória."
 
-#: plinth/modules/diagnostics/__init__.py:222
+#: plinth/modules/diagnostics/__init__.py:237
 msgid "You should not install any new apps on this system."
 msgstr "Você não deve instalar nenhum aplicativo novo neste sistema."
 
-#: plinth/modules/diagnostics/__init__.py:234
+#: plinth/modules/diagnostics/__init__.py:249
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
@@ -1725,24 +1732,24 @@ msgstr ""
 "O sistema está com pouca memória: {percent_used}% usada, {memory_available} "
 "{memory_available_unit} livre. {advice_message}"
 
-#: plinth/modules/diagnostics/__init__.py:236
+#: plinth/modules/diagnostics/__init__.py:251
 msgid "Low Memory"
 msgstr "Pouca memória"
 
-#: plinth/modules/diagnostics/__init__.py:267
+#: plinth/modules/diagnostics/__init__.py:282
 msgid "Running diagnostics"
 msgstr "Diagnóstico em execução"
 
-#: plinth/modules/diagnostics/__init__.py:313
+#: plinth/modules/diagnostics/__init__.py:328
 #, no-python-format, python-brace-format
 msgid "Found {issue_count} issues during routine tests."
 msgstr "Foram encontrados {issue_count} problemas durante testes de rotina."
 
-#: plinth/modules/diagnostics/__init__.py:314
+#: plinth/modules/diagnostics/__init__.py:329
 msgid "Diagnostics results"
 msgstr "Resultados de diagnóstico"
 
-#: plinth/modules/diagnostics/__init__.py:319
+#: plinth/modules/diagnostics/__init__.py:334
 msgid "Go to diagnostics results"
 msgstr "Ir para resultados de diagnóstico"
 
@@ -3315,14 +3322,14 @@ msgstr "Manual"
 
 #: plinth/modules/help/__init__.py:41
 #: plinth/modules/help/templates/help_support.html:9
-#: plinth/modules/help/views.py:93 plinth/templates/help-menu.html:27
+#: plinth/modules/help/views.py:91 plinth/templates/help-menu.html:27
 #: plinth/templates/help-menu.html:28
 msgid "Get Support"
 msgstr "Obtenha suporte"
 
 #: plinth/modules/help/__init__.py:45
 #: plinth/modules/help/templates/help_feedback.html:9
-#: plinth/modules/help/views.py:87 plinth/templates/help-menu.html:33
+#: plinth/modules/help/views.py:85 plinth/templates/help-menu.html:33
 #: plinth/templates/help-menu.html:34
 msgid "Submit Feedback"
 msgstr "Enviar feedback"
@@ -3330,7 +3337,7 @@ msgstr "Enviar feedback"
 #: plinth/modules/help/__init__.py:49
 #: plinth/modules/help/templates/help_about.html:113
 #: plinth/modules/help/templates/help_contribute.html:9
-#: plinth/modules/help/views.py:76 plinth/templates/help-menu.html:39
+#: plinth/modules/help/views.py:74 plinth/templates/help-menu.html:39
 #: plinth/templates/help-menu.html:40
 msgid "Contribute"
 msgstr "Contribuir"
@@ -3666,40 +3673,16 @@ msgstr ""
 "href=\"mailto:freedombox-discuss@alioth-lists.debian.net\">lista de "
 "discussão</a>."
 
-#: plinth/modules/help/templates/statuslog.html:10
-msgid "Status Log"
-msgstr "Registro de status"
-
-#: plinth/modules/help/templates/statuslog.html:13
-#, python-format
-msgid ""
-"These are the last %(num_lines)s lines of the status log for this web "
-"interface. If you want to report a bug, please use the <a href=\"https://"
-"salsa.debian.org/freedombox-team/freedombox/issues\">bug tracker</a> and "
-"attach this status log to the bug report."
-msgstr ""
-"Estas são as últimas %(num_lines)s linhas do log de status desta interface "
-"web. Se você quiser relatar um bug, use o rastreador de bugs &lt;a "
-"href=\"https://salsa.debian.org/freedombox-team/freedombox/issues\"&gt;&lt;/"
-"a&gt; e anexe este log de status ao relatório de bug."
-
-#: plinth/modules/help/templates/statuslog.html:27
-msgid ""
-"Please remove any personal information from the log before submitting the "
-"bug report."
-msgstr ""
-"Remova qualquer informação pessoal do log antes de enviar o relatório de bug."
-
-#: plinth/modules/help/views.py:29
+#: plinth/modules/help/views.py:27
 msgid "Documentation and FAQ"
 msgstr "Documentação e perguntas frequentes"
 
-#: plinth/modules/help/views.py:98
+#: plinth/modules/help/views.py:96
 #, python-brace-format
 msgid "About {box_name}"
 msgstr "Sobre {box_name}"
 
-#: plinth/modules/help/views.py:135
+#: plinth/modules/help/views.py:133
 #, python-brace-format
 msgid "{box_name} Manual"
 msgstr "{box_name} Manual"
@@ -10587,12 +10570,18 @@ msgid "500"
 msgstr "500"
 
 #: plinth/templates/500.html:14
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "This is an internal error and not something you caused or can fix. Please "
+#| "report the error on the <a href=\"https://salsa.debian.org/freedombox-"
+#| "team/freedombox/issues\">bug tracker</a> so we can fix it. Also, please "
+#| "attach the <a href=\"%(status_log_url)s\">status log</a> to the bug "
+#| "report."
 msgid ""
 "This is an internal error and not something you caused or can fix. Please "
 "report the error on the <a href=\"https://salsa.debian.org/freedombox-team/"
 "freedombox/issues\">bug tracker</a> so we can fix it. Also, please attach "
-"the <a href=\"%(status_log_url)s\">status log</a> to the bug report."
+"the <a href=\"%(logs_url)s\">logs</a> to the bug report."
 msgstr ""
 "Este é um erro interno e não algo que você causou ou pode corrigir. Por "
 "favor, reporte o erro no rastreador de bugs &lt;a href=\"https://"
@@ -10603,6 +10592,31 @@ msgstr ""
 #: plinth/templates/app-header.html:26
 msgid "Installation"
 msgstr "Instalação"
+
+#: plinth/templates/app-logs.html:12
+#, fuzzy
+#| msgid ""
+#| "These are the last %(num_lines)s lines of the status log for this web "
+#| "interface. If you want to report a bug, please use the <a href=\"https://"
+#| "salsa.debian.org/freedombox-team/freedombox/issues\">bug tracker</a> and "
+#| "attach this status log to the bug report."
+msgid ""
+"These are the last lines of the logs for services involved in this app. If "
+"you want to report a bug, please use the <a href=\"https://salsa.debian.org/"
+"freedombox-team/freedombox/issues\">bug tracker</a> and attach this log to "
+"the bug report."
+msgstr ""
+"Estas são as últimas %(num_lines)s linhas do log de status desta interface "
+"web. Se você quiser relatar um bug, use o rastreador de bugs &lt;a "
+"href=\"https://salsa.debian.org/freedombox-team/freedombox/issues\"&gt;&lt;/"
+"a&gt; e anexe este log de status ao relatório de bug."
+
+#: plinth/templates/app-logs.html:26
+msgid ""
+"Please remove any personal information from the log before submitting the "
+"bug report."
+msgstr ""
+"Remova qualquer informação pessoal do log antes de enviar o relatório de bug."
 
 #: plinth/templates/app.html:34
 #, python-format
@@ -10854,14 +10868,20 @@ msgid "Clear all tags"
 msgstr "Limpar todas as tags"
 
 #: plinth/templates/toolbar.html:39 plinth/templates/toolbar.html:40
+#, fuzzy
+#| msgid "Logs"
+msgid "View Logs"
+msgstr "Registros"
+
+#: plinth/templates/toolbar.html:46 plinth/templates/toolbar.html:47
 msgid "Backup"
 msgstr "Backup"
 
-#: plinth/templates/toolbar.html:53
+#: plinth/templates/toolbar.html:60
 msgid "Re-run setup"
 msgstr "Execute novamente a configuração"
 
-#: plinth/templates/toolbar.html:59 plinth/templates/toolbar.html:60
+#: plinth/templates/toolbar.html:66 plinth/templates/toolbar.html:67
 #: plinth/templates/uninstall.html:30
 msgid "Uninstall"
 msgstr "Desinstalar"
@@ -10879,15 +10899,15 @@ msgstr ""
 "Todos os dados e configurações do aplicativo serão perdidos permanentemente. "
 "O aplicativo poderá ser instalado novamente."
 
-#: plinth/views.py:84
+#: plinth/views.py:89
 msgid "Here"
 msgstr "Aqui"
 
-#: plinth/views.py:414
+#: plinth/views.py:421
 msgid "Setting unchanged"
 msgstr "Definição inalterada"
 
-#: plinth/views.py:640
+#: plinth/views.py:648
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr "antes da desinstalação do {app_id}"
@@ -10895,6 +10915,9 @@ msgstr "antes da desinstalação do {app_id}"
 #: plinth/web_framework.py:122
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "Status Log"
+#~ msgstr "Registro de status"
 
 #, python-brace-format
 #~ msgid "Invalid username: {username}"

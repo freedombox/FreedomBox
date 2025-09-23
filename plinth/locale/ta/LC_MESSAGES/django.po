@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-08 23:51+0000\n"
+"POT-Creation-Date: 2025-09-23 00:05+0000\n"
 "PO-Revision-Date: 2025-08-17 08:02+0000\n"
 "Last-Translator: தமிழ்நேரம் <anishprabu.t@gmail.com>\n"
 "Language-Team: Tamil <https://hosted.weblate.org/projects/freedombox/"
@@ -24,13 +24,13 @@ msgstr ""
 msgid "Static configuration {etc_path} is setup properly"
 msgstr "நிலையான உள்ளமைவு {etc_path} சரியாக அமைக்கப்படுகிறது"
 
-#: plinth/container.py:137
+#: plinth/container.py:140
 #, fuzzy, python-brace-format
 #| msgid "Service {service_name} is running"
 msgid "Container {container_name} is running"
 msgstr "பணி {service_name} இயங்குகிறது"
 
-#: plinth/context_processors.py:21 plinth/views.py:168
+#: plinth/context_processors.py:21 plinth/views.py:175
 msgid "FreedomBox"
 msgstr "கட்டற்றபெட்டி"
 
@@ -39,22 +39,22 @@ msgstr "கட்டற்றபெட்டி"
 msgid "Service {service_name} is running"
 msgstr "பணி {service_name} இயங்குகிறது"
 
-#: plinth/daemon.py:222
+#: plinth/daemon.py:221
 #, python-brace-format
 msgid "Listening on {kind} port {listen_address}:{port}"
 msgstr "{kind} துறைமுகம் {listen_address}: {port} இல் கேட்பது"
 
-#: plinth/daemon.py:225
+#: plinth/daemon.py:224
 #, python-brace-format
 msgid "Listening on {kind} port {port}"
 msgstr "{kind} துறைமுகம் {port} இல் கேட்பது"
 
-#: plinth/daemon.py:296
+#: plinth/daemon.py:295
 #, python-brace-format
 msgid "Connect to {host}:{port}"
 msgstr "{host}: {port} உடன் இணைக்கவும்"
 
-#: plinth/daemon.py:304
+#: plinth/daemon.py:303
 #, python-brace-format
 msgid "Cannot connect to {host}:{port}"
 msgstr "{host}: {port} உடன் இணைக்க முடியாது"
@@ -470,7 +470,7 @@ msgstr "சரிபார்க்கப்பட்ட பாஓடு பொ�
 #: plinth/modules/backups/templates/backups_repository.html:92
 #: plinth/modules/backups/templates/backups_restore.html:27
 #: plinth/modules/backups/views.py:238 plinth/modules/snapshot/manifest.py:14
-#: plinth/templates/toolbar.html:44 plinth/templates/toolbar.html:45
+#: plinth/templates/toolbar.html:51 plinth/templates/toolbar.html:52
 msgid "Restore"
 msgstr "மீட்டமை"
 
@@ -598,7 +598,6 @@ msgstr "இருக்கும் காப்புப்பிரதிக�
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:27
 #: plinth/modules/diagnostics/templates/diagnostics_full.html:102
 #: plinth/modules/help/templates/help_about.html:22
-#: plinth/modules/help/templates/statuslog.html:24
 #: plinth/modules/homeassistant/__init__.py:48
 #: plinth/modules/kiwix/templates/kiwix-add-package.html:26
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:28
@@ -613,8 +612,9 @@ msgstr "இருக்கும் காப்புப்பிரதிக�
 #: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:45
 #: plinth/modules/upgrades/templates/upgrades_configure.html:84
 #: plinth/modules/users/templates/users_firstboot.html:34
-#: plinth/templates/app.html:31 plinth/templates/messages.html:17
-#: plinth/templates/setup.html:40 plinth/templates/setup.html:69
+#: plinth/templates/app-logs.html:23 plinth/templates/app.html:31
+#: plinth/templates/messages.html:17 plinth/templates/setup.html:40
+#: plinth/templates/setup.html:69
 msgid "Caution:"
 msgstr "எச்சரிக்கை:"
 
@@ -1367,7 +1367,7 @@ msgstr "நெட்வொர்க்கிங்"
 msgid "Services"
 msgstr "சேவைகள்"
 
-#: plinth/modules/cockpit/manifest.py:28
+#: plinth/modules/cockpit/manifest.py:28 plinth/templates/app-logs.html:9
 msgid "Logs"
 msgstr "பதிவுகள்"
 
@@ -1638,7 +1638,7 @@ msgstr "வலை வாங்கி"
 msgid "P2P"
 msgstr "பி 2 பி"
 
-#: plinth/modules/diagnostics/__init__.py:29
+#: plinth/modules/diagnostics/__init__.py:32
 msgid ""
 "The system diagnostic test will run a number of checks on your system to "
 "confirm that applications and services are working as expected."
@@ -1646,53 +1646,60 @@ msgstr ""
 "பயன்பாடுகள் மற்றும் சேவைகள் எதிர்பார்த்தபடி செயல்படுகின்றன என்பதை உறுதிப்படுத்த கணினி "
 "கண்டறியும் சோதனை உங்கள் கணினியில் பல காசோலைகளை இயக்கும்."
 
-#: plinth/modules/diagnostics/__init__.py:53
-#: plinth/modules/diagnostics/__init__.py:239
+#: plinth/modules/diagnostics/__init__.py:36
+#, python-brace-format
+msgid ""
+"This app also shows the <a href=\"{logs_url}\">logs</a> for {box_name} "
+"services."
+msgstr ""
+
+#: plinth/modules/diagnostics/__init__.py:60
+#: plinth/modules/diagnostics/__init__.py:254
 msgid "Diagnostics"
 msgstr "கண்டறிதல்"
 
-#: plinth/modules/diagnostics/__init__.py:99
+#: plinth/modules/diagnostics/__init__.py:114
 msgid "skipped"
 msgstr "தவிர்க்கப்பட்டது"
 
-#: plinth/modules/diagnostics/__init__.py:100
+#: plinth/modules/diagnostics/__init__.py:115
 msgid "passed"
 msgstr "கடந்து சென்றது"
 
-#: plinth/modules/diagnostics/__init__.py:101
+#: plinth/modules/diagnostics/__init__.py:116
 #: plinth/modules/networks/views.py:51
 msgid "failed"
 msgstr "தோல்வியுற்றது"
 
-#: plinth/modules/diagnostics/__init__.py:102
+#: plinth/modules/diagnostics/__init__.py:117
 msgid "error"
 msgstr "பிழை"
 
-#: plinth/modules/diagnostics/__init__.py:103
+#: plinth/modules/diagnostics/__init__.py:118
 msgid "warning"
 msgstr "எச்சரிக்கை"
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: plinth/modules/diagnostics/__init__.py:205
+#: plinth/modules/diagnostics/__init__.py:220
 msgid "MiB"
 msgstr "Mib"
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: plinth/modules/diagnostics/__init__.py:210
+#: plinth/modules/diagnostics/__init__.py:225
 msgid "GiB"
 msgstr "கிப்"
 
-#: plinth/modules/diagnostics/__init__.py:217
+#: plinth/modules/diagnostics/__init__.py:232
 msgid "You should disable some apps to reduce memory usage."
 msgstr "நினைவக பயன்பாட்டைக் குறைக்க சில பயன்பாடுகளை முடக்க வேண்டும்."
 
-#: plinth/modules/diagnostics/__init__.py:222
+#: plinth/modules/diagnostics/__init__.py:237
 msgid "You should not install any new apps on this system."
 msgstr "இந்த கணினியில் நீங்கள் எந்த புதிய பயன்பாடுகளையும் நிறுவக்கூடாது."
 
-#: plinth/modules/diagnostics/__init__.py:234
+#: plinth/modules/diagnostics/__init__.py:249
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
@@ -1701,24 +1708,24 @@ msgstr ""
 "கணினி நினைவகத்தில் குறைவாக உள்ளது: {percent_used}% பயன்படுத்தப்படுகிறது, "
 "{memory_available} {memory_available_unit} இலவசம். {advice_message}"
 
-#: plinth/modules/diagnostics/__init__.py:236
+#: plinth/modules/diagnostics/__init__.py:251
 msgid "Low Memory"
 msgstr "குறைந்த நினைவகம்"
 
-#: plinth/modules/diagnostics/__init__.py:267
+#: plinth/modules/diagnostics/__init__.py:282
 msgid "Running diagnostics"
 msgstr "கண்டறியும் இயங்கும்"
 
-#: plinth/modules/diagnostics/__init__.py:313
+#: plinth/modules/diagnostics/__init__.py:328
 #, no-python-format, python-brace-format
 msgid "Found {issue_count} issues during routine tests."
 msgstr "வழக்கமான சோதனைகளின் போது {issue_count} சிக்கல்கள் கிடைத்தன."
 
-#: plinth/modules/diagnostics/__init__.py:314
+#: plinth/modules/diagnostics/__init__.py:329
 msgid "Diagnostics results"
 msgstr "கண்டறியும் முடிவுகள்"
 
-#: plinth/modules/diagnostics/__init__.py:319
+#: plinth/modules/diagnostics/__init__.py:334
 msgid "Go to diagnostics results"
 msgstr "கண்டறியும் முடிவுகளுக்குச் செல்லுங்கள்"
 
@@ -3268,14 +3275,14 @@ msgstr "கையேடு"
 
 #: plinth/modules/help/__init__.py:41
 #: plinth/modules/help/templates/help_support.html:9
-#: plinth/modules/help/views.py:93 plinth/templates/help-menu.html:27
+#: plinth/modules/help/views.py:91 plinth/templates/help-menu.html:27
 #: plinth/templates/help-menu.html:28
 msgid "Get Support"
 msgstr "ஆதரவை பெறு"
 
 #: plinth/modules/help/__init__.py:45
 #: plinth/modules/help/templates/help_feedback.html:9
-#: plinth/modules/help/views.py:87 plinth/templates/help-menu.html:33
+#: plinth/modules/help/views.py:85 plinth/templates/help-menu.html:33
 #: plinth/templates/help-menu.html:34
 msgid "Submit Feedback"
 msgstr "கருத்துக்களை சமர்ப்பிக்கவும்"
@@ -3283,7 +3290,7 @@ msgstr "கருத்துக்களை சமர்ப்பிக்க�
 #: plinth/modules/help/__init__.py:49
 #: plinth/modules/help/templates/help_about.html:113
 #: plinth/modules/help/templates/help_contribute.html:9
-#: plinth/modules/help/views.py:76 plinth/templates/help-menu.html:39
+#: plinth/modules/help/views.py:74 plinth/templates/help-menu.html:39
 #: plinth/templates/help-menu.html:40
 msgid "Contribute"
 msgstr "பங்களிப்பு"
@@ -3612,40 +3619,16 @@ msgstr ""
 "அல்லது எங்கள் <a href=\"mailto:freedombox-discuss@alioth-"
 "lists.debian.net\">அஞ்சல் பட்டியலுக்கு</a> மின்னஞ்சல் அனுப்பவும்."
 
-#: plinth/modules/help/templates/statuslog.html:10
-msgid "Status Log"
-msgstr "நிலை பதிவு"
-
-#: plinth/modules/help/templates/statuslog.html:13
-#, python-format
-msgid ""
-"These are the last %(num_lines)s lines of the status log for this web "
-"interface. If you want to report a bug, please use the <a href=\"https://"
-"salsa.debian.org/freedombox-team/freedombox/issues\">bug tracker</a> and "
-"attach this status log to the bug report."
-msgstr ""
-"இந்த வலை இடைமுகத்திற்கான நிலை பதிவின் கடைசி %(num_lines)s வரிகள் இவை. நீங்கள் ஒரு "
-"பிழையைப் புகாரளிக்க விரும்பினால், தயவுசெய்து <a href=\"https://salsa.debian.org/"
-"freedombox-team/freedombox/issues\"> பிழை டிராக்கர் </a> ஐப் பயன்படுத்தவும், இந்த "
-"நிலை உள்நுழைவு பிழை அறிக்கையில் இணைக்கவும்."
-
-#: plinth/modules/help/templates/statuslog.html:27
-msgid ""
-"Please remove any personal information from the log before submitting the "
-"bug report."
-msgstr ""
-"பிழை அறிக்கையை சமர்ப்பிக்கும் முன் பதிவிலிருந்து ஏதேனும் தனிப்பட்ட தகவல்களை அகற்றவும்."
-
-#: plinth/modules/help/views.py:29
+#: plinth/modules/help/views.py:27
 msgid "Documentation and FAQ"
 msgstr "ஆவணங்கள் மற்றும் கேள்விகள்"
 
-#: plinth/modules/help/views.py:98
+#: plinth/modules/help/views.py:96
 #, python-brace-format
 msgid "About {box_name}"
 msgstr "{box_name}"
 
-#: plinth/modules/help/views.py:135
+#: plinth/modules/help/views.py:133
 #, python-brace-format
 msgid "{box_name} Manual"
 msgstr "{box_name} கையேடு"
@@ -10413,12 +10396,18 @@ msgid "500"
 msgstr "500"
 
 #: plinth/templates/500.html:14
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "This is an internal error and not something you caused or can fix. Please "
+#| "report the error on the <a href=\"https://salsa.debian.org/freedombox-"
+#| "team/freedombox/issues\">bug tracker</a> so we can fix it. Also, please "
+#| "attach the <a href=\"%(status_log_url)s\">status log</a> to the bug "
+#| "report."
 msgid ""
 "This is an internal error and not something you caused or can fix. Please "
 "report the error on the <a href=\"https://salsa.debian.org/freedombox-team/"
 "freedombox/issues\">bug tracker</a> so we can fix it. Also, please attach "
-"the <a href=\"%(status_log_url)s\">status log</a> to the bug report."
+"the <a href=\"%(logs_url)s\">logs</a> to the bug report."
 msgstr ""
 "இது ஒரு உள் பிழை மற்றும் நீங்கள் ஏற்படுத்திய அல்லது சரிசெய்ய முடியாத ஒன்று அல்ல. <a "
 "href=\"https://salsa.debian.org/freedombox-team/freedombox/issues\"> பிழை "
@@ -10429,6 +10418,31 @@ msgstr ""
 #: plinth/templates/app-header.html:26
 msgid "Installation"
 msgstr "நிறுவல்"
+
+#: plinth/templates/app-logs.html:12
+#, fuzzy
+#| msgid ""
+#| "These are the last %(num_lines)s lines of the status log for this web "
+#| "interface. If you want to report a bug, please use the <a href=\"https://"
+#| "salsa.debian.org/freedombox-team/freedombox/issues\">bug tracker</a> and "
+#| "attach this status log to the bug report."
+msgid ""
+"These are the last lines of the logs for services involved in this app. If "
+"you want to report a bug, please use the <a href=\"https://salsa.debian.org/"
+"freedombox-team/freedombox/issues\">bug tracker</a> and attach this log to "
+"the bug report."
+msgstr ""
+"இந்த வலை இடைமுகத்திற்கான நிலை பதிவின் கடைசி %(num_lines)s வரிகள் இவை. நீங்கள் ஒரு "
+"பிழையைப் புகாரளிக்க விரும்பினால், தயவுசெய்து <a href=\"https://salsa.debian.org/"
+"freedombox-team/freedombox/issues\"> பிழை டிராக்கர் </a> ஐப் பயன்படுத்தவும், இந்த "
+"நிலை உள்நுழைவு பிழை அறிக்கையில் இணைக்கவும்."
+
+#: plinth/templates/app-logs.html:26
+msgid ""
+"Please remove any personal information from the log before submitting the "
+"bug report."
+msgstr ""
+"பிழை அறிக்கையை சமர்ப்பிக்கும் முன் பதிவிலிருந்து ஏதேனும் தனிப்பட்ட தகவல்களை அகற்றவும்."
 
 #: plinth/templates/app.html:34
 #, python-format
@@ -10677,14 +10691,20 @@ msgid "Clear all tags"
 msgstr "எல்லா குறிச்சொற்களையும் அழிக்கவும்"
 
 #: plinth/templates/toolbar.html:39 plinth/templates/toolbar.html:40
+#, fuzzy
+#| msgid "Logs"
+msgid "View Logs"
+msgstr "பதிவுகள்"
+
+#: plinth/templates/toolbar.html:46 plinth/templates/toolbar.html:47
 msgid "Backup"
 msgstr "காப்புப்பிரதி"
 
-#: plinth/templates/toolbar.html:53
+#: plinth/templates/toolbar.html:60
 msgid "Re-run setup"
 msgstr "மீண்டும் இயக்க"
 
-#: plinth/templates/toolbar.html:59 plinth/templates/toolbar.html:60
+#: plinth/templates/toolbar.html:66 plinth/templates/toolbar.html:67
 #: plinth/templates/uninstall.html:30
 msgid "Uninstall"
 msgstr "நிறுவல் நீக்க"
@@ -10702,15 +10722,15 @@ msgstr ""
 "அனைத்து பயன்பாட்டு தரவு மற்றும் உள்ளமைவும் நிரந்தரமாக இழக்கப்படும். பயன்பாடு மீண்டும் "
 "புதிதாக நிறுவப்படலாம்."
 
-#: plinth/views.py:84
+#: plinth/views.py:89
 msgid "Here"
 msgstr "இங்கே"
 
-#: plinth/views.py:414
+#: plinth/views.py:421
 msgid "Setting unchanged"
 msgstr "மாறாமல் அமைத்தல்"
 
-#: plinth/views.py:640
+#: plinth/views.py:648
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr "{app_id} ஐ நிறுவல் நீக்குவதற்கு முன்"
@@ -10718,6 +10738,9 @@ msgstr "{app_id} ஐ நிறுவல் நீக்குவதற்கு 
 #: plinth/web_framework.py:122
 msgid "Gujarati"
 msgstr "குசராத்தி"
+
+#~ msgid "Status Log"
+#~ msgstr "நிலை பதிவு"
 
 #, python-brace-format
 #~ msgid "Invalid username: {username}"

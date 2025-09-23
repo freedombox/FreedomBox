@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-08 23:51+0000\n"
+"POT-Creation-Date: 2025-09-23 00:05+0000\n"
 "PO-Revision-Date: 2022-09-14 17:19+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Persian <https://hosted.weblate.org/projects/freedombox/"
@@ -24,13 +24,13 @@ msgstr ""
 msgid "Static configuration {etc_path} is setup properly"
 msgstr ""
 
-#: plinth/container.py:137
+#: plinth/container.py:140
 #, fuzzy, python-brace-format
 #| msgid "Service {service_name} is running"
 msgid "Container {container_name} is running"
 msgstr "سرویس {service_name} در حال اجراست"
 
-#: plinth/context_processors.py:21 plinth/views.py:168
+#: plinth/context_processors.py:21 plinth/views.py:175
 #, fuzzy
 msgid "FreedomBox"
 msgstr "FreedomBox"
@@ -40,22 +40,22 @@ msgstr "FreedomBox"
 msgid "Service {service_name} is running"
 msgstr "سرویس {service_name} در حال اجراست"
 
-#: plinth/daemon.py:222
+#: plinth/daemon.py:221
 #, fuzzy, python-brace-format
 msgid "Listening on {kind} port {listen_address}:{port}"
 msgstr "در حال گوش دادن به پورت {kind} در {listen_address}:{port}"
 
-#: plinth/daemon.py:225
+#: plinth/daemon.py:224
 #, fuzzy, python-brace-format
 msgid "Listening on {kind} port {port}"
 msgstr "در حال گوش دادن به پورت {kind} یعنی {port}"
 
-#: plinth/daemon.py:296
+#: plinth/daemon.py:295
 #, fuzzy, python-brace-format
 msgid "Connect to {host}:{port}"
 msgstr "اتصال به {host}:{port}"
 
-#: plinth/daemon.py:304
+#: plinth/daemon.py:303
 #, fuzzy, python-brace-format
 msgid "Cannot connect to {host}:{port}"
 msgstr "نمی‌توان به {host}:{port} وصل شد"
@@ -465,7 +465,7 @@ msgstr ""
 #: plinth/modules/backups/templates/backups_repository.html:92
 #: plinth/modules/backups/templates/backups_restore.html:27
 #: plinth/modules/backups/views.py:238 plinth/modules/snapshot/manifest.py:14
-#: plinth/templates/toolbar.html:44 plinth/templates/toolbar.html:45
+#: plinth/templates/toolbar.html:51 plinth/templates/toolbar.html:52
 msgid "Restore"
 msgstr ""
 
@@ -616,7 +616,6 @@ msgstr ""
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:27
 #: plinth/modules/diagnostics/templates/diagnostics_full.html:102
 #: plinth/modules/help/templates/help_about.html:22
-#: plinth/modules/help/templates/statuslog.html:24
 #: plinth/modules/homeassistant/__init__.py:48
 #: plinth/modules/kiwix/templates/kiwix-add-package.html:26
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:28
@@ -631,8 +630,9 @@ msgstr ""
 #: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:45
 #: plinth/modules/upgrades/templates/upgrades_configure.html:84
 #: plinth/modules/users/templates/users_firstboot.html:34
-#: plinth/templates/app.html:31 plinth/templates/messages.html:17
-#: plinth/templates/setup.html:40 plinth/templates/setup.html:69
+#: plinth/templates/app-logs.html:23 plinth/templates/app.html:31
+#: plinth/templates/messages.html:17 plinth/templates/setup.html:40
+#: plinth/templates/setup.html:69
 msgid "Caution:"
 msgstr ""
 
@@ -1396,7 +1396,7 @@ msgstr "شبکه‌ها"
 msgid "Services"
 msgstr "سرویس"
 
-#: plinth/modules/cockpit/manifest.py:28
+#: plinth/modules/cockpit/manifest.py:28 plinth/templates/app-logs.html:9
 msgid "Logs"
 msgstr ""
 
@@ -1682,7 +1682,7 @@ msgstr "به‌روزرسانی وضعیت"
 msgid "P2P"
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:29
+#: plinth/modules/diagnostics/__init__.py:32
 msgid ""
 "The system diagnostic test will run a number of checks on your system to "
 "confirm that applications and services are working as expected."
@@ -1690,81 +1690,88 @@ msgstr ""
 "برنامهٔ عیب‌یابی با روش‌های مختلفی سیستم شما را می‌آزماید تا مطمئن شود که "
 "برنامه‌های و سرویس‌ها درست کار می‌کنند."
 
-#: plinth/modules/diagnostics/__init__.py:53
-#: plinth/modules/diagnostics/__init__.py:239
+#: plinth/modules/diagnostics/__init__.py:36
+#, python-brace-format
+msgid ""
+"This app also shows the <a href=\"{logs_url}\">logs</a> for {box_name} "
+"services."
+msgstr ""
+
+#: plinth/modules/diagnostics/__init__.py:60
+#: plinth/modules/diagnostics/__init__.py:254
 msgid "Diagnostics"
 msgstr "عیب‌یابی"
 
-#: plinth/modules/diagnostics/__init__.py:99
+#: plinth/modules/diagnostics/__init__.py:114
 msgid "skipped"
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:100
+#: plinth/modules/diagnostics/__init__.py:115
 msgid "passed"
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:101
+#: plinth/modules/diagnostics/__init__.py:116
 #: plinth/modules/networks/views.py:51
 msgid "failed"
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:102
+#: plinth/modules/diagnostics/__init__.py:117
 msgid "error"
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:103
+#: plinth/modules/diagnostics/__init__.py:118
 msgid "warning"
 msgstr ""
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: plinth/modules/diagnostics/__init__.py:205
+#: plinth/modules/diagnostics/__init__.py:220
 msgid "MiB"
 msgstr ""
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: plinth/modules/diagnostics/__init__.py:210
+#: plinth/modules/diagnostics/__init__.py:225
 msgid "GiB"
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:217
+#: plinth/modules/diagnostics/__init__.py:232
 msgid "You should disable some apps to reduce memory usage."
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:222
+#: plinth/modules/diagnostics/__init__.py:237
 msgid "You should not install any new apps on this system."
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:234
+#: plinth/modules/diagnostics/__init__.py:249
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
 "{memory_available_unit} free. {advice_message}"
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:236
+#: plinth/modules/diagnostics/__init__.py:251
 msgid "Low Memory"
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:267
+#: plinth/modules/diagnostics/__init__.py:282
 #, fuzzy
 #| msgid "Run Diagnostics"
 msgid "Running diagnostics"
 msgstr "اجرای عیب‌یابی"
 
-#: plinth/modules/diagnostics/__init__.py:313
+#: plinth/modules/diagnostics/__init__.py:328
 #, no-python-format, python-brace-format
 msgid "Found {issue_count} issues during routine tests."
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:314
+#: plinth/modules/diagnostics/__init__.py:329
 #, fuzzy
 #| msgid "Diagnostic Results"
 msgid "Diagnostics results"
 msgstr "نتیجهٔ عیب‌یابی"
 
-#: plinth/modules/diagnostics/__init__.py:319
+#: plinth/modules/diagnostics/__init__.py:334
 #, fuzzy
 #| msgid "Diagnostic Results"
 msgid "Go to diagnostics results"
@@ -3336,14 +3343,14 @@ msgstr "کتاب راهنما"
 
 #: plinth/modules/help/__init__.py:41
 #: plinth/modules/help/templates/help_support.html:9
-#: plinth/modules/help/views.py:93 plinth/templates/help-menu.html:27
+#: plinth/modules/help/views.py:91 plinth/templates/help-menu.html:27
 #: plinth/templates/help-menu.html:28
 msgid "Get Support"
 msgstr ""
 
 #: plinth/modules/help/__init__.py:45
 #: plinth/modules/help/templates/help_feedback.html:9
-#: plinth/modules/help/views.py:87 plinth/templates/help-menu.html:33
+#: plinth/modules/help/views.py:85 plinth/templates/help-menu.html:33
 #: plinth/templates/help-menu.html:34
 msgid "Submit Feedback"
 msgstr ""
@@ -3351,7 +3358,7 @@ msgstr ""
 #: plinth/modules/help/__init__.py:49
 #: plinth/modules/help/templates/help_about.html:113
 #: plinth/modules/help/templates/help_contribute.html:9
-#: plinth/modules/help/views.py:76 plinth/templates/help-menu.html:39
+#: plinth/modules/help/views.py:74 plinth/templates/help-menu.html:39
 #: plinth/templates/help-menu.html:40
 msgid "Contribute"
 msgstr ""
@@ -3652,36 +3659,16 @@ msgid ""
 "lists.debian.net\">mailing list</a>."
 msgstr ""
 
-#: plinth/modules/help/templates/statuslog.html:10
-#, fuzzy
-msgid "Status Log"
-msgstr "وضعیت"
-
-#: plinth/modules/help/templates/statuslog.html:13
-#, python-format
-msgid ""
-"These are the last %(num_lines)s lines of the status log for this web "
-"interface. If you want to report a bug, please use the <a href=\"https://"
-"salsa.debian.org/freedombox-team/freedombox/issues\">bug tracker</a> and "
-"attach this status log to the bug report."
-msgstr ""
-
-#: plinth/modules/help/templates/statuslog.html:27
-msgid ""
-"Please remove any personal information from the log before submitting the "
-"bug report."
-msgstr ""
-
-#: plinth/modules/help/views.py:29
+#: plinth/modules/help/views.py:27
 msgid "Documentation and FAQ"
 msgstr "راهنما و پرسش‌های رایج"
 
-#: plinth/modules/help/views.py:98
+#: plinth/modules/help/views.py:96
 #, python-brace-format
 msgid "About {box_name}"
 msgstr "دربارهٔ {box_name}"
 
-#: plinth/modules/help/views.py:135
+#: plinth/modules/help/views.py:133
 #, python-brace-format
 msgid "{box_name} Manual"
 msgstr "کتاب راهنمای {box_name}"
@@ -10184,11 +10171,25 @@ msgid ""
 "This is an internal error and not something you caused or can fix. Please "
 "report the error on the <a href=\"https://salsa.debian.org/freedombox-team/"
 "freedombox/issues\">bug tracker</a> so we can fix it. Also, please attach "
-"the <a href=\"%(status_log_url)s\">status log</a> to the bug report."
+"the <a href=\"%(logs_url)s\">logs</a> to the bug report."
 msgstr ""
 
 #: plinth/templates/app-header.html:26
 msgid "Installation"
+msgstr ""
+
+#: plinth/templates/app-logs.html:12
+msgid ""
+"These are the last lines of the logs for services involved in this app. If "
+"you want to report a bug, please use the <a href=\"https://salsa.debian.org/"
+"freedombox-team/freedombox/issues\">bug tracker</a> and attach this log to "
+"the bug report."
+msgstr ""
+
+#: plinth/templates/app-logs.html:26
+msgid ""
+"Please remove any personal information from the log before submitting the "
+"bug report."
 msgstr ""
 
 #: plinth/templates/app.html:34
@@ -10432,16 +10433,20 @@ msgid "Clear all tags"
 msgstr ""
 
 #: plinth/templates/toolbar.html:39 plinth/templates/toolbar.html:40
+msgid "View Logs"
+msgstr ""
+
+#: plinth/templates/toolbar.html:46 plinth/templates/toolbar.html:47
 #, fuzzy
 #| msgid "Create Connection"
 msgid "Backup"
 msgstr "ساختن اتصال"
 
-#: plinth/templates/toolbar.html:53
+#: plinth/templates/toolbar.html:60
 msgid "Re-run setup"
 msgstr ""
 
-#: plinth/templates/toolbar.html:59 plinth/templates/toolbar.html:60
+#: plinth/templates/toolbar.html:66 plinth/templates/toolbar.html:67
 #: plinth/templates/uninstall.html:30
 #, fuzzy
 msgid "Uninstall"
@@ -10459,15 +10464,15 @@ msgid ""
 "installed freshly again."
 msgstr ""
 
-#: plinth/views.py:84
+#: plinth/views.py:89
 msgid "Here"
 msgstr ""
 
-#: plinth/views.py:414
+#: plinth/views.py:421
 msgid "Setting unchanged"
 msgstr ""
 
-#: plinth/views.py:640
+#: plinth/views.py:648
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr ""
@@ -10475,6 +10480,10 @@ msgstr ""
 #: plinth/web_framework.py:122
 msgid "Gujarati"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Status Log"
+#~ msgstr "وضعیت"
 
 #, fuzzy, python-brace-format
 #~| msgid "Invalid server name"
