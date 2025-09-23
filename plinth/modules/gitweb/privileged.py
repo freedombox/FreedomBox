@@ -4,14 +4,16 @@
 import configparser
 import logging
 import os
+import pathlib
 import re
 import shutil
 import subprocess
 import time
 from typing import Any
+from urllib import parse
 
 from plinth import action_utils
-from plinth.actions import privileged
+from plinth.actions import privileged, secret_str
 from plinth.modules.gitweb.forms import RepositoryValidator, get_name_from_url
 from plinth.modules.gitweb.manifest import GIT_REPO_PATH, REPO_DIR_OWNER
 
@@ -27,7 +29,7 @@ def validate_repo_name(name: str) -> str:
     return name
 
 
-def validate_repo_url(url: str) -> str:
+def validate_repo_url(url: secret_str) -> secret_str:
     """Validate a repository URL."""
     RepositoryValidator(input_should_be='url')(url)
     return url
@@ -35,33 +37,58 @@ def validate_repo_url(url: str) -> str:
 
 @privileged
 def setup():
-    """Disable default Apache2 Gitweb configuration."""
+    """Configure Gitweb module."""
+    # Disable default Apache2 Gitweb configuration.
     action_utils.webserver_disable('gitweb')
-    if not _get_global_default_branch():
-        _set_global_default_branch('main')
+
+    # Configure Git client.
+    if not _get_git_global_config('init.defaultBranch'):
+        _set_git_global_config('init.defaultBranch', 'main')
+    if not _get_git_global_config('credential.helper'):
+        _set_git_global_config('credential.helper', 'cache')
 
 
-def _get_global_default_branch():
-    """Get globally configured default branch name."""
+def _get_git_global_config(key: str) -> str | None:
+    """Return a value from Git global configuration."""
     try:
-        default_branch = action_utils.run(
-            ['git', 'config', '--global', '--get', 'init.defaultBranch'],
-            check=True).stdout.decode().strip()
+        value = action_utils.run(['git', 'config', '--global', '--get', key],
+                                 check=True).stdout.decode().strip()
     except subprocess.CalledProcessError as exception:
-        if exception.returncode == 1:  # Default branch not configured
+        if exception.returncode == 1:  # Configuration option doesn't exist
             return None
         raise
 
-    return default_branch
+    return value
 
 
-def _set_global_default_branch(name):
-    """Configure default branch name globally."""
-    action_utils.run(['git', 'config', '--global', 'init.defaultBranch', name],
-                     check=True)
+def _set_git_global_config(key: str, value: str) -> None:
+    """Set a Git global configuration value."""
+    action_utils.run(['git', 'config', '--global', key, value], check=True)
 
 
-def _clone_with_progress_report(url, repo_dir):
+def _setup_git_credentials(url: secret_str) -> str:
+    """Set up git credential helper and return URL without credentials."""
+    url_parts = parse.urlsplit(url)
+    safe_netloc = url_parts.netloc.split('@')[-1]
+    safe_url = url_parts._replace(netloc=safe_netloc).geturl()
+    username = url_parts.username or ''
+    password = url_parts.password or ''
+
+    if username or password:
+        # Feed credentials to Git credential helper
+        input = (f'protocol={url_parts.scheme}\n'
+                 f'host={safe_netloc}\n'
+                 f'username={username}\n'
+                 f'password={password}\n\n')
+        env = dict(os.environ, GIT_TERMINAL_PROMPT='0')
+        action_utils.run(['git', 'credential', 'approve'],
+                         input=input.encode(), stdout=subprocess.DEVNULL,
+                         check=True, env=env)
+
+    return safe_url
+
+
+def _clone_with_progress_report(url: secret_str, repo_dir: pathlib.Path):
     """Clone a repository and write progress info to the file."""
     starttime = time.time()
     status_file = repo_dir / 'clone_progress'
@@ -70,9 +97,12 @@ def _clone_with_progress_report(url, repo_dir):
     env = dict(os.environ, GIT_TERMINAL_PROMPT='0', LC_ALL='C',
                GIT_HTTP_LOW_SPEED_LIMIT='100', GIT_HTTP_LOW_SPEED_TIME='60')
 
+    safe_url = _setup_git_credentials(url)
+    logger.info(f'Cloning Git repository {safe_url} ...')
     proc = subprocess.Popen(
-        ['git', 'clone', '--bare', '--progress', url,
+        ['git', 'clone', '--bare', '--progress', safe_url,
          str(repo_temp_dir)], stderr=subprocess.PIPE, text=True, env=env)
+    assert proc.stderr is not None
 
     # write clone progress to the file
     errors = []
@@ -108,7 +138,7 @@ def _clone_with_progress_report(url, repo_dir):
         raise RuntimeError('Git repository cloning failed.', errors)
 
 
-def _prepare_clone_repo(url: str, is_private: bool):
+def _prepare_clone_repo(url: secret_str, is_private: bool):
     """Prepare cloning a repository."""
     repo_name = get_name_from_url(url)
     if not repo_name.endswith('.git'):
@@ -150,7 +180,8 @@ def _clone_status_line_to_percent(line):
     return None
 
 
-def _clone_repo(url: str, description: str, owner: str, keep_ownership: bool):
+def _clone_repo(url: secret_str, description: str, owner: str,
+                keep_ownership: bool):
     """Clone a repository."""
     repo = get_name_from_url(url)
     if not repo.endswith('.git'):
@@ -343,7 +374,7 @@ def repo_info(name: str) -> dict[str, str]:
 
 
 @privileged
-def create_repo(url: str | None = None, name: str | None = None,
+def create_repo(url: secret_str | None = None, name: str | None = None,
                 description: str = '', owner: str = '',
                 keep_ownership: bool = False, is_private: bool = False,
                 skip_prepare: bool = False, prepare_only: bool = False):
@@ -365,12 +396,13 @@ def create_repo(url: str | None = None, name: str | None = None,
 
 
 @privileged
-def repo_exists(url: str) -> bool:
+def repo_exists(url: secret_str) -> bool:
     """Return whether remote repository exists."""
     url = validate_repo_url(url)
+    safe_url = _setup_git_credentials(url)
     env = dict(os.environ, GIT_TERMINAL_PROMPT='0')
     try:
-        action_utils.run(['git', 'ls-remote', url, 'HEAD'], timeout=10,
+        action_utils.run(['git', 'ls-remote', safe_url, 'HEAD'], timeout=10,
                          env=env, check=True)
         return True
     except subprocess.CalledProcessError:
