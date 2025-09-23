@@ -26,6 +26,11 @@ Home Assistant es una solución completa si tu automatización del hogar necesit
 
 Muchos dispositivos de automatización del hogar se conectan a los servidores de los fabricantes y les envían tus datos. Esto pserious ede suponer una violación muy seria de la privacidad de tu hogar. Estos dispositivos podrían también dejar de funcionar si su fabricante quebrara, decidiera descontinuar la línea de producto, o te forzara a comprar modelos más modernos. Se recomienda decididamente que compres hardware que funcione localmente con un centro de automatización del hogar (en este caso Home Assistant) sin conectarse a los servidores del fabricante. En la página de [[https://www.home-assistant.io/integrations/|integraciones]] de Home Assistant, estos dispositivos aparecen listados en las categorías "Local Push" o "Local Polling".
 
+=== Necesidad de un Subdominio ===
+
+A diferencia de otras aplicaciones de !FreedomBox que trabajan con una ruta como `https://mi_dominio.ejemplo/app`, Home Assistant require un subdominio propio (dedicado y separado) como `https://homeassistant.mi_dominio.ejemplo`.
+Antes de configurar la app de Home Assistant tienes que crear un subdominio usando Sistema -> [[FreedomBox/Manual/NameServices|Servicios de Nombre]]. Mira la documentación de Servicios de Nombre para entender cómo obtener un subdominio.
+
 === Arranque ===
 
 Tras instalar la app hay que levantar el interfaz web de Home Assistant. Con ello se crea una cuenta de administrador. Home Assistant mantiene su propias cuentas de usuario diferentes de las de la !FreedomBox.
@@ -52,10 +57,14 @@ Home Assistant proporciona unas aplicaciones para web y movil totalmente functio
 
 {{attachment:FreedomBox/Manual/HomeAssistant/homeassistant-app.png|Mobile App}}
 
+=== Configuración Manual Avanzada ===
+
+Siéntete libre de editar los ficheros de configuración de Home Assistant si quieres personalizarlo. La configuración, las escenas, las automatizaciones, los scripts, los secretos, la base de datos, y los registros de ejecución se almacenan todos en el directorio `/var/lib/home-assistant-freedombox/config`. Necesitarás deshabilitar y volver a habilitar la aplicación tras los cambios de configuración para que surtan efecto. Nota que cuando !FreedomBox modifica estos ficheros, no conservará comentarios ni formatos manuales.
+
 === Enlaces externos ===
 
  * Sitio web: https://www.home-assistant.io
- * Código fuente de Home Assistant: https://github.com/home-assistant/core
+ * Código fuente de Home Assistant: https://github.com/home-assistant/cori
  * Código fuente de la imágen del contenedor Home: https://github.com/home-assistant/docker
 
 ## END_INCLUDE

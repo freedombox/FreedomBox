@@ -37,9 +37,11 @@ Cambiar la [[es/FreedomBox/Manual/Configure#Página_Principal_(home)_del_Servido
 
 '''Configuración:'''
 
-Crea un fichero llamado `custom-shortcuts.json` en el directorio de configuración de Plinth `/etc/plinth` y añade accesos directos en formato JSON siguiendo el esquema publicado en https://<mi-freedombox>/plinth/api/1/shortcuts.
+Crea un fichero llamado `custom-shortcuts.json` en el directorio de configuración de Plinth `/etc/plinth` y añade accesos directos en 
 
-Un ejemplo de fichero añadiendo un acceso directo a [[https://nextcloud.com|NextCloud]].
+!FreedomBox lee los accesos directos que hayas creado en varias rutas de archivo del servidor. Un fichero de acceso directo puede ser cualquiera con extensión `.json` en alguno de estos directorios: `/etc/freedombox/custom-shortcuts.json.d`, `/var/lib/freedombox/custom-shortcuts.json.d` o `/usr/share/freedombox/custom-shortcuts.json.d`. O pueden ser un fichero `custom-shortcuts.json` en estos directorios: `/etc/freedombox`, `/etc/plinth` (solo por compatibilidad), `/var/lib/freedombox` y `/usr/share/freedombox/`. Su formato JSON sigue el esquema publicado en https://<mi-freedombox>/plinth/api/1/shortcuts.
+
+Como ejemplo, para añadir un acceso directo a la aplicación [[https://nextcloud.com|NextCloud]] crea un fichero `/etc/freedombox/custom-shortcuts.json.d/nextcloud.json` (creando los directorios necesarios).
 
 {{{#!highlight json
 {
@@ -59,9 +61,9 @@ Un ejemplo de fichero añadiendo un acceso directo a [[https://nextcloud.com|Nex
 }
 }}}
 
-Los iconos correspondientes a los accesos directos listados en el fichero anterior deben estar en el directorio `/var/www/plinth/custom/static/icons/` con los nombres declarados en `/etc/plinth/custom-shortcuts.json`.
+Los iconos correspondientes a los accesos directos listados en el fichero anterior deben estar en el directorio `/var/www/plinth/custom/static/icons/` con los nombres declarados en `/etc/freedombox/custom-shortcuts.json.d/nextcloud.json`.
 
-Tras añadir a !NextCloud en `custom-shortcuts.json` y su icono, reinicia el interfaz web de !FreedomBox. Puedes hacerlo desde el propio interfaz o con la orden {{{ systemctl restart plinth }}}.
+Tras añadir a !NextCloud en `nextcloud.json` y su icono, reinicia el interfaz web de !FreedomBox. Puedes hacerlo desde el propio interfaz o con la orden {{{ systemctl restart plinth }}}.
 
 Tras el reinicio, la página principal de !FreedomBox ofrecerá el acceso directo nuevo a !NextCloud como se muestra aquí:
 

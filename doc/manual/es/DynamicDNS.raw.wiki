@@ -16,6 +16,12 @@ Los proveedores de servicio de DNS Dinamico ayudan a solventar este problema.  P
 
 Para que esto funcione cada vez que te conectes a Internet tendrás que decirle a tu proveedor de servicio de DNS Dinamico cual es tu dirección IP provisional actual.  Por esto necesitas tener un software especial en tu servidor que haga esto. La funcionalidad DNS Dinamico de tu !FreedomBox permite a los usuarios sin dirección IP pública fija mantener su dirección IP pública temporal actualizada en el servicio de DNS Dinamico.  Esto te permite exponer servicios de tu !FreedomBox, como ownCloud, a Internet.
 
+=== Un dominio gratuito pata tu FreedomBox ===
+
+Puedes obtener un nombre de dominio para tu !FreedomBox usando el servicio gratuíto de DNS dinámica proporcionado por la comunidad de !FreedomBox en https://ddns.freedombox.org. Con este servicio tu nombre de dominio será algo así como ''midominio.fbx.one'' o ''midominio.freedombox.rocks'', donde ''midominio'' es la cuenta que te creas en el servicio.
+
+El servicio también proporciona una cantidad ilimitada de subdominios gratuítos. Ingresa a tu cuenta, vé a ''Cambiar Ajustes'', marca la opción ''Comodín'', y haz clic en ''Guardar cambios''. Tras esto puedes añadir cualquier cantidad de subdominios como ''foo.midominio.fbx.one'' a tu !FreedomBox en ''Sistema -> Nombres -> Añadir Dominio (normal)''. !FreedomBox obtendrá automaticamente los certificados TLS (para HTTPS) usando Let's Encrypt para esos subdominios. Los subdominios son especialmente útiles para aplicaciones que requiren alojarse en dominios exclusivos, como [[es/FreedomBox/Manual/HomeAssistant|Home Assistant]].
+
 === GnuDIP vs. Update URL ===
 
 Eisten 2 mecanismos principales para notificar al the servicio de DNS Dinamico cual es tu dirección IP provisional actual: empleando el protocolo ''GnuDIP'' o empleando el mecanismo ''URL de actualización''.
