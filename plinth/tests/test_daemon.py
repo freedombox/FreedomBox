@@ -145,12 +145,21 @@ def test_is_running(service_is_running, daemon):
 
 @patch('plinth.app.apps_init')
 @patch('plinth.action_utils.service_is_running')
+@patch('plinth.action_utils.service_show')
 @patch('subprocess.run')
-def test_ensure_running(subprocess_run, service_is_running, apps_init,
-                        app_list, mock_privileged, daemon):
+def test_ensure_running(subprocess_run, service_show, service_is_running,
+                        apps_init, app_list, mock_privileged, daemon):
     """Test that checking that the daemon is running works."""
     common_args = dict(stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                        check=False)
+
+    service_show.return_value = {'LoadState': 'not-found'}
+    with daemon.ensure_running() as starting_state:
+        assert not starting_state
+        assert subprocess_run.mock_calls == []
+
+    service_show.return_value = {'LoadState': 'loaded'}
+
     service_is_running.return_value = True
     with daemon.ensure_running() as starting_state:
         assert starting_state

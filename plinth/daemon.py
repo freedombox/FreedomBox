@@ -91,6 +91,13 @@ class Daemon(app.LeaderComponent, log.LogEmitter):
     def ensure_running(self):
         """Ensure a service is running and return to previous state."""
         from plinth.privileged import service as service_privileged
+
+        if action_utils.service_show(self.unit)['LoadState'] == 'not-found':
+            # The service's package not installed yet, don't try to start it
+            # and later stop it after it is installed.
+            yield False  # Not running
+            return
+
         starting_state = self.is_running()
         if not starting_state:
             service_privileged.enable(self.unit)
