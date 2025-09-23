@@ -123,8 +123,13 @@ def reset_user_password(username: str, password: secret_str):
 @privileged
 def uninstall():
     """Ensure that the database is removed."""
-    action_utils.debconf_set_selections(
-        ['miniflux miniflux/purge boolean true'])
+    action_utils.debconf_set_selections([
+        'miniflux miniflux/purge boolean true',
+        'miniflux miniflux/dbconfig-install boolean true',
+        'miniflux miniflux/dbconfig-reinstall boolean true'
+        'miniflux miniflux/dbconfig-upgrade boolean true',
+        'miniflux miniflux/dbconfig-remove boolean true',
+    ])
 
 
 def _get_database_config():
