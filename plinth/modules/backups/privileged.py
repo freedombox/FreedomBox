@@ -118,8 +118,8 @@ def reraise_known_errors(privileged_func):
 
 def _reraise_known_errors(err):
     """Look whether the caught error is known and reraise it accordingly"""
-    stdout = (getattr(err, 'stdout') or b'').decode()
-    stderr = (getattr(err, 'stderr') or b'').decode()
+    stdout = (getattr(err, 'stdout', b'') or b'').decode()
+    stderr = (getattr(err, 'stderr', b'') or b'').decode()
     caught_error = str((err, err.args, stdout, stderr))
     for known_error in KNOWN_ERRORS:
         for error in known_error['errors']:
