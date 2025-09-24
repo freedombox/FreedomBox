@@ -23,6 +23,7 @@ def pre_install():
         'zoph zoph/dbconfig-install boolean true',
         'zoph zoph/dbconfig-upgrade boolean true',
         'zoph zoph/dbconfig-remove boolean true',
+        'zoph zoph/dbconfig-reinstall boolean true'
         'zoph zoph/mysql/admin-user string root',
         'zoph zoph/rm_images select yes',
     ])
