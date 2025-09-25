@@ -350,7 +350,7 @@ def run_setup_on_apps(app_ids, allow_install=True):
         else:
             setup_apps(app_ids, allow_install=allow_install)
     except Exception as exception:
-        logger.error('Error running setup - %s', exception)
+        logger.exception('Error running setup - %s', exception)
         raise
 
 
