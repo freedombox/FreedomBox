@@ -837,10 +837,10 @@ def run(command, **kwargs):
         kwargs['stderr'] = subprocess.PIPE
 
     process = subprocess.run(command, **kwargs)
-    if collect_stdout and actions.thread_storage:
+    if collect_stdout and hasattr(actions.thread_storage, 'stdout'):
         actions.thread_storage.stdout += process.stdout
 
-    if collect_stderr and actions.thread_storage:
+    if collect_stderr and hasattr(actions.thread_storage, 'stderr'):
         actions.thread_storage.stderr += process.stderr
 
     return process

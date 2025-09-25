@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 
 socket_path = '/run/freedombox/privileged.socket'
 
-thread_storage = None
+thread_storage = threading.local()
 
 
 # An alias for 'str' to mark some strings as sensitive. Sensitive strings are
@@ -364,7 +364,6 @@ class JSONEncoder(json.JSONEncoder):
 def _setup_thread_storage():
     """Setup collection of stdout/stderr from any process in this thread."""
     global thread_storage
-    thread_storage = threading.local()
     thread_storage.stdout = b''
     thread_storage.stderr = b''
 
@@ -376,14 +375,13 @@ def _clear_thread_storage():
     cleaned up after a thread terminates.
     """
     global thread_storage
-    if thread_storage:
-        thread_storage.stdout = None
-        thread_storage.stderr = None
-        thread_storage = None
+    thread_storage.stdout = None
+    thread_storage.stderr = None
 
 
 def get_return_value_from_exception(exception):
     """Return the value to return from server when an exception is raised."""
+    global thread_storage
     return_value = {
         'result': 'exception',
         'exception': {
@@ -391,14 +389,10 @@ def get_return_value_from_exception(exception):
             'name': type(exception).__name__,
             'args': exception.args,
             'traceback': traceback.format_tb(exception.__traceback__),
-            'stdout': '',
-            'stderr': ''
+            'stdout': getattr(thread_storage, 'stdout', b'').decode(),
+            'stderr': getattr(thread_storage, 'stderr', b'').decode(),
         }
     }
-    if thread_storage:
-        return_value['exception']['stdout'] = thread_storage.stdout.decode()
-        return_value['exception']['stderr'] = thread_storage.stderr.decode()
-
     return return_value
 
 
