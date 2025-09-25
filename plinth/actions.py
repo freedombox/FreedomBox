@@ -503,6 +503,11 @@ def _privileged_call(module_name, action_name, arguments):
         return_value = {'result': 'success', 'return': return_values}
     except Exception as exception:
         return_value = get_return_value_from_exception(exception)
+        logger.exception(
+            'Error running action: %s..%s(..): %s\nstdout:\n%s\nstderr:\n%s\n',
+            module_name, action_name, exception,
+            return_value['exception']['stdout'],
+            return_value['exception']['stderr'])
 
     return return_value
 
