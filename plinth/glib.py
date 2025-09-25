@@ -51,8 +51,13 @@ def _run():
 
 
 def schedule(interval, method, data=None, in_thread=True, repeat=True,
-             add_jitter=True):
-    """Schedule a recurring call to a method with fixed interval."""
+             add_jitter=True, develop_interval=None):
+    """Schedule a recurring call to a method with fixed interval.
+
+    develop_interval is number of seconds to schedule the task after when
+    running in development mode. A value of 180 seconds assumed if the value is
+    set to None or 0.
+    """
 
     def _runner():
         """Run the target method and log and exceptions."""
@@ -74,8 +79,8 @@ def schedule(interval, method, data=None, in_thread=True, repeat=True,
 
     # When running in development mode, reduce the interval for tasks so that
     # they are triggered quickly and frequently to facilitate debugging.
-    if cfg.develop and interval > 180:
-        interval = 180
+    if cfg.develop:
+        interval = min(interval, develop_interval or 180)
 
     if add_jitter:
         # Add or subtract 5% random jitter to given interval to avoid many
