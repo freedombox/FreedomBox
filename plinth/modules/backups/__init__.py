@@ -35,6 +35,8 @@ class BackupsApp(app_module.App):
 
     _version = 3
 
+    can_be_disabled = False
+
     def __init__(self) -> None:
         """Create components for the app."""
         super().__init__()
