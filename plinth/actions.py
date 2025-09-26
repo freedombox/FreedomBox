@@ -88,6 +88,9 @@ def _read_from_server(client_socket: socket.socket) -> bytes:
 
         response += chunk
 
+    if not response:
+        raise ConnectionError('Server returned empty response')
+
     return json.loads(response)
 
 
