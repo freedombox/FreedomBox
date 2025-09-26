@@ -21,7 +21,7 @@
         </a>
       {% endif %}
 
-      {% if has_diagnostics or show_uninstall or has_backup_restore %}
+      {% if has_diagnostics or has_logs or show_uninstall or has_backup_restore %}
         <!-- Single button -->
         <div class="btn-group button-secondary dropdown">
           <button type="button" class="btn btn-default dropdown-toggle"
@@ -32,6 +32,13 @@
           <div class="dropdown-menu" aria-labelledby="id_extra_actions_button">
             {% if has_diagnostics %}
               {% include "diagnostics_button.html" with app_id=app_id enabled=is_enabled %}
+            {% endif %}
+            {% if has_logs %}
+              <a class="dropdown-item view-logs-item"
+                 href="{% url 'logs' app_id=app_id %}"
+                 title="{% trans "View Logs" %}">
+                {% trans "View Logs" %}
+              </a>
             {% endif %}
             {% if has_backup_restore %}
               <a class="dropdown-item backup-item"

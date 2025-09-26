@@ -5,11 +5,30 @@ Setup logging for the application.
 
 import logging
 import logging.config
+import typing
 import warnings
 
 from . import cfg
 
 default_level = None
+
+
+class LogEmitterProtocol(typing.Protocol):
+    unit: str
+
+
+class LogEmitter:
+    """A mixin for App components that emit logs.
+
+    Used as a simple base class for identifying components that have logs. Use
+    the self.unit property to fetch systemd journal logs of the unit.
+    """
+
+    unit: str
+
+    def get_logs(self: LogEmitterProtocol) -> dict[str, str]:
+        from plinth.privileged import service as service_privileged
+        return service_privileged.get_logs(self.unit)
 
 
 class ColoredFormatter(logging.Formatter):

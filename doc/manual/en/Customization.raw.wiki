@@ -33,9 +33,9 @@ e.g. A university using !MediaWiki running on !FreedomBox as a course wiki wants
 
 '''Configuration:'''
 
-Create a file called `custom-shortcuts.json` in Plinth's configuration directory `/etc/plinth` and add additional shortcuts in JSON format. The file should have follow the same JSON schema as the Plinth API. You can refer to the JSON schema by visiting https://<my-freedombox-url>/plinth/api/1/shortcuts.
+!FreedomBox reads custom shortcuts you have created from various files paths on the server. A shortcuts file can be any file with `.json` extension in the following directories: `/etc/freedombox/custom-shortcuts.json.d/`, `/var/lib/freedombox/custom-shortcuts.json.d/` and `/usr/share/freedombox/custom-shortcuts.json.d/`. Or they can be a file named `custom-shortcuts.json` in these directories: `/etc/freedombox/`, `/etc/plinth/` (only for compatibility), `/var/lib/freedombox/` and `/usr/share/freedombox/`. The file should follow the same JSON schema as the !FreedomBox API. You can refer to the JSON schema by visiting `https://<my-freedombox-url>/plinth/api/1/shortcuts`.
 
-An example file adding one additional shortcut for [[https://nextcloud.com|NextCloud]].
+As an example, to add one additional shortcut for [[https://nextcloud.com|NextCloud]] app, create a file called `/etc/freedombox/custom-shortcuts.json.d/nextcloud.json` (create directories as needed).
 
 {{{#!highlight json
 {
@@ -55,9 +55,9 @@ An example file adding one additional shortcut for [[https://nextcloud.com|NextC
 }
 }}}
 
-The corresponding icons for the shortcuts listed in the above file should be placed in the directory `/var/www/plinth/custom/static/icons/`. The file names of the icons should match with those provided in `/etc/plinth/custom-shortcuts.json`.
+The corresponding icons for the shortcuts listed in the above file should be placed in the directory `/var/www/plinth/custom/static/icons/`. The file names of the icons should match with those provided in `/etc/freedombox/custom-shortcuts.json.d/nextcloud.json`.
 
-After adding an entry for !NextCloud in custom-shortcuts.json and an icon, restart Plinth by executing the command {{{ systemctl restart plinth }}} on the !FreedomBox. You can also restart the !FreedomBox from the web interface.
+After adding an entry for !NextCloud in `nextcloud.json` and an icon, restart Plinth by executing the command {{{ systemctl restart plinth }}} on the !FreedomBox. You can also restart the !FreedomBox from the web interface.
 
 After restart the Plinth home page will display an additional shortcut for !NextCloud as shown below: <<BR>>
 {{attachment:nextcloud-frontpage-shortcut.png|NextCloud custom shortcut on the Plinth home page}}

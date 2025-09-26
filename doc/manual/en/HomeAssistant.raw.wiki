@@ -27,6 +27,10 @@ Home Assistant is a comprehensive solution for your home automation needs suppor
 
 Many home automation devices connect to or send data to their manufacturers' servers. This can be a serious violation of your home's privacy. These devices may also stop working when their manufacturer goes bankrupt, decides to close the product line, or forces you to purchase newer models. It is strongly recommended that you purchase hardware that works locally with a home automation hub (in this case Home Assistant) without connecting to manufacturer's servers. These are listed under the categories "Local Push" or "Local Polling" in the Home Assistant's integrations page.
 
+=== Need for Subdomain ===
+
+Unlike most other apps in !FreedomBox which work on a path like `https://mydomain.example/app`, Home Assistant requires a separate dedicated subdomain such as `https://homeassistant.mydomain.example`. Before configuring the Home Assistant app, you must create a subdomain using System -> [[FreedomBox/Manual/NameServices|Name Services]]. See the documentation for Name Services to understand how you can acquire a subdomain.
+
 === Setup ===
 
 After the app is installed, Home Assistant web interface must be setup. An administrator account is created at this time. Home Assistant maintains its own user accounts separate from user accounts created on !FreedomBox.
@@ -53,6 +57,10 @@ Home Assistant provides a fully functional web application and a mobile applicat
 
 
 {{attachment:homeassistant-app.png|Mobile App}}
+
+=== Advanced Manual Configuration ===
+
+If you wish to perform your own customization to Home Assistant setup, feel free to edit Home Assistant configuration files manually. Configuration, scenes, automations, scripts, secrets, database, and log files are all stored in the directory `/var/lib/home-assistant-freedombox/config` directory. You will need to disable and re-enable the app after configuration changes for them to take effect. Note that when !FreedomBox itself modifies these files, it will not preserve comments and other formatting.
 
 === External links ===
 

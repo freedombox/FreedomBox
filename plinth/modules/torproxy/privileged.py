@@ -161,12 +161,7 @@ def _enable_apt_transport_tor():
 
 def _disable_apt_transport_tor():
     """Disable package download over Tor."""
-    try:
-        aug = get_augeas()
-    except Exception:
-        # Disable what we can, so APT is not unusable.
-        pass
-
+    aug = get_augeas(raise_exception=False)
     for uri_path in iter_apt_uris(aug):
         uri = aug.get(uri_path)
         if uri.startswith(APT_TOR_PREFIX):

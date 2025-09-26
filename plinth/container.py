@@ -5,13 +5,13 @@ import contextlib
 
 from django.utils.translation import gettext_noop
 
-from plinth import app, privileged
+from plinth import app, log, privileged
 from plinth.daemon import diagnose_port_listening
 from plinth.diagnostic_check import (DiagnosticCheck,
                                      DiagnosticCheckParameters, Result)
 
 
-class Container(app.LeaderComponent):
+class Container(app.LeaderComponent, log.LogEmitter):
     """Component to manage a podman container."""
 
     def __init__(self, component_id: str, name: str, image_name: str,
@@ -64,6 +64,9 @@ class Container(app.LeaderComponent):
         self.binds_to = binds_to
         self.devices = devices
         self.listen_ports = listen_ports or []
+
+        # For logs
+        self.unit = self.name
 
     def is_enabled(self):
         """Return if the container is enabled."""

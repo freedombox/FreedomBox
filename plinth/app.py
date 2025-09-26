@@ -309,6 +309,28 @@ class App:
 
         return should_rerun_setup
 
+    def has_logs(self) -> bool:
+        """Return if any of the components emit logs.
+
+        This is typically true if the apps has daemons or containers.
+        """
+        from plinth import log
+        for component in self.components.values():
+            if isinstance(component, log.LogEmitter):
+                return True
+
+        return False
+
+    def get_logs(self) -> _list_type[dict[str, str]]:
+        """Return the logs in a dictionary format."""
+        from plinth import log
+        logs: list[dict[str, str]] = []
+        for component in self.components.values():
+            if isinstance(component, log.LogEmitter):
+                logs.append(component.get_logs())
+
+        return logs
+
 
 class Component:
     """Interface for an app component.

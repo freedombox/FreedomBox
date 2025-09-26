@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-08 23:51+0000\n"
+"POT-Creation-Date: 2025-09-23 00:05+0000\n"
 "PO-Revision-Date: 2025-06-04 15:01+0000\n"
 "Last-Translator: András Szűcs "
 "<andrascc86288f63c44cb5@users.noreply.hosted.weblate.org>\n"
@@ -25,13 +25,13 @@ msgstr ""
 msgid "Static configuration {etc_path} is setup properly"
 msgstr "A statikus konfiguráció {etc_path} megfelelően van beállítva"
 
-#: plinth/container.py:137
+#: plinth/container.py:140
 #, fuzzy, python-brace-format
 #| msgid "Service {service_name} is running"
 msgid "Container {container_name} is running"
 msgstr "A szolgáltatás fut: {service_name}"
 
-#: plinth/context_processors.py:21 plinth/views.py:168
+#: plinth/context_processors.py:21 plinth/views.py:175
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
@@ -40,22 +40,22 @@ msgstr "FreedomBox"
 msgid "Service {service_name} is running"
 msgstr "A szolgáltatás fut: {service_name}"
 
-#: plinth/daemon.py:222
+#: plinth/daemon.py:221
 #, python-brace-format
 msgid "Listening on {kind} port {listen_address}:{port}"
 msgstr "Figyelés a {kind} porton: {listen_address}:{port}"
 
-#: plinth/daemon.py:225
+#: plinth/daemon.py:224
 #, python-brace-format
 msgid "Listening on {kind} port {port}"
 msgstr "Figyelés {kind} porton: {port}"
 
-#: plinth/daemon.py:296
+#: plinth/daemon.py:295
 #, python-brace-format
 msgid "Connect to {host}:{port}"
 msgstr "Csatlakozás ide: {host}:{port}"
 
-#: plinth/daemon.py:304
+#: plinth/daemon.py:303
 #, python-brace-format
 msgid "Cannot connect to {host}:{port}"
 msgstr "Nem lehet ide csatlakozni: {host}:{port}"
@@ -475,7 +475,7 @@ msgstr "Válaszd ki az ellenőrzött SSH nyilvános kulcsot"
 #: plinth/modules/backups/templates/backups_repository.html:92
 #: plinth/modules/backups/templates/backups_restore.html:27
 #: plinth/modules/backups/views.py:238 plinth/modules/snapshot/manifest.py:14
-#: plinth/templates/toolbar.html:44 plinth/templates/toolbar.html:45
+#: plinth/templates/toolbar.html:51 plinth/templates/toolbar.html:52
 msgid "Restore"
 msgstr "Visszaállítás"
 
@@ -611,7 +611,6 @@ msgstr "Meglévő biztonsági mentések"
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:27
 #: plinth/modules/diagnostics/templates/diagnostics_full.html:102
 #: plinth/modules/help/templates/help_about.html:22
-#: plinth/modules/help/templates/statuslog.html:24
 #: plinth/modules/homeassistant/__init__.py:48
 #: plinth/modules/kiwix/templates/kiwix-add-package.html:26
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:28
@@ -626,8 +625,9 @@ msgstr "Meglévő biztonsági mentések"
 #: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:45
 #: plinth/modules/upgrades/templates/upgrades_configure.html:84
 #: plinth/modules/users/templates/users_firstboot.html:34
-#: plinth/templates/app.html:31 plinth/templates/messages.html:17
-#: plinth/templates/setup.html:40 plinth/templates/setup.html:69
+#: plinth/templates/app-logs.html:23 plinth/templates/app.html:31
+#: plinth/templates/messages.html:17 plinth/templates/setup.html:40
+#: plinth/templates/setup.html:69
 msgid "Caution:"
 msgstr "Vigyázat:"
 
@@ -1415,7 +1415,7 @@ msgstr "Hálózatok"
 msgid "Services"
 msgstr "Szolgáltatások"
 
-#: plinth/modules/cockpit/manifest.py:28
+#: plinth/modules/cockpit/manifest.py:28 plinth/templates/app-logs.html:9
 msgid "Logs"
 msgstr ""
 
@@ -1707,7 +1707,7 @@ msgstr "Webes kliens indítása"
 msgid "P2P"
 msgstr "I2P"
 
-#: plinth/modules/diagnostics/__init__.py:29
+#: plinth/modules/diagnostics/__init__.py:32
 msgid ""
 "The system diagnostic test will run a number of checks on your system to "
 "confirm that applications and services are working as expected."
@@ -1716,53 +1716,60 @@ msgstr ""
 "annak megerősítésére, hogy az alkalmazások és szolgáltatások az elvárt módon "
 "működnek."
 
-#: plinth/modules/diagnostics/__init__.py:53
-#: plinth/modules/diagnostics/__init__.py:239
+#: plinth/modules/diagnostics/__init__.py:36
+#, python-brace-format
+msgid ""
+"This app also shows the <a href=\"{logs_url}\">logs</a> for {box_name} "
+"services."
+msgstr ""
+
+#: plinth/modules/diagnostics/__init__.py:60
+#: plinth/modules/diagnostics/__init__.py:254
 msgid "Diagnostics"
 msgstr "Hibaellenőrzés"
 
-#: plinth/modules/diagnostics/__init__.py:99
+#: plinth/modules/diagnostics/__init__.py:114
 msgid "skipped"
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:100
+#: plinth/modules/diagnostics/__init__.py:115
 msgid "passed"
 msgstr "sikerült"
 
-#: plinth/modules/diagnostics/__init__.py:101
+#: plinth/modules/diagnostics/__init__.py:116
 #: plinth/modules/networks/views.py:51
 msgid "failed"
 msgstr "sikertelen"
 
-#: plinth/modules/diagnostics/__init__.py:102
+#: plinth/modules/diagnostics/__init__.py:117
 msgid "error"
 msgstr "hiba"
 
-#: plinth/modules/diagnostics/__init__.py:103
+#: plinth/modules/diagnostics/__init__.py:118
 msgid "warning"
 msgstr "figyelmeztetés"
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: plinth/modules/diagnostics/__init__.py:205
+#: plinth/modules/diagnostics/__init__.py:220
 msgid "MiB"
 msgstr "MiB"
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: plinth/modules/diagnostics/__init__.py:210
+#: plinth/modules/diagnostics/__init__.py:225
 msgid "GiB"
 msgstr "GiB"
 
-#: plinth/modules/diagnostics/__init__.py:217
+#: plinth/modules/diagnostics/__init__.py:232
 msgid "You should disable some apps to reduce memory usage."
 msgstr "A memóriahasználat csökkentése érdekében tilts le néhány alkalmazást."
 
-#: plinth/modules/diagnostics/__init__.py:222
+#: plinth/modules/diagnostics/__init__.py:237
 msgid "You should not install any new apps on this system."
 msgstr "Ne telepíts további alkalmazásokat erre a rendszerre."
 
-#: plinth/modules/diagnostics/__init__.py:234
+#: plinth/modules/diagnostics/__init__.py:249
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
@@ -1771,28 +1778,28 @@ msgstr ""
 "A rendszerben kevés a memória: {percent_used}% használt, "
 "{memory_available} {memory_available_unit} szabad. {advice_message}"
 
-#: plinth/modules/diagnostics/__init__.py:236
+#: plinth/modules/diagnostics/__init__.py:251
 msgid "Low Memory"
 msgstr "Kevés a memória"
 
-#: plinth/modules/diagnostics/__init__.py:267
+#: plinth/modules/diagnostics/__init__.py:282
 #, fuzzy
 #| msgid "Run Diagnostics"
 msgid "Running diagnostics"
 msgstr "Ellenőrzés indítása"
 
-#: plinth/modules/diagnostics/__init__.py:313
+#: plinth/modules/diagnostics/__init__.py:328
 #, no-python-format, python-brace-format
 msgid "Found {issue_count} issues during routine tests."
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:314
+#: plinth/modules/diagnostics/__init__.py:329
 #, fuzzy
 #| msgid "Diagnostic Results"
 msgid "Diagnostics results"
 msgstr "Az ellenőrzés eredménye"
 
-#: plinth/modules/diagnostics/__init__.py:319
+#: plinth/modules/diagnostics/__init__.py:334
 #, fuzzy
 #| msgid "Diagnostic Results"
 msgid "Go to diagnostics results"
@@ -3419,14 +3426,14 @@ msgstr "Kézikönyv"
 
 #: plinth/modules/help/__init__.py:41
 #: plinth/modules/help/templates/help_support.html:9
-#: plinth/modules/help/views.py:93 plinth/templates/help-menu.html:27
+#: plinth/modules/help/views.py:91 plinth/templates/help-menu.html:27
 #: plinth/templates/help-menu.html:28
 msgid "Get Support"
 msgstr "Támogatás kérése"
 
 #: plinth/modules/help/__init__.py:45
 #: plinth/modules/help/templates/help_feedback.html:9
-#: plinth/modules/help/views.py:87 plinth/templates/help-menu.html:33
+#: plinth/modules/help/views.py:85 plinth/templates/help-menu.html:33
 #: plinth/templates/help-menu.html:34
 msgid "Submit Feedback"
 msgstr "Visszajelzés küldése"
@@ -3434,7 +3441,7 @@ msgstr "Visszajelzés küldése"
 #: plinth/modules/help/__init__.py:49
 #: plinth/modules/help/templates/help_about.html:113
 #: plinth/modules/help/templates/help_contribute.html:9
-#: plinth/modules/help/views.py:76 plinth/templates/help-menu.html:39
+#: plinth/modules/help/views.py:74 plinth/templates/help-menu.html:39
 #: plinth/templates/help-menu.html:40
 msgid "Contribute"
 msgstr "Hozzájárulás"
@@ -3774,45 +3781,16 @@ msgstr ""
 "ul> Vagy küldhetsz e-mailt a <a href=\"mailto:freedombox-discuss@alioth-"
 "lists.debian.net\">levelezési listánkra</a>."
 
-#: plinth/modules/help/templates/statuslog.html:10
-msgid "Status Log"
-msgstr "Állapotnapló"
-
-#: plinth/modules/help/templates/statuslog.html:13
-#, python-format
-msgid ""
-"These are the last %(num_lines)s lines of the status log for this web "
-"interface. If you want to report a bug, please use the <a href=\"https://"
-"salsa.debian.org/freedombox-team/freedombox/issues\">bug tracker</a> and "
-"attach this status log to the bug report."
-msgstr ""
-"A webes felülethez tartozó állapotnapló utolsó %(num_lines)s sorát láthatod. "
-"Ha szeretnél bejelenteni egy hibát, kérlek, használd a <a href=\"https://"
-"salsa.debian.org/freedombox-team/freedombox/issues\">hibabejelentőt</a> és "
-"mellékeld ezt az állapotnaplót a bejelentéshez."
-
-#: plinth/modules/help/templates/statuslog.html:27
-#, fuzzy
-#| msgid ""
-#| "Please remove any passwords or other personal information from the log "
-#| "before submitting the bug report."
-msgid ""
-"Please remove any personal information from the log before submitting the "
-"bug report."
-msgstr ""
-"Kérlek, távolíts el minden jelszót és személyes információt a naplóból "
-"mielőtt elküldenéd a bejelentést."
-
-#: plinth/modules/help/views.py:29
+#: plinth/modules/help/views.py:27
 msgid "Documentation and FAQ"
 msgstr "Dokumentáció és GYIK"
 
-#: plinth/modules/help/views.py:98
+#: plinth/modules/help/views.py:96
 #, python-brace-format
 msgid "About {box_name}"
 msgstr "A {box_name} projektről"
 
-#: plinth/modules/help/views.py:135
+#: plinth/modules/help/views.py:133
 #, python-brace-format
 msgid "{box_name} Manual"
 msgstr "{box_name} kézikönyv"
@@ -10884,12 +10862,18 @@ msgid "500"
 msgstr "500"
 
 #: plinth/templates/500.html:14
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "This is an internal error and not something you caused or can fix. Please "
+#| "report the error on the <a href=\"https://salsa.debian.org/freedombox-"
+#| "team/freedombox/issues\">bug tracker</a> so we can fix it. Also, please "
+#| "attach the <a href=\"%(status_log_url)s\">status log</a> to the bug "
+#| "report."
 msgid ""
 "This is an internal error and not something you caused or can fix. Please "
 "report the error on the <a href=\"https://salsa.debian.org/freedombox-team/"
 "freedombox/issues\">bug tracker</a> so we can fix it. Also, please attach "
-"the <a href=\"%(status_log_url)s\">status log</a> to the bug report."
+"the <a href=\"%(logs_url)s\">logs</a> to the bug report."
 msgstr ""
 "Ez egy belső hiba, nem pedig valami, amit te okoztál vagy meg tudnál "
 "javítani. Kérjük, hogy jelentsd ezt a hibát a <a href=\"https://"
@@ -10900,6 +10884,36 @@ msgstr ""
 #: plinth/templates/app-header.html:26
 msgid "Installation"
 msgstr "Telepítés"
+
+#: plinth/templates/app-logs.html:12
+#, fuzzy
+#| msgid ""
+#| "These are the last %(num_lines)s lines of the status log for this web "
+#| "interface. If you want to report a bug, please use the <a href=\"https://"
+#| "salsa.debian.org/freedombox-team/freedombox/issues\">bug tracker</a> and "
+#| "attach this status log to the bug report."
+msgid ""
+"These are the last lines of the logs for services involved in this app. If "
+"you want to report a bug, please use the <a href=\"https://salsa.debian.org/"
+"freedombox-team/freedombox/issues\">bug tracker</a> and attach this log to "
+"the bug report."
+msgstr ""
+"A webes felülethez tartozó állapotnapló utolsó %(num_lines)s sorát láthatod. "
+"Ha szeretnél bejelenteni egy hibát, kérlek, használd a <a href=\"https://"
+"salsa.debian.org/freedombox-team/freedombox/issues\">hibabejelentőt</a> és "
+"mellékeld ezt az állapotnaplót a bejelentéshez."
+
+#: plinth/templates/app-logs.html:26
+#, fuzzy
+#| msgid ""
+#| "Please remove any passwords or other personal information from the log "
+#| "before submitting the bug report."
+msgid ""
+"Please remove any personal information from the log before submitting the "
+"bug report."
+msgstr ""
+"Kérlek, távolíts el minden jelszót és személyes információt a naplóból "
+"mielőtt elküldenéd a bejelentést."
 
 #: plinth/templates/app.html:34
 #, python-format
@@ -11158,18 +11172,22 @@ msgid "Clear all tags"
 msgstr "Keresés a weben"
 
 #: plinth/templates/toolbar.html:39 plinth/templates/toolbar.html:40
+msgid "View Logs"
+msgstr ""
+
+#: plinth/templates/toolbar.html:46 plinth/templates/toolbar.html:47
 #, fuzzy
 #| msgid "Backups"
 msgid "Backup"
 msgstr "Biztonsági mentések"
 
-#: plinth/templates/toolbar.html:53
+#: plinth/templates/toolbar.html:60
 #, fuzzy
 #| msgid "Start setup"
 msgid "Re-run setup"
 msgstr "Beállítás elindítása"
 
-#: plinth/templates/toolbar.html:59 plinth/templates/toolbar.html:60
+#: plinth/templates/toolbar.html:66 plinth/templates/toolbar.html:67
 #: plinth/templates/uninstall.html:30
 #, fuzzy
 #| msgid "Install"
@@ -11188,15 +11206,15 @@ msgid ""
 "installed freshly again."
 msgstr ""
 
-#: plinth/views.py:84
+#: plinth/views.py:89
 msgid "Here"
 msgstr ""
 
-#: plinth/views.py:414
+#: plinth/views.py:421
 msgid "Setting unchanged"
 msgstr "A beállítás változatlan"
 
-#: plinth/views.py:640
+#: plinth/views.py:648
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr ""
@@ -11204,6 +11222,9 @@ msgstr ""
 #: plinth/web_framework.py:122
 msgid "Gujarati"
 msgstr "Gudzsaráti"
+
+#~ msgid "Status Log"
+#~ msgstr "Állapotnapló"
 
 #, python-brace-format
 #~ msgid "Invalid username: {username}"

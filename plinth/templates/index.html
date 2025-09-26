@@ -62,7 +62,7 @@
                     <a href="{{ shortcut.url }}">
                   {% endif %}
                         <div class="card-icon">
-                          {% if "custom" in shortcut.icon %}
+                          {% if shortcut.icon|first == "/" %}
                             <img src="{{ shortcut.icon }}"/>
                           {% else %}
                             {% if shortcut.app_id %}

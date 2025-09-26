@@ -36,7 +36,7 @@ def iter_apt_uris(aug):
         [aug.match(path) for path in APT_SOURCES_URI_PATHS])
 
 
-def get_augeas():
+def get_augeas(raise_exception=True):
     """Return an instance of Augeaus for processing APT configuration."""
     aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
                         augeas.Augeas.NO_MODL_AUTOLOAD)
@@ -51,9 +51,10 @@ def get_augeas():
     aug.load()
 
     # Check for any errors in parsing sources lists.
-    if aug.match('/augeas/files/etc/apt/sources.list/error') or \
-       aug.match('/augeas/files/etc/apt/sources.list.d//error'):
-        raise Exception('Error parsing sources list')
+    if raise_exception:
+        if aug.match('/augeas/files/etc/apt/sources.list/error') or \
+           aug.match('/augeas/files/etc/apt/sources.list.d//error'):
+            raise Exception('Error parsing sources list')
 
     return aug
 

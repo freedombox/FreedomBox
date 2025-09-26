@@ -113,6 +113,29 @@ test Aptsources822.lns get sources2 =
     { "Components" { "1" = "main" } }
   }
 
+(* Test edge cases in parsing: leading, trailer, and repeating new lines and
+   dos-style line terminators for empty lines and stanza lines*)
+let sources3 = "
+
+Enabled: yes
+
+\r
+Enabled: no\r
+
+"
+test Aptsources822.lns get sources3 =
+  { }
+  { }
+  { "1"
+    { "Enabled" = "yes" }
+  }
+  { }
+  { }
+  { "2"
+    { "Enabled" = "no" }
+  }
+  { }
+
 (* Test adding nodes to tree *)
 test Aptsources822.lns put "Types: deb\n" after set "/1/Enabled" "yes" = "Types: deb\nEnabled: yes\n"
 test Aptsources822.lns put "Types: deb\n" after

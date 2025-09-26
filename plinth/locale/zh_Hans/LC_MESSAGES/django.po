@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plinth\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-08 23:51+0000\n"
-"PO-Revision-Date: 2025-08-21 09:02+0000\n"
+"POT-Creation-Date: 2025-09-23 00:05+0000\n"
+"PO-Revision-Date: 2025-09-10 04:01+0000\n"
 "Last-Translator: 大王叫我来巡山 "
 "<hamburger2048@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/"
@@ -18,19 +18,19 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.13\n"
+"X-Generator: Weblate 5.14-dev\n"
 
 #: plinth/config.py:103
 #, python-brace-format
 msgid "Static configuration {etc_path} is setup properly"
 msgstr ""
 
-#: plinth/container.py:137
+#: plinth/container.py:140
 #, python-brace-format
 msgid "Container {container_name} is running"
 msgstr "{container_name} 容器正在运行"
 
-#: plinth/context_processors.py:21 plinth/views.py:168
+#: plinth/context_processors.py:21 plinth/views.py:175
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
@@ -39,22 +39,22 @@ msgstr "FreedomBox"
 msgid "Service {service_name} is running"
 msgstr "服务{service_name}正在运行"
 
-#: plinth/daemon.py:222
+#: plinth/daemon.py:221
 #, python-brace-format
 msgid "Listening on {kind} port {listen_address}:{port}"
 msgstr "正在侦听 {kind} 端口 {listen_address}:{port}"
 
-#: plinth/daemon.py:225
+#: plinth/daemon.py:224
 #, python-brace-format
 msgid "Listening on {kind} port {port}"
 msgstr "正在侦听 {kind} 端口 {port}"
 
-#: plinth/daemon.py:296
+#: plinth/daemon.py:295
 #, python-brace-format
 msgid "Connect to {host}:{port}"
 msgstr "连接到主机 {host}:{port}"
 
-#: plinth/daemon.py:304
+#: plinth/daemon.py:303
 #, python-brace-format
 msgid "Cannot connect to {host}:{port}"
 msgstr "不能连接到主机 {host}:{port}"
@@ -444,7 +444,7 @@ msgstr "选择经过验证的 SSH 公钥"
 #: plinth/modules/backups/templates/backups_repository.html:92
 #: plinth/modules/backups/templates/backups_restore.html:27
 #: plinth/modules/backups/views.py:238 plinth/modules/snapshot/manifest.py:14
-#: plinth/templates/toolbar.html:44 plinth/templates/toolbar.html:45
+#: plinth/templates/toolbar.html:51 plinth/templates/toolbar.html:52
 msgid "Restore"
 msgstr "恢复"
 
@@ -570,7 +570,6 @@ msgstr "现有的备份"
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:27
 #: plinth/modules/diagnostics/templates/diagnostics_full.html:102
 #: plinth/modules/help/templates/help_about.html:22
-#: plinth/modules/help/templates/statuslog.html:24
 #: plinth/modules/homeassistant/__init__.py:48
 #: plinth/modules/kiwix/templates/kiwix-add-package.html:26
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:28
@@ -585,8 +584,9 @@ msgstr "现有的备份"
 #: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:45
 #: plinth/modules/upgrades/templates/upgrades_configure.html:84
 #: plinth/modules/users/templates/users_firstboot.html:34
-#: plinth/templates/app.html:31 plinth/templates/messages.html:17
-#: plinth/templates/setup.html:40 plinth/templates/setup.html:69
+#: plinth/templates/app-logs.html:23 plinth/templates/app.html:31
+#: plinth/templates/messages.html:17 plinth/templates/setup.html:40
+#: plinth/templates/setup.html:69
 msgid "Caution:"
 msgstr "注意："
 
@@ -671,25 +671,14 @@ msgid "Restore data from"
 msgstr "从 恢复数据"
 
 #: plinth/modules/backups/templates/backups_upload.html:17
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "      Upload a backup file downloaded from another %(box_name)s to "
-#| "restore its\n"
-#| "      contents. You can choose the apps you wish to restore after "
-#| "uploading a\n"
-#| "      backup file.\n"
-#| "    "
+#, python-format
 msgid ""
 "Upload a backup file downloaded from another %(box_name)s to restore its "
 "contents. You can choose the apps you wish to restore after uploading a "
 "backup file."
 msgstr ""
-"\n"
-"      上传一个从另一个 %(box_name)s 下载的备份文件来还原其\n"
-"      内容。 你可以选择上传备份文件后希望还原的\n"
-"      应用。\n"
-"    "
+"上传从另一个 %(box_name)s 下载的备份文件来恢复其内容。上传备份文件后可以选择"
+"希望恢复的应用。"
 
 #: plinth/modules/backups/templates/backups_upload.html:31
 #, python-format
@@ -1317,7 +1306,7 @@ msgstr "网络"
 msgid "Services"
 msgstr "服务"
 
-#: plinth/modules/cockpit/manifest.py:28
+#: plinth/modules/cockpit/manifest.py:28 plinth/templates/app-logs.html:9
 msgid "Logs"
 msgstr ""
 
@@ -1575,60 +1564,67 @@ msgstr "Web 客户端"
 msgid "P2P"
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:29
+#: plinth/modules/diagnostics/__init__.py:32
 msgid ""
 "The system diagnostic test will run a number of checks on your system to "
 "confirm that applications and services are working as expected."
 msgstr ""
 "系统诊断将运行测试程序检查你的系统以确认应用程序和服务正在按预期方式运行。"
 
-#: plinth/modules/diagnostics/__init__.py:53
-#: plinth/modules/diagnostics/__init__.py:239
+#: plinth/modules/diagnostics/__init__.py:36
+#, python-brace-format
+msgid ""
+"This app also shows the <a href=\"{logs_url}\">logs</a> for {box_name} "
+"services."
+msgstr ""
+
+#: plinth/modules/diagnostics/__init__.py:60
+#: plinth/modules/diagnostics/__init__.py:254
 msgid "Diagnostics"
 msgstr "诊断程序"
 
-#: plinth/modules/diagnostics/__init__.py:99
+#: plinth/modules/diagnostics/__init__.py:114
 msgid "skipped"
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:100
+#: plinth/modules/diagnostics/__init__.py:115
 msgid "passed"
 msgstr "通过了"
 
-#: plinth/modules/diagnostics/__init__.py:101
+#: plinth/modules/diagnostics/__init__.py:116
 #: plinth/modules/networks/views.py:51
 msgid "failed"
 msgstr "失败"
 
-#: plinth/modules/diagnostics/__init__.py:102
+#: plinth/modules/diagnostics/__init__.py:117
 msgid "error"
 msgstr "错误"
 
-#: plinth/modules/diagnostics/__init__.py:103
+#: plinth/modules/diagnostics/__init__.py:118
 msgid "warning"
 msgstr "警告"
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: plinth/modules/diagnostics/__init__.py:205
+#: plinth/modules/diagnostics/__init__.py:220
 msgid "MiB"
 msgstr "MiB"
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: plinth/modules/diagnostics/__init__.py:210
+#: plinth/modules/diagnostics/__init__.py:225
 msgid "GiB"
 msgstr "GiB"
 
-#: plinth/modules/diagnostics/__init__.py:217
+#: plinth/modules/diagnostics/__init__.py:232
 msgid "You should disable some apps to reduce memory usage."
 msgstr "你应该禁用一些应用程序以减少内存的使用。"
 
-#: plinth/modules/diagnostics/__init__.py:222
+#: plinth/modules/diagnostics/__init__.py:237
 msgid "You should not install any new apps on this system."
 msgstr "你不应该在这个系统上安装任何新的应用程序。"
 
-#: plinth/modules/diagnostics/__init__.py:234
+#: plinth/modules/diagnostics/__init__.py:249
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
@@ -1637,24 +1633,24 @@ msgstr ""
 "系统内存不足：已使用 {percent_used}，{memory_available} "
 "{memory_available_unit}可用。{advice_message}"
 
-#: plinth/modules/diagnostics/__init__.py:236
+#: plinth/modules/diagnostics/__init__.py:251
 msgid "Low Memory"
 msgstr "低内存"
 
-#: plinth/modules/diagnostics/__init__.py:267
+#: plinth/modules/diagnostics/__init__.py:282
 msgid "Running diagnostics"
 msgstr "运行诊断程序"
 
-#: plinth/modules/diagnostics/__init__.py:313
+#: plinth/modules/diagnostics/__init__.py:328
 #, no-python-format, python-brace-format
 msgid "Found {issue_count} issues during routine tests."
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:314
+#: plinth/modules/diagnostics/__init__.py:329
 msgid "Diagnostics results"
 msgstr "诊断结果"
 
-#: plinth/modules/diagnostics/__init__.py:319
+#: plinth/modules/diagnostics/__init__.py:334
 msgid "Go to diagnostics results"
 msgstr "转到诊断结果"
 
@@ -3081,14 +3077,14 @@ msgstr "手册"
 
 #: plinth/modules/help/__init__.py:41
 #: plinth/modules/help/templates/help_support.html:9
-#: plinth/modules/help/views.py:93 plinth/templates/help-menu.html:27
+#: plinth/modules/help/views.py:91 plinth/templates/help-menu.html:27
 #: plinth/templates/help-menu.html:28
 msgid "Get Support"
 msgstr "获取帮助"
 
 #: plinth/modules/help/__init__.py:45
 #: plinth/modules/help/templates/help_feedback.html:9
-#: plinth/modules/help/views.py:87 plinth/templates/help-menu.html:33
+#: plinth/modules/help/views.py:85 plinth/templates/help-menu.html:33
 #: plinth/templates/help-menu.html:34
 msgid "Submit Feedback"
 msgstr ""
@@ -3096,7 +3092,7 @@ msgstr ""
 #: plinth/modules/help/__init__.py:49
 #: plinth/modules/help/templates/help_about.html:113
 #: plinth/modules/help/templates/help_contribute.html:9
-#: plinth/modules/help/views.py:76 plinth/templates/help-menu.html:39
+#: plinth/modules/help/views.py:74 plinth/templates/help-menu.html:39
 #: plinth/templates/help-menu.html:40
 msgid "Contribute"
 msgstr "贡献"
@@ -3383,38 +3379,16 @@ msgid ""
 "lists.debian.net\">mailing list</a>."
 msgstr ""
 
-#: plinth/modules/help/templates/statuslog.html:10
-msgid "Status Log"
-msgstr "状态日志"
-
-#: plinth/modules/help/templates/statuslog.html:13
-#, python-format
-msgid ""
-"These are the last %(num_lines)s lines of the status log for this web "
-"interface. If you want to report a bug, please use the <a href=\"https://"
-"salsa.debian.org/freedombox-team/freedombox/issues\">bug tracker</a> and "
-"attach this status log to the bug report."
-msgstr ""
-"这些是此 Web 界面状态日志的最后 %(num_lines)s 行。如果想报 Bug，请通过 <a "
-"href=\"salsa.debian.org/freedombox-team/freedombox/issues\"> bug 追踪器</a> "
-"并附上此状态日志。"
-
-#: plinth/modules/help/templates/statuslog.html:27
-msgid ""
-"Please remove any personal information from the log before submitting the "
-"bug report."
-msgstr "提交日志报告前，请从日志中删除任何个人信息。"
-
-#: plinth/modules/help/views.py:29
+#: plinth/modules/help/views.py:27
 msgid "Documentation and FAQ"
 msgstr "文档和 FAQ"
 
-#: plinth/modules/help/views.py:98
+#: plinth/modules/help/views.py:96
 #, python-brace-format
 msgid "About {box_name}"
 msgstr "关于 {box_name}"
 
-#: plinth/modules/help/views.py:135
+#: plinth/modules/help/views.py:133
 #, python-brace-format
 msgid "{box_name} Manual"
 msgstr "{box_name} 手册"
@@ -6719,10 +6693,8 @@ msgid "Samba"
 msgstr ""
 
 #: plinth/modules/samba/manifest.py:12
-#, fuzzy
-#| msgid "Publish Key"
 msgid "SambaLite"
-msgstr "发布密钥"
+msgstr "SambaLite"
 
 #: plinth/modules/samba/manifest.py:26
 msgid "Ghost Commander"
@@ -9475,12 +9447,18 @@ msgid "500"
 msgstr "500"
 
 #: plinth/templates/500.html:14
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "This is an internal error and not something you caused or can fix. Please "
+#| "report the error on the <a href=\"https://salsa.debian.org/freedombox-"
+#| "team/freedombox/issues\">bug tracker</a> so we can fix it. Also, please "
+#| "attach the <a href=\"%(status_log_url)s\">status log</a> to the bug "
+#| "report."
 msgid ""
 "This is an internal error and not something you caused or can fix. Please "
 "report the error on the <a href=\"https://salsa.debian.org/freedombox-team/"
 "freedombox/issues\">bug tracker</a> so we can fix it. Also, please attach "
-"the <a href=\"%(status_log_url)s\">status log</a> to the bug report."
+"the <a href=\"%(logs_url)s\">logs</a> to the bug report."
 msgstr ""
 "这是一个内部错误，不是你造成的或可以修复。 请报告到 <a href=\"https://"
 "salsa.debian.org/freedombox-team/freedombox/issues\"> bug 追踪器</a> 上这样我"
@@ -9490,6 +9468,29 @@ msgstr ""
 #: plinth/templates/app-header.html:26
 msgid "Installation"
 msgstr "安装"
+
+#: plinth/templates/app-logs.html:12
+#, fuzzy
+#| msgid ""
+#| "These are the last %(num_lines)s lines of the status log for this web "
+#| "interface. If you want to report a bug, please use the <a href=\"https://"
+#| "salsa.debian.org/freedombox-team/freedombox/issues\">bug tracker</a> and "
+#| "attach this status log to the bug report."
+msgid ""
+"These are the last lines of the logs for services involved in this app. If "
+"you want to report a bug, please use the <a href=\"https://salsa.debian.org/"
+"freedombox-team/freedombox/issues\">bug tracker</a> and attach this log to "
+"the bug report."
+msgstr ""
+"这些是此 Web 界面状态日志的最后 %(num_lines)s 行。如果想报 Bug，请通过 <a "
+"href=\"salsa.debian.org/freedombox-team/freedombox/issues\"> bug 追踪器</a> "
+"并附上此状态日志。"
+
+#: plinth/templates/app-logs.html:26
+msgid ""
+"Please remove any personal information from the log before submitting the "
+"bug report."
+msgstr "提交日志报告前，请从日志中删除任何个人信息。"
 
 #: plinth/templates/app.html:34
 #, python-format
@@ -9723,14 +9724,18 @@ msgid "Clear all tags"
 msgstr ""
 
 #: plinth/templates/toolbar.html:39 plinth/templates/toolbar.html:40
+msgid "View Logs"
+msgstr ""
+
+#: plinth/templates/toolbar.html:46 plinth/templates/toolbar.html:47
 msgid "Backup"
 msgstr "备份"
 
-#: plinth/templates/toolbar.html:53
+#: plinth/templates/toolbar.html:60
 msgid "Re-run setup"
 msgstr "重新运行安装程序"
 
-#: plinth/templates/toolbar.html:59 plinth/templates/toolbar.html:60
+#: plinth/templates/toolbar.html:66 plinth/templates/toolbar.html:67
 #: plinth/templates/uninstall.html:30
 msgid "Uninstall"
 msgstr "卸载"
@@ -9746,15 +9751,15 @@ msgid ""
 "installed freshly again."
 msgstr ""
 
-#: plinth/views.py:84
+#: plinth/views.py:89
 msgid "Here"
 msgstr ""
 
-#: plinth/views.py:414
+#: plinth/views.py:421
 msgid "Setting unchanged"
 msgstr "设置未改变"
 
-#: plinth/views.py:640
+#: plinth/views.py:648
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr ""
@@ -9762,6 +9767,9 @@ msgstr ""
 #: plinth/web_framework.py:122
 msgid "Gujarati"
 msgstr "古吉拉特语"
+
+#~ msgid "Status Log"
+#~ msgstr "状态日志"
 
 #, python-brace-format
 #~ msgid "Invalid username: {username}"

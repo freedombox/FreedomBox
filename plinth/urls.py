@@ -30,6 +30,8 @@ urlpatterns = [
             views.is_available_view, name='is-available'),
     re_path(r'^rerun-setup/(?P<app_id>[1-9a-z\-_]+)/$', views.rerun_setup_view,
             name='rerun-setup'),
+    re_path(r'^logs/(?P<app_id>[1-9a-z\-_]+)/$', views.AppLogsView.as_view(),
+            name='logs'),
 
     # captcha urls are public
     re_path(r'^captcha/image/(?P<key>\w+)/$', public(cviews.captcha_image),

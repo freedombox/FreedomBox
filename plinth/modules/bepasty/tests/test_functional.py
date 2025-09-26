@@ -43,7 +43,7 @@ class TestBepastyApp(functional.BaseAppTests):
         assert not _can_login(session_browser, password_added)
 
     @pytest.mark.backups
-    def test_backup_and_restore(self, session_browser):
+    def test_backup_restore(self, session_browser):
         functional.app_enable(session_browser, 'bepasty')
         password_added = _add_and_save_password(session_browser)
         functional.backup_create(session_browser, 'bepasty', 'test_bepasty')
@@ -68,7 +68,7 @@ def _set_default_permissions(browser, permissions=''):
 
 
 def _add_password(browser):
-    functional.visit(browser, '/plinth/apps/bepasty/add')
+    functional.visit(browser, '/plinth/apps/bepasty/add/')
     for permission in ['read', 'create', 'list', 'delete', 'admin']:
         browser.find_by_css('#id_bepasty-permissions input[value="{}"]'.format(
             permission)).check()

@@ -75,19 +75,26 @@ def get_breadcrumbs(request: HttpRequest) -> dict[str, dict[str, str | bool]]:
             'url_name': url_name
         }
 
-    url_name = request.resolver_match.url_name
-    full_url_name = ':'.join(request.resolver_match.app_names + [url_name])
     try:
-        menu_item = menu.Menu.get_with_url_name(full_url_name)
-    except LookupError:
-        # There is no menu entry for this page, find it's app.
-        _add(request.path, _('Here'), full_url_name)
-        app_url_name = ':'.join(request.resolver_match.app_names + ['index'])
+        url_name = request.resolver_match.url_name
+        full_url_name = ':'.join(request.resolver_match.app_names + [url_name])
+    except AttributeError:
+        # 404 page: unknown URL, resolver_match is None. Index is home.
+        menu_item = menu.Menu.get_with_url_name('index')
+    else:
         try:
-            menu_item = menu.Menu.get_with_url_name(app_url_name)
+            menu_item = menu.Menu.get_with_url_name(full_url_name)
         except LookupError:
-            # Don't know which app this page belongs to, assume parent is Home.
-            menu_item = menu.Menu.get_with_url_name('index')
+            # There is no menu entry for this page, find it's app.
+            _add(request.path, _('Here'), full_url_name)
+            app_url_name = ':'.join(request.resolver_match.app_names +
+                                    ['index'])
+            try:
+                menu_item = menu.Menu.get_with_url_name(app_url_name)
+            except LookupError:
+                # Don't know which app this page belongs to, assume parent is
+                # Home.
+                menu_item = menu.Menu.get_with_url_name('index')
 
     for _number in range(10):
         _add(menu_item.url, menu_item.name, menu_item.url_name)
@@ -446,6 +453,7 @@ class AppView(FormView):
         context['is_running'] = app_is_running(self.app)
         context['app_info'] = self.app.info
         context['has_diagnostics'] = self.app.has_diagnostics()
+        context['has_logs'] = self.app.has_logs()
         context['port_forwarding_info'] = get_port_forwarding_info(self.app)
         context['app_enable_disable_form'] = self.get_enable_disable_form()
         context['show_rerun_setup'] = True
@@ -645,6 +653,25 @@ class UninstallView(FormView):
         setup.run_uninstall_on_app(self.app.app_id)
 
         return super().form_valid(form)
+
+
+class AppLogsView(TemplateView):
+    """View for an app's logs.
+
+    This view shows logs for all the daemon units involved the app for easy
+    debugging.
+    """
+    template_name = 'app-logs.html'
+
+    def get_context_data(self, *args, **kwargs):
+        """Add additional context data for template."""
+        context = super().get_context_data(*args, **kwargs)
+        app_id = self.kwargs['app_id']
+        app = app_module.App.get(app_id)
+        context['app_info'] = app.info
+        context['logs'] = app.get_logs()
+
+        return context
 
 
 def notification_dismiss(request, id):

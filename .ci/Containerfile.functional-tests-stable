@@ -7,7 +7,7 @@ USER root:root
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN echo "deb http://deb.debian.org/debian bookworm-backports main" > /etc/apt/sources.list.d/backports.list; echo "deb-src http://deb.debian.org/debian bookworm-backports main" >> /etc/apt/sources.list.d/backports.list
+RUN echo "deb http://deb.debian.org/debian trixie-backports main" > /etc/apt/sources.list.d/backports.list; echo "deb-src http://deb.debian.org/debian trixie-backports main" >> /etc/apt/sources.list.d/backports.list
 
 RUN apt-get update
 
@@ -15,14 +15,14 @@ RUN apt-get update
 RUN apt-get dist-upgrade -y
 
 # Install freedombox package so that plint:plinth user/group are created etc.
-RUN apt-get install -y freedombox/bookworm-backports
+RUN apt-get install -y freedombox/trixie-backports
 RUN systemctl mask plinth.service
 
 # Don't ask for the secret in first wizard
 RUN rm -f /var/lib/plinth/firstboot-wizard-secret
 
 # Dependencies of the freedombox Debian package
-RUN apt-get build-dep -y freedombox/bookworm-backports
+RUN apt-get build-dep -y freedombox/trixie-backports
 
 # Build and test dependencies
 RUN apt-get install -y \

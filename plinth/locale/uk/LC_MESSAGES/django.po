@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-08 23:51+0000\n"
-"PO-Revision-Date: 2025-08-20 04:02+0000\n"
+"POT-Creation-Date: 2025-09-23 00:05+0000\n"
+"PO-Revision-Date: 2025-09-10 04:01+0000\n"
 "Last-Translator: Максим Горпиніч <gorpinicmaksim0@gmail.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/uk/>\n"
@@ -18,19 +18,19 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.13\n"
+"X-Generator: Weblate 5.14-dev\n"
 
 #: plinth/config.py:103
 #, python-brace-format
 msgid "Static configuration {etc_path} is setup properly"
 msgstr "Статична конфігурація {etc_path} налаштована належним чином"
 
-#: plinth/container.py:137
+#: plinth/container.py:140
 #, python-brace-format
 msgid "Container {container_name} is running"
 msgstr "Контейнер {container_name} працює"
 
-#: plinth/context_processors.py:21 plinth/views.py:168
+#: plinth/context_processors.py:21 plinth/views.py:175
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
@@ -39,22 +39,22 @@ msgstr "FreedomBox"
 msgid "Service {service_name} is running"
 msgstr "Сервіс {service_name} запущено"
 
-#: plinth/daemon.py:222
+#: plinth/daemon.py:221
 #, python-brace-format
 msgid "Listening on {kind} port {listen_address}:{port}"
 msgstr "Слухати на {kind} порт {listen_address}:{port}"
 
-#: plinth/daemon.py:225
+#: plinth/daemon.py:224
 #, python-brace-format
 msgid "Listening on {kind} port {port}"
 msgstr "Слухати на {kind} порт {port}"
 
-#: plinth/daemon.py:296
+#: plinth/daemon.py:295
 #, python-brace-format
 msgid "Connect to {host}:{port}"
 msgstr "Під'єднання до {host}:{port}"
 
-#: plinth/daemon.py:304
+#: plinth/daemon.py:303
 #, python-brace-format
 msgid "Cannot connect to {host}:{port}"
 msgstr "Неможливо підключитись до {host}:{port}"
@@ -470,7 +470,7 @@ msgstr "Вибрати перевірений публічний ключ SSH"
 #: plinth/modules/backups/templates/backups_repository.html:92
 #: plinth/modules/backups/templates/backups_restore.html:27
 #: plinth/modules/backups/views.py:238 plinth/modules/snapshot/manifest.py:14
-#: plinth/templates/toolbar.html:44 plinth/templates/toolbar.html:45
+#: plinth/templates/toolbar.html:51 plinth/templates/toolbar.html:52
 msgid "Restore"
 msgstr "Відновити"
 
@@ -599,7 +599,6 @@ msgstr "Наявні резервні копії"
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:27
 #: plinth/modules/diagnostics/templates/diagnostics_full.html:102
 #: plinth/modules/help/templates/help_about.html:22
-#: plinth/modules/help/templates/statuslog.html:24
 #: plinth/modules/homeassistant/__init__.py:48
 #: plinth/modules/kiwix/templates/kiwix-add-package.html:26
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:28
@@ -614,8 +613,9 @@ msgstr "Наявні резервні копії"
 #: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:45
 #: plinth/modules/upgrades/templates/upgrades_configure.html:84
 #: plinth/modules/users/templates/users_firstboot.html:34
-#: plinth/templates/app.html:31 plinth/templates/messages.html:17
-#: plinth/templates/setup.html:40 plinth/templates/setup.html:69
+#: plinth/templates/app-logs.html:23 plinth/templates/app.html:31
+#: plinth/templates/messages.html:17 plinth/templates/setup.html:40
+#: plinth/templates/setup.html:69
 msgid "Caution:"
 msgstr "Обережно:"
 
@@ -703,27 +703,15 @@ msgid "Restore data from"
 msgstr "Відновити дані з"
 
 #: plinth/modules/backups/templates/backups_upload.html:17
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "      Upload a backup file downloaded from another %(box_name)s to "
-#| "restore its\n"
-#| "      contents. You can choose the apps you wish to restore after "
-#| "uploading a\n"
-#| "      backup file.\n"
-#| "    "
+#, python-format
 msgid ""
 "Upload a backup file downloaded from another %(box_name)s to restore its "
 "contents. You can choose the apps you wish to restore after uploading a "
 "backup file."
 msgstr ""
-"\n"
-"      Вивантажити файл резервної копії від іншого %(box_name)s, щоб "
-"відновити\n"
-"      його вміст. Можете обрати застосунки, які бажаєте відновити, після "
-"вивантажування\n"
-"      файлу резервної копії.\n"
-"    "
+"Завантажте файл резервної копії, завантажений з іншого %(box_name)s, щоб "
+"відновити його вміст. Після завантаження файлу резервної копії ви можете "
+"вибрати програми, які хочете відновити."
 
 #: plinth/modules/backups/templates/backups_upload.html:31
 #, python-format
@@ -1373,7 +1361,7 @@ msgstr "Мережа"
 msgid "Services"
 msgstr "Сервіси"
 
-#: plinth/modules/cockpit/manifest.py:28
+#: plinth/modules/cockpit/manifest.py:28 plinth/templates/app-logs.html:9
 msgid "Logs"
 msgstr "Журнали"
 
@@ -1649,7 +1637,7 @@ msgstr "Веб-клієнт"
 msgid "P2P"
 msgstr "P2P"
 
-#: plinth/modules/diagnostics/__init__.py:29
+#: plinth/modules/diagnostics/__init__.py:32
 msgid ""
 "The system diagnostic test will run a number of checks on your system to "
 "confirm that applications and services are working as expected."
@@ -1657,54 +1645,61 @@ msgstr ""
 "Тест діагностики системи запускає певну кількість перевірок, щоб упевнитися, "
 "що застосунки і сервіси працюють так, як очікується."
 
-#: plinth/modules/diagnostics/__init__.py:53
-#: plinth/modules/diagnostics/__init__.py:239
+#: plinth/modules/diagnostics/__init__.py:36
+#, python-brace-format
+msgid ""
+"This app also shows the <a href=\"{logs_url}\">logs</a> for {box_name} "
+"services."
+msgstr ""
+
+#: plinth/modules/diagnostics/__init__.py:60
+#: plinth/modules/diagnostics/__init__.py:254
 msgid "Diagnostics"
 msgstr "Діагностика"
 
-#: plinth/modules/diagnostics/__init__.py:99
+#: plinth/modules/diagnostics/__init__.py:114
 msgid "skipped"
 msgstr "пропущено"
 
-#: plinth/modules/diagnostics/__init__.py:100
+#: plinth/modules/diagnostics/__init__.py:115
 msgid "passed"
 msgstr "пройдено"
 
-#: plinth/modules/diagnostics/__init__.py:101
+#: plinth/modules/diagnostics/__init__.py:116
 #: plinth/modules/networks/views.py:51
 msgid "failed"
 msgstr "невдало"
 
-#: plinth/modules/diagnostics/__init__.py:102
+#: plinth/modules/diagnostics/__init__.py:117
 msgid "error"
 msgstr "помилка"
 
-#: plinth/modules/diagnostics/__init__.py:103
+#: plinth/modules/diagnostics/__init__.py:118
 msgid "warning"
 msgstr "попередження"
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: plinth/modules/diagnostics/__init__.py:205
+#: plinth/modules/diagnostics/__init__.py:220
 msgid "MiB"
 msgstr "МіБ"
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: plinth/modules/diagnostics/__init__.py:210
+#: plinth/modules/diagnostics/__init__.py:225
 msgid "GiB"
 msgstr "ҐіБ"
 
-#: plinth/modules/diagnostics/__init__.py:217
+#: plinth/modules/diagnostics/__init__.py:232
 msgid "You should disable some apps to reduce memory usage."
 msgstr ""
 "Ви повинні вимкнути деякі застосунки, щоб зменшити використання памʼяті."
 
-#: plinth/modules/diagnostics/__init__.py:222
+#: plinth/modules/diagnostics/__init__.py:237
 msgid "You should not install any new apps on this system."
 msgstr "Не слід встановлювати нові застосунки в цій системі."
 
-#: plinth/modules/diagnostics/__init__.py:234
+#: plinth/modules/diagnostics/__init__.py:249
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
@@ -1713,24 +1708,24 @@ msgstr ""
 "У системі бракує памʼяті: {percent_used}% використано, {memory_available} "
 "{memory_available_unit} вільно. {advice_message}"
 
-#: plinth/modules/diagnostics/__init__.py:236
+#: plinth/modules/diagnostics/__init__.py:251
 msgid "Low Memory"
 msgstr "Мало памʼяті"
 
-#: plinth/modules/diagnostics/__init__.py:267
+#: plinth/modules/diagnostics/__init__.py:282
 msgid "Running diagnostics"
 msgstr "Виконується діагностика"
 
-#: plinth/modules/diagnostics/__init__.py:313
+#: plinth/modules/diagnostics/__init__.py:328
 #, no-python-format, python-brace-format
 msgid "Found {issue_count} issues during routine tests."
 msgstr "Знайдено {issue_count} проблеми під час звичайних перевірок."
 
-#: plinth/modules/diagnostics/__init__.py:314
+#: plinth/modules/diagnostics/__init__.py:329
 msgid "Diagnostics results"
 msgstr "Результати діагностики"
 
-#: plinth/modules/diagnostics/__init__.py:319
+#: plinth/modules/diagnostics/__init__.py:334
 msgid "Go to diagnostics results"
 msgstr "Перейти до результатів діагностики"
 
@@ -3281,14 +3276,14 @@ msgstr "Посібник"
 
 #: plinth/modules/help/__init__.py:41
 #: plinth/modules/help/templates/help_support.html:9
-#: plinth/modules/help/views.py:93 plinth/templates/help-menu.html:27
+#: plinth/modules/help/views.py:91 plinth/templates/help-menu.html:27
 #: plinth/templates/help-menu.html:28
 msgid "Get Support"
 msgstr "Отримати підтримку"
 
 #: plinth/modules/help/__init__.py:45
 #: plinth/modules/help/templates/help_feedback.html:9
-#: plinth/modules/help/views.py:87 plinth/templates/help-menu.html:33
+#: plinth/modules/help/views.py:85 plinth/templates/help-menu.html:33
 #: plinth/templates/help-menu.html:34
 msgid "Submit Feedback"
 msgstr "Надіслати відгук"
@@ -3296,7 +3291,7 @@ msgstr "Надіслати відгук"
 #: plinth/modules/help/__init__.py:49
 #: plinth/modules/help/templates/help_about.html:113
 #: plinth/modules/help/templates/help_contribute.html:9
-#: plinth/modules/help/views.py:76 plinth/templates/help-menu.html:39
+#: plinth/modules/help/views.py:74 plinth/templates/help-menu.html:39
 #: plinth/templates/help-menu.html:40
 msgid "Contribute"
 msgstr "Співпрацювати"
@@ -3632,63 +3627,31 @@ msgstr ""
 "ul> Або надіслати ел. листа на нашу <a href=\"mailto:freedombox-"
 "discuss@alioth-lists.debian.net\">поштову розсилку</a>."
 
-#: plinth/modules/help/templates/statuslog.html:10
-msgid "Status Log"
-msgstr "Журнал стану"
-
-#: plinth/modules/help/templates/statuslog.html:13
-#, python-format
-msgid ""
-"These are the last %(num_lines)s lines of the status log for this web "
-"interface. If you want to report a bug, please use the <a href=\"https://"
-"salsa.debian.org/freedombox-team/freedombox/issues\">bug tracker</a> and "
-"attach this status log to the bug report."
-msgstr ""
-"Це останні %(num_lines)s рядків із журналу стану для цього вебінтерфейсу. "
-"Якщо Ви бажаєте повідомити про недолік, будь ласка використовуйте сторінку "
-"<a href=\"https://salsa.debian.org/freedombox-team/freedombox/"
-"issues\">відстеження недоліків</a> і прикріпіть цей журнал стану до звіту "
-"про недолік."
-
-#: plinth/modules/help/templates/statuslog.html:27
-msgid ""
-"Please remove any personal information from the log before submitting the "
-"bug report."
-msgstr ""
-"Будь ласка, видаліть будь-яку особисту інформацію з журналу, перш ніж "
-"надсилати звіт про помилку."
-
-#: plinth/modules/help/views.py:29
+#: plinth/modules/help/views.py:27
 msgid "Documentation and FAQ"
 msgstr "Документація та ЧаП"
 
-#: plinth/modules/help/views.py:98
+#: plinth/modules/help/views.py:96
 #, python-brace-format
 msgid "About {box_name}"
 msgstr "Про {box_name}"
 
-#: plinth/modules/help/views.py:135
+#: plinth/modules/help/views.py:133
 #, python-brace-format
 msgid "{box_name} Manual"
 msgstr "Посібник для {box_name}"
 
 #: plinth/modules/homeassistant/__init__.py:31
-#, fuzzy
-#| msgid ""
-#| "Home Assistant is a home automation hub with emphasis on local control "
-#| "and privacy. It integrates with thousands of devices including smart "
-#| "bulbs, alarms, presense sensors, door bells, thermostats, irrigation "
-#| "timers, energy monitors, etc."
 msgid ""
 "Home Assistant is a home automation hub with emphasis on local control and "
 "privacy. It integrates with thousands of devices including smart bulbs, "
 "alarms, presence sensors, door bells, thermostats, irrigation timers, energy "
 "monitors, etc."
 msgstr ""
-"Home Assistant – це центр домашньої автоматизації з акцентом на локальному "
-"управлінні та конфіденційності. Він інтегрується з тисячами пристроїв, "
-"включаючи розумні лампочки, сигналізації, датчики присутності, дверні "
-"дзвінки, термостати, таймери поливу, монітори енергії тощо."
+"Home Assistant — це центр домашньої автоматизації, що робить акцент на "
+"локальному контролі та конфіденційності. Він інтегрується з тисячами "
+"пристроїв, включаючи розумні лампочки, сигналізацію, датчики присутності, "
+"дверні дзвінки, термостати, таймери поливу, монітори енергоспоживання тощо."
 
 #: plinth/modules/homeassistant/__init__.py:35
 msgid ""
@@ -4317,6 +4280,9 @@ msgid ""
 "only be installed if frequent feature updates is enabled in the <a "
 "href=\"{upgrades_url}\">Software Update</a> app."
 msgstr ""
+"<strong>Примітка:</strong> Ця програма отримує часті оновлення функцій. Її "
+"можна встановити, лише якщо в програмі <a href=\"{upgrades_url}\">Оновлення "
+"програмного забезпечення</a> увімкнено часті оновлення функцій."
 
 #: plinth/modules/matrixsynapse/__init__.py:59
 msgid "Matrix Synapse"
@@ -7411,10 +7377,8 @@ msgid "Samba"
 msgstr "Samba"
 
 #: plinth/modules/samba/manifest.py:12
-#, fuzzy
-#| msgid "Samba"
 msgid "SambaLite"
-msgstr "Samba"
+msgstr "SambaLite"
 
 #: plinth/modules/samba/manifest.py:26
 msgid "Ghost Commander"
@@ -9182,15 +9146,7 @@ msgstr "Нові функції"
 
 #: plinth/modules/upgrades/templates/backports-firstboot.html:14
 #: plinth/modules/upgrades/templates/upgrades_configure.html:69
-#, fuzzy, python-format
-#| msgid ""
-#| "Frequent feature updates allow the %(box_name)s Service, plus a very "
-#| "limited set of software, to receive new features more frequently (from "
-#| "the backports repository). This results in receiving some new features "
-#| "within weeks, instead of only once every 2 years or so. Note that "
-#| "software with frequent feature updates does not have support from the "
-#| "Debian Security Team. Instead, they are maintained by contributors to "
-#| "Debian and the %(box_name)s community."
+#, python-format
 msgid ""
 "Frequent feature updates allow the %(box_name)s Service, plus a very limited "
 "set of software, to receive new features more frequently (from the backports "
@@ -9202,11 +9158,11 @@ msgid ""
 msgstr ""
 "Часті оновлення функцій дозволяють службі %(box_name)s, а також дуже "
 "обмеженому набору програмного забезпечення, частіше отримувати нові функції "
-"(з репозиторію бекпортів). Це призводить до того, що деякі нові функції "
-"з'являються протягом декількох тижнів, а не лише раз на 2 роки або близько "
-"того. Зауважте, що програмне забезпечення з частими оновленнями не "
-"підтримується командою безпеки Debian. Замість цього вони підтримуються "
-"учасниками Debian і спільнотою %(box_name)s."
+"(з репозиторію backports або unstable). Це дозволяє отримувати деякі нові "
+"функції протягом декількох тижнів, а не раз на 2 роки. Зверніть увагу, що "
+"програмне забезпечення з частими оновленнями функцій не підтримується "
+"командою безпеки Debian. Натомість, його підтримують учасники спільноти "
+"Debian та %(box_name)s."
 
 #: plinth/modules/upgrades/templates/backports-firstboot.html:26
 msgid ""
@@ -9789,13 +9745,7 @@ msgid "The following administrator accounts exist in the system."
 msgstr "Наступні облікові записи адміністратора існують у системі."
 
 #: plinth/modules/users/templates/users_firstboot.html:56
-#, fuzzy, python-format
-#| msgid ""
-#| "Delete these accounts from command line and refresh the page to create an "
-#| "account that is usable with %(box_name)s. On the command line run the "
-#| "command \"echo '{\"args\": [\"USERNAME\", \"PASSWORD\"], \"kwargs\": {}}' "
-#| "| sudo /usr/share/plinth/actions/actions users remove_user\". If an "
-#| "account is already usable with %(box_name)s, skip this step."
+#, python-format
 msgid ""
 "Delete these accounts from command line and refresh the page to create an "
 "account that is usable with %(box_name)s. On the command line run the "
@@ -9803,11 +9753,11 @@ msgid ""
 "\"kwargs\": {}}' | sudo freedombox-cmd users remove_user\". If an account is "
 "already usable with %(box_name)s, skip this step."
 msgstr ""
-"Видаліть ці облікові записи з командного рядка та оновіть сторінку для "
-"створення облікового запису, який можна використовувати з %(box_name)s. У "
-"командному рядку виконайте команду \"echo '{\"args\": [\"USERNAME\", "
-"\"PASSWORD\"], \"kwargs\": {}}' | sudo /usr/share/plinth/actions/actions "
-"users remove_user\". Якщо обліковий запис вже використовується на "
+"Видаліть ці облікові записи з командного рядка та оновіть сторінку, щоб "
+"створити обліковий запис, який можна використовувати з %(box_name)s. У "
+"командному рядку виконайте команду «echo '{\"args\": [\"USERNAME\", "
+"\"AUTH_USER\", \"AUTH_PASSWORD\"], \"kwargs\": {}}' | sudo freedombox-cmd "
+"users remove_user». Якщо обліковий запис вже можна використовувати з "
 "%(box_name)s, пропустіть цей крок."
 
 #: plinth/modules/users/templates/users_firstboot.html:69
@@ -10533,12 +10483,18 @@ msgid "500"
 msgstr "500"
 
 #: plinth/templates/500.html:14
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "This is an internal error and not something you caused or can fix. Please "
+#| "report the error on the <a href=\"https://salsa.debian.org/freedombox-"
+#| "team/freedombox/issues\">bug tracker</a> so we can fix it. Also, please "
+#| "attach the <a href=\"%(status_log_url)s\">status log</a> to the bug "
+#| "report."
 msgid ""
 "This is an internal error and not something you caused or can fix. Please "
 "report the error on the <a href=\"https://salsa.debian.org/freedombox-team/"
 "freedombox/issues\">bug tracker</a> so we can fix it. Also, please attach "
-"the <a href=\"%(status_log_url)s\">status log</a> to the bug report."
+"the <a href=\"%(logs_url)s\">logs</a> to the bug report."
 msgstr ""
 "Це внутрішня помилка і не те, що Ви спричинили чи можете виправити. Будь "
 "ласка, повідомте про помилку на сторінці <a href=\"https://salsa.debian.org/"
@@ -10549,6 +10505,33 @@ msgstr ""
 #: plinth/templates/app-header.html:26
 msgid "Installation"
 msgstr "Встановлення"
+
+#: plinth/templates/app-logs.html:12
+#, fuzzy
+#| msgid ""
+#| "These are the last %(num_lines)s lines of the status log for this web "
+#| "interface. If you want to report a bug, please use the <a href=\"https://"
+#| "salsa.debian.org/freedombox-team/freedombox/issues\">bug tracker</a> and "
+#| "attach this status log to the bug report."
+msgid ""
+"These are the last lines of the logs for services involved in this app. If "
+"you want to report a bug, please use the <a href=\"https://salsa.debian.org/"
+"freedombox-team/freedombox/issues\">bug tracker</a> and attach this log to "
+"the bug report."
+msgstr ""
+"Це останні %(num_lines)s рядків із журналу стану для цього вебінтерфейсу. "
+"Якщо Ви бажаєте повідомити про недолік, будь ласка використовуйте сторінку "
+"<a href=\"https://salsa.debian.org/freedombox-team/freedombox/"
+"issues\">відстеження недоліків</a> і прикріпіть цей журнал стану до звіту "
+"про недолік."
+
+#: plinth/templates/app-logs.html:26
+msgid ""
+"Please remove any personal information from the log before submitting the "
+"bug report."
+msgstr ""
+"Будь ласка, видаліть будь-яку особисту інформацію з журналу, перш ніж "
+"надсилати звіт про помилку."
 
 #: plinth/templates/app.html:34
 #, python-format
@@ -10800,14 +10783,20 @@ msgid "Clear all tags"
 msgstr "Очистити всі теги"
 
 #: plinth/templates/toolbar.html:39 plinth/templates/toolbar.html:40
+#, fuzzy
+#| msgid "Logs"
+msgid "View Logs"
+msgstr "Журнали"
+
+#: plinth/templates/toolbar.html:46 plinth/templates/toolbar.html:47
 msgid "Backup"
 msgstr "Резервна копія"
 
-#: plinth/templates/toolbar.html:53
+#: plinth/templates/toolbar.html:60
 msgid "Re-run setup"
 msgstr "Повторно розпочати налаштування"
 
-#: plinth/templates/toolbar.html:59 plinth/templates/toolbar.html:60
+#: plinth/templates/toolbar.html:66 plinth/templates/toolbar.html:67
 #: plinth/templates/uninstall.html:30
 msgid "Uninstall"
 msgstr "Видалити"
@@ -10825,15 +10814,15 @@ msgstr ""
 "Усі дані програми та налаштування буде втрачено назавжди. Застосунок можна "
 "встановити начисто ще раз."
 
-#: plinth/views.py:84
+#: plinth/views.py:89
 msgid "Here"
 msgstr "тут"
 
-#: plinth/views.py:414
+#: plinth/views.py:421
 msgid "Setting unchanged"
 msgstr "Налаштування не змінено"
 
-#: plinth/views.py:640
+#: plinth/views.py:648
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr "перед видаленням {app_id}"
@@ -10841,6 +10830,9 @@ msgstr "перед видаленням {app_id}"
 #: plinth/web_framework.py:122
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "Status Log"
+#~ msgstr "Журнал стану"
 
 #, python-brace-format
 #~ msgid "Invalid username: {username}"

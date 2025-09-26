@@ -12,6 +12,23 @@
 
 Name Services provides an overview of ways the box can be reached from the public Internet: domain name, Tor Onion Service, and Pagekite. For each type of name, it is shown whether the HTTP, HTTPS, and SSH services are enabled or disabled for incoming connections through the given name. It also shows and allows configuring how !FreedomBox performs domain name resolutions.
 
+=== Adding Domain Name to FreedomBox ===
+
+Domain names are unique names assigned to computers and servers to identify and reach them easily without having remember their more technical (IP) addresses.
+
+Adding at least one domain name to your !FreedomBox through one of the supported methods is necessary if you wish to access various apps from outside of your home network. Even at home, adding a domain name allows you to have a TLS certificate that is essential for accessing apps securely through HTTPS. The following types of domains are supported:
+ * A regular domain that is purchased from a domain registrar. These domains looks like `mydomain.example`. These types of domains require that your !FreedomBox machine or your home network router have a public IP address provided by your ISP. All apps can be accessed using these domains.
+ * A dynamic domain that can obtained from a dynamic DNS provider. !FreedomBox foundation provides a free dynamic DNS domain for all !FreedomBox users at https://ddns.freedombox.org . These domains look like `mydomain.fbx.one` or `mydomain.freedombox.rocks`. These types of domains require that your !FreedomBox machine or your home network router have a public IP address provided by your ISP. The public IP may be changed by the ISP regularly and DNS records will be updated accordingly. All apps can be accessed using these domains. These types of domains are configured using the [[FreedomBox/Manual/DynamicDNS|Dynamic DNS]] app in !FreedomBox.
+ * A Tor Onion domain that can be obtained by setting up Tor app. These domains look like `mysitenameyx4fi3l6x2gyzmtmgxjyqyorj9qsb5r543izcwymle.onion`. These types of domains don't require a public IP address from your ISP. However, only web or SSH based services/apps work on this type of domain. Further, only users of Tor will be able to reach these domains. A regular browser will not be able to reach these services. These types of domains are configured using the [[FreedomBox/Manual/Tor|Tor]] app in !FreedomBox.
+ * A !PageKite domain that can obtained from a !PageKite service provider. This service can be purchased at https://pagekite.net . These domains look like `https://mydomain.pagekite.net`. These types of domains don't require a public IP address from your ISP. However, only web or SSH based services/apps work on this type of domain. These types of domains are configured using the [[FreedomBox/Manual/PageKite|PageKite]] app in !FreedomBox.
+
+=== Subdomains ===
+
+Subdomains are similar to domains, but reside under the a domain name. For example, for a domain `mydomain.example` a subdomain could be `myapp.mydomain.example`. Some applications such as [[FreedomBox/Manual/HomeAssistant|Home Assistant]] in !FreedomBox require you to setup and access them over a subdomain instead of a URL path. You can obtain and setup subdomains in the following ways:
+
+ * If you own a regular domain (as described above), you can login to the web console provided by your domain registrar and add a subdomain. Make the subdomain a CNAME of the original domain or assign A and AAAA records similar to the original domain. See your domain registrar's documentation for more information. After adding DNS entries for the subdomain, let !FreedomBox know that it can use the subdomain by adding it as another regular domain. TLS certificates (for HTTPS) will be automatically obtained by !FreedomBox using Let's Encrypt for these subdomains.
+ * If you have a dynamic domain name from !FreedomBox foundation, you can also get an unlimited number of free subdomains. For this, login to your account at https://ddns.freedombox.org, go to `Change Settings`, check the option `Wild Card`, and click `Save Changes`. After this you can add any number of subdomains like `foo.myaccount.fbx.one` to your !FreedomBox in `System` -> `Names` -> `Add Domain (regular)`. TLS certificates (for HTTPS) will be automatically obtained by !FreedomBox using Let's Encrypt for these subdomains. Also see [[FreedomBox/Manual/DynamicDNS|Dynamic DNS]] documentation page.
+
 === systemd-resolved ===
 
 From release 24.19, !FreedomBox uses systemd-resolved as caching DNS resolver and replaces resolvconf for managing DNS server configuration. This improves privacy and security. Newer installations will come with systemd-resolved and older machines will automatically switch after an upgrade to this new release.

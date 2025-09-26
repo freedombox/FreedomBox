@@ -263,3 +263,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         error();
     }
 });
+
+/*
+ * Text areas showing log lines have special behavior.
+ */
+document.addEventListener('DOMContentLoaded', function(event) {
+    const logElements = document.querySelectorAll('textarea.log');
+
+    // Scroll the textarea to the bottom so that last lines are visible.
+    for (const element of logElements) {
+        element.scrollTop = element.scrollHeight;
+    }
+});

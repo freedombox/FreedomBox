@@ -104,6 +104,16 @@ def is_running(service: str) -> bool:
     return action_utils.service_is_running(service)
 
 
+@privileged
+def get_logs(service: str) -> dict[str, str]:
+    _assert_service_is_managed_by_plinth(service)
+    return {
+        'unit': service,
+        'description': action_utils.service_show(service)['Description'],
+        'logs': action_utils.service_get_logs(service)
+    }
+
+
 def _get_managed_services():
     """Get a set of all services managed by FreedomBox."""
     from plinth.container import Container

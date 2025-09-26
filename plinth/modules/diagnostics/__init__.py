@@ -11,24 +11,31 @@ import threading
 from copy import deepcopy
 
 import psutil
+from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import gettext_noop
 
 from plinth import app as app_module
-from plinth import daemon, glib, kvstore, menu
+from plinth import cfg, glib, kvstore, menu
 from plinth import operation as operation_module
+from plinth.daemon import RelatedDaemon, diagnose_port_listening
 from plinth.diagnostic_check import (CheckJSONDecoder, CheckJSONEncoder,
                                      DiagnosticCheck, Result)
 from plinth.modules.apache.components import diagnose_url_on_all
 from plinth.modules.backups.components import BackupRestore
 from plinth.setup import run_repair_on_app
+from plinth.utils import format_lazy
 
 from . import manifest
 
 _description = [
     _('The system diagnostic test will run a number of checks on your '
       'system to confirm that applications and services are working as '
-      'expected.')
+      'expected.'),
+    format_lazy(
+        _('This app also shows the <a href="{logs_url}">logs</a> for '
+          '{box_name} services.'), box_name=_(cfg.box_name),
+        logs_url=reverse_lazy('logs', args=['diagnostics']))
 ]
 
 logger = logging.Logger(__name__)
@@ -61,6 +68,14 @@ class DiagnosticsApp(app_module.App):
                               order=30)
         self.add(menu_item)
 
+        # Add FreedomBox daemons to show logs for them.
+        daemon = RelatedDaemon('related-daemon-plinth', 'plinth')
+        self.add(daemon)
+
+        daemon = RelatedDaemon('related-daemon-freedombox-privileged',
+                               'freedombox-privileged')
+        self.add(daemon)
+
         backup_restore = BackupRestore('backup-restore-diagnostics',
                                        **manifest.backup)
         self.add(backup_restore)
@@ -82,7 +97,7 @@ class DiagnosticsApp(app_module.App):
     def diagnose(self) -> list[DiagnosticCheck]:
         """Run diagnostics and return the results."""
         results = super().diagnose()
-        results.append(daemon.diagnose_port_listening(8000, 'tcp4'))
+        results.append(diagnose_port_listening(8000, 'tcp4'))
         results.extend(
             diagnose_url_on_all('http://{host}/plinth/',
                                 check_certificate=False))
