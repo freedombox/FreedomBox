@@ -836,11 +836,20 @@ def run(command, **kwargs):
     if collect_stderr:
         kwargs['stderr'] = subprocess.PIPE
 
-    process = subprocess.run(command, **kwargs)
-    if collect_stdout and hasattr(actions.thread_storage, 'stdout'):
-        actions.thread_storage.stdout += process.stdout
+    try:
+        process = subprocess.run(command, **kwargs)
+        if collect_stdout and hasattr(actions.thread_storage, 'stdout'):
+            actions.thread_storage.stdout += process.stdout
 
-    if collect_stderr and hasattr(actions.thread_storage, 'stderr'):
-        actions.thread_storage.stderr += process.stderr
+        if collect_stderr and hasattr(actions.thread_storage, 'stderr'):
+            actions.thread_storage.stderr += process.stderr
+    except subprocess.CalledProcessError as exception:
+        if exception.stdout and hasattr(actions.thread_storage, 'stdout'):
+            actions.thread_storage.stdout += exception.stdout
+
+        if exception.stderr and hasattr(actions.thread_storage, 'stderr'):
+            actions.thread_storage.stderr += exception.stderr
+
+        raise exception
 
     return process
