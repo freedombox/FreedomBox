@@ -257,6 +257,16 @@ class TestAdminMiddleware:
         response = middleware.process_view(web_request, **kwargs)
         assert response is None
 
+    @staticmethod
+    def test_that_stronghold_allowed_urls_are_allowed_for_normal_user(
+            middleware, kwargs):
+        web_request = RequestFactory().get('/o/authorize/')
+        web_request.user = Mock()
+        web_request.user.groups.filter().exists = Mock(return_value=False)
+        web_request.session = MagicMock()
+        response = middleware.process_view(web_request, **kwargs)
+        assert response is None
+
 
 class TestCommonErrorMiddleware:
     """Test cases for common error middleware."""

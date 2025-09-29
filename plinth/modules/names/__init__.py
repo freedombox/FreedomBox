@@ -251,6 +251,15 @@ def on_domain_added(sender: str, domain_type: str, name: str = '',
     logger.info('Added domain %s of type %s with services %s', name,
                 domain_type, str(services))
 
+    # HACK: Call from here to here ensure that the on_domain_added can perform
+    # DomainName.list() iteration and get an updated list of domains. This
+    # won't happen if in the signal calling order, oidc module get notified
+    # first. A proper fix is being worked on as a complete overhaul to domain
+    # change notification mechanism.
+    from plinth.modules import oidc
+    oidc.on_domain_added(sender, domain_type, name, description, services,
+                         **kwargs)
+
 
 def on_domain_removed(sender: str, domain_type: str, name: str = '', **kwargs):
     """Remove domain from global list."""
@@ -258,6 +267,14 @@ def on_domain_removed(sender: str, domain_type: str, name: str = '', **kwargs):
         component_id = 'domain-' + sender + '-' + name
         components.DomainName.get(component_id).remove()
         logger.info('Removed domain %s of type %s', name, domain_type)
+
+        # HACK: Call from here to here ensure that the on_domain_remove can
+        # perform DomainName.list() iteration and get an updated list of
+        # domains. This won't happen if in the signal calling order, oidc
+        # module get notified first. A proper fix is being worked on as a
+        # complete overhaul to domain change notification mechanism.
+        from plinth.modules import oidc
+        oidc.on_domain_removed(sender, domain_type, name, **kwargs)
     else:
         for domain_name in components.DomainName.list():
             if domain_name.domain_type.component_id == domain_type:

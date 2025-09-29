@@ -27,6 +27,7 @@ See: https://docs.djangoproject.com/en/dev/ref/settings/
 """
 
 import django
+from django.utils.translation import gettext_lazy as _
 
 ALLOWED_HOSTS = ['*']
 
@@ -125,6 +126,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.messages',
     'django.contrib.sessions',
+    'oauth2_provider',
     'stronghold',
     'plinth',
 ]
@@ -171,6 +173,21 @@ MIDDLEWARE = (
     'axes.middleware.AxesMiddleware',
 )
 
+OAUTH2_PROVIDER = {
+    'OIDC_ENABLED': True,
+    'OAUTH2_VALIDATOR_CLASS': 'plinth.modules.oidc.validators.OAuth2Validator',
+    'SCOPES': {
+        'openid':
+            _('Uniquely identify your user account with username'),
+        'email':
+            _('View email address'),
+        'profile':
+            _('View basic profile information (such as name and email)'),
+        'freedombox_groups':
+            _('View permissions that account has')
+    },
+}
+
 PASSWORD_HASHERS = [
     'plinth.hashers.Argon2PasswordHasherLowMemory',
     'django.contrib.auth.hashers.PBKDF2PasswordHasher',
@@ -192,7 +209,7 @@ SESSION_FILE_PATH = '/var/lib/plinth/sessions'
 # Overridden based on configuration key server_dir
 STATIC_URL = '/freedombox/static/'
 
-# STRONGHOLD_PUBLIC_URLS=(r'^captcha/', )
+STRONGHOLD_PUBLIC_URLS = (r'^/o/', )
 
 STRONGHOLD_PUBLIC_NAMED_URLS = (
     'captcha-image',
