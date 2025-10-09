@@ -81,54 +81,55 @@ def test_is_enabled(service_is_enabled, daemon):
 @patch('subprocess.run')
 def test_enable(subprocess_run, apps_init, app_list, mock_privileged, daemon):
     """Test that enabling the daemon works."""
+    common_args = dict(stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                       check=False)
     daemon.enable()
     subprocess_run.assert_has_calls(
-        [call(['systemctl', 'enable', 'test-unit'], check=False)])
+        [call(['systemctl', 'enable', 'test-unit'], **common_args)])
     subprocess_run.assert_any_call(['systemctl', 'start', 'test-unit'],
-                                   stdout=subprocess.DEVNULL, check=False)
+                                   **common_args)
 
     subprocess_run.reset_mock()
     daemon.alias = 'test-unit-2'
     daemon.enable()
+
     subprocess_run.assert_has_calls([
-        call(['systemctl', 'enable', 'test-unit'], check=False),
-        call(['systemctl', 'start', 'test-unit'], stdout=subprocess.DEVNULL,
-             check=False),
-        call(['systemctl', 'enable', 'test-unit-2'], check=False),
-        call(['systemctl', 'start', 'test-unit-2'], stdout=subprocess.DEVNULL,
-             check=False),
+        call(['systemctl', 'enable', 'test-unit'], **common_args),
+        call(['systemctl', 'start', 'test-unit'], **common_args),
+        call(['systemctl', 'enable', 'test-unit-2'], **common_args),
+        call(['systemctl', 'start', 'test-unit-2'], **common_args),
     ])
     subprocess_run.assert_any_call(['systemctl', 'start', 'test-unit'],
-                                   stdout=subprocess.DEVNULL, check=False)
+                                   **common_args)
     subprocess_run.assert_any_call(['systemctl', 'start', 'test-unit-2'],
-                                   stdout=subprocess.DEVNULL, check=False)
+                                   **common_args)
 
 
 @patch('plinth.app.apps_init')
 @patch('subprocess.run')
 def test_disable(subprocess_run, apps_init, app_list, mock_privileged, daemon):
     """Test that disabling the daemon works."""
+    common_args = dict(stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                       check=False)
     daemon.disable()
     subprocess_run.assert_has_calls(
-        [call(['systemctl', 'disable', 'test-unit'], check=False)])
+        [call(['systemctl', 'disable', 'test-unit'], **common_args)])
     subprocess_run.assert_any_call(['systemctl', 'stop', 'test-unit'],
-                                   stdout=subprocess.DEVNULL, check=False)
+                                   **common_args)
 
     subprocess_run.reset_mock()
     daemon.alias = 'test-unit-2'
     daemon.disable()
     subprocess_run.assert_has_calls([
-        call(['systemctl', 'disable', 'test-unit'], check=False),
-        call(['systemctl', 'stop', 'test-unit'], stdout=subprocess.DEVNULL,
-             check=False),
-        call(['systemctl', 'disable', 'test-unit-2'], check=False),
-        call(['systemctl', 'stop', 'test-unit-2'], stdout=subprocess.DEVNULL,
-             check=False),
+        call(['systemctl', 'disable', 'test-unit'], **common_args),
+        call(['systemctl', 'stop', 'test-unit'], **common_args),
+        call(['systemctl', 'disable', 'test-unit-2'], **common_args),
+        call(['systemctl', 'stop', 'test-unit-2'], **common_args),
     ])
     subprocess_run.assert_any_call(['systemctl', 'stop', 'test-unit'],
-                                   stdout=subprocess.DEVNULL, check=False)
+                                   **common_args)
     subprocess_run.assert_any_call(['systemctl', 'stop', 'test-unit-2'],
-                                   stdout=subprocess.DEVNULL, check=False)
+                                   **common_args)
 
 
 @patch('plinth.action_utils.service_is_running')
@@ -144,10 +145,21 @@ def test_is_running(service_is_running, daemon):
 
 @patch('plinth.app.apps_init')
 @patch('plinth.action_utils.service_is_running')
+@patch('plinth.action_utils.service_show')
 @patch('subprocess.run')
-def test_ensure_running(subprocess_run, service_is_running, apps_init,
-                        app_list, mock_privileged, daemon):
+def test_ensure_running(subprocess_run, service_show, service_is_running,
+                        apps_init, app_list, mock_privileged, daemon):
     """Test that checking that the daemon is running works."""
+    common_args = dict(stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                       check=False)
+
+    service_show.return_value = {'LoadState': 'not-found'}
+    with daemon.ensure_running() as starting_state:
+        assert not starting_state
+        assert subprocess_run.mock_calls == []
+
+    service_show.return_value = {'LoadState': 'loaded'}
+
     service_is_running.return_value = True
     with daemon.ensure_running() as starting_state:
         assert starting_state
@@ -159,16 +171,14 @@ def test_ensure_running(subprocess_run, service_is_running, apps_init,
     with daemon.ensure_running() as starting_state:
         assert not starting_state
         assert subprocess_run.mock_calls == [
-            call(['systemctl', 'enable', 'test-unit'], check=False),
-            call(['systemctl', 'start', 'test-unit'],
-                 stdout=subprocess.DEVNULL, check=False),
+            call(['systemctl', 'enable', 'test-unit'], **common_args),
+            call(['systemctl', 'start', 'test-unit'], **common_args),
         ]
         subprocess_run.reset_mock()
 
     assert subprocess_run.mock_calls == [
-        call(['systemctl', 'disable', 'test-unit'], check=False),
-        call(['systemctl', 'stop', 'test-unit'], stdout=subprocess.DEVNULL,
-             check=False),
+        call(['systemctl', 'disable', 'test-unit'], **common_args),
+        call(['systemctl', 'stop', 'test-unit'], **common_args),
     ]
 
 

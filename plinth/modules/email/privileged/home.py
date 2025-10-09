@@ -6,8 +6,7 @@ See:
 https://doc.dovecot.org/configuration_manual/authentication/user_databases_userdb/
 """
 
-import subprocess
-
+from plinth import action_utils
 from plinth.actions import privileged
 
 
@@ -19,4 +18,4 @@ def setup_home():
     Dovecot creates new directories with the same permissions as the parent
     directory. Ensure that 'others' can't access /var/mail/.
     """
-    subprocess.run(['chmod', 'o-rwx', '/var/mail'], check=True)
+    action_utils.run(['chmod', 'o-rwx', '/var/mail'], check=True)

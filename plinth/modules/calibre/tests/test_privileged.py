@@ -29,9 +29,8 @@ def fixture_patch():
         path = pathlib.Path(args[0][2]) / 'metadata.db'
         path.touch()
 
-    with patch('subprocess.call') as subprocess_call, \
-         patch('subprocess.run'), patch('shutil.chown'):
-        subprocess_call.side_effect = side_effect
+    with patch('subprocess.run') as subprocess_run, patch('shutil.chown'):
+        subprocess_run.side_effect = side_effect
         yield
 
 

@@ -4,11 +4,13 @@ Tests for config module.
 """
 
 import os
-from unittest.mock import MagicMock, patch
+import pathlib
+from unittest.mock import Mock, patch
 
 import pytest
 
 from plinth import __main__ as plinth_main
+from plinth import utils
 from plinth.modules.apache import uws_directory_of_user, uws_url_of_user
 from plinth.modules.config import (_home_page_scid2url, change_home_page,
                                    get_home_page, home_page_url2scid)
@@ -61,23 +63,14 @@ def test_homepage_mapping_skip_ci():
 
     # AC: Return None if it doesn't:
     os.rmdir(uws_directory)
-    assert _home_page_scid2url(uws_scid) is None
+    assert _home_page_scid2url(uws_scid) == '/plinth/'
 
 
-class Dict2Obj:
-    """Mock object made out of any dict."""
-
-    def __init__(self, a_dict):
-        self.__dict__ = a_dict
-
-
-@patch('plinth.frontpage.Shortcut.list',
-       MagicMock(return_value=[
-           Dict2Obj({
-               'url': 'url/for/' + id,
-               'component_id': id
-           }) for id in ('a', 'b')
-       ]))
+@patch(
+    'plinth.frontpage.Shortcut.list',
+    Mock(return_value=[
+        Mock(url='url/for/' + id, component_id=id) for id in ('a', 'b')
+    ]))
 @pytest.mark.usefixtures('needs_root')
 def test_homepage_field():
     """Test homepage changes.
@@ -104,23 +97,14 @@ def test_homepage_field():
                Currently they share the same test case.
              - Search for another valid user apart from fbx.
     """
-    user = 'fbx'
+    user = 'test_' + utils.random_string(size=12)
     uws_directory = uws_directory_of_user(user)
     uws_url = uws_url_of_user(user)
     uws_scid = home_page_url2scid(uws_url)
 
     default_home_page = 'plinth'
     original_home_page = get_home_page() or default_home_page
-
-    # Check test's preconditions:
-    if original_home_page not in (default_home_page, None):
-        reason = "Unexpected home page {}.".format(original_home_page)
-        pytest.skip(reason)
-
-    if os.path.exists(uws_directory):
-        # Don't blindly remove a pre-existing directory. Just skip the test.
-        reason = "UWS directory {} exists already.".format(uws_directory)
-        pytest.skip(reason)
+    change_home_page(default_home_page)  # Set to known value explicitly
 
     # AC: invalid changes fall back to default:
     for scid in ('uws-unexisting', uws_scid, 'missing_app'):
@@ -128,12 +112,7 @@ def test_homepage_field():
         assert get_home_page() == default_home_page
 
     # AC: valid changes actually happen:
-    try:
-        os.mkdir(uws_directory)
-    except Exception:
-        reason = "Needs access to ~/ directory. " \
-               + "CI sandboxed workspace doesn't provide it."
-        pytest.skip(reason)
+    pathlib.Path(uws_directory).mkdir(parents=True)
     for scid in ('b', 'a', uws_scid, 'apache-default', 'plinth'):
         change_home_page(scid)
         assert get_home_page() == scid

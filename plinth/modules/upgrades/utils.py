@@ -3,10 +3,10 @@
 
 import pathlib
 import re
-import subprocess
 
 import augeas
 
+from plinth import action_utils
 from plinth.modules.apache.components import check_url
 
 RELEASE_FILE_URL = \
@@ -23,7 +23,7 @@ def check_auto() -> bool:
         'apt-config', 'shell', 'UpdateInterval',
         'APT::Periodic::Update-Package-Lists'
     ]
-    output = subprocess.check_output(arguments).decode()
+    output = action_utils.run(arguments, check=True).stdout.decode()
     update_interval = 0
     match = re.match(r"UpdateInterval='(.*)'", output)
     if match:
@@ -62,7 +62,7 @@ def is_release_file_available(protocol: str, dist: str,
 
 def is_sufficient_free_space() -> bool:
     """Return whether there is sufficient free space for dist upgrade."""
-    output = subprocess.check_output(['df', '--output=avail', '/'])
+    output = action_utils.run(['df', '--output=avail', '/'], check=True).stdout
     free_space = int(output.decode().split('\n')[1])
     return free_space >= DIST_UPGRADE_REQUIRED_FREE_SPACE
 
@@ -100,9 +100,9 @@ def get_sources_list_codename() -> str | None:
 
 def get_current_release():
     """Return current release and codename as a tuple."""
-    output = subprocess.check_output(
-        ['lsb_release', '--release', '--codename',
-         '--short']).decode().strip()
+    output = action_utils.run(
+        ['lsb_release', '--release', '--codename', '--short'],
+        check=True).stdout.decode().strip()
     lines = output.split('\n')
     return lines[0], lines[1]
 

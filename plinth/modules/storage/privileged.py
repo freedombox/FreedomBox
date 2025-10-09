@@ -46,7 +46,7 @@ def _move_gpt_second_header(device):
     """
     command = ['sgdisk', '--move-second-header', device]
     try:
-        subprocess.run(command, check=True)
+        action_utils.run(command, check=True)
     except subprocess.CalledProcessError:
         raise RuntimeError('Error moving GPT second header to the end')
 
@@ -65,12 +65,12 @@ def _resize_partition(device, requested_partition, free_space):
         'B', 'resizepart', requested_partition['number']
     ]
     try:
-        subprocess.run(command, check=True)
+        action_utils.run(command, check=True)
     except subprocess.CalledProcessError:
         try:
             input_text = 'yes\n' + str(free_space['end'])
-            subprocess.run(fallback_command, check=True,
-                           input=input_text.encode())
+            action_utils.run(fallback_command, check=True,
+                             input=input_text.encode())
         except subprocess.CalledProcessError as exception:
             raise RuntimeError(f'Error expanding partition: {exception}')
 
@@ -90,8 +90,7 @@ def _resize_ext4(device, requested_partition, _free_space, _mount_point):
                                              requested_partition['number'])
     try:
         command = ['resize2fs', partition_device]
-        subprocess.run(command, stdout=subprocess.DEVNULL,
-                       stderr=subprocess.DEVNULL, check=True)
+        action_utils.run(command, check=True)
     except subprocess.CalledProcessError as exception:
         raise RuntimeError(f'Error expanding filesystem: {exception}')
 
@@ -100,7 +99,7 @@ def _resize_btrfs(_device, _requested_partition, _free_space, mount_point='/'):
     """Resize a btrfs file system inside a partition."""
     try:
         command = ['btrfs', 'filesystem', 'resize', 'max', mount_point]
-        subprocess.run(command, stdout=subprocess.DEVNULL, check=True)
+        action_utils.run(command, check=True)
     except subprocess.CalledProcessError as exception:
         raise RuntimeError(f'Error expanding filesystem: {exception}')
 
@@ -167,7 +166,7 @@ def _get_partitions_and_free_spaces(device, partition_number):
     command = [
         'parted', '--machine', '--script', device, 'unit', 'B', 'print', 'free'
     ]
-    process = subprocess.run(command, stdout=subprocess.PIPE, check=True)
+    process = action_utils.run(command, check=True)
 
     requested_partition = None
     free_spaces = []
@@ -215,7 +214,7 @@ def mount(block_device: str):
     UDISKS_FILESYSTEM_SHARED=1 by writing a udev rule.
 
     """
-    subprocess.run([
+    action_utils.run([
         'udisksctl', 'mount', '--block-device', block_device,
         '--no-user-interaction'
     ], check=True)
@@ -325,7 +324,7 @@ def usage_info() -> str:
         'df', '--exclude-type=tmpfs', '--exclude-type=devtmpfs',
         '--block-size=1', '--output=source,fstype,size,used,avail,pcent,target'
     ]
-    return subprocess.check_output(command).decode()
+    return action_utils.run(command, check=False).stdout.decode()
 
 
 @privileged

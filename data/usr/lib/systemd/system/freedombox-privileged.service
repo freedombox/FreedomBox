@@ -5,10 +5,12 @@ Description=FreedomBox Privileged Service
 Documentation=https://wiki.debian.org/FreedomBox/
 # Don't hit the start rate limiting.
 StartLimitIntervalSec=0
+# Stop/restart along with .socket unit (invoked from dpkg scripts).
+PartOf=freedombox-privileged.socket
 
 [Service]
 Type=notify
-ExecStart=/usr/bin/freedombox-privileged
+ExecStart=/usr/lib/freedombox/freedombox-privileged
 TimeoutSec=300s
 User=root
 Group=root

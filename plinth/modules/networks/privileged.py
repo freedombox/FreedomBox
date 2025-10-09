@@ -29,8 +29,9 @@ def _sort_interfaces(interfaces: list[str]) -> list[str]:
 
 def _get_interfaces() -> dict[str, list[str]]:
     """Return all network interfaces by their type."""
-    output = subprocess.check_output(
-        ['nmcli', '--terse', '--fields', 'type,device', 'device'])
+    output = action_utils.run(
+        ['nmcli', '--terse', '--fields', 'type,device', 'device'],
+        check=True).stdout
     interfaces = collections.defaultdict(list)
     for line in output.decode().splitlines():
         type_, _, interface = line.partition(':')
@@ -45,14 +46,15 @@ def _get_interfaces() -> dict[str, list[str]]:
 def _add_connection(connection_name: str, interface: str,
                     remaining_arguments: list[str]):
     """Add an Ethernet/Wi-Fi connection of type regular or shared."""
-    output = subprocess.check_output(
-        ['nmcli', '--terse', '--fields', 'name,device', 'con', 'show'])
+    output = action_utils.run(
+        ['nmcli', '--terse', '--fields', 'name,device', 'con', 'show'],
+        check=True).stdout
     lines = output.decode().splitlines()
     if f'{connection_name}:{interface}' in lines:
         logging.info('Connection %s already exists for device %s, not adding.',
                      connection_name, interface)
     else:
-        subprocess.run([
+        action_utils.run([
             'nmcli', 'con', 'add', 'con-name', connection_name, 'ifname',
             interface
         ] + remaining_arguments, check=True)
@@ -108,8 +110,9 @@ def _set_connection_properties(connection_name: str, properties: dict[str,
                                                                       str]):
     """Configure property key/values on a connection."""
     for key, value in properties.items():
-        subprocess.run(['nmcli', 'con', 'modify', connection_name, key, value],
-                       check=True)
+        action_utils.run(
+            ['nmcli', 'con', 'modify', connection_name, key, value],
+            check=True)
 
 
 def _configure_wireless_interface(interface: str):

@@ -104,15 +104,15 @@ def _setup_firewall():
             'firewall-cmd', '--zone', 'internal',
             '--{}-interface'.format(operation), interface
         ]
-        subprocess.call(command)
-        subprocess.call(command + ['--permanent'])
+        action_utils.run(command, check=False)
+        action_utils.run(command + ['--permanent'], check=False)
 
     def _is_tunplus_enabled():
         """Return whether tun+ interface is already added."""
         try:
-            process = subprocess.run(
+            process = action_utils.run(
                 ['firewall-cmd', '--zone', 'internal', '--list-interfaces'],
-                stdout=subprocess.PIPE, check=True)
+                check=True)
             return 'tun+' in process.stdout.decode().strip().split()
         except subprocess.CalledProcessError:
             return True  # Safer
@@ -135,8 +135,8 @@ def _setup_firewall():
 
 def _run_easy_rsa(args):
     """Execute easy-rsa command with some default arguments."""
-    return subprocess.run(['/usr/share/easy-rsa/easyrsa'] + args,
-                          cwd=KEYS_DIRECTORY, check=True)
+    return action_utils.run(['/usr/share/easy-rsa/easyrsa'] + args,
+                            cwd=KEYS_DIRECTORY, check=True)
 
 
 def _write_easy_rsa_config():
@@ -162,9 +162,9 @@ def _is_renewable(cert_name):
     if not cert_path.exists():
         return False
 
-    process = subprocess.run(
+    process = action_utils.run(
         ['openssl', 'x509', '-noout', '-enddate', '-in',
-         str(cert_path)], check=True, stdout=subprocess.PIPE)
+         str(cert_path)], check=True)
     date_string = process.stdout.decode().strip().partition('=')[2]
     cert_expiry_time = datetime.datetime.strptime(date_string,
                                                   '%b %d %H:%M:%S %Y GMT')

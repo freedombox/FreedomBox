@@ -4,7 +4,6 @@ Configure Mumble server.
 """
 
 import pathlib
-import subprocess
 
 import augeas
 
@@ -37,8 +36,8 @@ def check_setup() -> bool:
 @privileged
 def set_super_user_password(password: secret_str):
     """Set the superuser password with murmurd command."""
-    subprocess.run(['murmurd', '-readsupw'], input=password.encode(),
-                   stdout=subprocess.DEVNULL, check=False)
+    action_utils.run(['murmurd', '-readsupw'], input=password.encode(),
+                     check=False)
 
 
 @privileged

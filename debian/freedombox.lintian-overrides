@@ -19,3 +19,8 @@ freedombox binary: web-application-works-only-with-apache
 # Not documentation
 freedombox: package-contains-documentation-outside-usr-share-doc [usr/share/plinth/static/jslicense.html]
 freedombox: package-contains-documentation-outside-usr-share-doc [usr/lib/python3/dist-packages/plinth-*.dist-info/top_level.txt]
+
+# This executable is meant to executed from systemd service file and is not
+# meant for user. However, don't install to /usr/libexec and follow systemd
+# convention instead.
+freedombox: executable-in-usr-lib [usr/lib/freedombox/freedombox-privileged]

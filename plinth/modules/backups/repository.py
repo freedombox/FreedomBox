@@ -237,7 +237,7 @@ class RootBorgRepository(BaseBorgRepository):
     UUID = 'root'
     PATH = '/var/lib/freedombox/borgbackup'
 
-    storage_type = 'root'
+    storage_type = 'root'  # type: ignore
     name = format_lazy(_('{box_name} storage'), box_name=_(cfg.box_name))
     borg_path = PATH
     sort_order = 10
@@ -252,7 +252,7 @@ class RootBorgRepository(BaseBorgRepository):
 class BorgRepository(BaseBorgRepository):
     """General Borg repository implementation."""
     known_credentials = ['encryption_passphrase']
-    storage_type = 'disk'
+    storage_type = 'disk'  # type: ignore
     sort_order = 20
     flags = {'removable': True}
 
@@ -273,7 +273,7 @@ class SshBorgRepository(BaseBorgRepository):
     known_credentials = [
         'ssh_keyfile', 'ssh_password', 'encryption_passphrase'
     ]
-    storage_type = 'ssh'
+    storage_type = 'ssh'  # type: ignore
     sort_order = 30
     flags = {'removable': True, 'mountable': True}
 

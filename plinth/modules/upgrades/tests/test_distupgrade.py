@@ -7,7 +7,7 @@ import re
 import subprocess
 from datetime import datetime as datetime_original
 from datetime import timezone
-from unittest.mock import call, patch
+from unittest.mock import Mock, call, patch
 
 import pytest
 
@@ -24,7 +24,7 @@ def test_apt_run(run):
     distupgrade._apt_run(args)
     assert run.call_args.args == \
         (['apt-get', '--assume-yes', '--quiet=2'] + args,)
-    assert not run.call_args.kwargs['stdout']
+    assert run.call_args.kwargs['stdout'] == subprocess.PIPE
 
     run.return_value.returncode = 10
     with pytest.raises(RuntimeError):
@@ -219,7 +219,7 @@ def test_snapshot_run_and_disable(is_supported, is_apt_snapshots_enabled, run):
     with distupgrade._snapshot_run_and_disable():
         assert run.call_args_list == [
             call(['snapper', 'create', '--description', 'before dist-upgrade'],
-                 check=True)
+                 stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
         ]
         run.reset_mock()
 
@@ -230,16 +230,18 @@ def test_snapshot_run_and_disable(is_supported, is_apt_snapshots_enabled, run):
     with distupgrade._snapshot_run_and_disable():
         assert run.call_args_list == [
             call(['snapper', 'create', '--description', 'before dist-upgrade'],
-                 check=True),
+                 stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True),
             call([
                 '/usr/bin/freedombox-cmd', 'snapshot', 'disable_apt_snapshot'
-            ], input=b'{"args": ["yes"], "kwargs": {}}', check=True)
+            ], input=b'{"args": ["yes"], "kwargs": {}}',
+                 stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
         ]
         run.reset_mock()
 
     assert run.call_args_list == [
         call(['/usr/bin/freedombox-cmd', 'snapshot', 'disable_apt_snapshot'],
-             input=b'{"args": ["no"], "kwargs": {}}', check=True)
+             input=b'{"args": ["no"], "kwargs": {}}', stdout=subprocess.PIPE,
+             stderr=subprocess.PIPE, check=True)
     ]
 
 
@@ -262,40 +264,51 @@ def test_services_disable(service_is_running, service_disable, service_enable):
 
 
 @patch('subprocess.run')
-@patch('subprocess.check_call')
-@patch('subprocess.check_output')
-def test_apt_hold_packages(check_output, check_call, run, tmp_path):
+def test_apt_hold_packages(run, tmp_path):
     """Test that holding apt packages works."""
+
+    def _run(command, **kwargs):
+        if 'showhold' in command:
+            return Mock(stdout=False)
+
+        return Mock(returncode=0)
+
     hold_flag = tmp_path / 'flag'
-    run.return_value.returncode = 0
+    run.side_effect = _run
     with patch('plinth.action_utils.apt_hold_flag', hold_flag), \
          patch('plinth.modules.upgrades.distupgrade.PACKAGES_WITH_PROMPTS',
                ['package1', 'package2']):
-        check_output.return_value = False
         with distupgrade._apt_hold_packages():
             assert hold_flag.exists()
             assert hold_flag.stat().st_mode & 0o117 == 0
-            expected_call = [call(['apt-mark', 'hold', 'freedombox'])]
-            assert check_call.call_args_list == expected_call
             expected_calls = [
-                call(['apt-mark', 'hold', 'package1'], check=False),
-                call(['apt-mark', 'hold', 'package2'], check=False)
+                call(['apt-mark', 'showhold', 'freedombox'], check=True,
+                     stdout=subprocess.PIPE, stderr=subprocess.PIPE),
+                call(['apt-mark', 'hold', 'freedombox'], check=True,
+                     stdout=subprocess.PIPE, stderr=subprocess.PIPE),
+                call(['apt-mark', 'showhold', 'package1'],
+                     stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                     check=True),
+                call(['apt-mark', 'hold', 'package1'], check=False,
+                     stdout=subprocess.PIPE, stderr=subprocess.PIPE),
+                call(['apt-mark', 'showhold', 'package2'],
+                     stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                     check=True),
+                call(['apt-mark', 'hold', 'package2'], check=False,
+                     stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             ]
-            assert run.call_args_list == expected_calls
-            check_call.reset_mock()
+            assert run.mock_calls == expected_calls
             run.reset_mock()
 
         expected_call = [
-            call(['apt-mark', 'unhold', 'freedombox'],
-                 stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
-                 check=False)
+            call(['apt-mark', 'unhold', 'package1'], stdout=subprocess.PIPE,
+                 stderr=subprocess.PIPE, check=True),
+            call(['apt-mark', 'unhold', 'package2'], stdout=subprocess.PIPE,
+                 stderr=subprocess.PIPE, check=True),
+            call(['apt-mark', 'unhold', 'freedombox'], stdout=subprocess.PIPE,
+                 stderr=subprocess.PIPE, check=False),
         ]
         assert run.call_args_list == expected_call
-        expected_calls = [
-            call(['apt-mark', 'unhold', 'package1']),
-            call(['apt-mark', 'unhold', 'package2'])
-        ]
-        assert check_call.call_args_list == expected_calls
 
 
 @patch('plinth.action_utils.debconf_set_selections')
@@ -340,7 +353,8 @@ def test_apt_fix(run, apt_run):
     """Test that apt fixes work."""
     distupgrade._apt_fix()
     assert run.call_args_list == [
-        call(['dpkg', '--configure', '-a'], check=False)
+        call(['dpkg', '--configure', '-a'], stdout=subprocess.PIPE,
+             stderr=subprocess.PIPE, check=False)
     ]
     assert apt_run.call_args_list == [call(['--fix-broken', 'install'])]
 
@@ -365,7 +379,9 @@ def test_apt_full_upgrade(apt_run):
 def test_unatteneded_upgrades_run(run):
     """Test that running unattended upgrades works."""
     distupgrade._unattended_upgrades_run()
-    run.assert_called_with(['unattended-upgrade', '--verbose'], check=False)
+    run.assert_called_with(['unattended-upgrade', '--verbose'],
+                           stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                           check=False)
 
 
 @patch('plinth.action_utils.service_restart')
@@ -384,7 +400,7 @@ def test_trigger_on_complete(run):
         '--description=Finish up upgrade to new stable Debian release',
         '/usr/bin/freedombox-cmd', 'upgrades', 'dist_upgrade_on_complete',
         '--no-args'
-    ], check=True)
+    ], stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
 
 
 def test_on_complete(tmp_path):

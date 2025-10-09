@@ -29,10 +29,6 @@ ifneq ($(FBX_VERSION),$(DEB_VERSION))
 endif
 
 override_dh_installsystemd:
-	# Do not enable or start any service other than FreedomBox service. Use
-	# of --tmpdir is a hack to workaround an issue with dh_installsystemd
-	# (as of debhelper 13.5.2) that still has hardcoded search path of
-	# /lib/systemd/system for searching systemd services. See #987989 and
-	# reversion of its changes.
-	dh_installsystemd --tmpdir=debian/tmp/usr --package=freedombox \
-		plinth.service freedombox-privileged.socket
+	# Do not enable or start any service other than FreedomBox service.
+	dh_installsystemd --package=freedombox plinth.service \
+		freedombox-privileged.socket

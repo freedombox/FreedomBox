@@ -73,13 +73,13 @@ def setup():
 
 
 def _run_in_container(
-        *args, capture_output: bool = False, check: bool = True,
+        *args, check: bool = True,
         env: dict[str, str] | None = None) -> subprocess.CompletedProcess:
     """Run a command inside the container."""
     env_args = [f'--env={key}={value}' for key, value in (env or {}).items()]
     command = ['podman', 'exec', '--user', WWW_DATA_UID
                ] + env_args + [CONTAINER_NAME] + list(args)
-    return subprocess.run(command, capture_output=capture_output, check=check)
+    return action_utils.run(command, check=check)
 
 
 def _run_occ(*args, **kwargs) -> subprocess.CompletedProcess:
@@ -109,8 +109,7 @@ def disable():
 def get_override_domain():
     """Return the domain name that Nextcloud is configured to override with."""
     try:
-        domain = _run_occ('config:system:get', 'overwritehost',
-                          capture_output=True)
+        domain = _run_occ('config:system:get', 'overwritehost')
         return domain.stdout.decode().strip()
     except subprocess.CalledProcessError:
         return None
@@ -159,8 +158,7 @@ def get_default_phone_region():
     """"Get the value of default_phone_region."""
     try:
         default_phone_region = _run_occ('config:system:get',
-                                        'default_phone_region',
-                                        capture_output=True)
+                                        'default_phone_region')
         return default_phone_region.stdout.decode().strip()
     except subprocess.CalledProcessError:
         return None
@@ -174,7 +172,7 @@ def set_default_phone_region(region: str):
 
 def _database_query(query: str):
     """Run a database query."""
-    subprocess.run(['mysql'], input=query.encode(), check=True)
+    action_utils.run(['mysql'], input=query.encode(), check=True)
 
 
 def _create_database():
@@ -239,14 +237,14 @@ def _nextcloud_wait_until_ready():
     # obtaining. We are unable to obtain the lock for 5 minutes, fail and stop
     # the setup process.
     lock_file = _data_path / 'nextcloud-init-sync.lock'
-    subprocess.run(
+    action_utils.run(
         ['flock', '--exclusive', '--wait', '300', lock_file, 'echo'],
         check=True)
 
 
 def _nextcloud_get_status():
     """Return Nextcloud status such installed, in maintenance, etc."""
-    output = _run_occ('status', '--output=json', capture_output=True)
+    output = _run_occ('status', '--output=json')
     return json.loads(output.stdout)
 
 
@@ -281,8 +279,7 @@ def _configure_ldap():
     # Check if LDAP has already been configured. This is necessary because
     # if the setup proccess is rerun when updating the FredomBox app another
     # redundant LDAP config would be created.
-    output = _run_occ('ldap:test-config', 's01', capture_output=True,
-                      check=False)
+    output = _run_occ('ldap:test-config', 's01', check=False)
     if 'Invalid configID' in output.stdout.decode():
         _run_occ('ldap:create-empty-config')
 
@@ -362,7 +359,7 @@ def dump_database():
 
     with _maintenance_mode():
         with DB_BACKUP_FILE.open('w', encoding='utf-8') as file_handle:
-            subprocess.run([
+            action_utils.run([
                 'mysqldump', '--add-drop-database', '--add-drop-table',
                 '--add-drop-trigger', '--single-transaction',
                 '--default-character-set=utf8mb4', '--user', 'root',
@@ -374,11 +371,11 @@ def dump_database():
 def restore_database():
     """Restore database from file."""
     with DB_BACKUP_FILE.open('r', encoding='utf-8') as file_handle:
-        subprocess.run(['mysql', '--user', 'root'], stdin=file_handle,
-                       check=True)
+        action_utils.run(['mysql', '--user', 'root'], stdin=file_handle,
+                         check=True)
 
-    subprocess.run(['redis-cli', '-n',
-                    str(REDIS_DB), 'FLUSHDB', 'SYNC'], check=False)
+    action_utils.run(['redis-cli', '-n',
+                      str(REDIS_DB), 'FLUSHDB', 'SYNC'], check=False)
 
     _set_database_privileges(_get_database_password())
 
@@ -405,8 +402,7 @@ def _get_database_password():
     code = 'if (file_exists("/var/www/html/config/config.php")) {' \
         'include_once("/var/www/html/config/config.php");' \
         'print($CONFIG["dbpassword"] ?? ""); }'
-    return _run_in_container('php', '-r', code,
-                             capture_output=True).stdout.decode().strip()
+    return _run_in_container('php', '-r', code).stdout.decode().strip()
 
 
 def _create_redis_config():

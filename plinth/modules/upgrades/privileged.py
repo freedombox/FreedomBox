@@ -7,6 +7,7 @@ import pathlib
 import re
 import subprocess
 
+from plinth import action_utils
 from plinth.action_utils import (apt_hold_flag, apt_unhold_freedombox,
                                  is_package_manager_busy, run_apt_command,
                                  service_is_running)
@@ -127,17 +128,17 @@ def release_held_packages():
                        'holds.')
         return
 
-    output = subprocess.check_output(['apt-mark', 'showhold']).decode().strip()
+    output = action_utils.run(['apt-mark', 'showhold'],
+                              check=True).stdout.decode().strip()
     holds = output.split('\n')
     logger.info('Releasing package holds: %s', holds)
-    subprocess.run(['apt-mark', 'unhold', *holds], stdout=subprocess.DEVNULL,
-                   stderr=subprocess.DEVNULL, check=True)
+    action_utils.run(['apt-mark', 'unhold', *holds], check=True)
 
 
 @privileged
 def run():
     """Run unattended-upgrades."""
-    subprocess.run(['dpkg', '--configure', '-a'], check=False)
+    action_utils.run(['dpkg', '--configure', '-a'], check=False)
     run_apt_command(['--fix-broken', 'install'])
     _release_held_freedombox()
 

@@ -109,23 +109,23 @@ def home_page_url2scid(url: str | None):
 
 def _home_page_scid2url(shortcut_id: str) -> str | None:
     """Return the url for the given home page shortcut ID."""
+    url: str | None = '/plinth/'
     if shortcut_id == 'plinth':
-        url = '/plinth/'
+        pass
     elif shortcut_id == 'apache-default':
         url = None
     elif shortcut_id.startswith('uws-'):
         user = shortcut_id[4:]
         if user in get_users_with_website():
             url = uws_url_of_user(user)
-        else:
-            url = None
     else:
         shortcuts = frontpage.Shortcut.list()
         aux = [
             shortcut.url for shortcut in shortcuts
             if shortcut_id == shortcut.component_id
         ]
-        url = aux[0] if 1 == len(aux) else None
+        if 1 == len(aux):
+            url = aux[0]
 
     return url
 

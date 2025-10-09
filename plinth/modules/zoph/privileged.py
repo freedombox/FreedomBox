@@ -23,6 +23,7 @@ def pre_install():
         'zoph zoph/dbconfig-install boolean true',
         'zoph zoph/dbconfig-upgrade boolean true',
         'zoph zoph/dbconfig-remove boolean true',
+        'zoph zoph/dbconfig-reinstall boolean true'
         'zoph zoph/mysql/admin-user string root',
         'zoph zoph/rm_images select yes',
     ])
@@ -33,15 +34,13 @@ def get_configuration() -> dict[str, str]:
     """Return the current configuration."""
     configuration = {}
     try:
-        process = subprocess.run(['zoph', '--dump-config'],
-                                 stdout=subprocess.PIPE, check=True)
+        process = action_utils.run(['zoph', '--dump-config'], check=True)
     except subprocess.CalledProcessError as exception:
         if exception.returncode != 96:
             raise
 
         _zoph_setup_cli_user()
-        process = subprocess.run(['zoph', '--dump-config'],
-                                 stdout=subprocess.PIPE, check=True)
+        process = action_utils.run(['zoph', '--dump-config'], check=True)
 
     for line in process.stdout.decode().splitlines():
         name, value = line.partition(':')[::2]
@@ -75,13 +74,13 @@ WHERE
 def _zoph_configure(key, value):
     """Set a configure value in Zoph."""
     try:
-        subprocess.run(['zoph', '--config', key, value], check=True)
+        action_utils.run(['zoph', '--config', key, value], check=True)
     except subprocess.CalledProcessError as exception:
         if exception.returncode != 96:
             raise
 
         _zoph_setup_cli_user()
-        subprocess.run(['zoph', '--config', key, value], check=True)
+        action_utils.run(['zoph', '--config', key, value], check=True)
 
 
 @privileged
@@ -137,17 +136,16 @@ def set_configuration(enable_osm: bool | None = None,
         query = f"UPDATE zoph_users SET user_name='{admin_user}' \
                  WHERE user_name='admin';"
 
-        subprocess.run(['mysql', _get_db_config()['db_name']],
-                       input=query.encode(), check=True)
+        action_utils.run(['mysql', _get_db_config()['db_name']],
+                         input=query.encode(), check=True)
 
 
 @privileged
 def is_configured() -> bool | None:
     """Return whether zoph app is configured."""
     try:
-        process = subprocess.run(
-            ['zoph', '--get-config', 'interface.user.remote'],
-            stdout=subprocess.PIPE, check=True)
+        process = action_utils.run(
+            ['zoph', '--get-config', 'interface.user.remote'], check=True)
         return process.stdout.decode().strip() == 'true'
     except (FileNotFoundError, subprocess.CalledProcessError):
         return None
@@ -163,8 +161,8 @@ def dump_database():
         db_name = _get_db_config()['db_name']
         os.makedirs(os.path.dirname(DB_BACKUP_FILE), exist_ok=True)
         with open(DB_BACKUP_FILE, 'w', encoding='utf-8') as db_backup_file:
-            subprocess.run(['mysqldump', db_name], stdout=db_backup_file,
-                           check=True)
+            action_utils.run(['mysqldump', db_name], stdout=db_backup_file,
+                             check=True)
 
 
 @privileged
@@ -178,15 +176,16 @@ def restore_database():
         db_user = _get_db_config()['db_user']
         db_host = _get_db_config()['db_host']
         db_pass = _get_db_config()['db_pass']
-        subprocess.run(['mysqladmin', '--force', 'drop', db_name], check=False)
-        subprocess.run(['mysqladmin', 'create', db_name], check=True)
+        action_utils.run(['mysqladmin', '--force', 'drop', db_name],
+                         check=False)
+        action_utils.run(['mysqladmin', 'create', db_name], check=True)
         with open(DB_BACKUP_FILE, 'r', encoding='utf-8') as db_restore_file:
-            subprocess.run(['mysql', db_name], stdin=db_restore_file,
-                           check=True)
+            action_utils.run(['mysql', db_name], stdin=db_restore_file,
+                             check=True)
 
         # Set the password for user from restored configuration
         query = f'ALTER USER {db_user}@{db_host} IDENTIFIED BY "{db_pass}";'
-        subprocess.run(['mysql'], input=query.encode(), check=True)
+        action_utils.run(['mysql'], input=query.encode(), check=True)
 
 
 @privileged
@@ -198,12 +197,12 @@ def uninstall():
     with action_utils.service_ensure_running('mysql'):
         try:
             config = _get_db_config()
-            subprocess.run(
+            action_utils.run(
                 ['mysqladmin', '--force', 'drop', config['db_name']],
                 check=False)
 
             query = f'DROP USER IF EXISTS {config["db_user"]}@localhost;'
-            subprocess.run(['mysql'], input=query.encode(), check=False)
+            action_utils.run(['mysql'], input=query.encode(), check=False)
         except FileNotFoundError:  # Database configuration not found
             pass
 

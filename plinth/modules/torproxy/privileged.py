@@ -4,7 +4,6 @@
 import logging
 import os
 import shutil
-import subprocess
 from typing import Any
 
 import augeas
@@ -31,7 +30,7 @@ def setup():
     # Mask the service to prevent re-enabling it by the Tor master service.
     action_utils.service_mask('tor@default')
 
-    subprocess.run(['tor-instance-create', INSTANCE_NAME], check=True)
+    action_utils.run(['tor-instance-create', INSTANCE_NAME], check=True)
 
     # Remove line starting with +SocksPort, since our augeas lens
     # doesn't handle it correctly.

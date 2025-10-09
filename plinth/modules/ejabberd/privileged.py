@@ -89,7 +89,7 @@ def setup(domain_name: str):
     _upgrade_config(domain_name)
 
     try:
-        subprocess.check_output(['ejabberdctl', 'restart'])
+        action_utils.run(['ejabberdctl', 'restart'], check=True)
     except subprocess.CalledProcessError as err:
         logger.warn('Failed to restart ejabberd with new configuration: %s',
                     err)
@@ -145,11 +145,11 @@ def pre_change_hostname(old_hostname: str, new_hostname: str):
         logger.info('ejabberdctl not found')
         return
 
-    subprocess.call(['ejabberdctl', 'backup', EJABBERD_BACKUP])
-    subprocess.check_output([
+    action_utils.run(['ejabberdctl', 'backup', EJABBERD_BACKUP], check=False)
+    action_utils.run([
         'ejabberdctl', 'mnesia-change-nodename', 'ejabberd@' + old_hostname,
         'ejabberd@' + new_hostname, EJABBERD_BACKUP, EJABBERD_BACKUP_NEW
-    ])
+    ], check=True)
     os.remove(EJABBERD_BACKUP)
 
 
@@ -160,20 +160,20 @@ def change_hostname():
         return
 
     action_utils.service_stop('ejabberd')
-    subprocess.call(['pkill', '-u', 'ejabberd'])
+    action_utils.run(['pkill', '-u', 'ejabberd'], check=False)
 
     # Make sure there aren't files in the Mnesia spool dir
     os.makedirs('/var/lib/ejabberd/oldfiles', exist_ok=True)
-    subprocess.call('mv /var/lib/ejabberd/*.* /var/lib/ejabberd/oldfiles/',
-                    shell=True)
+    action_utils.run('mv /var/lib/ejabberd/*.* /var/lib/ejabberd/oldfiles/',
+                     shell=True, check=False)
 
     action_utils.service_start('ejabberd')
 
     # restore backup database
     if os.path.exists(EJABBERD_BACKUP_NEW):
         try:
-            subprocess.check_output(
-                ['ejabberdctl', 'restore', EJABBERD_BACKUP_NEW])
+            action_utils.run(['ejabberdctl', 'restore', EJABBERD_BACKUP_NEW],
+                             check=True)
             os.remove(EJABBERD_BACKUP_NEW)
         except subprocess.CalledProcessError as err:
             logger.error('Failed to restore ejabberd backup database: %s', err)
@@ -278,7 +278,7 @@ def mam(command: str) -> bool | None:
         yaml.dump(conf, file_handle)
 
     if action_utils.service_is_running('ejabberd'):
-        subprocess.call(['ejabberdctl', 'reload_config'])
+        action_utils.run(['ejabberdctl', 'reload_config'], check=False)
 
     return None
 
@@ -359,14 +359,14 @@ def configure_turn(turn_server_config: dict[str, Any], managed: bool):
         Path(EJABBERD_MANAGED_COTURN).unlink(missing_ok=True)
 
     if action_utils.service_is_running('ejabberd'):
-        subprocess.call(['ejabberdctl', 'reload_config'])
+        action_utils.run(['ejabberdctl', 'reload_config'], check=False)
 
 
 def _get_version():
     """Get the current ejabberd version."""
     try:
-        output = subprocess.check_output(['ejabberdctl',
-                                          'status']).decode('utf-8')
+        output = action_utils.run(['ejabberdctl', 'status'],
+                                  check=True).stdout.decode('utf-8')
     except subprocess.CalledProcessError:
         return None
 

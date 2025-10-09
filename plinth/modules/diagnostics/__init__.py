@@ -86,8 +86,9 @@ class DiagnosticsApp(app_module.App):
         # Check periodically for low RAM space
         glib.schedule(3600, _warn_about_low_ram_space)
 
-        # Run diagnostics once a day
-        glib.schedule(24 * 3600, _daily_diagnostics_run, in_thread=False)
+        # Run diagnostics once a day or every 30 minutes in development mode.
+        glib.schedule(24 * 3600, _daily_diagnostics_run, in_thread=False,
+                      develop_interval=1800)
 
     def setup(self, old_version):
         """Install and configure the app."""

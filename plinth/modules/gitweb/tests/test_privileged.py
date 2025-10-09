@@ -2,6 +2,8 @@
 """Test module for gitweb module operations."""
 
 import pathlib
+import subprocess
+from unittest.mock import call, patch
 
 import pytest
 from django.forms import ValidationError
@@ -121,3 +123,26 @@ def test_action_create_repo_with_invalid_urls(url):
     with pytest.raises(ValidationError):
         privileged.create_repo(url=url, description='', owner='',
                                keep_ownership=True)
+
+
+@patch('plinth.action_utils.run')
+def test_setup_git_creentials(run):
+    """Test that setting up git credentials works."""
+    url = 'https://user:pass@host.example/path?key=value'
+    safe_url = privileged._setup_git_credentials(url)
+    assert safe_url == 'https://host.example/path?key=value'
+
+    input_ = b'protocol=https\nhost=host.example\nusername=user\n' \
+        b'password=pass\n\n'
+    env = run.mock_calls[0].kwargs.pop('env')
+    assert env['GIT_TERMINAL_PROMPT'] == '0'
+    assert run.mock_calls == [
+        call(['git', 'credential', 'approve'], input=input_,
+             stdout=subprocess.DEVNULL, check=True)
+    ]
+
+    run.reset_mock()
+    url = 'https://host2.example/path?key=value'
+    safe_url = privileged._setup_git_credentials(url)
+    assert safe_url == 'https://host2.example/path?key=value'
+    run.assert_not_called()

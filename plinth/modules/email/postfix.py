@@ -11,6 +11,8 @@ import re
 import subprocess
 from dataclasses import dataclass
 
+from plinth import action_utils
+
 
 @dataclass
 class Service:  # NOQA, pylint: disable=too-many-instance-attributes
@@ -109,7 +111,7 @@ def _run(args):
     Raise a RuntimeError on non-zero exit codes.
     """
     try:
-        result = subprocess.run(args, check=True, capture_output=True)
+        result = action_utils.run(args, check=True)
         return result.stdout.decode()
     except subprocess.SubprocessError as subprocess_error:
         raise RuntimeError('Subprocess failed') from subprocess_error

@@ -53,7 +53,8 @@ def add_package(file_name: str, temporary_file_path: str):
 
 
 def _kiwix_manage_add(zim_file: str):
-    subprocess.check_call(['kiwix-manage', LIBRARY_FILE, 'add', zim_file])
+    action_utils.run(['kiwix-manage', LIBRARY_FILE, 'add', zim_file],
+                     check=True)
 
     # kiwix-serve doesn't read the library file unless it is restarted.
     action_utils.service_try_restart('kiwix-server-freedombox')
@@ -97,8 +98,8 @@ def delete_package(zim_id: str):
             if book.attrib['id'] != zim_id:
                 continue
 
-            subprocess.check_call(
-                ['kiwix-manage', LIBRARY_FILE, 'remove', zim_id])
+            action_utils.run(['kiwix-manage', LIBRARY_FILE, 'remove', zim_id],
+                             check=True)
             (KIWIX_HOME / book.attrib['path']).unlink()
             action_utils.service_try_restart('kiwix-server-freedombox')
             return

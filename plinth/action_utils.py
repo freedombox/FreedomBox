@@ -33,20 +33,18 @@ def is_systemd_running():
 
 def systemd_get_default() -> str:
     """Return the default target that systemd will boot into."""
-    process = subprocess.run(['systemctl', 'get-default'],
-                             stdout=subprocess.PIPE, check=True)
+    process = run(['systemctl', 'get-default'], check=True)
     return process.stdout.decode().strip()
 
 
 def systemd_set_default(target: str):
     """Set the default target that systemd will boot into."""
-    subprocess.run(['systemctl', 'set-default', target], check=True)
+    run(['systemctl', 'set-default', target], check=True)
 
 
 def service_daemon_reload():
     """Reload systemd to ensure that newer unit files are read."""
-    subprocess.run(['systemctl', 'daemon-reload'], check=True,
-                   stdout=subprocess.DEVNULL)
+    run(['systemctl', 'daemon-reload'], check=True)
 
 
 def service_is_running(servicename):
@@ -55,8 +53,7 @@ def service_is_running(servicename):
     Does not need to run as root.
     """
     try:
-        subprocess.run(['systemctl', 'status', servicename], check=True,
-                       stdout=subprocess.DEVNULL)
+        run(['systemctl', 'status', servicename], check=True)
         return True
     except subprocess.CalledProcessError:
         # If a service is not running we get a status code != 0 and
@@ -102,9 +99,7 @@ def service_is_enabled(service_name, strict_check=False):
 
     """
     try:
-        process = subprocess.run(['systemctl', 'is-enabled', service_name],
-                                 check=True, stdout=subprocess.PIPE,
-                                 stderr=subprocess.DEVNULL)
+        process = run(['systemctl', 'is-enabled', service_name], check=True)
         if not strict_check:
             return True
 
@@ -115,13 +110,13 @@ def service_is_enabled(service_name, strict_check=False):
 
 def service_enable(service_name: str, check: bool = False):
     """Enable and start a service in systemd."""
-    subprocess.run(['systemctl', 'enable', service_name], check=check)
+    run(['systemctl', 'enable', service_name], check=check)
     service_start(service_name, check=check)
 
 
 def service_disable(service_name: str, check: bool = False):
     """Disable and stop service in systemd."""
-    subprocess.run(['systemctl', 'disable', service_name], check=check)
+    run(['systemctl', 'disable', service_name], check=check)
     try:
         service_stop(service_name, check=check)
     except subprocess.CalledProcessError:
@@ -130,12 +125,12 @@ def service_disable(service_name: str, check: bool = False):
 
 def service_mask(service_name: str, check: bool = False):
     """Mask a service"""
-    subprocess.run(['systemctl', 'mask', service_name], check=check)
+    run(['systemctl', 'mask', service_name], check=check)
 
 
 def service_unmask(service_name: str, check: bool = False):
     """Unmask a service"""
-    subprocess.run(['systemctl', 'unmask', service_name], check=check)
+    run(['systemctl', 'unmask', service_name], check=check)
 
 
 def service_start(service_name: str, check: bool = False):
@@ -181,14 +176,14 @@ def service_get_logs(service_name: str) -> str:
     command = [
         'journalctl', '--no-pager', '--lines=200', '--unit', service_name
     ]
-    process = subprocess.run(command, check=False, stdout=subprocess.PIPE)
+    process = run(command, check=False)
     return process.stdout.decode()
 
 
 def service_show(service_name: str) -> dict[str, str]:
     """Return the status of the service in dictionary format."""
     command = ['systemctl', 'show', service_name]
-    process = subprocess.run(command, check=False, stdout=subprocess.PIPE)
+    process = run(command, check=False)
     status = {}
     for line in process.stdout.decode().splitlines():
         parts = line.partition('=')
@@ -199,8 +194,7 @@ def service_show(service_name: str) -> dict[str, str]:
 
 def service_action(service_name: str, action: str, check: bool = False):
     """Perform the given action on the service_name."""
-    subprocess.run(['systemctl', action, service_name],
-                   stdout=subprocess.DEVNULL, check=check)
+    run(['systemctl', action, service_name], check=check)
 
 
 def webserver_is_enabled(name, kind='config'):
@@ -211,8 +205,7 @@ def webserver_is_enabled(name, kind='config'):
     option_map = {'config': '-c', 'site': '-s', 'module': '-m'}
     try:
         # Don't print anything on the terminal
-        subprocess.check_output(['a2query', option_map[kind], name],
-                                stderr=subprocess.STDOUT)
+        run(['a2query', option_map[kind], name], check=True)
         return True
     except subprocess.CalledProcessError:
         return False
@@ -234,7 +227,7 @@ def webserver_enable(name, kind='config', apply_changes=True):
         'site': 'a2ensite',
         'module': 'a2enmod'
     }
-    subprocess.check_output([command_map[kind], name])
+    run([command_map[kind], name], check=True)
 
     action_required = 'restart' if kind == 'module' else 'reload'
 
@@ -263,7 +256,7 @@ def webserver_disable(name, kind='config', apply_changes=True):
         'site': 'a2dissite',
         'module': 'a2dismod'
     }
-    subprocess.check_output([command_map[kind], name])
+    run([command_map[kind], name], check=True)
 
     action_required = 'restart' if kind == 'module' else 'reload'
 
@@ -391,7 +384,7 @@ def get_ip_addresses() -> list[dict[str, str | bool]]:
     """Return a list of IP addresses assigned to the system."""
     addresses = []
 
-    output = subprocess.check_output(['ip', '-o', 'addr'])
+    output = run(['ip', '-o', 'addr'], check=True).stdout
     for line in output.decode().splitlines():
         parts = line.split()
         address: dict[str, str | bool] = {
@@ -417,7 +410,7 @@ def get_ip_addresses() -> list[dict[str, str | bool]]:
 
 def get_hostname():
     """Return the current hostname."""
-    return subprocess.check_output(['hostname']).decode().strip()
+    return run(['hostname'], check=True).stdout.decode().strip()
 
 
 def dpkg_reconfigure(package, config):
@@ -440,7 +433,7 @@ Owners: {package}
     env['DEBCONF_DB_OVERRIDE'] = 'File{' + override_file.name + \
                                  ' readonly:true}'
     env['DEBIAN_FRONTEND'] = 'noninteractive'
-    subprocess.run(['dpkg-reconfigure', package], env=env, check=False)
+    run(['dpkg-reconfigure', package], env=env, check=False)
 
     try:
         os.remove(override_file.name)
@@ -454,12 +447,12 @@ def debconf_set_selections(presets):
         # Workaround Debian Bug #487300. In some situations, debconf complains
         # it can't find the question being answered even though it is supposed
         # to create a dummy question for it.
-        subprocess.run(['/usr/share/debconf/fix_db.pl'], check=True)
+        run(['/usr/share/debconf/fix_db.pl'], check=True)
     except (FileNotFoundError, PermissionError):
         pass
 
     presets = '\n'.join(presets)
-    subprocess.check_output(['debconf-set-selections'], input=presets.encode())
+    run(['debconf-set-selections'], input=presets.encode(), check=True)
 
 
 def is_disk_image():
@@ -472,8 +465,7 @@ def is_disk_image():
     return os.path.exists('/var/lib/freedombox/is-freedombox-disk-image')
 
 
-def run_apt_command(arguments, stdout=subprocess.DEVNULL,
-                    enable_triggers: bool = False):
+def run_apt_command(arguments, enable_triggers: bool = False):
     """Run apt-get with provided arguments."""
     command = ['apt-get', '--assume-yes', '--quiet=2'] + arguments
 
@@ -481,8 +473,7 @@ def run_apt_command(arguments, stdout=subprocess.DEVNULL,
     env['DEBIAN_FRONTEND'] = 'noninteractive'
     if not enable_triggers:
         env['FREEDOMBOX_INVOKED'] = 'true'
-    process = subprocess.run(command, stdin=subprocess.DEVNULL, stdout=stdout,
-                             env=env, check=False)
+    process = run(command, stdin=subprocess.DEVNULL, env=env, check=False)
     return process.returncode
 
 
@@ -503,25 +494,24 @@ def apt_hold(packages):
     held_packages = []
     try:
         for package in packages:
-            current_hold = subprocess.check_output(
-                ['apt-mark', 'showhold', package])
+            current_hold = run(['apt-mark', 'showhold', package],
+                               check=True).stdout
             if not current_hold:
-                process = subprocess.run(['apt-mark', 'hold', package],
-                                         check=False)
+                process = run(['apt-mark', 'hold', package], check=False)
                 if process.returncode == 0:  # success
                     held_packages.append(package)
 
         yield held_packages
     finally:
         for package in held_packages:
-            subprocess.check_call(['apt-mark', 'unhold', package])
+            run(['apt-mark', 'unhold', package], check=True)
 
 
 @contextmanager
 def apt_hold_freedombox():
     """Prevent freedombox package from being removed during apt operations."""
-    current_hold = subprocess.check_output(
-        ['apt-mark', 'showhold', 'freedombox'])
+    current_hold = run(['apt-mark', 'showhold', 'freedombox'],
+                       check=True).stdout
     try:
         if current_hold:
             # Package is already held, possibly by administrator.
@@ -530,7 +520,7 @@ def apt_hold_freedombox():
             # Set the flag.
             apt_hold_flag.parent.mkdir(mode=0o755, parents=True, exist_ok=True)
             apt_hold_flag.touch(mode=0o660)
-            yield subprocess.check_call(['apt-mark', 'hold', 'freedombox'])
+            yield run(['apt-mark', 'hold', 'freedombox'], check=True)
     finally:
         # Was the package held, either in this process or a previous one?
         if not current_hold or apt_hold_flag.exists():
@@ -539,9 +529,7 @@ def apt_hold_freedombox():
 
 def apt_unhold_freedombox():
     """Remove any hold on freedombox package, and clear flag."""
-    subprocess.run(['apt-mark', 'unhold', 'freedombox'],
-                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
-                   check=False)
+    run(['apt-mark', 'unhold', 'freedombox'], check=False)
     if apt_hold_flag.exists():
         apt_hold_flag.unlink()
 
@@ -552,7 +540,7 @@ def is_package_manager_busy():
     is open which indicates that the package manager is busy"""
     LOCK_FILE = '/var/lib/dpkg/lock'
     try:
-        subprocess.check_output(['lsof', LOCK_FILE])
+        run(['lsof', LOCK_FILE], check=True)
         return True
     except subprocess.CalledProcessError:
         return False
@@ -568,15 +556,14 @@ def podman_create(container_name: str, image_name: str, volume_name: str,
     service_stop(container_name)
 
     # Data is kept
-    subprocess.run(['podman', 'volume', 'rm', '--force', volume_name],
-                   check=False)
+    run(['podman', 'volume', 'rm', '--force', volume_name], check=False)
 
     directory = pathlib.Path('/etc/containers/systemd')
     directory.mkdir(parents=True, exist_ok=True)
 
     # Fetch the image before creating the container. The systemd service for
     # the container won't timeout due to slow internet connectivity.
-    subprocess.run(['podman', 'image', 'pull', image_name], check=True)
+    run(['podman', 'image', 'pull', image_name], check=True)
 
     pathlib.Path(volume_path).mkdir(parents=True, exist_ok=True)
     # Create storage volume
@@ -735,10 +722,8 @@ def podman_disable(container_name: str):
 def podman_uninstall(container_name: str, volume_name: str, image_name: str,
                      volume_path: str):
     """Remove a podman container's components and systemd unit."""
-    subprocess.run(['podman', 'volume', 'rm', '--force', volume_name],
-                   check=True)
-    subprocess.run(['podman', 'image', 'rm', '--ignore', image_name],
-                   check=True)
+    run(['podman', 'volume', 'rm', '--force', volume_name], check=True)
+    run(['podman', 'image', 'rm', '--ignore', image_name], check=True)
     volume_file = pathlib.Path(
         '/etc/containers/systemd/') / f'{volume_name}.volume'
     volume_file.unlink(missing_ok=True)
@@ -825,8 +810,10 @@ def run_as_user(command, username, **kwargs):
 
 def run(command, **kwargs):
     """Run subprocess.run but capture stdout and stderr in thread storage."""
-    collect_stdout = ('stdout' not in kwargs)
-    collect_stderr = ('stderr' not in kwargs)
+    collect_stdout = ('stdout' not in kwargs
+                      and 'capture_output' not in kwargs)
+    collect_stderr = ('stderr' not in kwargs
+                      and 'capture_output' not in kwargs)
 
     if collect_stdout:
         kwargs['stdout'] = subprocess.PIPE
@@ -834,11 +821,20 @@ def run(command, **kwargs):
     if collect_stderr:
         kwargs['stderr'] = subprocess.PIPE
 
-    process = subprocess.run(command, **kwargs)
-    if collect_stdout and actions.thread_storage:
-        actions.thread_storage.stdout += process.stdout
+    try:
+        process = subprocess.run(command, **kwargs)
+        if collect_stdout and hasattr(actions.thread_storage, 'stdout'):
+            actions.thread_storage.stdout += process.stdout
 
-    if collect_stderr and actions.thread_storage:
-        actions.thread_storage.stderr += process.stderr
+        if collect_stderr and hasattr(actions.thread_storage, 'stderr'):
+            actions.thread_storage.stderr += process.stderr
+    except subprocess.CalledProcessError as exception:
+        if exception.stdout and hasattr(actions.thread_storage, 'stdout'):
+            actions.thread_storage.stdout += exception.stdout
+
+        if exception.stderr and hasattr(actions.thread_storage, 'stderr'):
+            actions.thread_storage.stderr += exception.stderr
+
+        raise exception
 
     return process

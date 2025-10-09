@@ -7,7 +7,6 @@ import pathlib
 import pwd
 import shutil
 import stat
-import subprocess
 
 import augeas
 
@@ -101,7 +100,7 @@ def set_keys(user: str, keys: str, auth_user: str, auth_password: secret_str):
     ssh_folder = os.path.join(get_user_homedir(user), '.ssh')
     key_file_path = os.path.join(ssh_folder, 'authorized_keys')
 
-    subprocess.check_call(['mkhomedir_helper', user])
+    action_utils.run(['mkhomedir_helper', user], check=True)
 
     if not os.path.exists(ssh_folder):
         os.makedirs(ssh_folder)

@@ -118,8 +118,8 @@ def reraise_known_errors(privileged_func):
 
 def _reraise_known_errors(err):
     """Look whether the caught error is known and reraise it accordingly"""
-    stdout = (getattr(err, 'stdout') or b'').decode()
-    stderr = (getattr(err, 'stderr') or b'').decode()
+    stdout = (getattr(err, 'stdout', b'') or b'').decode()
+    stderr = (getattr(err, 'stderr', b'') or b'').decode()
     caught_error = str((err, err.args, stdout, stderr))
     for known_error in KNOWN_ERRORS:
         for error in known_error['errors']:
@@ -194,7 +194,7 @@ def _is_mounted(mountpoint):
     cmd = ['mountpoint', '-q', mountpoint]
     # mountpoint exits with status non-zero if it didn't find a mountpoint
     try:
-        subprocess.run(cmd, check=True)
+        action_utils.run(cmd, check=True)
         return True
     except subprocess.CalledProcessError:
         return False
@@ -244,8 +244,7 @@ def init(path: str, encryption: str,
 @privileged
 def info(path: str, encryption_passphrase: secret_str | None = None) -> dict:
     """Show repository information."""
-    process = _run(['borg', 'info', '--json', path], encryption_passphrase,
-                   stdout=subprocess.PIPE)
+    process = _run(['borg', 'info', '--json', path], encryption_passphrase)
     return json.loads(process.stdout.decode())
 
 
@@ -255,7 +254,7 @@ def list_repo(path: str,
               encryption_passphrase: secret_str | None = None) -> dict:
     """List repository contents."""
     process = _run(['borg', 'list', '--json', '--format="{comment}"', path],
-                   encryption_passphrase, stdout=subprocess.PIPE)
+                   encryption_passphrase)
     return json.loads(process.stdout.decode())
 
 
@@ -281,7 +280,7 @@ def remove_uploaded_archive(file_path: str):
 
 def _get_borg_version():
     """Return the version of borgbackup."""
-    process = _run(['borg', '--version'], stdout=subprocess.PIPE)
+    process = _run(['borg', '--version'])
     return process.stdout.decode().split()[1]  # Example: "borg 1.1.9"
 
 
@@ -322,10 +321,7 @@ def _extract(archive_path, destination, encryption_passphrase, locations=None):
 
     try:
         os.chdir(os.path.expanduser(destination))
-        # TODO: with python 3.7 use subprocess.run with the 'capture_output'
-        # argument
-        process = _run(borg_call, encryption_passphrase, check=False,
-                       stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        process = _run(borg_call, encryption_passphrase, check=False)
         if process.returncode != 0:
             error = process.stderr.decode()
             # Don't fail on the borg error when no files were matched
@@ -350,8 +346,7 @@ def export_tar(path: str, encryption_passphrase: secret_str | None = None):
 def _read_archive_file(archive, filepath, encryption_passphrase):
     """Read the content of a file inside an archive."""
     borg_call = ['borg', 'extract', archive, filepath, '--stdout']
-    return _run(borg_call, encryption_passphrase,
-                stdout=subprocess.PIPE).stdout.decode()
+    return _run(borg_call, encryption_passphrase).stdout.decode()
 
 
 @reraise_known_errors
@@ -365,8 +360,7 @@ def get_archive_apps(
         'borg', 'list', path, manifest_folder, '--format', '{path}{NEWLINE}'
     ]
     try:
-        borg_process = _run(borg_call, encryption_passphrase,
-                            stdout=subprocess.PIPE)
+        borg_process = _run(borg_call, encryption_passphrase)
         manifest_path = borg_process.stdout.decode().strip()
     except subprocess.CalledProcessError:
         raise RuntimeError('Borg exited unsuccessfully')

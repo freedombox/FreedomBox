@@ -58,7 +58,12 @@ class MinifluxApp(app_module.App):
                                       login_required=True)
         self.add(shortcut)
 
-        packages = Packages('packages-miniflux', ['miniflux', 'postgresql'])
+        # miniflux package does not depend on postgres. Install postgresql,
+        # start it and only then install miniflux.
+        packages = Packages('packages-miniflux-postgresql', ['postgresql'])
+        self.add(packages)
+
+        packages = Packages('packages-miniflux', ['miniflux'])
         self.add(packages)
 
         drop_in_configs = DropinConfigs(
@@ -74,7 +79,7 @@ class MinifluxApp(app_module.App):
                               urls=['https://{host}/miniflux/'])
         self.add(webserver)
 
-        daemon = SharedDaemon('shared-daemon-miniflus-postgresql',
+        daemon = SharedDaemon('shared-daemon-miniflux-postgresql',
                               'postgresql')
         self.add(daemon)
 
@@ -89,7 +94,17 @@ class MinifluxApp(app_module.App):
     def setup(self, old_version=None):
         """Install and configure the app."""
         privileged.pre_setup()
-        super().setup(old_version)
+
+        # Database needs to be running for successful initialization or upgrade
+        # of miniflux database. 1. The app and database are being freshly
+        # installed. 2. The app is being freshly installed, but database server
+        # is already installed but disabled. 3. The app is being updated to new
+        # version but is currently disabled (DB is installed but disabled or
+        # enabled).
+        with self.get_component(
+                'shared-daemon-miniflux-postgresql').ensure_running():
+            super().setup(old_version)
+
         privileged.setup(old_version)
         if not old_version:
             self.enable()
@@ -97,7 +112,11 @@ class MinifluxApp(app_module.App):
     def uninstall(self):
         """De-configure and uninstall the app."""
         privileged.uninstall()
-        super().uninstall()
+        with self.get_component(
+                'shared-daemon-miniflux-postgresql').ensure_running():
+            # Database needs to be running for successful removal miniflux
+            # database.
+            super().uninstall()
 
 
 class MinifluxBackupRestore(BackupRestore):

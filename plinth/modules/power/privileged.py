@@ -1,18 +1,17 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """Shutdown/restart the system."""
 
-import subprocess
-
+from plinth import action_utils
 from plinth.actions import privileged
 
 
 @privileged
 def restart():
     """Restart the system."""
-    subprocess.call('reboot')
+    action_utils.run('reboot', check=False)
 
 
 @privileged
 def shutdown():
     """Shut down the system."""
-    subprocess.call(['shutdown', 'now'])
+    action_utils.run(['shutdown', 'now'], check=False)

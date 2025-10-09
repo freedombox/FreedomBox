@@ -5,7 +5,6 @@ import grp
 import os
 import pwd
 import shutil
-import subprocess
 import time
 
 import augeas
@@ -37,13 +36,13 @@ def setup():
     try:
         grp.getgrnam('syncthing')
     except KeyError:
-        subprocess.run(['addgroup', '--system', 'syncthing'], check=True)
+        action_utils.run(['addgroup', '--system', 'syncthing'], check=True)
 
     # Create syncthing user if needed.
     try:
         pwd.getpwnam('syncthing')
     except KeyError:
-        subprocess.run([
+        action_utils.run([
             'adduser', '--system', '--ingroup', 'syncthing', '--home',
             DATA_DIR, '--gecos', 'Syncthing file synchronization server',
             'syncthing'

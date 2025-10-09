@@ -7,6 +7,7 @@ import pathlib
 import shutil
 import subprocess
 
+from plinth import action_utils
 from plinth.actions import privileged
 
 DEFAULT_FILE = '/etc/default/samba'
@@ -51,12 +52,13 @@ CONF = r'''
 
 def _close_share(share_name):
     """Disconnect all samba users who are connected to the share."""
-    subprocess.check_call(['smbcontrol', 'smbd', 'close-share', share_name])
+    action_utils.run(['smbcontrol', 'smbd', 'close-share', share_name],
+                     check=True)
 
 
 def _conf_command(parameters, **kwargs):
     """Run samba configuration registry command."""
-    subprocess.check_call(['net', 'conf'] + parameters, **kwargs)
+    action_utils.run(['net', 'conf'] + parameters, check=True, **kwargs)
 
 
 def _create_share(mount_point, share_type, windows_filesystem=False):
@@ -103,7 +105,7 @@ def _create_share_name(mount_point):
 def _define_open_share(name, path, windows_filesystem=False):
     """Define an open samba share."""
     try:
-        _conf_command(['delshare', name], stderr=subprocess.DEVNULL)
+        _conf_command(['delshare', name])
     except subprocess.CalledProcessError:
         pass
     _conf_command(['addshare', name, path, 'writeable=y', 'guest_ok=y'])
@@ -115,7 +117,7 @@ def _define_open_share(name, path, windows_filesystem=False):
 def _define_group_share(name, path, windows_filesystem=False):
     """Define a group samba share."""
     try:
-        _conf_command(['delshare', name], stderr=subprocess.DEVNULL)
+        _conf_command(['delshare', name])
     except subprocess.CalledProcessError:
         pass
     _conf_command(['addshare', name, path, 'writeable=y', 'guest_ok=n'])
@@ -128,7 +130,7 @@ def _define_group_share(name, path, windows_filesystem=False):
 def _define_homes_share(name, path):
     """Define a samba share for private homes."""
     try:
-        _conf_command(['delshare', name], stderr=subprocess.DEVNULL)
+        _conf_command(['delshare', name])
     except subprocess.CalledProcessError:
         pass
     userpath = os.path.join(path, '%u')
@@ -153,7 +155,7 @@ def _get_mount_point(path):
 def _get_shares() -> list[dict[str, str]]:
     """Get shares."""
     shares = []
-    output = subprocess.check_output(['net', 'conf', 'list'])
+    output = action_utils.run(['net', 'conf', 'list'], check=True).stdout
     config = configparser.RawConfigParser()
     config.read_string(output.decode())
     for name in config.sections():
@@ -198,8 +200,8 @@ def _set_open_share_permissions(directory):
             file_path = os.path.join(root, file)
             shutil.chown(file_path, group='freedombox-share')
             os.chmod(file_path, 0o0664)
-    subprocess.check_call(['setfacl', '-Rm', 'g::rwX', directory])
-    subprocess.check_call(['setfacl', '-Rdm', 'g::rwX', directory])
+    action_utils.run(['setfacl', '-Rm', 'g::rwX', directory], check=True)
+    action_utils.run(['setfacl', '-Rdm', 'g::rwX', directory], check=True)
 
 
 def _use_config_file(conf_file):
@@ -229,8 +231,8 @@ def _set_share_permissions(directory):
             file_path = os.path.join(root, file)
             shutil.chown(file_path, group='freedombox-share')
             os.chmod(file_path, 0o0664)
-    subprocess.check_call(['setfacl', '-Rm', 'g::rwX', directory])
-    subprocess.check_call(['setfacl', '-Rdm', 'g::rwX', directory])
+    action_utils.run(['setfacl', '-Rm', 'g::rwX', directory], check=True)
+    action_utils.run(['setfacl', '-Rdm', 'g::rwX', directory], check=True)
 
 
 @privileged
@@ -270,7 +272,7 @@ def get_shares() -> list[dict[str, str]]:
 @privileged
 def get_users() -> list[str]:
     """Get users from Samba database."""
-    output = subprocess.check_output(['pdbedit', '-L']).decode()
+    output = action_utils.run(['pdbedit', '-L'], check=True).stdout.decode()
     samba_users = [line.split(':')[0] for line in output.split()]
     return samba_users
 

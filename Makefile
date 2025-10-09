@@ -37,6 +37,7 @@ DIRECTORIES_TO_CREATE := \
 
 STATIC_FILES_DIRECTORY := $(DESTDIR)/usr/share/plinth/static
 BIN_DIR := $(DESTDIR)/usr/bin
+LIB_DIR := $(DESTDIR)/usr/lib
 
 FIND_ARGS := \
     -not -iname "*.log" \
@@ -102,7 +103,7 @@ install:
 	rm -f $(DESTDIR)$${lib_dir}/plinth*.dist-info/COPYING.md && \
 	rm -f $(DESTDIR)$${lib_dir}/plinth*.dist-info/direct_url.json && \
         $(INSTALL) -D -t $(BIN_DIR) bin/plinth
-	$(INSTALL) -D -t $(BIN_DIR) bin/freedombox-privileged
+	$(INSTALL) -D -t $(LIB_DIR)/freedombox bin/freedombox-privileged
 	$(INSTALL) -D -t $(BIN_DIR) bin/freedombox-cmd
 
 	# Static web server files

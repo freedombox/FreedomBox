@@ -10,7 +10,6 @@ import pwd
 import secrets
 import shutil
 import string
-import subprocess
 
 import augeas
 
@@ -71,13 +70,13 @@ def setup(domain_name: str):
     try:
         grp.getgrnam('bepasty')
     except KeyError:
-        subprocess.run(['addgroup', '--system', 'bepasty'], check=True)
+        action_utils.run(['addgroup', '--system', 'bepasty'], check=True)
 
     # Create bepasty user if needed.
     try:
         pwd.getpwnam('bepasty')
     except KeyError:
-        subprocess.run([
+        action_utils.run([
             'adduser', '--system', '--ingroup', 'bepasty', '--home',
             '/var/lib/bepasty', '--gecos', 'bepasty file sharing', 'bepasty'
         ], check=True)
@@ -174,5 +173,5 @@ def uninstall():
     """Remove bepasty user, group and data."""
     shutil.rmtree(DATA_DIR, ignore_errors=True)
     CONF_FILE.unlink(missing_ok=True)
-    subprocess.run(['deluser', 'bepasty'], check=False)
-    subprocess.run(['delgroup', 'bepasty'], check=False)
+    action_utils.run(['deluser', 'bepasty'], check=False)
+    action_utils.run(['delgroup', 'bepasty'], check=False)

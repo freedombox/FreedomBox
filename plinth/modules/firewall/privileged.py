@@ -36,10 +36,10 @@ def _flush_iptables_rules():
         iptables_rules += rule_template.format(table=table)
         ip6tables_rules += rule_template.format(table=table)
 
-    subprocess.run(['iptables-restore'], input=iptables_rules.encode(),
-                   check=True)
-    subprocess.run(['ip6tables-restore'], input=iptables_rules.encode(),
-                   check=True)
+    action_utils.run(['iptables-restore'], input=iptables_rules.encode(),
+                     check=True)
+    action_utils.run(['ip6tables-restore'], input=iptables_rules.encode(),
+                     check=True)
 
 
 def set_firewall_backend(backend):
@@ -67,8 +67,7 @@ def set_firewall_backend(backend):
 
 def _run_firewall_cmd(args):
     """Run firewall-cmd command, discard output and check return value."""
-    subprocess.run(['firewall-cmd'] + args, stdout=subprocess.DEVNULL,
-                   stderr=subprocess.DEVNULL, check=True)
+    action_utils.run(['firewall-cmd'] + args, check=True)
 
 
 def _setup_local_service_protection():
@@ -160,9 +159,8 @@ def _setup_inter_zone_forwarding():
 def setup():
     """Perform basic firewalld setup."""
     action_utils.service_enable('firewalld')
-    subprocess.run(['firewall-cmd', '--set-default-zone=external'],
-                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
-                   check=True)
+    action_utils.run(['firewall-cmd', '--set-default-zone=external'],
+                     check=True)
     set_firewall_backend('nftables')
 
     _setup_local_service_protection()
@@ -176,7 +174,8 @@ def get_config() -> FirewallConfig:
     config: FirewallConfig = {}
 
     # Get the default zone.
-    output = subprocess.check_output(['firewall-cmd', '--get-default-zone'])
+    output = action_utils.run(['firewall-cmd', '--get-default-zone'],
+                              check=True).stdout
     config['default_zone'] = output.decode().strip()
 
     # Load Augeas lens.
@@ -191,8 +190,9 @@ def get_config() -> FirewallConfig:
     config['backend'] = aug.get('FirewallBackend')
 
     # Get the list of direct passthroughs.
-    output = subprocess.check_output(
-        ['firewall-cmd', '--direct', '--get-all-passthroughs'])
+    output = action_utils.run(
+        ['firewall-cmd', '--direct', '--get-all-passthroughs'],
+        check=True).stdout
     config['passthroughs'] = output.decode().strip().split('\n')
 
     return config

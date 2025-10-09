@@ -8,6 +8,47 @@ For more technical details, see the [[https://salsa.debian.org/freedombox-team/f
 
 The following are the release notes for each !FreedomBox version.
 
+== FreedomBox 25.13 (2025-10-06) ==
+
+=== Highlights ===
+
+ * backups: Fix robust handling of known errors
+ * debian: Stop privileged service during upgrade or removal
+ * miniflux: Fix DB connection issues during install/uninstall
+
+=== Other Changes ===
+
+ * *: Collect output for all privileged sub-processes
+ * *: Use action_utils.run instead of subprocess.call
+ * *: Use action_utils.run instead of subprocess.check_call
+ * *: Use action_utils.run instead of subprocess.check_output
+ * *: Use action_utils.run instead of subprocess.run
+ * action_utils: Handle capture_output argument in run wrapper
+ * actions: Fix lifetime of thread local storage
+ * actions: Log full exception from privileged daemon on error
+ * actions: Log method arguments in privileged daemon
+ * actions: Raise an exception if privileged server response is empty
+ * actions: Work with older privileged daemon
+ * actions_utils: Fix issue with collecting stdout/stderr
+ * backups: Don't show enable/disable button as app can't be disabled
+ * backups: Ignore a typing error with mypy
+ * ci: Switch backports test to trixie-backports
+ * config: Set home page to !FreedomBox for invalid values
+ * d/rules: Drop a workaround for dh_installsytemd needed for /usr/lib
+ * daemon: When ensuring running state handle not-installed state
+ * diagnostics: In development mode, run diagnostics more rarely
+ * doc: Add manual page for freedombox-cmd
+ * gitweb: Use Git credential helper when cloning URLs with credentials
+ * glib: Add schedule parameter for setting interval in develop mode
+ * locale: Fix a string formatting issue in Italian translation
+ * locale: Update translations for Albanian, Bulgarian, Chinese (Simplified Han script), Czech, German, Italian, Russian, Turkish, Ukrainian
+ * Makefile: Move privileged daemon to /usr/lib/freedombox
+ * privileged_daemon: Fix showing errors for freedombox-cmd command
+ * privileged_daemon: Implement handling termination signal
+ * setup: Log full exception traceback when setup fails
+ * storage: Fix disk usage checking with disconnected SSH mounts
+ * zoph: Additional dbconfig configuration keys
+
 == FreedomBox 25.12 (2025-09-22) ==
 
 === Highlights ===

@@ -5,8 +5,8 @@ import os
 import pathlib
 import re
 import shutil
-import subprocess
 
+from plinth import action_utils
 from plinth.actions import privileged, secret_str
 
 SETUP_WIKI = '/etc/ikiwiki/plinth-wiki.setup'
@@ -61,10 +61,9 @@ def create_wiki(wiki_name: str, admin_name: str, admin_password: secret_str):
     """Create a wiki."""
     pw_bytes = admin_password.encode()
     input_ = pw_bytes + b'\n' + pw_bytes
-    subprocess.run(['ikiwiki', '-setup', SETUP_WIKI, wiki_name, admin_name],
-                   stdout=subprocess.PIPE, input=input_,
-                   stderr=subprocess.PIPE,
-                   env=dict(os.environ, PERL_UNICODE='AS'), check=True)
+    action_utils.run(['ikiwiki', '-setup', SETUP_WIKI, wiki_name, admin_name],
+                     input=input_, env=dict(os.environ,
+                                            PERL_UNICODE='AS'), check=True)
 
 
 @privileged
@@ -72,17 +71,15 @@ def create_blog(blog_name: str, admin_name: str, admin_password: secret_str):
     """Create a blog."""
     pw_bytes = admin_password.encode()
     input_ = pw_bytes + b'\n' + pw_bytes
-    subprocess.run(['ikiwiki', '-setup', SETUP_BLOG, blog_name, admin_name],
-                   stdout=subprocess.PIPE, input=input_,
-                   stderr=subprocess.PIPE, env=dict(os.environ,
-                                                    PERL_UNICODE='AS'))
+    action_utils.run(['ikiwiki', '-setup', SETUP_BLOG, blog_name, admin_name],
+                     input=input_, env=dict(os.environ, PERL_UNICODE='AS'))
 
 
 @privileged
 def setup_site(site_name: str):
     """Run setup for a site."""
     setup_path = os.path.join(WIKI_PATH, site_name + '.setup')
-    subprocess.run(['ikiwiki', '-setup', setup_path], check=True)
+    action_utils.run(['ikiwiki', '-setup', setup_path], check=True)
 
 
 @privileged
