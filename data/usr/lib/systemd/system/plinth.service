@@ -5,6 +5,8 @@ Description=FreedomBox Service (Plinth)
 Documentation=man:plinth(1)
 After=network.target
 StartLimitIntervalSec=0
+# Uploaded files in /var/tmp/ are shared with FreedomBox privileged service.
+JoinsNamespaceOf=freedombox-privileged.service
 
 [Service]
 Type=notify
@@ -18,6 +20,8 @@ Group=plinth
 StandardOutput=null
 StandardError=null
 NotifyAccess=main
+# Uploaded files in /var/tmp/ are shared with FreedomBox privileged service by
+# joining namespaces.
 PrivateTmp=yes
 
 [Install]
