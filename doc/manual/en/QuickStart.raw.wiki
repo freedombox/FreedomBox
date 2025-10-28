@@ -15,18 +15,35 @@ The easy way is to [[https://freedomboxfoundation.org/buy/|buy]] a !FreedomBox k
 Alternatively you may choose to build it yourself, by gathering all the components:
  * A supported [[FreedomBox/Hardware|device]] (including any device that can run Debian). We will call that the !FreedomBox in the rest of this manual.
  * A power cable for your device.
- * An ethernet cable.
+ * An Ethernet cable.
  * A microSD card (or equivalent storage media for your device), prepared according to the instructions on the [[FreedomBox/Download|Download]] page.
 
 == How to get started ==
 
-  1. Plug one end of your ethernet cord into your !FreedomBox's ethernet port, and plug the other end into your router.
+  1. Plug one end of your Ethernet cord into your !FreedomBox's Ethernet port, and plug the other end into your router.
   1. Power on the !FreedomBox.
      * '''Note:''' On most single board computers, don't expect any output on a monitor connected via HDMI as the support may not exist in the kernel. See below to access and control your !FreedomBox via network.
   1. On first boot, !FreedomBox will perform its initial setup (older versions of !FreedomBox reboot after this step). This process may take several minutes on some machines. After giving it about 10 minutes, proceed to the next step.
   1. After the !FreedomBox has finished its initial setup, you can access its web interface through your web browser.
-     * If your computer is connected directly to the !FreedomBox through a second (LAN) ethernet port, you can browse to: http://freedombox/ or http://10.42.0.1/.
      * If your computer supports mDNS (GNU/Linux, Mac OSX or Windows with mDNS software installed), you can browse to: http://freedombox.local/ (or http://the-hostname-you-entered-during-install.local/)
+     * If your computer is connected to a monitor and !FreedomBox is able to display text to it, then the login prompt shows the web address. It looks like this:
+     {{{
+     Debian GNU/Linux 13 freedombox tty1
+
+     FreedomBox
+
+     To start using FreedomBox and to create an account, access using a web browser
+     one of the following URLs.
+
+     http://freedombox.local/
+     http://192.168.0.2/
+     http://[fe80::7207:12ff:fe34:5678]/
+
+     ...
+
+     freedombox login:
+     }}}
+     * If your computer is connected directly to the !FreedomBox through a second (LAN) Ethernet port, you can browse to: http://freedombox/ or http://10.42.0.1/.
      * If you know your way around the router's web interface, you can look up the IP address of the !FreedomBox there, and browse to that address.
      * If none of these methods are available, then you will need to figure out the IP address of your !FreedomBox. You can use the "nmap" program from your computer to find its IP address:
      {{{
