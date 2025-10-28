@@ -161,6 +161,16 @@ Environment=PYTHONPATH=/freedombox/
 endef
 export DEVELOP_SERVICE_CONF
 
+define DEVELOP_LOGS_SCRIPT
+#!/usr/bin/bash
+
+set -e
+set -x
+
+journalctl --follow --unit=plinth.service --unit=freedombox-privileged.service
+endef
+export DEVELOP_LOGS_SCRIPT
+
 # Run basic setup for a developer environment (VM or container)
 provision-dev:
 	# Install newer build dependencies if any
@@ -170,9 +180,15 @@ provision-dev:
 	# Install latest code over .deb
 	$(MAKE) build install
 
-	# Configure privileged daemon for development setup
+	# Configure privileged and web daemon for development setup
 	mkdir -p /etc/systemd/system/freedombox-privileged.service.d/
 	echo "$$DEVELOP_SERVICE_CONF" > /etc/systemd/system/freedombox-privileged.service.d/develop.conf
+	mkdir -p /etc/systemd/system/plinth.service.d/
+	echo "$$DEVELOP_SERVICE_CONF" > /etc/systemd/system/plinth.service.d/develop.conf
+
+	# Create a command to easily watch service logs
+	echo "$$DEVELOP_LOGS_SCRIPT" > /usr/bin/freedombox-logs
+	chmod 755 /usr/bin/freedombox-logs
 
 	# Reload newer systemd units, ignore failure
 	-systemctl daemon-reload
@@ -182,6 +198,10 @@ provision-dev:
 
 	-test -d /run/systemd/system && \
 		systemctl enable --now freedombox-privileged.socket
+
+	# Enable and restart plinth service if it is running
+	-systemctl enable plinth.service
+	-systemctl restart plinth.service
 
 	# Stop any ongoing upgrade, ignore failure
 	-killall -9 unattended-upgr
@@ -207,6 +227,12 @@ provision-dev:
 	DEBIAN_FRONTEND=noninteractive apt-get install --yes ncurses-term \
 	    sshpass bash-completion
 
+wait-while-first-setup:
+	while [ x$$(curl -k https://localhost/plinth/status/ 2> /dev/null | \
+	    json_pp 2> /dev/null | grep 'is_first_setup_running' | \
+            tr -d '[:space:]' | cut -d':' -f2 ) != 'xfalse' ] ; do \
+	    sleep 1; echo -n .; done
+
 .PHONY: \
     build \
     check \
@@ -219,4 +245,5 @@ provision-dev:
     configure \
     install \
     provision \
-    update-translations
+    update-translations \
+    wait-while-first-setup

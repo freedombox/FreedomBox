@@ -143,12 +143,12 @@ directory:
 guest$ cd /freedombox
 ```
 
-Run the development version of FreedomBox Service in the container using the
-following command. This command continuously deploys your code changes into the
-container providing a quick feedback cycle during development.
+FreedomBox Service runs as plinth.service in the container. This service
+restarts when it detects a change to the source code file. This provides a quick
+feedback cycle during development. To watch service logs run:
 
 ```bash
-guest$ freedombox-develop
+guest$ sudo freedombox-logs
 ```
 
 If you have changed any system configuration files during your development,
@@ -156,7 +156,8 @@ you will need to run the following to install those files properly on to the
 system and their changes to reflect properly.
 
 ```bash
-guest$ sudo make build install
+guest$ sudo make build install ;
+guest$ sudo systemctl restart plinth.service
 ```
 
 Note: This development container has automatic upgrades disabled by default.
@@ -373,13 +374,12 @@ After logging into the virtual machine (VM), the source code is available in
 vm$ cd /freedombox
 ```
 
-Run the development version of FreedomBox Service (Plinth) from your source
-directory in the virtual machine using the following command. This command
-continuously deploys your code changes into the virtual machine providing a
-quick feedback cycle during development.
+FreedomBox Service runs as plinth.service in the virtual machine. This service
+restarts when it detects a change to the source code file. This provides a quick
+feedback cycle during development. To watch service logs run:
 
 ```bash
-vm$ freedombox-develop
+vm$ sudo freedombox-logs
 ```
 
 If you have changed any system configuration files during your development,

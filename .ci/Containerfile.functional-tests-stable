@@ -16,7 +16,7 @@ RUN apt-get dist-upgrade -y
 
 # Install freedombox package so that plint:plinth user/group are created etc.
 RUN apt-get install -y freedombox/trixie-backports
-RUN systemctl mask plinth.service
+RUN systemctl disable plinth.service
 
 # Don't ask for the secret in first wizard
 RUN rm -f /var/lib/plinth/firstboot-wizard-secret

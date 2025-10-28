@@ -196,9 +196,6 @@ cd /freedombox/
 sudo apt-get -y install make
 sudo make provision-dev
 
-echo 'alias freedombox-develop="cd /freedombox; sudo -u plinth /freedombox/run --develop"' \
-  >> /home/fbx/.bashrc
-
 # Make some pytest related files and directories writable to the fbx user
 sudo touch geckodriver.log
 sudo chmod a+rw geckodriver.log
@@ -241,25 +238,7 @@ fi
 # Run the plinth server if functional tests are requested
 if [[ "{pytest_command}" =~ "--include-functional" ]]
 then
-    is_plinth_running=0
-    ps -ax -o cmd | grep -q "^sudo -u plinth /freedombox/run" && \
-    is_plinth_running=1
-    ps -ax -o cmd | grep -q "^/usr/bin/python3 /usr/bin/plinth" && \
-    is_plinth_running=1
-
-    if [[ $is_plinth_running -eq 1 ]]
-    then
-        echo "> In machine: Plinth is already running"
-    else
-        echo -n "> In machine: Starting plinth ... "
-        sudo -u plinth /freedombox/run --develop > plinth.log 2>&1 &
-        while ! grep -q "Setup finished" plinth.log
-        do
-            sleep 1
-            echo -n .
-        done
-        echo
-    fi
+    make -C /freedombox wait-while-first-setup
 
     if [[ "{pytest_command}" != *"--splinter-headless"* ]]
     then
@@ -1074,7 +1053,7 @@ Folder overlay        :    (host, read-only){project_folder}
 
 SSH easily            : {script} ssh {options}
 Run tests             : {script} run-tests {options} [ --pytest-args ... ]
-Run FreedomBox inside : freedombox-develop
+Watch FreedomBox logs : sudo freedombox-logs
 
 Web access            : https://{ip_address}/
 Ports access          : Any port on {ip_address}
