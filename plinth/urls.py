@@ -18,6 +18,7 @@ system_urlpatterns = [
 
 urlpatterns = [
     re_path(r'^$', views.index, name='index'),
+    re_path(r'^status/$', views.status, name='status'),
     re_path(r'^language-selection/$',
             public(views.LanguageSelectionView.as_view()),
             name='language-selection'),
