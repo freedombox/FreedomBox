@@ -7,6 +7,8 @@ Documentation=https://wiki.debian.org/FreedomBox/
 StartLimitIntervalSec=0
 # Stop/restart along with .socket unit (invoked from dpkg scripts).
 PartOf=freedombox-privileged.socket
+# Uploaded files in /var/tmp/ are shared with FreedomBox web service.
+JoinsNamespaceOf=plinth.service
 
 [Service]
 Type=notify
@@ -15,8 +17,9 @@ TimeoutSec=300s
 User=root
 Group=root
 NotifyAccess=main
-# Uploaded files in /var/tmp/ are shared with FreedomBox web service.
-#PrivateTmp=yes
+# Uploaded files in /var/tmp/ are shared with FreedomBox web service by joining
+# namespaces.
+PrivateTmp=yes
 Restart=on-failure
 # Don't restart too fast
 RestartSec=1
