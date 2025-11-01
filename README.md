@@ -62,7 +62,7 @@ See the [HACKING.md](https://salsa.debian.org/freedombox-team/freedombox/blob/ma
 
 # Localization
 
-[![Translation status](https://hosted.weblate.org/widgets/freedombox/-/287x66-white.png)](https://hosted.weblate.org/engage/freedombox/?utm_source=widget)
+[![Translation status](https://hosted.weblate.org/widget/freedombox/horizontal-auto.svg)](https://hosted.weblate.org/engage/freedombox/)
 
 # License
 
