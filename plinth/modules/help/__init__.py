@@ -73,6 +73,11 @@ class HelpApp(app_module.App):
                                               directory_map)
         self.add(static_files)
 
+        # Mounting has to be done manually because web server will been
+        # initialized before post_init() runs. Web server initialization is
+        # when all existing StaticFiles components are auto-mounted.
+        static_files.mount()
+
     def setup(self, old_version):
         """Install and configure the app."""
         super().setup(old_version)
