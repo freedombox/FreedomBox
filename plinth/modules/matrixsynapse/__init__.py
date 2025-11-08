@@ -49,7 +49,7 @@ class MatrixSynapseApp(app_module.App):
 
     app_id = 'matrixsynapse'
 
-    _version = 10
+    _version = 11
 
     def __init__(self) -> None:
         """Create components for the app."""

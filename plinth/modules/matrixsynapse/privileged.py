@@ -29,8 +29,7 @@ FREEDOMBOX_ADMIN_USERNAME = 'freedombox-admin'
 ADMIN_API_BASE = 'http://localhost:8008/_synapse/admin/v1/'
 
 STATIC_CONFIG = {
-    'max_upload_size':
-        '100M',
+    'max_upload_size': '100M',
     'password_providers': [{
         'module': 'ldap_auth_provider.LdapAuthProvider',
         'config': {
@@ -44,6 +43,10 @@ STATIC_CONFIG = {
                 'mail': '',
             },
         },
+    }, ],
+    'suppress_key_server_warning': True,
+    'trusted_key_servers': [{
+        'server_name': 'matrix.org'
     }, ],
 }
 
