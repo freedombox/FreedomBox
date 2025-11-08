@@ -52,7 +52,6 @@ _site_url = {
     'cockpit': '/_cockpit/',
     'syncthing': '/syncthing/',
     'rssbridge': '/rss-bridge/',
-    'ttrss': '/tt-rss/',
     'sogo': '/SOGo/',
 }
 

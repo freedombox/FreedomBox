@@ -471,7 +471,7 @@ def _set_onion_header(hidden_service):
         # https://community.torproject.org/onion-services/advanced/onion-location/
         hostname = hidden_service['hostname']
         config_contents = f'''# This file is managed by FreedomBox
-<LocationMatch "^(?!/(wordpress|mediawiki|tt-rss))/[^/]+">
+<LocationMatch "^(?!/(wordpress|mediawiki))/[^/]+">
     Header set Onion-Location "http://{hostname}%{{REQUEST_URI}}s"
 </LocationMatch>
 '''
