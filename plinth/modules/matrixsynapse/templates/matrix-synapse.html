@@ -75,6 +75,19 @@
     </div>
   {% endif %}
 
+  <h3>{% trans "Federation" %}</h3>
+
+  <p>
+    {% blocktrans trimmed with tester_url="https://federationtester.matrix.org/" %}
+      Matrix Synapse is configured to work with other Matrix servers on the
+      internet. This allows {{ box_name }} users to participate in rooms that
+      are hosted elsewhere and Matrix users on other servers to participate
+      in rooms hosted here. If you face problems with federation, try the
+      <a href="{{ tester_url }}#{{ domain_name }}">
+      federation tester tool</a>.
+    {% endblocktrans %}
+  </p>
+
   {% if certificate_status != "valid" %}
     <div class="alert alert-warning d-flex align-items-center" role="alert">
       <div class="me-2">
