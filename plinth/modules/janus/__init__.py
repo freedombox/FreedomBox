@@ -61,9 +61,9 @@ class JanusApp(app_module.App):
         self.add(shortcut)
 
         packages = Packages('packages-janus', [
-            'janus', 'libjs-jquery', 'libjs-bootbox', 'libjs-bootstrap',
-            'libjs-bootswatch', 'libjs-janus-gateway', 'libjs-jquery-blockui',
-            'libjs-spin.js', 'libjs-toastr', 'libjs-webrtc-adapter'
+            'janus', 'libjs-jquery', 'libjs-bootbox', 'libjs-bootstrap5',
+            'libjs-janus-gateway', 'libjs-jquery-blockui', 'libjs-toastr',
+            'libjs-webrtc-adapter', 'node-popper2'
         ])
         self.add(packages)
 
