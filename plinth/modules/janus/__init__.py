@@ -25,6 +25,11 @@ _description = [
     format_lazy(
         _('<a href="{coturn_url}">Coturn</a> is required to '
           'use Janus.'), coturn_url=reverse_lazy('coturn:index')),
+    format_lazy(
+        _('<strong>Note:</strong> This app receives frequent feature updates. '
+          'It can only be installed if frequent feature updates is enabled in '
+          'the <a href="{upgrades_url}">Software Update</a> app.'),
+        upgrades_url=reverse_lazy('upgrades:index')),
 ]
 
 
