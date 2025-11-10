@@ -188,3 +188,93 @@ class CommonErrorMiddleware(MiddlewareMixin):
         breadcrumbs = views.get_breadcrumbs(request)
         parent_index = 1 if len(breadcrumbs) > 1 else 0
         return list(breadcrumbs.keys())[parent_index]
+
+
+class CSPDict(dict):
+    """A dictionary to store Content Security Policy.
+
+    And return a full value of the HTTP header.
+    """
+
+    def get_header_value(self) -> str:
+        """Return the string header value for the policy stored."""
+        return ' '.join([f'{key} {value};' for key, value in self.items()])
+
+
+CONTENT_SECURITY_POLICY = CSPDict({
+    # @fonts are allowed only from FreedomBox itself.
+    'font-src': "'self'",
+    # <frame>/<iframe> sources are disabled.
+    'frame-src': "'none'",
+    # <img> sources are allowed only from FreedomBox itself. Allow
+    # data: URLs for SVGs in CSS.
+    'img-src': "'self' data:",
+    # Manifest file is not allowed as there is none yet.
+    'manifest-src': "'none'",
+    # <audio>, <video>, <track> tags are not allowed yet.
+    'media-src': "'none'",
+    # <object>, <embed>, <applet> tags are not allowed yet. No plugins
+    # types are alllowed since object-src is 'none'.
+    'object-src': "'none'",
+    # Allow JS from FreedomBox itself (no inline and attribute
+    # scripts).
+    'script-src': "'self'",
+    # Allow inline CSS and CSS files from Freedombox itself.
+    'style-src': "'self'",
+    # Web worker sources are allowed only from FreedomBox itself (for
+    # JSXC).
+    'worker-src': "'self'",
+    # All other fetch sources including Ajax are not allowed from
+    # FreedomBox itself.
+    'default-src': "'self'",
+    # <base> tag is not allowed.
+    'base-uri': "'none'",
+    # Enable strict sandboxing enabled with some exceptions:
+    # - Allow running Javascript.
+    # - Allow popups as sometimes we use <a target=_blank>
+    # - Allow popups to have different sandbox requirements as we
+    #   launch apps' web clients.
+    # - Allow forms to support configuration forms.
+    # - Allow policies to treat same origin differently from other
+    # - origins
+    # - Allow downloads such as backup tarballs.
+    'sandbox': 'allow-scripts allow-popups '
+               'allow-popups-to-escape-sandbox allow-forms '
+               'allow-same-origin allow-downloads',
+    # Form action should be to FreedomBox itself.
+    'form-action': "'self'",
+    # This interface may be not embedded in <frame>, <iframe>, etc.
+    # tags.
+    'frame-ancestors': "'none'",
+})
+
+
+class CommonHeadersMiddleware:
+
+    def __init__(self, get_response):
+        """Initialize the middleware object."""
+        self.get_response = get_response
+
+    def __call__(self, request):
+        """Add common security middleware."""
+        # Disable sending Referer (sic) header from FreedomBox web interface to
+        # external websites. This improves privacy by not disclosing FreedomBox
+        # domains/URLs to external domains. Apps such as blogs which want to
+        # popularize themselves with referrer header may still do so.
+        response = self.get_response(request)
+        if not response.get('Referrer-Policy'):
+            response['Referrer-Policy'] = 'same-origin'
+
+        # Disable browser guessing of MIME types. FreedoBox already sets good
+        # content types for all the common file types.
+        if not response.get('X-Content-Type-Options'):
+            response['X-Content-Type-Options'] = 'nosniff'
+
+        csp = ' '.join([
+            f'{key} {value};'
+            for key, value in CONTENT_SECURITY_POLICY.items()
+        ])
+        if not response.get('Content-Security-Policy'):
+            response['Content-Security-Policy'] = csp
+
+        return response

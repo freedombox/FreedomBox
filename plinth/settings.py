@@ -149,6 +149,7 @@ LOGIN_REDIRECT_URL = 'index'
 MESSAGE_TAGS: dict = {}
 
 MIDDLEWARE = (
+    'plinth.middleware.CommonHeadersMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
