@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-07 00:04+0000\n"
+"POT-Creation-Date: 2025-11-11 01:20+0000\n"
 "PO-Revision-Date: 2025-02-07 12:01+0000\n"
 "Last-Translator: pesder <j_h_liau@yahoo.com.tw>\n"
 "Language-Team: Chinese (Traditional Han script) <https://hosted.weblate.org/"
@@ -380,7 +380,7 @@ msgid "Key in Repository"
 msgstr "儲存庫中的金鑰"
 
 #: plinth/modules/backups/forms.py:184
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:67
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:68
 #: plinth/modules/searx/forms.py:14
 msgid "None"
 msgstr "無"
@@ -578,7 +578,7 @@ msgstr "現有的備份檔"
 #: plinth/modules/homeassistant/__init__.py:48
 #: plinth/modules/kiwix/templates/kiwix-add-package.html:26
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:28
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:81
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:95
 #: plinth/modules/names/templates/names.html:159
 #: plinth/modules/networks/templates/connection_show.html:24
 #: plinth/modules/pagekite/templates/pagekite_custom_services.html:16
@@ -1141,7 +1141,7 @@ msgstr "更新 IP 位址與網域名稱"
 #: plinth/modules/shadowsocks/views.py:52
 #: plinth/modules/shadowsocksserver/views.py:48 plinth/modules/sogo/views.py:32
 #: plinth/modules/ssh/views.py:62 plinth/modules/transmission/views.py:43
-#: plinth/modules/ttrss/views.py:31 plinth/modules/wordpress/views.py:31
+#: plinth/modules/wordpress/views.py:31
 msgid "Configuration updated"
 msgstr "配置已更新"
 
@@ -4146,49 +4146,63 @@ msgstr ""
 #, python-format
 msgid ""
 "The Matrix server domain is set to <em>%(domain_name)s</em>. User IDs will "
-"look like <em>@username:%(domain_name)s</em>. Changing the domain name after "
-"the initial setup is currently not supported."
+"look like <em>@username:%(domain_name)s</em>. Changing the domain name "
+"requires uninstalling and reinstalling the app which will wipe app's data."
 msgstr ""
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:27
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:28
 msgid ""
 "New users can be registered from any client if public registration is "
 "enabled."
 msgstr ""
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:34
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:35
 msgid ""
 "New users must use one of the following tokens for verification during "
 "account registration:"
 msgstr ""
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:43
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:44
 msgid "Registration Token"
 msgstr ""
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:44
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:45
 msgid "Uses Allowed"
 msgstr ""
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:45
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:46
 #, fuzzy
 #| msgid "Server Administration"
 msgid "Pending Registrations"
 msgstr "伺服器管理"
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:46
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:47
 msgid "Completed Registrations"
 msgstr ""
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:47
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:48
 msgid "Expiry Time"
 msgstr ""
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:56
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:57
 msgid "Unlimited"
 msgstr ""
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:85
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:78
+msgid "Federation"
+msgstr ""
+
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:81
+#, python-format
+msgid ""
+"Matrix Synapse is configured to work with other Matrix servers on the "
+"internet. This allows %(box_name)s users to participate in rooms that are "
+"hosted elsewhere and Matrix users on other servers to participate in rooms "
+"hosted here. If you face problems with federation, try the <a "
+"href=\"%(tester_url)s#%(domain_name)s\"> federation tester tool</a>."
+msgstr ""
+
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:99
 #, python-format
 msgid ""
 "The configured domain name is using a self-signed certificate. Federation "
@@ -4555,21 +4569,21 @@ msgstr "讀取"
 msgid "RSS Guard"
 msgstr ""
 
-#: plinth/modules/miniflux/manifest.py:138 plinth/modules/ttrss/manifest.py:55
+#: plinth/modules/miniflux/manifest.py:138
 msgid "Feed reader"
 msgstr ""
 
-#: plinth/modules/miniflux/manifest.py:138 plinth/modules/ttrss/manifest.py:55
+#: plinth/modules/miniflux/manifest.py:138
 msgid "News aggregation"
 msgstr ""
 
 #: plinth/modules/miniflux/manifest.py:138
-#: plinth/modules/rssbridge/manifest.py:16 plinth/modules/ttrss/manifest.py:55
+#: plinth/modules/rssbridge/manifest.py:16
 msgid "RSS"
 msgstr ""
 
 #: plinth/modules/miniflux/manifest.py:138
-#: plinth/modules/rssbridge/manifest.py:16 plinth/modules/ttrss/manifest.py:55
+#: plinth/modules/rssbridge/manifest.py:16
 msgid "ATOM"
 msgstr ""
 
@@ -6724,15 +6738,15 @@ msgstr ""
 #, python-brace-format
 msgid ""
 "You can use RSS-Bridge with <a href=\"{miniflux_url}\">Miniflux</a> or <a "
-"href=\"{ttrss_url}\">Tiny Tiny RSS</a> to follow various websites. When "
+"href=\"{nextcloud_url}\">Nextcloud News</a> to follow various websites. When "
 "adding a feed, enable authentication and use your {box_name} credentials."
 msgstr ""
 
-#: plinth/modules/rssbridge/__init__.py:48 plinth/modules/ttrss/__init__.py:47
+#: plinth/modules/rssbridge/__init__.py:49
 msgid "Read and subscribe to news feeds"
 msgstr ""
 
-#: plinth/modules/rssbridge/__init__.py:51
+#: plinth/modules/rssbridge/__init__.py:52
 #: plinth/modules/rssbridge/manifest.py:7
 msgid "RSS-Bridge"
 msgstr ""
@@ -8257,44 +8271,6 @@ msgstr ""
 
 #: plinth/modules/transmission/manifest.py:15
 msgid "Tremotesf"
-msgstr ""
-
-#: plinth/modules/ttrss/__init__.py:21
-msgid ""
-"Tiny Tiny RSS is a news feed (RSS/Atom) reader and aggregator, designed to "
-"allow reading news from any location, while feeling as close to a real "
-"desktop application as possible."
-msgstr ""
-
-#: plinth/modules/ttrss/__init__.py:25
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "It can be accessed by <a href=\"{users_url}\">any user</a> on {box_name} "
-#| "belonging to the admin group."
-msgid ""
-"When enabled, Tiny Tiny RSS can be accessed by <a href=\"{users_url}\">any "
-"user</a> belonging to the feed-reader group."
-msgstr ""
-"它可以由 {box_name} 上屬於 admin 群組的 <a href=\"{users_url}\">任何使用者</"
-"a>存取。"
-
-#: plinth/modules/ttrss/__init__.py:30
-msgid ""
-"When using a mobile or desktop application for Tiny Tiny RSS, use the URL <a "
-"href=\"/tt-rss/\">/tt-rss</a> or <a href=\"/tt-rss-app/\">/tt-rss-app</a> "
-"for connecting."
-msgstr ""
-
-#: plinth/modules/ttrss/__init__.py:50 plinth/modules/ttrss/manifest.py:34
-msgid "Tiny Tiny RSS"
-msgstr ""
-
-#: plinth/modules/ttrss/manifest.py:10
-msgid "TTRSS-Reader"
-msgstr ""
-
-#: plinth/modules/ttrss/manifest.py:25
-msgid "Geekttrss"
 msgstr ""
 
 #: plinth/modules/upgrades/__init__.py:34
@@ -9866,11 +9842,11 @@ msgstr ""
 msgid "Here"
 msgstr ""
 
-#: plinth/views.py:421
+#: plinth/views.py:431
 msgid "Setting unchanged"
 msgstr ""
 
-#: plinth/views.py:648
+#: plinth/views.py:658
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr ""
@@ -9878,6 +9854,17 @@ msgstr ""
 #: plinth/web_framework.py:122
 msgid "Gujarati"
 msgstr ""
+
+#, fuzzy, python-brace-format
+#~| msgid ""
+#~| "It can be accessed by <a href=\"{users_url}\">any user</a> on {box_name} "
+#~| "belonging to the admin group."
+#~ msgid ""
+#~ "When enabled, Tiny Tiny RSS can be accessed by <a href=\"{users_url}"
+#~ "\">any user</a> belonging to the feed-reader group."
+#~ msgstr ""
+#~ "它可以由 {box_name} 上屬於 admin 群組的 <a href=\"{users_url}\">任何使用者"
+#~ "</a>存取。"
 
 #, python-brace-format
 #~ msgid "Invalid username: {username}"

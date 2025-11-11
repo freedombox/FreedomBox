@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-07 00:04+0000\n"
+"POT-Creation-Date: 2025-11-11 01:20+0000\n"
 "PO-Revision-Date: 2025-10-14 10:07+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian <https://hosted.weblate.org/projects/freedombox/"
@@ -396,7 +396,7 @@ msgid "Key in Repository"
 msgstr "Kyç në Depo"
 
 #: plinth/modules/backups/forms.py:184
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:67
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:68
 #: plinth/modules/searx/forms.py:14
 msgid "None"
 msgstr "Asnjë"
@@ -603,7 +603,7 @@ msgstr "Kopjeruajtje Ekzistuese"
 #: plinth/modules/homeassistant/__init__.py:48
 #: plinth/modules/kiwix/templates/kiwix-add-package.html:26
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:28
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:81
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:95
 #: plinth/modules/names/templates/names.html:159
 #: plinth/modules/networks/templates/connection_show.html:24
 #: plinth/modules/pagekite/templates/pagekite_custom_services.html:16
@@ -1161,7 +1161,7 @@ msgstr "Rifresko adresë IP dhe përkatësi"
 #: plinth/modules/shadowsocks/views.py:52
 #: plinth/modules/shadowsocksserver/views.py:48 plinth/modules/sogo/views.py:32
 #: plinth/modules/ssh/views.py:62 plinth/modules/transmission/views.py:43
-#: plinth/modules/ttrss/views.py:31 plinth/modules/wordpress/views.py:31
+#: plinth/modules/wordpress/views.py:31
 msgid "Configuration updated"
 msgstr "Formësimi u përditësua"
 
@@ -3755,8 +3755,9 @@ msgid ""
 msgstr ""
 "Një përkatësi më vete mund të jepet për Home Assistant përmes formësimit të "
 "një nënpërkatësie, b.f. homeassistant.përkatësimeime.shembull. Rreth "
-"formësimi nënpërkatësish shihni aplikacionin <a href=\"%(names_url)s\""
-">Names</a> dhe <a href=\"%(dynamic_dns_url)s\">Dynamic DNS</a>."
+"formësimi nënpërkatësish shihni aplikacionin <a "
+"href=\"%(names_url)s\">Names</a> dhe <a href=\"%(dynamic_dns_url)s\">Dynamic "
+"DNS</a>."
 
 #: plinth/modules/homeassistant/templates/homeassistant.html:40
 #: plinth/modules/ikiwiki/templates/ikiwiki_create.html:18
@@ -4394,18 +4395,22 @@ msgstr ""
 "përkatësi, që të jeni në gjendje të përdorni Matrix Synapse."
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse.html:20
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "The Matrix server domain is set to <em>%(domain_name)s</em>. User IDs "
+#| "will look like <em>@username:%(domain_name)s</em>. Changing the domain "
+#| "name after the initial setup is currently not supported."
 msgid ""
 "The Matrix server domain is set to <em>%(domain_name)s</em>. User IDs will "
-"look like <em>@username:%(domain_name)s</em>. Changing the domain name after "
-"the initial setup is currently not supported."
+"look like <em>@username:%(domain_name)s</em>. Changing the domain name "
+"requires uninstalling and reinstalling the app which will wipe app's data."
 msgstr ""
 "Si përkatësi shërbyesi Matrix është caktuar <em>%(domain_name)s</em>. ID-të "
 "e përdoruesve do të jenë të trajtës <em>@emërpërdoruesi:%(domain_name)s</"
 "em>. Ndryshimi i emrit të përkatësisë, pas ujdisjes fillestare, aktualisht "
 "s’mbulohet."
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:27
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:28
 msgid ""
 "New users can be registered from any client if public registration is "
 "enabled."
@@ -4413,7 +4418,7 @@ msgstr ""
 "Përdorues të rinj mund të regjistrohen prej cilitdo klient, nëse është "
 "aktivizuar regjistrimi publik."
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:34
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:35
 msgid ""
 "New users must use one of the following tokens for verification during "
 "account registration:"
@@ -4421,31 +4426,47 @@ msgstr ""
 "Përdoruesit e rinj mund të përdorin një nga token-ët vijues për verifikim "
 "gjatë regjistrimit të llogarisë:"
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:43
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:44
 msgid "Registration Token"
 msgstr "Token regjistrimi"
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:44
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:45
 msgid "Uses Allowed"
 msgstr "Përdorime të Lejuara"
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:45
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:46
 msgid "Pending Registrations"
 msgstr "Regjistrime Pezull"
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:46
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:47
 msgid "Completed Registrations"
 msgstr "Regjistrime të Plotësuara"
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:47
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:48
 msgid "Expiry Time"
 msgstr "Kohë Skadimi"
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:56
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:57
 msgid "Unlimited"
 msgstr "E pakufizuar"
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:85
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:78
+#, fuzzy
+#| msgid "Feed generator"
+msgid "Federation"
+msgstr "Prodhues prurjesh"
+
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:81
+#, python-format
+msgid ""
+"Matrix Synapse is configured to work with other Matrix servers on the "
+"internet. This allows %(box_name)s users to participate in rooms that are "
+"hosted elsewhere and Matrix users on other servers to participate in rooms "
+"hosted here. If you face problems with federation, try the <a "
+"href=\"%(tester_url)s#%(domain_name)s\"> federation tester tool</a>."
+msgstr ""
+
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:99
 #, python-format
 msgid ""
 "The configured domain name is using a self-signed certificate. Federation "
@@ -4863,21 +4884,21 @@ msgstr "Read You"
 msgid "RSS Guard"
 msgstr "RSS Guard"
 
-#: plinth/modules/miniflux/manifest.py:138 plinth/modules/ttrss/manifest.py:55
+#: plinth/modules/miniflux/manifest.py:138
 msgid "Feed reader"
 msgstr "Lexues prurjesh"
 
-#: plinth/modules/miniflux/manifest.py:138 plinth/modules/ttrss/manifest.py:55
+#: plinth/modules/miniflux/manifest.py:138
 msgid "News aggregation"
 msgstr "Grumbullim lajmesh"
 
 #: plinth/modules/miniflux/manifest.py:138
-#: plinth/modules/rssbridge/manifest.py:16 plinth/modules/ttrss/manifest.py:55
+#: plinth/modules/rssbridge/manifest.py:16
 msgid "RSS"
 msgstr "RSS"
 
 #: plinth/modules/miniflux/manifest.py:138
-#: plinth/modules/rssbridge/manifest.py:16 plinth/modules/ttrss/manifest.py:55
+#: plinth/modules/rssbridge/manifest.py:16
 msgid "ATOM"
 msgstr "ATOM"
 
@@ -7325,10 +7346,14 @@ msgstr ""
 "\">cilido përdorues</a> pjesë e grupit të leximit të prurjeve."
 
 #: plinth/modules/rssbridge/__init__.py:28
-#, python-brace-format
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "You can use RSS-Bridge with <a href=\"{miniflux_url}\">Miniflux</a> or <a "
+#| "href=\"{ttrss_url}\">Tiny Tiny RSS</a> to follow various websites. When "
+#| "adding a feed, enable authentication and use your {box_name} credentials."
 msgid ""
 "You can use RSS-Bridge with <a href=\"{miniflux_url}\">Miniflux</a> or <a "
-"href=\"{ttrss_url}\">Tiny Tiny RSS</a> to follow various websites. When "
+"href=\"{nextcloud_url}\">Nextcloud News</a> to follow various websites. When "
 "adding a feed, enable authentication and use your {box_name} credentials."
 msgstr ""
 "RSS-Bridge-in mund ta përdorni me <a href=\"{miniflux_url}\">Miniflux</a>, "
@@ -7336,11 +7361,11 @@ msgstr ""
 "ndryshëm. Kur shtohet një prurje, aktivizoni mirëfilltësimin dhe përdorni "
 "kredencialet tuaj për {box_name}."
 
-#: plinth/modules/rssbridge/__init__.py:48 plinth/modules/ttrss/__init__.py:47
+#: plinth/modules/rssbridge/__init__.py:49
 msgid "Read and subscribe to news feeds"
 msgstr "Lexoni dhe pajtohuni te prurje lajmesh"
 
-#: plinth/modules/rssbridge/__init__.py:51
+#: plinth/modules/rssbridge/__init__.py:52
 #: plinth/modules/rssbridge/manifest.py:7
 msgid "RSS-Bridge"
 msgstr "RSS-Bridge"
@@ -9067,47 +9092,6 @@ msgstr "Transmission"
 msgid "Tremotesf"
 msgstr "Tremotesf"
 
-#: plinth/modules/ttrss/__init__.py:21
-msgid ""
-"Tiny Tiny RSS is a news feed (RSS/Atom) reader and aggregator, designed to "
-"allow reading news from any location, while feeling as close to a real "
-"desktop application as possible."
-msgstr ""
-"Tiny Tiny RSS është një lexues dhe grumbullues prurjesh lajmesh (RSS/Atom), "
-"i konceptuar të lejojë lexim lajmesh prej çfarëdo vendndodhjeje, ndërkohë që "
-"duket si një aplikacion desktop, aq afër kësaj sa mundet."
-
-#: plinth/modules/ttrss/__init__.py:25
-#, python-brace-format
-msgid ""
-"When enabled, Tiny Tiny RSS can be accessed by <a href=\"{users_url}\">any "
-"user</a> belonging to the feed-reader group."
-msgstr ""
-"Kur aktivizohet, Tiny Tiny RSS mund të përdoret nga <a href=\"{users_url}"
-"\">cilido përdorues</a> pjesëtar i grupit të leximit të prurjeve."
-
-#: plinth/modules/ttrss/__init__.py:30
-msgid ""
-"When using a mobile or desktop application for Tiny Tiny RSS, use the URL <a "
-"href=\"/tt-rss/\">/tt-rss</a> or <a href=\"/tt-rss-app/\">/tt-rss-app</a> "
-"for connecting."
-msgstr ""
-"Kur për Tiny Tiny RSS-në përdoret një aplikacion për celular, ose për "
-"desktop, përdorni URL-në <a href=\"/tt-rss/\">/tt-rss</a> ose <a href=\"/tt-"
-"rss-app/\">/tt-rss-app</a> për t’u lidhur."
-
-#: plinth/modules/ttrss/__init__.py:50 plinth/modules/ttrss/manifest.py:34
-msgid "Tiny Tiny RSS"
-msgstr "Tiny Tiny RSS"
-
-#: plinth/modules/ttrss/manifest.py:10
-msgid "TTRSS-Reader"
-msgstr "Lexues TTRSS"
-
-#: plinth/modules/ttrss/manifest.py:25
-msgid "Geekttrss"
-msgstr "Geekttrss"
-
 #: plinth/modules/upgrades/__init__.py:34
 msgid "Check for and apply the latest software and security updates."
 msgstr ""
@@ -9817,9 +9801,9 @@ msgstr ""
 "Fshijini këto llogari që nga rreshti i urdhrave dhe rifreskoni faqen, që të "
 "krijohet një llogari e cila të jetë e përdorshme me %(box_name)s. Te rreshti "
 "i urdhrave jepni urdhrin \"echo '{\"args\": [\"EMËR PËRDORUESI\", "
-"\"PËRDORUES_MIRËFILTËSIMI\", \"FJALËKALIM_MIRËFILLTËSIMI\"], \"kwargs\": {}}"
-"' | sudo freedombox-cmd users remove_user\". Nëse një llogari është tashmë e "
-"përdorshme me %(box_name)s, anashkalojeni këtë hap."
+"\"PËRDORUES_MIRËFILTËSIMI\", \"FJALËKALIM_MIRËFILLTËSIMI\"], \"kwargs\": "
+"{}}' | sudo freedombox-cmd users remove_user\". Nëse një llogari është "
+"tashmë e përdorshme me %(box_name)s, anashkalojeni këtë hap."
 
 #: plinth/modules/users/templates/users_firstboot.html:69
 msgid "Skip this step"
@@ -10559,10 +10543,10 @@ msgid ""
 "the <a href=\"%(logs_url)s\">logs</a> to the bug report."
 msgstr ""
 "Ky është një gabim i brendshëm dhe jo diçka që e shkaktuat apo mund ta "
-"ndreqni ju. Ju lutemi, njoftojeni gabimin te <a href="
-"\"https://salsa.debian.org/freedombox-team/freedombox/issues\">ndjekësi i të "
-"metave</a>, që të mund ta ndreqim. Po ashtu, ju lutemi, te njoftimi i të "
-"metës bashkëngjitni <a href=\"%(logs_url)s\">regjistra</a>."
+"ndreqni ju. Ju lutemi, njoftojeni gabimin te <a href=\"https://"
+"salsa.debian.org/freedombox-team/freedombox/issues\">ndjekësi i të metave</"
+"a>, që të mund ta ndreqim. Po ashtu, ju lutemi, te njoftimi i të metës "
+"bashkëngjitni <a href=\"%(logs_url)s\">regjistra</a>."
 
 #: plinth/templates/app-header.html:26
 msgid "Installation"
@@ -10576,9 +10560,10 @@ msgid ""
 "the bug report."
 msgstr ""
 "Këto janë rreshtat e fundit të regjistrave për shërbime të përfshirë në këtë "
-"aplikacion. Nëse doni të njoftoni një të metë, ju lutemi, përdorni <a href="
-"\"https://salsa.debian.org/freedombox-team/freedombox/issues\">ndjekësin e "
-"të metave</a> dhe bashkëngjiteni këtë regjistër te njoftimi i të metës."
+"aplikacion. Nëse doni të njoftoni një të metë, ju lutemi, përdorni <a "
+"href=\"https://salsa.debian.org/freedombox-team/freedombox/"
+"issues\">ndjekësin e të metave</a> dhe bashkëngjiteni këtë regjistër te "
+"njoftimi i të metës."
 
 #: plinth/templates/app-logs.html:26
 msgid ""
@@ -10871,11 +10856,11 @@ msgstr ""
 msgid "Here"
 msgstr "Këtu"
 
-#: plinth/views.py:421
+#: plinth/views.py:431
 msgid "Setting unchanged"
 msgstr "Rregullim i pandryshuar"
 
-#: plinth/views.py:648
+#: plinth/views.py:658
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr "para çinstalimit të {app_id}"
@@ -10883,6 +10868,41 @@ msgstr "para çinstalimit të {app_id}"
 #: plinth/web_framework.py:122
 msgid "Gujarati"
 msgstr "Gujaratase"
+
+#~ msgid ""
+#~ "Tiny Tiny RSS is a news feed (RSS/Atom) reader and aggregator, designed "
+#~ "to allow reading news from any location, while feeling as close to a real "
+#~ "desktop application as possible."
+#~ msgstr ""
+#~ "Tiny Tiny RSS është një lexues dhe grumbullues prurjesh lajmesh (RSS/"
+#~ "Atom), i konceptuar të lejojë lexim lajmesh prej çfarëdo vendndodhjeje, "
+#~ "ndërkohë që duket si një aplikacion desktop, aq afër kësaj sa mundet."
+
+#, python-brace-format
+#~ msgid ""
+#~ "When enabled, Tiny Tiny RSS can be accessed by <a href=\"{users_url}"
+#~ "\">any user</a> belonging to the feed-reader group."
+#~ msgstr ""
+#~ "Kur aktivizohet, Tiny Tiny RSS mund të përdoret nga <a href=\"{users_url}"
+#~ "\">cilido përdorues</a> pjesëtar i grupit të leximit të prurjeve."
+
+#~ msgid ""
+#~ "When using a mobile or desktop application for Tiny Tiny RSS, use the URL "
+#~ "<a href=\"/tt-rss/\">/tt-rss</a> or <a href=\"/tt-rss-app/\">/tt-rss-app</"
+#~ "a> for connecting."
+#~ msgstr ""
+#~ "Kur për Tiny Tiny RSS-në përdoret një aplikacion për celular, ose për "
+#~ "desktop, përdorni URL-në <a href=\"/tt-rss/\">/tt-rss</a> ose <a href=\"/"
+#~ "tt-rss-app/\">/tt-rss-app</a> për t’u lidhur."
+
+#~ msgid "Tiny Tiny RSS"
+#~ msgstr "Tiny Tiny RSS"
+
+#~ msgid "TTRSS-Reader"
+#~ msgstr "Lexues TTRSS"
+
+#~ msgid "Geekttrss"
+#~ msgstr "Geekttrss"
 
 #~ msgid "Status Log"
 #~ msgstr "Regjistër Gjendjeje"

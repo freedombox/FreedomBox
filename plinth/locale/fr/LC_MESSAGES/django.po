@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-07 00:04+0000\n"
+"POT-Creation-Date: 2025-11-11 01:20+0000\n"
 "PO-Revision-Date: 2025-10-30 04:24+0000\n"
 "Last-Translator: Coucouf <coucouf@coucouf.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/freedombox/"
@@ -399,7 +399,7 @@ msgid "Key in Repository"
 msgstr "Clef dans le dépôt"
 
 #: plinth/modules/backups/forms.py:184
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:67
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:68
 #: plinth/modules/searx/forms.py:14
 msgid "None"
 msgstr "Aucun"
@@ -608,7 +608,7 @@ msgstr "Sauvegardes existantes"
 #: plinth/modules/homeassistant/__init__.py:48
 #: plinth/modules/kiwix/templates/kiwix-add-package.html:26
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:28
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:81
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:95
 #: plinth/modules/names/templates/names.html:159
 #: plinth/modules/networks/templates/connection_show.html:24
 #: plinth/modules/pagekite/templates/pagekite_custom_services.html:16
@@ -1177,7 +1177,7 @@ msgstr "Actualiser l’adresse IP et les domaines"
 #: plinth/modules/shadowsocks/views.py:52
 #: plinth/modules/shadowsocksserver/views.py:48 plinth/modules/sogo/views.py:32
 #: plinth/modules/ssh/views.py:62 plinth/modules/transmission/views.py:43
-#: plinth/modules/ttrss/views.py:31 plinth/modules/wordpress/views.py:31
+#: plinth/modules/wordpress/views.py:31
 msgid "Configuration updated"
 msgstr "Configuration mise à jour"
 
@@ -4459,18 +4459,22 @@ msgstr ""
 "moins un domaine pour pouvoir utiliser Matrix Synapse."
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse.html:20
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "The Matrix server domain is set to <em>%(domain_name)s</em>. User IDs "
+#| "will look like <em>@username:%(domain_name)s</em>. Changing the domain "
+#| "name after the initial setup is currently not supported."
 msgid ""
 "The Matrix server domain is set to <em>%(domain_name)s</em>. User IDs will "
-"look like <em>@username:%(domain_name)s</em>. Changing the domain name after "
-"the initial setup is currently not supported."
+"look like <em>@username:%(domain_name)s</em>. Changing the domain name "
+"requires uninstalling and reinstalling the app which will wipe app's data."
 msgstr ""
 "Votre serveur Matrix utilise le domaine <em>%(domain_name)s</em>. Les "
 "identifiants utilisateur seront du type <em>@identifiant:%(domain_name)s</"
 "em>. Le changement du nom de domaine après l’installation initiale n’est "
 "actuellement pas pris en charge."
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:27
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:28
 msgid ""
 "New users can be registered from any client if public registration is "
 "enabled."
@@ -4478,7 +4482,7 @@ msgstr ""
 "De nouveaux utilisateurs peuvent créer un compte depuis n’importe quel "
 "client si l’inscription publique est activée."
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:34
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:35
 msgid ""
 "New users must use one of the following tokens for verification during "
 "account registration:"
@@ -4486,31 +4490,47 @@ msgstr ""
 "Les nouveaux utilisateurs doivent utiliser l'un des jetons suivants à des "
 "fins de vérification lors de l'enregistrement de leur compte :"
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:43
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:44
 msgid "Registration Token"
 msgstr "Jeton d'inscription"
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:44
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:45
 msgid "Uses Allowed"
 msgstr "Usages autorisés"
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:45
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:46
 msgid "Pending Registrations"
 msgstr "Inscriptions en attente"
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:46
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:47
 msgid "Completed Registrations"
 msgstr "Inscriptions terminées"
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:47
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:48
 msgid "Expiry Time"
 msgstr "Date d'expiration"
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:56
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:57
 msgid "Unlimited"
 msgstr "Illimité"
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:85
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:78
+#, fuzzy
+#| msgid "Feed generator"
+msgid "Federation"
+msgstr "Générateur de fils"
+
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:81
+#, python-format
+msgid ""
+"Matrix Synapse is configured to work with other Matrix servers on the "
+"internet. This allows %(box_name)s users to participate in rooms that are "
+"hosted elsewhere and Matrix users on other servers to participate in rooms "
+"hosted here. If you face problems with federation, try the <a "
+"href=\"%(tester_url)s#%(domain_name)s\"> federation tester tool</a>."
+msgstr ""
+
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:99
 #, python-format
 msgid ""
 "The configured domain name is using a self-signed certificate. Federation "
@@ -4789,9 +4809,8 @@ msgstr ""
 "servir des fichiers de médias (musique, photos et vidéos) à des clients "
 "réseau. DLNA/UPnP est un protocole sans configuration et est compatible avec "
 "tout appareil ayant la certification DLNA comme les lecteurs portables, les "
-"smartphones, les télévisions et les consoles de jeu "
-"(comme la PS3 ou la Xbox 360) ainsi que les applications telles que Totem ou "
-"Kodi."
+"smartphones, les télévisions et les consoles de jeu (comme la PS3 ou la Xbox "
+"360) ainsi que les applications telles que Totem ou Kodi."
 
 #: plinth/modules/minidlna/__init__.py:45
 msgid "MiniDLNA"
@@ -4932,21 +4951,21 @@ msgstr "Read You"
 msgid "RSS Guard"
 msgstr "RSS Guard"
 
-#: plinth/modules/miniflux/manifest.py:138 plinth/modules/ttrss/manifest.py:55
+#: plinth/modules/miniflux/manifest.py:138
 msgid "Feed reader"
 msgstr "Liseuse de flux"
 
-#: plinth/modules/miniflux/manifest.py:138 plinth/modules/ttrss/manifest.py:55
+#: plinth/modules/miniflux/manifest.py:138
 msgid "News aggregation"
 msgstr "Agrégation de nouvelles"
 
 #: plinth/modules/miniflux/manifest.py:138
-#: plinth/modules/rssbridge/manifest.py:16 plinth/modules/ttrss/manifest.py:55
+#: plinth/modules/rssbridge/manifest.py:16
 msgid "RSS"
 msgstr "RSS"
 
 #: plinth/modules/miniflux/manifest.py:138
-#: plinth/modules/rssbridge/manifest.py:16 plinth/modules/ttrss/manifest.py:55
+#: plinth/modules/rssbridge/manifest.py:16
 msgid "ATOM"
 msgstr "ATOM"
 
@@ -7433,10 +7452,14 @@ msgstr ""
 "d’actualités."
 
 #: plinth/modules/rssbridge/__init__.py:28
-#, python-brace-format
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "You can use RSS-Bridge with <a href=\"{miniflux_url}\">Miniflux</a> or <a "
+#| "href=\"{ttrss_url}\">Tiny Tiny RSS</a> to follow various websites. When "
+#| "adding a feed, enable authentication and use your {box_name} credentials."
 msgid ""
 "You can use RSS-Bridge with <a href=\"{miniflux_url}\">Miniflux</a> or <a "
-"href=\"{ttrss_url}\">Tiny Tiny RSS</a> to follow various websites. When "
+"href=\"{nextcloud_url}\">Nextcloud News</a> to follow various websites. When "
 "adding a feed, enable authentication and use your {box_name} credentials."
 msgstr ""
 "Vous pouvez utiliser RSS-Bridge avec <a href=\"{miniflux_url}\">Miniflux</a> "
@@ -7444,11 +7467,11 @@ msgstr ""
 "sites Internet. Lors de l’ajout d’un fil, activez l’authentification et "
 "utilisez les identifiants de {box_name}."
 
-#: plinth/modules/rssbridge/__init__.py:48 plinth/modules/ttrss/__init__.py:47
+#: plinth/modules/rssbridge/__init__.py:49
 msgid "Read and subscribe to news feeds"
 msgstr "Lecture et abonnement à des flux d’actualités"
 
-#: plinth/modules/rssbridge/__init__.py:51
+#: plinth/modules/rssbridge/__init__.py:52
 #: plinth/modules/rssbridge/manifest.py:7
 msgid "RSS-Bridge"
 msgstr "RSS-Bridge"
@@ -7749,13 +7772,13 @@ msgid ""
 "community."
 msgstr ""
 "En activant cette option, le système %(box_name)s et un nombre limité de "
-"logiciels recevront des mises à jours plus fréquentes "
-"(via le dépôt de rétroportages « backports ») pouvant inclure de nouvelles "
-"fonctionnalités. Ceci vous permet de bénéficier de nouvelles fonctionnalités "
-"au bout de quelques semaines plutôt que tous les 2 ans environ. Veuillez "
-"noter que les logiciels bénéficiant de ces mises à jours fréquentes ne sont "
-"pas suivis par l’équipe Debian en charge de la sécurité. Ils sont simplement "
-"maintenus par les contributeurs Debian et la communauté %(box_name)s."
+"logiciels recevront des mises à jours plus fréquentes (via le dépôt de "
+"rétroportages « backports ») pouvant inclure de nouvelles fonctionnalités. "
+"Ceci vous permet de bénéficier de nouvelles fonctionnalités au bout de "
+"quelques semaines plutôt que tous les 2 ans environ. Veuillez noter que les "
+"logiciels bénéficiant de ces mises à jours fréquentes ne sont pas suivis par "
+"l’équipe Debian en charge de la sécurité. Ils sont simplement maintenus par "
+"les contributeurs Debian et la communauté %(box_name)s."
 
 #: plinth/modules/security/templates/security_report.html:10
 #: plinth/modules/security/views.py:65
@@ -9208,49 +9231,6 @@ msgstr "Transmission"
 msgid "Tremotesf"
 msgstr "Tremotesf"
 
-#: plinth/modules/ttrss/__init__.py:21
-msgid ""
-"Tiny Tiny RSS is a news feed (RSS/Atom) reader and aggregator, designed to "
-"allow reading news from any location, while feeling as close to a real "
-"desktop application as possible."
-msgstr ""
-"Tiny Tiny RSS est un lecteur et un agrégateur de fils d’actualités (RSS/"
-"Atom). Il est conçu pour permettre la lecture des actualités depuis "
-"n’importe quel appareil tout en restant au plus près du design d’une "
-"application de bureau complète."
-
-#: plinth/modules/ttrss/__init__.py:25
-#, python-brace-format
-msgid ""
-"When enabled, Tiny Tiny RSS can be accessed by <a href=\"{users_url}\">any "
-"user</a> belonging to the feed-reader group."
-msgstr ""
-"Une fois activé, Tiny Tiny RSS peut être consulté par <a href=\"{users_url}"
-"\">n’importe quel utilisatrice ou utilisateur</a> appartenant au groupe des "
-"lecteurs de fils d’actualités."
-
-#: plinth/modules/ttrss/__init__.py:30
-msgid ""
-"When using a mobile or desktop application for Tiny Tiny RSS, use the URL <a "
-"href=\"/tt-rss/\">/tt-rss</a> or <a href=\"/tt-rss-app/\">/tt-rss-app</a> "
-"for connecting."
-msgstr ""
-"Si vous utilisez Tiny Tiny RSS avec une application pour téléphone ou "
-"ordinateur, saisissez l’URL <a href=\"/tt-rss/\">/tt-rss</a> ou bien <a "
-"href=\"/tt-rss-app/\">tt-rss-app</a> pour vous connecter."
-
-#: plinth/modules/ttrss/__init__.py:50 plinth/modules/ttrss/manifest.py:34
-msgid "Tiny Tiny RSS"
-msgstr "Tiny Tiny RSS"
-
-#: plinth/modules/ttrss/manifest.py:10
-msgid "TTRSS-Reader"
-msgstr "Lecteur TTRSS"
-
-#: plinth/modules/ttrss/manifest.py:25
-msgid "Geekttrss"
-msgstr "Geekttrss"
-
 #: plinth/modules/upgrades/__init__.py:34
 msgid "Check for and apply the latest software and security updates."
 msgstr ""
@@ -9353,14 +9333,14 @@ msgid ""
 "%(box_name)s community."
 msgstr ""
 "En activant cette option, le système %(box_name)s et un nombre limité de "
-"logiciels recevront des mises à jours plus fréquentes "
-"(via le dépôt de rétroportages « backports » ou le dépôt « unstable ») "
-"pouvant inclure de nouvelles fonctionnalités. Ceci vous permet de bénéficier "
-"de nouvelles fonctionnalités au bout de quelques semaines plutôt que tous "
-"les 2 ans environ. Veuillez noter que les logiciels bénéficiant de ces mises "
-"à jours fréquentes ne sont pas suivis par l’équipe Debian en charge de la "
-"sécurité. Ils sont simplement maintenus par les contributeurs Debian et la "
-"communauté %(box_name)s."
+"logiciels recevront des mises à jours plus fréquentes (via le dépôt de "
+"rétroportages « backports » ou le dépôt « unstable ») pouvant inclure de "
+"nouvelles fonctionnalités. Ceci vous permet de bénéficier de nouvelles "
+"fonctionnalités au bout de quelques semaines plutôt que tous les 2 ans "
+"environ. Veuillez noter que les logiciels bénéficiant de ces mises à jours "
+"fréquentes ne sont pas suivis par l’équipe Debian en charge de la sécurité. "
+"Ils sont simplement maintenus par les contributeurs Debian et la communauté "
+"%(box_name)s."
 
 #: plinth/modules/upgrades/templates/backports-firstboot.html:26
 msgid ""
@@ -9505,13 +9485,12 @@ msgstr ""
 "%(box_name)s, le système d’exploitation doit subir une mise à niveau de la "
 "distribution tous les deux ans environ. Cette mise à niveau apporte des "
 "fonctionnalités et modifications majeures, et il peut arriver que certaines "
-"anciennes fonctionnalités disparaissent. Veuillez consulter le <a href="
-"\"%(dist_upgrade_url)s\">manuel</a> pour vous renseigner sur les "
+"anciennes fonctionnalités disparaissent. Veuillez consulter le <a "
+"href=\"%(dist_upgrade_url)s\">manuel</a> pour vous renseigner sur les "
 "modifications et transitions attendues lors des mises à niveau de la "
 "distribution. Si vous n’êtes pas intéressé pas ces changements vous pouvez "
-"continuer à utiliser chaque distribution pendant au moins <a href="
-"\"https://wiki.debian.org/LTS\">5 ans</a> avant de devoir passer par une "
-"mise à niveau."
+"continuer à utiliser chaque distribution pendant au moins <a href=\"https://"
+"wiki.debian.org/LTS\">5 ans</a> avant de devoir passer par une mise à niveau."
 
 #: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:34
 msgid ""
@@ -10091,8 +10070,8 @@ msgid ""
 msgstr ""
 "Une autre usage possible est de connecter un appareil mobile à votre "
 "{box_name} pendant un déplacement. Même si votre appareil est connecté à un "
-"réseau Wi-Fi public, tout votre trafic sera alors relayé via votre {box_name}"
-" de manière sécurisée."
+"réseau Wi-Fi public, tout votre trafic sera alors relayé via votre "
+"{box_name} de manière sécurisée."
 
 #: plinth/modules/wireguard/forms.py:32
 msgid "Invalid key."
@@ -10110,8 +10089,8 @@ msgid ""
 "Public key of the peer. Example: "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 msgstr ""
-"Clé publique du pair. Exemple : MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= "
-"."
+"Clé publique du pair. Exemple : "
+"MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 
 #: plinth/modules/wireguard/forms.py:70
 msgid "Endpoint of the server"
@@ -10165,8 +10144,8 @@ msgstr ""
 "Paramètre optionnel. De nouvelles clés privée/publique seront générées si ce "
 "champ est laissé vide. La clé publique pourra ensuite être communiquée au "
 "serveur. Il s’agit de la méthode recommandée, même si certains opérateurs de "
-"serveur insistent pour fournir eux même cette clé. Exemple : MConEJFIg6+"
-"DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
+"serveur insistent pour fournir eux même cette clé. Exemple : "
+"MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 
 #: plinth/modules/wireguard/forms.py:98
 msgid "Pre-shared key"
@@ -10735,10 +10714,10 @@ msgid ""
 "the <a href=\"%(logs_url)s\">logs</a> to the bug report."
 msgstr ""
 "Ceci est une erreur interne du système ; vous n’en êtes pas à l’origine et "
-"vous ne pouvez pas la réparer. Prière de remonter un <a href="
-"\"https://salsa.debian.org/freedombox-team/freedombox/issues\">rapport de "
-"bogue</a> pour que nous puissions la corriger. Veuillez également joindre le "
-"<a href=\"%(logs_url)s\">journal d’état</a> à votre rapport de bogue."
+"vous ne pouvez pas la réparer. Prière de remonter un <a href=\"https://"
+"salsa.debian.org/freedombox-team/freedombox/issues\">rapport de bogue</a> "
+"pour que nous puissions la corriger. Veuillez également joindre le <a "
+"href=\"%(logs_url)s\">journal d’état</a> à votre rapport de bogue."
 
 #: plinth/templates/app-header.html:26
 msgid "Installation"
@@ -10752,8 +10731,8 @@ msgid ""
 "the bug report."
 msgstr ""
 "Voici les dernières lignes de journal des services liés à cette appli. Pour "
-"nous faire parvenir un rapport d’erreur, veuillez utiliser l’<a href="
-"\"https://salsa.debian.org/freedombox-team/freedombox/issues\">outil de "
+"nous faire parvenir un rapport d’erreur, veuillez utiliser l’<a "
+"href=\"https://salsa.debian.org/freedombox-team/freedombox/issues\">outil de "
 "suivi de tickets</a> et attacher ce journal à votre rapport d’erreur."
 
 #: plinth/templates/app-logs.html:26
@@ -11053,11 +11032,11 @@ msgstr ""
 msgid "Here"
 msgstr "Ici"
 
-#: plinth/views.py:421
+#: plinth/views.py:431
 msgid "Setting unchanged"
 msgstr "Paramètre inchangé"
 
-#: plinth/views.py:648
+#: plinth/views.py:658
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr "avant la désinstallation de {app_id}"
@@ -11065,6 +11044,43 @@ msgstr "avant la désinstallation de {app_id}"
 #: plinth/web_framework.py:122
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid ""
+#~ "Tiny Tiny RSS is a news feed (RSS/Atom) reader and aggregator, designed "
+#~ "to allow reading news from any location, while feeling as close to a real "
+#~ "desktop application as possible."
+#~ msgstr ""
+#~ "Tiny Tiny RSS est un lecteur et un agrégateur de fils d’actualités (RSS/"
+#~ "Atom). Il est conçu pour permettre la lecture des actualités depuis "
+#~ "n’importe quel appareil tout en restant au plus près du design d’une "
+#~ "application de bureau complète."
+
+#, python-brace-format
+#~ msgid ""
+#~ "When enabled, Tiny Tiny RSS can be accessed by <a href=\"{users_url}"
+#~ "\">any user</a> belonging to the feed-reader group."
+#~ msgstr ""
+#~ "Une fois activé, Tiny Tiny RSS peut être consulté par <a "
+#~ "href=\"{users_url}\">n’importe quel utilisatrice ou utilisateur</a> "
+#~ "appartenant au groupe des lecteurs de fils d’actualités."
+
+#~ msgid ""
+#~ "When using a mobile or desktop application for Tiny Tiny RSS, use the URL "
+#~ "<a href=\"/tt-rss/\">/tt-rss</a> or <a href=\"/tt-rss-app/\">/tt-rss-app</"
+#~ "a> for connecting."
+#~ msgstr ""
+#~ "Si vous utilisez Tiny Tiny RSS avec une application pour téléphone ou "
+#~ "ordinateur, saisissez l’URL <a href=\"/tt-rss/\">/tt-rss</a> ou bien <a "
+#~ "href=\"/tt-rss-app/\">tt-rss-app</a> pour vous connecter."
+
+#~ msgid "Tiny Tiny RSS"
+#~ msgstr "Tiny Tiny RSS"
+
+#~ msgid "TTRSS-Reader"
+#~ msgstr "Lecteur TTRSS"
+
+#~ msgid "Geekttrss"
+#~ msgstr "Geekttrss"
 
 #~ msgid "Status Log"
 #~ msgstr "Journal d’état"
