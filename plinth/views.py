@@ -178,6 +178,16 @@ def index(request):
         })
 
 
+@public
+def status(request):
+    """Return the status of service in JSON format."""
+    status = {
+        'is_available': True,
+        'is_first_setup_running': setup.is_first_setup_running
+    }
+    return JsonResponse(status)
+
+
 def _pick_menu_items(menu_items, selected_tags):
     """Return a sorted list of menu items filtered by tags."""
 

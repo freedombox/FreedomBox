@@ -20,7 +20,8 @@
     {% blocktrans trimmed %}
       The Matrix server domain is set to <em>{{ domain_name }}</em>. User IDs
       will look like <em>@username:{{ domain_name }}</em>. Changing the domain
-      name after the initial setup is currently not supported.
+      name requires uninstalling and reinstalling the app which will wipe app's
+      data.
     {% endblocktrans %}
   </p>
   <p>
@@ -73,6 +74,19 @@
       </table>
     </div>
   {% endif %}
+
+  <h3>{% trans "Federation" %}</h3>
+
+  <p>
+    {% blocktrans trimmed with tester_url="https://federationtester.matrix.org/" %}
+      Matrix Synapse is configured to work with other Matrix servers on the
+      internet. This allows {{ box_name }} users to participate in rooms that
+      are hosted elsewhere and Matrix users on other servers to participate
+      in rooms hosted here. If you face problems with federation, try the
+      <a href="{{ tester_url }}#{{ domain_name }}">
+      federation tester tool</a>.
+    {% endblocktrans %}
+  </p>
 
   {% if certificate_status != "valid" %}
     <div class="alert alert-warning d-flex align-items-center" role="alert">

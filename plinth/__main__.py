@@ -3,6 +3,7 @@
 
 import argparse
 import logging
+import os
 import sys
 import threading
 
@@ -121,7 +122,8 @@ def main():
     arguments = parse_arguments()
 
     cfg.read()
-    if arguments.develop:
+    if arguments.develop or os.getenv('FREEDOMBOX_DEVELOP', '') == '1':
+        cfg.develop = True
         # Use the config in the current working directory
         cfg.read_file(cfg.get_develop_config_path())
 

@@ -24,17 +24,13 @@ Vagrant.configure(2) do |config|
   config.vm.provision "shell", inline: <<-SHELL
     cd /freedombox/
     make provision-dev
-
-    echo 'alias freedombox-develop="cd /freedombox; sudo -u plinth /freedombox/run --develop"' >> /home/vagrant/.bashrc
   SHELL
   config.vm.provision "tests", run: "never", type: "shell", path: "plinth/tests/functional/install.sh"
   config.vm.post_up_message = "FreedomBox virtual machine is ready
-for development. You can run the development version of Plinth using
-the following command.
+for development. Plinth will be available at https://localhost:4430/plinth
+(with an invalid SSL certificate). To watch logs:
 $ vagrant ssh
-$ freedombox-develop
-Plinth will be available at https://localhost:4430/plinth (with
-an invalid SSL certificate).
+$ sudo freedombox-logs
 "
 
   config.trigger.after [:up, :resume, :reload] do |trigger|

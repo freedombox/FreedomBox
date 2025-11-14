@@ -30,9 +30,10 @@ class FirstBootMiddleware(MiddlewareMixin):
         if user_requests_login:
             return
 
-        # Don't interfere with help pages
+        # Don't interfere with help or status pages
         user_requests_help = request.path.startswith(reverse('help:index'))
-        if user_requests_help:
+        user_requests_status = request.path.startswith(reverse('status'))
+        if user_requests_help or user_requests_status:
             return
 
         # Don't interfere with first setup progress page. When first setup is

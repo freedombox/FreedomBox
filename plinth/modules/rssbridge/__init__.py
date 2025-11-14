@@ -26,11 +26,12 @@ _description = [
         users_url=reverse_lazy('users:index')),
     format_lazy(
         _('You can use RSS-Bridge with <a href="{miniflux_url}">Miniflux</a> '
-          'or <a href="{ttrss_url}">Tiny Tiny RSS</a> to follow various '
+          'or <a href="{nextcloud_url}">Nextcloud News</a> to follow various '
           'websites. When adding a feed, enable authentication and use your '
           '{box_name} credentials.'),
         miniflux_url=reverse_lazy('miniflux:index'),
-        ttrss_url=reverse_lazy('ttrss:index'), box_name=_(cfg.box_name)),
+        nextcloud_url=reverse_lazy('nextcloud:index'),
+        box_name=_(cfg.box_name)),
 ]
 
 

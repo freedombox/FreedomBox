@@ -22,8 +22,25 @@ Alternativamente podrías optar por montarlo tu mismo reuniendo todas las piezas
      * '''Nota:''' En la mayoría de computadoras monoplaca no esperes un efecto de salida en un monitor si lo conectas por HDMI porque el núcleo (kernel) del sistema podría no reconocerlo. Mira más abajo para aprender cómo acceder y controlar tu !FreedomBox desde la red.
   1. En el primer arranque !FreedomBox ejecutará su configuración inicial (las versiones más antiguas de !FreedomBox se reinician tras este paso). Este proceso podría llevar varios minutos en algunas máquinas. Después de darle unos 10 minutos aproximadamente, sigue con el siguiente paso.
   1. Después de que tu !FreedomBox haya finalizado su configuración inicial puedes acceder a su interfaz web mediante tu navegador web.
-     * Si tu ordenador está conectado directamente a tu !FreedomBox a través de un segundo puerto ''Ethernet'' de la red local, puedes navegar a http://freedombox/ o a http://10.42.0.1/.
      * Si tu ordenador soporta mDNS (GNU/Linux, Mac OSX o Windows con software mDNS instalado), puedes navegar a: http://freedombox.local/ (o a http://<el-hostname-que-estableciste-durante-la-instalación>.local/)
+     * Si tu ordenador está conectado a un monitor y !FreedomBox puede escribir en él, la petición de credenciales muestra la dirección de la web:
+     {{{
+     Debian GNU/Linux 13 freedombox tty1
+
+     FreedomBox
+
+     To start using FreedomBox and to create an account, access using a web browser
+     one of the following URLs.
+
+     http://freedombox.local/
+     http://192.168.0.2/
+     http://[fe80::7207:12ff:fe34:5678]/
+
+     ...
+
+     freedombox login:
+     }}}
+     * Si tu ordenador está conectado directamente a tu !FreedomBox a través de un segundo puerto ''Ethernet'' de la red local, puedes navegar a http://freedombox/ o a http://10.42.0.1/.
      * Si te manejas con el interfaz web de tu router, puedes buscar allí la dirección IP de tu !FreedomBox y navegar a ella.
      * Si no están disponibles ninguno de estos métodos necesitarás averiguar la dirección IP de tu !FreedomBox. Puedes usar el programa "nmap" de tu ordenador para encontrar su dirección IP:
      {{{

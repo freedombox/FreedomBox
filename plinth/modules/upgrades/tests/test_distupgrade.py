@@ -335,9 +335,9 @@ def test_packages_remove_obsolete(apt_run):
     apt_run.assert_not_called()  # No obsolete package to remove currently.
 
     with patch('plinth.modules.upgrades.distupgrade.OBSOLETE_PACKAGES',
-               ['tt-rss', 'searx']):
+               ['searx']):
         distupgrade._packages_remove_obsolete()
-        apt_run.assert_called_with(['remove', 'tt-rss', 'searx'])
+        apt_run.assert_called_with(['remove', 'searx'])
 
 
 @patch('plinth.modules.upgrades.distupgrade._apt_run')
