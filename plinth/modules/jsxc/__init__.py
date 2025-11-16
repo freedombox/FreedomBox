@@ -53,7 +53,11 @@ class JSXCApp(app_module.App):
                                       clients=info.clients, tags=info.tags)
         self.add(shortcut)
 
-        packages = Packages('packages-jsxc', ['libjs-jsxc'])
+        packages = Packages('packages-jsxc', [
+            'libjs-jsxc', 'libjs-bootstrap4', 'libjs-jquery',
+            'libjs-jquery-ui', 'node-jquery-slimscroll',
+            'libjs-jquery-fullscreen'
+        ])
         self.add(packages)
 
         firewall = Firewall('firewall-jsxc', info.name,
