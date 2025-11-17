@@ -85,7 +85,8 @@ def test_remote_backup_location(session_browser):
 
 
 def _assert_main_page_is_shown(session_browser):
-    assert (session_browser.url.endswith('/plinth/'))
+    assert (session_browser.url.endswith('/freedombox/')
+            or session_browser.url.endswith('/plinth/'))
 
 
 def _backup_download(session_browser, downloaded_file_info, archive_name):
@@ -126,7 +127,7 @@ def _backup_schedule_get(browser):
     functional.nav_to_module(browser, 'backups')
     with functional.wait_for_page_update(browser):
         browser.links.find_by_href(
-            '/plinth/sys/backups/root/schedule/').first.click()
+            '/freedombox/sys/backups/root/schedule/').first.click()
 
     without_apps = []
     elements = browser.find_by_name('backups_schedule-selected_apps')
@@ -158,7 +159,7 @@ def _backup_schedule_set(browser, enable, daily, weekly, monthly, run_at,
     functional.nav_to_module(browser, 'backups')
     with functional.wait_for_page_update(browser):
         browser.links.find_by_href(
-            '/plinth/sys/backups/root/schedule/').first.click()
+            '/freedombox/sys/backups/root/schedule/').first.click()
 
     if enable:
         browser.find_by_name('backups_schedule-enabled').check()
@@ -192,7 +193,7 @@ def _download_file_logged_in(browser, url, suffix=''):
 def _download(browser, archive_name=None):
     """Download a backup archive to a temporary file on disk."""
     functional.nav_to_module(browser, 'backups')
-    href = f'/plinth/sys/backups/root/download/{archive_name}/'
+    href = f'/freedombox/sys/backups/root/download/{archive_name}/'
     url = functional.base_url + href
     file_path = _download_file_logged_in(browser, url, suffix='.tar.gz')
     return file_path
@@ -201,22 +202,23 @@ def _download(browser, archive_name=None):
 def _open_main_page(browser):
     """Open the FreedomBox interface main page."""
     with functional.wait_for_page_update(browser):
-        browser.links.find_by_href('/plinth/').first.click()
+        browser.links.find_by_href('/freedombox/').first.click()
 
 
 def _upload_and_restore(browser, app_name, downloaded_file_path):
     """Upload a backup archive from the disk and perform restore operation."""
     functional.nav_to_module(browser, 'backups')
     with functional.wait_for_page_update(browser):
-        browser.links.find_by_href('/plinth/sys/backups/upload/').first.click()
+        browser.links.find_by_href(
+            '/freedombox/sys/backups/upload/').first.click()
 
     fileinput = browser.find_by_id('id_backups-file')
     fileinput.fill(downloaded_file_path)
     # submit upload form
     functional.submit(browser, form_class='form-upload')
     # submit restore form
-    with functional.wait_for_page_update(browser,
-                                         expected_url='/plinth/sys/backups/'):
+    with functional.wait_for_page_update(
+            browser, expected_url='/freedombox/sys/backups/'):
         functional.submit(browser, form_class='form-restore')
 
 
@@ -233,7 +235,7 @@ def _add_remote_backup_location(browser, ssh_use_password=True):
         _remove_remote_backup_location(browser)
 
     browser.links.find_by_href(
-        '/plinth/sys/backups/repositories/add-remote/').first.click()
+        '/freedombox/sys/backups/repositories/add-remote/').first.click()
     browser.find_by_name('repository').fill(REMOTE_PATH)
     password = functional.get_password(
         functional.config['DEFAULT']['username'])

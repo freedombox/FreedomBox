@@ -36,7 +36,7 @@ class TestIsAdminUser:
     @pytest.fixture(name='web_request')
     def fixture_web_request():
         """Setup each test case before execution."""
-        web_request = RequestFactory().get('/plinth/mockapp')
+        web_request = RequestFactory().get('/freedombox/mockapp')
         web_request.user = Mock()
         web_request.session = MagicMock()
         return web_request

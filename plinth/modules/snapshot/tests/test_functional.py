@@ -61,7 +61,7 @@ def _empty_snapshots_list(browser):
 
 
 def _delete_all(browser):
-    functional.visit(browser, '/plinth/sys/snapshot/manage/')
+    functional.visit(browser, '/freedombox/sys/snapshot/manage/')
     delete_button = browser.find_by_name('delete_selected').first
     if not delete_button['disabled']:
         browser.find_by_id('select-all').check()
@@ -73,13 +73,13 @@ def _delete_all(browser):
 
 
 def _create_snapshot(browser):
-    functional.visit(browser, '/plinth/sys/snapshot/manage/')
+    functional.visit(browser, '/freedombox/sys/snapshot/manage/')
     create_button = browser.find_by_name('create').first
     functional.submit(browser, element=create_button)
 
 
 def _get_count(browser):
-    functional.visit(browser, '/plinth/sys/snapshot/manage/')
+    functional.visit(browser, '/freedombox/sys/snapshot/manage/')
     # Subtract 1 for table header
     return len(browser.find_by_xpath('//tr')) - 1
 

@@ -24,7 +24,7 @@ _description = [
       'automatically cleaned up according to the settings below.'),
     _('Snapshots currently work on btrfs file systems only and on the root '
       'partition only. Snapshots are not a replacement for '
-      '<a href="/plinth/sys/backups">backups</a> since '
+      '<a href="/freedombox/sys/backups">backups</a> since '
       'they can only be stored on the same partition. ')
 ]
 

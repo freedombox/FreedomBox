@@ -57,7 +57,7 @@ def test_get_breadcrumbs(rf, test_menu):
 
 
 @pytest.mark.parametrize('url', [
-    '/plinth/login/',
+    '/freedombox/login/',
     '/',
     'safe',
 ])
@@ -71,11 +71,11 @@ def test_is_safe_url_valid_url(url):
     [
         '',
         None,
-        '\\plinth',
-        '///plinth',
-        'https://example.com/plinth/login/',
+        '\\freedombox',
+        '///freedombox',
+        'https://example.com/freedombox/login/',
         'https:///example.com',
-        'https:///plinth/login',
+        'https:///freedombox/login',
         'ftp://example.com',
         'https://[aabb::ccdd',  # Invalid IPv6
     ])

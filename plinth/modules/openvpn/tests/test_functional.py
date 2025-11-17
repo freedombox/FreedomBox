@@ -4,6 +4,7 @@ Functional, browser based tests for openvpn app.
 """
 
 import pytest
+
 from plinth.tests import functional
 
 pytestmark = [pytest.mark.apps, pytest.mark.openvpn]
@@ -64,5 +65,5 @@ def _download_profile(browser):
     """Return the content of the current user's OpenVPN profile."""
     browser.visit(base_url)
     browser.links.find_by_href(shortcut_href).click()
-    profile_url = f'{base_url}/plinth/apps/openvpn/profile/'
+    profile_url = f'{base_url}/freedombox/apps/openvpn/profile/'
     return functional.download_file(browser, profile_url)

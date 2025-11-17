@@ -38,7 +38,7 @@ _description = [
           'they can add aliases to their email address. Necessary aliases '
           'such as "postmaster" are automatically created pointing to the '
           'first admin user.'), box_name=_(cfg.box_name)),
-    _('<a href="/plinth/apps/roundcube/">Roundcube app</a> provides web '
+    _('<a href="/freedombox/apps/roundcube/">Roundcube app</a> provides web '
       'interface for users to access email.'),
     _('During installation, any other email servers in the system will be '
       'uninstalled.')

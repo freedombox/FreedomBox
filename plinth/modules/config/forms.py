@@ -24,8 +24,8 @@ def get_homepage_choices():
          format_lazy(gettext_lazy("{user}'s website"), user=user))
          for user, url in get_users_with_website().items()]
     apache_default = ('apache-default', _('Apache Default'))
-    plinth = ('plinth', _('FreedomBox Service (Plinth)'))
-    return [apache_default, plinth] + uws_choices + shortcut_choices
+    freedombox = ('freedombox', _('FreedomBox Service (Plinth)'))
+    return [apache_default, freedombox] + uws_choices + shortcut_choices
 
 
 class ConfigurationForm(forms.Form):
@@ -39,8 +39,8 @@ class ConfigurationForm(forms.Form):
                 'case is to set your blog or wiki as the home page when '
                 'someone visits the domain name. Note that once the home '
                 'page is set to something other than {box_name} Service '
-                '(Plinth), your users must explicitly type /plinth or '
-                '/freedombox to reach {box_name} Service (Plinth).'),
+                '(Plinth), your users must explicitly type /freedombox to '
+                'reach {box_name} Service (Plinth).'),
             box_name=gettext_lazy(cfg.box_name)), required=False,
         choices=get_homepage_choices)
 

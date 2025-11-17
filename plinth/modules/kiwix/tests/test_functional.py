@@ -74,7 +74,8 @@ class TestKiwixApp(functional.BaseAppTests):
 
 def _add_package(browser, file_name):
     """Add a package by uploading the ZIM file in kiwix app page."""
-    browser.links.find_by_href('/plinth/apps/kiwix/package/add/').first.click()
+    browser.links.find_by_href(
+        '/freedombox/apps/kiwix/package/add/').first.click()
     browser.attach_file('kiwix-file', file_name)
     functional.submit(browser, form_class='form-kiwix')
 
@@ -98,7 +99,7 @@ def _delete_package(browser, zim_id):
     """Delete a content package from the kiwix app page."""
     functional.nav_to_module(browser, 'kiwix')
     link = browser.links.find_by_href(
-        f'/plinth/apps/kiwix/package/{zim_id}/delete/')
+        f'/freedombox/apps/kiwix/package/{zim_id}/delete/')
     if not link:
         raise ValueError('ZIM file missing!')
 

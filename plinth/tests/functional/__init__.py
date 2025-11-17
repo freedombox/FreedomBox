@@ -48,7 +48,7 @@ base_url = config['DEFAULT']['url']
 # unlisted sites just use '/' + site_name as url
 _site_url = {
     'wiki': '/ikiwiki',
-    'jsxc': '/plinth/apps/jsxc/jsxc/',
+    'jsxc': '/freedombox/apps/jsxc/jsxc/',
     'cockpit': '/_cockpit/',
     'syncthing': '/syncthing/',
     'rssbridge': '/rss-bridge/',
@@ -377,7 +377,7 @@ def _run_first_wizard(browser):
     username = config['DEFAULT']['username'],
     password = config['DEFAULT']['password']
 
-    welcome_url = base_url + '/plinth/firstboot/welcome/'
+    welcome_url = base_url + '/freedombox/firstboot/welcome/'
     browser.visit(welcome_url)
     if browser.url != welcome_url:
         # We got redirected because first wizard is already complete. Don't
@@ -398,7 +398,7 @@ def login_with_account(browser, url, username, password=None):
     if password is None:
         password = get_password(username)
     # XXX: Find a way to remove the hardcoded jsxc URL
-    if '/plinth/' not in browser.url or '/jsxc/jsxc' in browser.url:
+    if '/freedombox/' not in browser.url or '/jsxc/jsxc' in browser.url:
         browser.visit(url)
 
     user_menu = browser.find_by_id('id_user_menu')
@@ -409,7 +409,7 @@ def login_with_account(browser, url, username, password=None):
 
         logout(browser)
 
-    login_button = browser.links.find_by_href('/plinth/accounts/login/')
+    login_button = browser.links.find_by_href('/freedombox/accounts/login/')
     if login_button:
         click_and_wait(browser, login_button.first)
         browser.fill('username', username)
@@ -423,7 +423,7 @@ def logout(browser):
     """Log out of the FreedomBox interface."""
     # Navigate to the home page if logout form is not found
     if not browser.find_by_css('.form-logout'):
-        visit(browser, '/plinth/')
+        visit(browser, '/freedombox/')
 
     # We are not logged in if the home page does not contain logout form
     if browser.find_by_css('.form-logout'):
@@ -436,13 +436,13 @@ def logout(browser):
 #################
 def nav_to_module(browser, module):
     sys_or_apps = 'sys' if module in _sys_modules else 'apps'
-    required_url = base_url + f'/plinth/{sys_or_apps}/{module}/'
+    required_url = base_url + f'/freedombox/{sys_or_apps}/{module}/'
     if browser.url != required_url:
         browser.visit(required_url)
 
 
 def app_select_domain_name(browser, app_name, domain_name):
-    browser.visit('{}/plinth/apps/{}/setup/'.format(base_url, app_name))
+    browser.visit('{}/freedombox/apps/{}/setup/'.format(base_url, app_name))
     drop_down = browser.find_by_id('id_domain_name')
     drop_down.select(domain_name)
     submit(browser, form_class='form-configuration')
@@ -603,7 +603,7 @@ def running_inside_container():
 #############################
 def set_hostname(browser, hostname: str):
     """Configure the system hostname."""
-    visit(browser, '/plinth/sys/names/hostname/')
+    visit(browser, '/freedombox/sys/names/hostname/')
     browser.find_by_id('id_hostname-hostname').fill(hostname)
     submit(browser, form_class='form-hostname')
 
@@ -613,8 +613,8 @@ def domain_add(browser, domain_name: str):
     if domain_name in domain_list(browser):
         return
 
-    visit(browser, '/plinth/sys/names/')
-    click_link_by_href(browser, '/plinth/sys/names/domains/')
+    visit(browser, '/freedombox/sys/names/')
+    click_link_by_href(browser, '/freedombox/sys/names/domains/')
     browser.find_by_id('id_domain-add-domain_name').fill(domain_name)
     submit(browser, form_class='form-domain-add')
 
@@ -624,15 +624,15 @@ def domain_remove(browser, domain_name: str):
     if domain_name not in domain_list(browser):
         return
 
-    visit(browser, '/plinth/sys/names/')
+    visit(browser, '/freedombox/sys/names/')
     click_link_by_href(browser,
-                       f'/plinth/sys/names/domains/{domain_name}/delete/')
+                       f'/freedombox/sys/names/domains/{domain_name}/delete/')
     submit(browser, form_class='form-delete')
 
 
 def domain_list(browser) -> list[str]:
     """Return a list of domains configured."""
-    visit(browser, '/plinth/sys/names/')
+    visit(browser, '/freedombox/sys/names/')
     elements = browser.find_by_css('td.names-domain-column')
     return [element.text for element in elements]
 
@@ -659,12 +659,12 @@ def _click_button_and_confirm(browser, href, form_class):
     if buttons:
         submit(browser, element=buttons.first)
         submit(browser, form_class=form_class,
-               expected_url='/plinth/sys/backups/')
+               expected_url='/freedombox/sys/backups/')
 
 
 def _backup_delete_archive_by_name(browser, archive_name):
     nav_to_module(browser, 'backups')
-    href = f'/plinth/sys/backups/root/delete/{archive_name}/'
+    href = f'/freedombox/sys/backups/root/delete/{archive_name}/'
     _click_button_and_confirm(browser, href, 'form-delete')
 
 
@@ -674,7 +674,7 @@ def backup_create(browser, app_name, archive_name=None):
     if archive_name:
         _backup_delete_archive_by_name(browser, archive_name)
 
-    buttons = browser.links.find_by_href('/plinth/sys/backups/create/')
+    buttons = browser.links.find_by_href('/freedombox/sys/backups/create/')
     submit(browser, element=buttons.first)
     eventually(browser.find_by_css, args=['.select-all'])
     browser.find_by_css('.select-all').first.uncheck()
@@ -690,7 +690,7 @@ def backup_create(browser, app_name, archive_name=None):
 def backup_restore(browser, app_name, archive_name=None):
     """Restore a given app from a backup archive."""
     nav_to_module(browser, 'backups')
-    href = f'/plinth/sys/backups/root/restore-archive/{archive_name}/'
+    href = f'/freedombox/sys/backups/root/restore-archive/{archive_name}/'
     _click_button_and_confirm(browser, href, 'form-restore')
 
 
@@ -708,7 +708,7 @@ def networks_set_firewall_zone(browser, zone):
         'and contains(@class, "connection-status-label")]/following::a').first
     network_id = device['href'].split('/')[-3]
     device.click()
-    edit_url = '/plinth/sys/networks/{}/edit/'.format(network_id)
+    edit_url = '/freedombox/sys/networks/{}/edit/'.format(network_id)
     click_link_by_href(browser, edit_url)
     browser.select('zone', zone)
     submit(browser, form_class='form-connection-edit')
@@ -742,7 +742,7 @@ def create_user(browser, name, password=None, groups=[], email=None):
     if password is None:
         password = get_password(name)
 
-    click_link_by_href(browser, '/plinth/sys/users/create/')
+    click_link_by_href(browser, '/freedombox/sys/users/create/')
 
     browser.find_by_id('id_username').fill(name)
     browser.find_by_id('id_password1').fill(password)
@@ -763,7 +763,7 @@ def create_user(browser, name, password=None, groups=[], email=None):
 def delete_user(browser, name):
     """Delete a user."""
     nav_to_module(browser, 'users')
-    click_link_by_href(browser, f'/plinth/sys/users/{name}/edit/')
+    click_link_by_href(browser, f'/freedombox/sys/users/{name}/edit/')
 
     browser.find_by_id('id_delete').check()
     browser.find_by_id('id_confirm_password').fill(
@@ -775,13 +775,14 @@ def delete_user(browser, name):
         '#user-delete-confirm-dialog button.confirm').first
     eventually(lambda: confirm_button.visible)
     assert confirm_button.visible
-    click_and_wait(browser, confirm_button, expected_url='/plinth/sys/users/')
+    click_and_wait(browser, confirm_button,
+                   expected_url='/freedombox/sys/users/')
 
 
 def user_exists(browser, name):
     """Check if a user with a given name exists."""
     nav_to_module(browser, 'users')
-    links = browser.links.find_by_href(f'/plinth/sys/users/{name}/edit/')
+    links = browser.links.find_by_href(f'/freedombox/sys/users/{name}/edit/')
     return len(links) == 1
 
 
@@ -789,7 +790,7 @@ def user_set_language(browser, language_code):
     """Change user's preferred UI language."""
     username = config['DEFAULT']['username']
     admin_password = config['DEFAULT']['password']
-    visit(browser, '/plinth/sys/users/{}/edit/'.format(username))
+    visit(browser, '/freedombox/sys/users/{}/edit/'.format(username))
     browser.find_by_xpath('//select[@id="id_language"]//option[@value="' +
                           language_code + '"]').first.click()
     browser.find_by_id('id_confirm_password').fill(admin_password)

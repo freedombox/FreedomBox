@@ -162,8 +162,8 @@ class StaticFiles(app_module.FollowerComponent):
         static files from the directory are served over the given web path. The
         web path will be prepended with the FreedomBox's configured base web
         path. For example, {'/foo': '/usr/share/foo'} means that
-        '/usr/share/foo/bar.png' will be served over '/plinth/foo/bar.png' if
-        FreedomBox is configured to be served on '/plinth'.
+        '/usr/share/foo/bar.png' will be served over '/freedombox/foo/bar.png'
+        if FreedomBox is configured to be served on '/freedombox'.
 
         """
         super().__init__(component_id)

@@ -16,7 +16,7 @@ data_dir = '/var/lib/plinth'
 custom_static_dir = '/var/www/plinth/custom/static'
 store_file = data_dir + '/plinth.sqlite3'
 doc_dir = '/usr/share/freedombox'
-server_dir = '/plinth'
+server_dir = '/freedombox'
 
 # [Network] section
 host = '127.0.0.1'

@@ -114,7 +114,7 @@ FILE_UPLOAD_HANDLERS = [
 ]
 
 # Overridden based on the configuration key server_dir
-FORCE_SCRIPT_NAME = '/plinth'
+FORCE_SCRIPT_NAME = '/freedombox'
 
 # FreedomBox apps are appended to this list
 INSTALLED_APPS = [
@@ -190,7 +190,7 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.file'
 SESSION_FILE_PATH = '/var/lib/plinth/sessions'
 
 # Overridden based on configuration key server_dir
-STATIC_URL = '/plinth/static/'
+STATIC_URL = '/freedombox/static/'
 
 # STRONGHOLD_PUBLIC_URLS=(r'^captcha/', )
 

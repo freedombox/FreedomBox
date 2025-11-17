@@ -44,7 +44,7 @@ class TestWireguardApp(functional.BaseAppTests):
     def _get_client_href(key):
         """Return the href for client show page."""
         key = urllib.parse.quote(urllib.parse.quote(key, safe=''))
-        return f'/plinth/apps/wireguard/client/{key}/show/'
+        return f'/freedombox/apps/wireguard/client/{key}/show/'
 
     def _client_exists(self, browser, key):
         """Check whether a client key exists."""

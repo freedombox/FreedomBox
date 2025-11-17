@@ -227,7 +227,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     try {
         setInstallButtonState(false);
-        const response = await fetch(`/plinth/is-available/${appId}/`, {
+        const response = await fetch(`/freedombox/is-available/${appId}/`, {
             timeout: 2 * 60 * 1000  // 2 minutes
         });
 

@@ -59,7 +59,8 @@ class TestMinifluxApp(functional.BaseAppTests):
 def _fill_credentials_form(browser, href):
     """Fill the user credentials form in Miniflux app."""
     functional.nav_to_module(browser, 'miniflux')
-    functional.click_link_by_href(browser, f'/plinth/apps/miniflux/{href}/')
+    functional.click_link_by_href(browser,
+                                  f'/freedombox/apps/miniflux/{href}/')
 
     browser.fill('miniflux-username', CREDENTIALS['username'])
     browser.fill('miniflux-password', CREDENTIALS['password'])

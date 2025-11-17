@@ -28,7 +28,7 @@ Vagrant.configure(2) do |config|
   SHELL
   config.vm.provision "tests", run: "never", type: "shell", path: "plinth/tests/functional/install.sh"
   config.vm.post_up_message = "FreedomBox virtual machine is ready
-for development. Plinth will be available at https://localhost:4430/plinth
+for development. Plinth will be available at https://localhost:4430/freedombox
 (with an invalid SSL certificate). To watch logs:
 $ vagrant ssh
 $ sudo freedombox-logs

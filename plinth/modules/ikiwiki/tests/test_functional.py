@@ -34,7 +34,7 @@ def _create_wiki_if_needed(browser):
     wiki = browser.links.find_by_href('/ikiwiki/wiki')
     if not wiki:
         browser.links.find_by_href(
-            '/plinth/apps/ikiwiki/create/').first.click()
+            '/freedombox/apps/ikiwiki/create/').first.click()
         browser.find_by_id('id_ikiwiki-name').fill('wiki')
         browser.find_by_id('id_ikiwiki-admin_name').fill(
             functional.config['DEFAULT']['username'])
@@ -47,7 +47,7 @@ def _delete_wiki(browser):
     """Delete wiki."""
     functional.nav_to_module(browser, 'ikiwiki')
     browser.links.find_by_href(
-        '/plinth/apps/ikiwiki/wiki/delete/').first.click()
+        '/freedombox/apps/ikiwiki/wiki/delete/').first.click()
     functional.submit(browser, form_class='form-delete')
 
 

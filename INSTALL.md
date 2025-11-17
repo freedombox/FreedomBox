@@ -35,7 +35,7 @@ FreedomBox [Manual](https://wiki.debian.org/FreedomBox/Manual/)'s
 
 3.  Access FreedomBox UI:
 
-    UI should be accessible at http://localhost:8000/plinth
+    UI should be accessible at http://localhost:8000/freedombox
 
 If you are installing FreedomBox Service (Plinth) for development purposes, see
 HACKING.md instead.

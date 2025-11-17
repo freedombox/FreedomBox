@@ -230,7 +230,7 @@ provision-dev:
 	    sshpass bash-completion
 
 wait-while-first-setup:
-	while [ x$$(curl -k https://localhost/plinth/status/ 2> /dev/null | \
+	while [ x$$(curl -k https://localhost/freedombox/status/ 2> /dev/null | \
 	    json_pp 2> /dev/null | grep 'is_first_setup_running' | \
             tr -d '[:space:]' | cut -d':' -f2 ) != 'xfalse' ] ; do \
 	    sleep 1; echo -n .; done

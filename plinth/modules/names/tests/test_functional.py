@@ -24,7 +24,7 @@ def test_change_hostname(session_browser):
 
 
 def _get_hostname(browser):
-    functional.visit(browser, '/plinth/sys/names/hostname/')
+    functional.visit(browser, '/freedombox/sys/names/hostname/')
     return browser.find_by_id('id_hostname-hostname').value
 
 
