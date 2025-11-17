@@ -12,7 +12,6 @@ logger = logging.getLogger(__name__)
 
 # [Path] section
 file_root = '/usr/share/plinth'
-config_dir = '/etc/plinth'
 data_dir = '/var/lib/plinth'
 custom_static_dir = '/var/www/plinth/custom/static'
 store_file = data_dir + '/plinth.sqlite3'
@@ -111,7 +110,6 @@ def read_file(config_path):
 
     config_items = (
         ('Path', 'file_root', 'string'),
-        ('Path', 'config_dir', 'string'),
         ('Path', 'data_dir', 'string'),
         ('Path', 'custom_static_dir', 'string'),
         ('Path', 'store_file', 'string'),

@@ -64,9 +64,9 @@ def fixture_load_cfg():
     """Load test configuration."""
     from plinth import cfg
 
-    keys = ('file_root', 'config_dir', 'data_dir', 'custom_static_dir',
-            'store_file', 'actions_dir', 'doc_dir', 'server_dir', 'host',
-            'port', 'use_x_forwarded_for', 'use_x_forwarded_host',
+    keys = ('file_root', 'data_dir', 'custom_static_dir', 'store_file',
+            'actions_dir', 'doc_dir', 'server_dir', 'host', 'port',
+            'use_x_forwarded_for', 'use_x_forwarded_host',
             'secure_proxy_ssl_header', 'box_name', 'develop')
     saved_state = {}
     for key in keys:
