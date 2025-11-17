@@ -416,7 +416,7 @@ for more details.
 ### Translating literals (contributing translations)
 
 The easiest way to start translating is with your browser, by using
-[Weblate](https://hosted.weblate.org/projects/freedombox/plinth/).
+[Weblate](https://hosted.weblate.org/projects/freedombox/freedombox/).
 Your changes will automatically get pushed to the code repository.
 
 Alternatively, you can directly edit the `.po` file in your language directory
