@@ -105,7 +105,6 @@ def compare_configurations(parser):
     assert parser.get('Path', 'custom_static_dir') == cfg.custom_static_dir
     assert parser.get('Path', 'data_dir') == cfg.data_dir
     assert parser.get('Path', 'store_file') == cfg.store_file
-    assert parser.get('Path', 'actions_dir') == cfg.actions_dir
     assert parser.get('Path', 'doc_dir') == cfg.doc_dir
 
     assert parser.get('Network', 'host') == cfg.host

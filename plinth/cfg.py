@@ -15,7 +15,6 @@ file_root = '/usr/share/plinth'
 data_dir = '/var/lib/plinth'
 custom_static_dir = '/var/www/plinth/custom/static'
 store_file = data_dir + '/plinth.sqlite3'
-actions_dir = '/usr/share/plinth/actions'
 doc_dir = '/usr/share/freedombox'
 server_dir = '/plinth'
 
@@ -113,7 +112,6 @@ def read_file(config_path):
         ('Path', 'data_dir', 'string'),
         ('Path', 'custom_static_dir', 'string'),
         ('Path', 'store_file', 'string'),
-        ('Path', 'actions_dir', 'string'),
         ('Path', 'doc_dir', 'string'),
         ('Path', 'server_dir', 'string'),
         ('Network', 'host', 'string'),
