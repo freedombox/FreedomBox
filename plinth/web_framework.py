@@ -36,7 +36,11 @@ def init():
     settings.DATABASES['default']['NAME'] = cfg.store_file
     settings.DEBUG = cfg.develop
     settings.FORCE_SCRIPT_NAME = cfg.server_dir
-    settings.INSTALLED_APPS += module_loader.get_modules_to_load()
+    # Order our apps before django/library apps so that we can override their
+    # templates, static files, management commands, etc. This requires that
+    # proper dependencies are declared inside database migration scripts.
+    settings.INSTALLED_APPS = module_loader.get_modules_to_load() + \
+        settings.INSTALLED_APPS
     settings.LANGUAGES = get_languages()
     settings.LOGGING = log.get_configuration()
     settings.MESSAGE_TAGS = {message_constants.ERROR: 'danger'}
