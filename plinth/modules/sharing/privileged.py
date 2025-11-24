@@ -20,6 +20,26 @@ def setup():
     if not path.exists():
         path.touch()
 
+    _migrate_old_style_auth()
+
+
+def _migrate_old_style_auth():
+    """Migration from auth_pubtkt to auth_openidc."""
+    aug = load_augeas()
+    if not aug.match('$conf//directive["TKTAuthToken"]'):
+        return
+
+    shares = _list(aug)
+    for share in shares:
+        _remove(aug, share['name'])
+
+    for share in shares:
+        _add(aug, share['name'], share['path'], share['groups'],
+             share['is_public'])
+
+    aug.save()
+    action_utils.service_reload('apache2')
+
 
 def load_augeas():
     """Initialize augeas for this app's configuration file."""
@@ -37,8 +57,6 @@ def load_augeas():
 @privileged
 def add(name: str, path: str, groups: list[str], is_public: bool):
     """Add a share to Apache configuration."""
-    path = '"' + path.replace('"', r'\"') + '"'
-    url = '/share/' + name
 
     if not os.path.exists(APACHE_CONFIGURATION):
         pathlib.Path(APACHE_CONFIGURATION).touch()
@@ -47,6 +65,18 @@ def add(name: str, path: str, groups: list[str], is_public: bool):
     shares = _list(aug)
     if any([share for share in shares if share['name'] == name]):
         raise Exception('Share already present')
+
+    _add(aug, name, path, groups, is_public)
+    aug.save()
+
+    with action_utils.WebserverChange() as webserver_change:
+        webserver_change.enable('sharing-freedombox')
+
+
+def _add(aug, name: str, path: str, groups: list[str], is_public: bool):
+    """Insert a share using augeas."""
+    path = '"' + path.replace('"', r'\"') + '"'
+    url = '/share/' + name
 
     aug.set('$conf/directive[last() + 1]', 'Alias')
     aug.set('$conf/directive[last()]/arg[1]', url)
@@ -59,34 +89,36 @@ def add(name: str, path: str, groups: list[str], is_public: bool):
             'includes/freedombox-sharing.conf')
 
     if not is_public:
-        aug.set('$conf/Location[last()]/directive[last() + 1]', 'Include')
-        aug.set('$conf/Location[last()]/directive[last()]/arg',
-                'includes/freedombox-single-sign-on.conf')
+        aug.set('$conf/Location[last()]/directive[last() + 1]', 'Use')
+        aug.set('$conf/Location[last()]/directive[last()]/arg[1]',
+                'AuthOpenIDConnect')
 
-        aug.set('$conf/Location[last()]/IfModule/arg', 'mod_auth_pubtkt.c')
-        aug.set('$conf/Location[last()]/IfModule/directive[1]', 'TKTAuthToken')
         for group_name in groups:
-            aug.set(
-                '$conf/Location[last()]/IfModule/directive[1]/arg[last() + 1]',
-                group_name)
+            aug.set('$conf/Location[last()]/directive[last() + 1]', 'Use')
+            aug.set('$conf/Location[last()]/directive[last()]/arg[1]',
+                    'RequireGroup')
+            aug.set('$conf/Location[last()]/directive[last()]/arg[2]',
+                    group_name)
     else:
         aug.set('$conf/Location[last()]/directive[last() + 1]', 'Require')
         aug.set('$conf/Location[last()]/directive[last()]/arg[1]', 'all')
         aug.set('$conf/Location[last()]/directive[last()]/arg[2]', 'granted')
 
+
+@privileged
+def remove(name: str):
+    """Remove a share from Apache configuration."""
+    aug = load_augeas()
+    _remove(aug, name)
     aug.save()
 
     with action_utils.WebserverChange() as webserver_change:
         webserver_change.enable('sharing-freedombox')
 
 
-@privileged
-def remove(name: str):
-    """Remove a share from Apache configuration."""
+def _remove(aug, name: str):
+    """Remove from configuration using augeas lens."""
     url_to_remove = '/share/' + name
-
-    aug = load_augeas()
-
     for directive in aug.match('$conf/directive'):
         if aug.get(directive) != 'Alias':
             continue
@@ -99,11 +131,6 @@ def remove(name: str):
         url = aug.get(location + '/arg')
         if url == url_to_remove:
             aug.remove(location)
-
-    aug.save()
-
-    with action_utils.WebserverChange() as webserver_change:
-        webserver_change.enable('sharing-freedombox')
 
 
 def _get_name_from_url(url):
@@ -150,8 +177,15 @@ def _list(aug=None):
             continue
 
         groups = []
+        # Old style pubtkt configuration
         for group in aug.match(location + '//directive["TKTAuthToken"]/arg'):
             groups.append(aug.get(group))
+
+        # New style OpenID Connect configuration
+        for require_group in aug.match(
+                location + '//directive["Use" and arg[1] = "RequireGroup"]'):
+            group = aug.get(require_group + '/arg[2]')
+            groups.append(group)
 
         def _is_public():
             """Must contain the line 'Require all granted'."""
