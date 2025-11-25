@@ -73,9 +73,13 @@ class UsersApp(app_module.App):
         ])
         self.add(packages)
 
-        dropin_configs = DropinConfigs('dropin-configs-users', [
-            '/etc/apache2/includes/freedombox-auth-ldap.conf',
-        ])
+        dropin_configs = DropinConfigs(
+            'dropin-configs-users',
+            [
+                '/etc/apache2/includes/freedombox-auth-ldap.conf',
+                # Empty file kept for easier upgrade
+                '/etc/apache2/includes/freedombox-single-sign-on.conf',
+            ])
         self.add(dropin_configs)
 
         daemon = Daemon('daemon-users', 'slapd', listen_ports=[(389, 'tcp4'),

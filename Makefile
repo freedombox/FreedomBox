@@ -21,7 +21,8 @@ DISABLED_APPS_TO_REMOVE := \
     tahoe \
     mldonkey \
     i2p \
-    ttrss
+    ttrss \
+    sso
 
 APP_FILES_TO_REMOVE := $(foreach app,$(DISABLED_APPS_TO_REMOVE),$(ENABLED_APPS_PATH)/$(app))
 

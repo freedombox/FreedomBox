@@ -66,6 +66,27 @@ def fixture_login(session_browser):
     functional.login(session_browser)
 
 
+@pytest.fixture(name='syncthing_installed')
+def fixture_syncthing_installed(session_browser):
+    """Login and install the app."""
+    functional.login(session_browser)
+    functional.install(session_browser, 'syncthing')
+    functional.app_enable(session_browser, 'syncthing')
+    yield
+    functional.app_disable(session_browser, 'syncthing')
+
+
+def test_app_access(session_browser, syncthing_installed):
+    """Test that only logged-in users can access Syncthing web interface."""
+    functional.logout(session_browser)
+    functional.access_url(session_browser, 'syncthing')
+    assert functional.is_login_prompt(session_browser)
+
+    functional.login(session_browser)
+    functional.access_url(session_browser, 'syncthing')
+    assert functional.is_available(session_browser, 'syncthing')
+
+
 def test_create_user(session_browser):
     """Test creating a user."""
     _delete_user(session_browser, 'alice')

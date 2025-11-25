@@ -1,15 +1,22 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """Django views for user app."""
 
+import axes.utils
 import django.views.generic
+from django import shortcuts
+from django.contrib import messages
+from django.contrib.auth import logout as auth_logout
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.models import User
+from django.contrib.auth.views import LoginView as DjangoLoginView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
+from django.utils.translation import gettext as _
 from django.utils.translation import gettext_lazy
-from django.views.generic.edit import (CreateView, FormView, UpdateView)
+from django.views.decorators.http import require_POST
+from django.views.generic.edit import CreateView, FormView, UpdateView
 
 import plinth.modules.ssh.privileged as ssh_privileged
 from plinth import translation
@@ -18,8 +25,67 @@ from plinth.utils import is_user_admin
 from plinth.views import AppView
 
 from . import privileged
-from .forms import (CreateUserForm, FirstBootForm, UserChangePasswordForm,
-                    UserUpdateForm)
+from .forms import (AuthenticationForm, CaptchaForm, CreateUserForm,
+                    FirstBootForm, UserChangePasswordForm, UserUpdateForm)
+
+
+class LoginView(DjangoLoginView):
+    """View to login to FreedomBox and set language preference."""
+
+    redirect_authenticated_user = True
+    template_name = 'users_login.html'
+    form_class = AuthenticationForm
+
+    def dispatch(self, request, *args, **kwargs):
+        """Handle a request and return a HTTP response."""
+        response = super().dispatch(request, *args, **kwargs)
+        if request.user.is_authenticated:
+            translation.set_language(request, response,
+                                     request.user.userprofile.language)
+
+        return response
+
+
+class CaptchaView(FormView):
+    """A simple form view with a CAPTCHA image.
+
+    When a user performs too many login attempts, they will no longer be able
+    to login with the typical login view. They will be redirected to this view.
+    On successfully solving the CAPTCHA in this form, their ability to use the
+    login form will be reset.
+    """
+
+    template_name = 'users_captcha.html'
+    form_class = CaptchaForm
+
+    def form_valid(self, form):
+        """Reset login attempts and redirect to login page."""
+        axes.utils.reset_request(self.request)
+        return shortcuts.redirect('users:login')
+
+
+@require_POST
+def logout(request):
+    """Logout an authenticated user, remove SSO cookie and redirect to home."""
+    auth_logout(request)
+    response = shortcuts.redirect('index')
+
+    # HACK: Remove Apache OpenID Connect module's session. This will logout all
+    # the apps using mod_auth_openidc for their authentication and
+    # authorization. A better way to do this is to implement OpenID Connect's
+    # Back-Channel Logout[1] or using OpenID Connect Session Management[2].
+    # With this scheme, each application will register a logout URL during
+    # client registration. The OpenID Provider (FreedomBox service) will call
+    # this URL with appropriate parameters to perform logout on all the apps.
+    # Support for OpenID Connect Back-Channel Logout is currently under
+    # review[3].
+    # 1. https://openid.net/specs/openid-connect-backchannel-1_0.html
+    # 2. https://openid.net/specs/openid-connect-session-1_0.html
+    # 3. https://github.com/django-oauth/django-oauth-toolkit/pull/1573
+    response.delete_cookie('mod_auth_openidc_session')
+
+    messages.success(request, _('Logged out successfully.'))
+    return response
 
 
 class ContextMixin:
