@@ -58,6 +58,9 @@
     <link rel="stylesheet" href="{% static user_css %}"/>
   {% endif %}
 
+  <!-- This script is not loaded in defer mode because it needs to run before
+       page is rendered -->
+  <script type="text/javascript" src="{% static 'theme/js/color-modes.js' %}"></script>
   <!-- Local link to system Bootstrap JS -->
   <script type="text/javascript" src="{% static '/javascript/popperjs2/popper.min.js' %}" defer></script>
   <script type="text/javascript" src="{% static '/javascript/bootstrap5/js/bootstrap.bundle.min.js' %}" defer></script>
@@ -147,6 +150,8 @@
               {% if user.is_authenticated %}
 
                 {% include "notifications-dropdown.html" %}
+
+                {% include "theme-menu.html" %}
 
                 {% include "help-menu.html" %}
 
