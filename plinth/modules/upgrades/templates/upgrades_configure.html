@@ -104,10 +104,10 @@
   <h3>{% trans "Manual Update" %}</h3>
   {% if is_busy %}
     <div class="btn-toolbar">
-      <button type="button" disabled="disabled"
-              class="running-status-parent btn btn-default" >
-        <span class="running-status loading"></span>
-        {% trans "Updating..." %}
+      <button type="button" class="btn btn-default" disabled="disabled">
+        <span class="spinner-border spinner-border-sm" aria-hidden="true">
+        </span>
+        <span role="status">{% trans "Updating..." %}</span>
       </button>
     </div>
   {% else %}
