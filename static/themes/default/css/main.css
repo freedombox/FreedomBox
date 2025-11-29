@@ -8,7 +8,11 @@
     --progress-color: #3498db; /* Blue */
     --freedombox-navbar-color: white;
     --freedombox-navbar-shadow-color: rgba(0, 0, 0, 0.25);
+    --freedombox-toggle-button-bg: #ccc;
+}
 
+[data-bs-theme="dark"] {
+    --freedombox-toggle-button-bg: #888;
 }
 
 /*
@@ -693,9 +697,9 @@ footer {
     border-radius: 0.8125rem;
     width: 3.125rem;
     height: 1.625rem;
-    background: #ccc;
-    --bs-btn-hover-bg: #ccc;
-    --bs-btn-disabled-bg: #ccc;
+    background: var(--freedombox-toggle-button-bg);
+    --bs-btn-hover-bg: var(--freedombox-toggle-button-bg);
+    --bs-btn-disabled-bg: var(--freedombox-toggle-button-bg);;
     --bs-btn-disabled-border-color: transparent;
     position: relative;
 }
@@ -706,7 +710,7 @@ footer {
     height: 1.5rem;
     width: 1.5rem;
     border-radius: 100%;
-    background: #fff;
+    background: var(--bs-body-bg);
     position: absolute;
     top: 50%;
     left: 0%;
@@ -726,8 +730,8 @@ footer {
 
 .toggle-button.running-status-button::before {
     top: 0;
-    border: 0.25rem solid var(--neutral-light-color);
-    border-top: 0.25rem solid var(--progress-color);
+    border: 0.25rem solid var(--bs-body-bg);
+    border-top-color: var(--freedombox-blue-color);
     animation: spin 1s linear infinite;
 }
 
