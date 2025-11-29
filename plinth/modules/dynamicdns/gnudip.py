@@ -5,6 +5,7 @@ GnuDIP client for updating Dynamic DNS records.
 
 import hashlib
 import logging
+import socket
 from html.parser import HTMLParser
 
 import requests
@@ -45,18 +46,43 @@ def _check_required_keys(dictionary: dict[str, str], keys: list[str]) -> None:
             f"Missing required keys in response: {', '.join(missing_keys)}")
 
 
+def _request_get_ipv4(*args, **kwargs):
+    """Make a IPv4-only request.
+
+    XXX: This monkey-patches socket.getaddrinfo which may causes issues when
+    running multiple threads. With urllib3 >= 2.4 (Trixie has 2.3), it is
+    possible to implement more cleanly. Use a session for requests library. In
+    the session add custom adapter for https:. In the adapter, override
+    creation of pool manager, and pass socket_family parameter.
+    """
+    original = socket.getaddrinfo
+
+    def getaddrinfo_ipv4(*args, **kwargs):
+        return original(args[0], args[1], socket.AF_INET, *args[3:], **kwargs)
+
+    socket.getaddrinfo = getaddrinfo_ipv4
+    try:
+        return requests.get(*args, **kwargs)
+    finally:
+        socket.getaddrinfo = original
+
+
 def update(server: str, domain: str, username: str,
            password: str) -> tuple[bool, str | None]:
     """Update Dynamic DNS record using GnuDIP protocol.
 
     Protocol documentation:
     https://gnudip2.sourceforge.net/gnudip-www/latest/gnudip/html/protocol.html
+
+    GnuDIP at least as deployed on the FreedomBox foundation servers does not
+    support IPv6 (it does have any code to update AAAA records). So, make a
+    request only using IPv4 stack.
     """
     domain = domain.removeprefix(username + '.')
     password_digest = hashlib.md5(password.encode()).hexdigest()
 
     http_server = f'https://{server}/gnudip/cgi-bin/gdipupdt.cgi'
-    response = requests.get(http_server)
+    response = _request_get_ipv4(http_server)
 
     salt_response = _extract_content_from_meta_tags(response.text)
     _check_required_keys(salt_response, ['salt', 'time', 'sign'])
@@ -74,7 +100,7 @@ def update(server: str, domain: str, username: str,
         'pass': password_digest,
         'reqc': '2'
     }
-    update_response = requests.get(http_server, params=query_params)
+    update_response = _request_get_ipv4(http_server, params=query_params)
 
     update_result = _extract_content_from_meta_tags(update_response.text)
     _check_required_keys(update_result, ['retc'])

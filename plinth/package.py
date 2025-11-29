@@ -308,9 +308,9 @@ class Packages(app_module.FollowerComponent):
         """
         packages_set: set[str] = set(packages)
 
-        # Get list of packages needed by other installed apps (packages to
-        # keep).
-        keep_packages: set[str] = set()
+        # Get list of packages needed by other installed apps and by freedombox
+        # itself (packages to keep).
+        keep_packages: set[str] = {'freedombox'}
         for app in app_module.App.list():
             # uninstall() will be called on Packages of this app separately
             # for uninstalling this app.

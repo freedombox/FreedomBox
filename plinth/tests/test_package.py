@@ -178,11 +178,11 @@ def test_packages_uninstall(uninstall, _refresh_package_lists):
         """Test app"""
         app_id = 'test-app'
 
-    component = Packages('test-component', ['python3', 'bash'])
+    component = Packages('test-component', ['bash', 'dash'])
     app = TestApp()
     app.add(component)
     app.uninstall()
-    uninstall.assert_has_calls([call(['python3', 'bash'], purge=True)])
+    uninstall.assert_has_calls([call(['bash', 'dash'], purge=True)])
 
 
 @patch('plinth.package.refresh_package_lists')

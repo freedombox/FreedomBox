@@ -74,6 +74,17 @@ Explanation: matrix-synapse recommends python3-pympler
 Package: python3-pympler
 Pin: release n=sid
 Pin-Priority: 200
+
+Explanation: Make janus package and its dependencies installable from Debian
+Explanation: 'unstable' distribution.
+Package: janus
+Pin: release n=sid
+Pin-Priority: 200
+
+Explanation: Janus app in FreedomBox needs the package for web UI.
+Package: libjs-janus-gateway
+Pin: release n=sid
+Pin-Priority: 200
 '''
 
 APT_PREFERENCES_UNSTABLE = \
