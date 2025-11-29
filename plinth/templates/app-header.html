@@ -43,10 +43,11 @@
     </section>
 
     {% if app_info.tags %}
-      <div class="app-tags">
+      <div class="app-tags d-flex align-items-center flex-wrap">
         {% for tag in app_info.tags %}
+        {% if not forloop.first %}•{% endif %}
           <a href="{{ active_section_url }}?tag={{ tag|urlencode }}"
-             class="btn btn-light rounded-pill tag">
+             class="btn btn-default rounded-pill tag">
             {% trans tag %}
           </a>
         {% endfor %}

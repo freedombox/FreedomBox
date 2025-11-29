@@ -292,16 +292,21 @@ html {
 /* Tags */
 .tag {
     --bs-btn-padding-y: 0.25rem; /* Make the badge shorter */
+    border-style: none;
+}
+
+#selected-tags .tag {
+    border-style: solid;
 }
 
 /* Tag Input Container */
 .tag-input {
     display: flex;
     align-items: center;
-    border: 1px solid #ced4da;
+    border: 1px solid var(--bs-border-color);
     border-radius: .25rem;
     padding: .375rem .75rem;
-    background-color: #fff;
+    background-color: var(--bs-body-bg);
     margin-bottom: 2rem;
 }
 
