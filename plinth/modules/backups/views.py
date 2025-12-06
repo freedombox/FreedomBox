@@ -24,7 +24,8 @@ from plinth.errors import PlinthError
 from plinth.modules import backups, storage
 from plinth.views import AppView
 
-from . import (SESSION_PATH_VARIABLE, api, errors, forms, get_known_hosts_path,
+from . import (SESSION_PATH_VARIABLE, api, errors, forms,
+               generate_ssh_client_auth_key, get_known_hosts_path,
                is_ssh_hostkey_verified, privileged)
 from .decorators import delete_tmp_backup_file
 from .repository import (BorgRepository, SshBorgRepository, get_instance,
@@ -357,6 +358,14 @@ class AddRemoteRepositoryView(FormView):
     """View to create a new remote backup repository."""
     form_class = forms.AddRemoteRepositoryForm
     template_name = 'backups_add_remote_repository.html'
+
+    def get(self, *args, **kwargs):
+        """Handle GET requests.
+
+        Generate SSH client authentication key if necessary.
+        """
+        generate_ssh_client_auth_key()
+        return super().get(*args, kwargs)
 
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""

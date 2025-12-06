@@ -137,6 +137,20 @@ def get_known_hosts_path():
     return pathlib.Path(cfg.data_dir) / '.ssh' / 'known_hosts'
 
 
+def generate_ssh_client_auth_key():
+    """Generate SSH client authentication keypair, if needed."""
+    key_path = pathlib.Path(cfg.data_dir) / '.ssh' / 'id_ed25519'
+    if not key_path.exists():
+        logger.info('Generating SSH client key %s for FreedomBox service',
+                    key_path)
+        subprocess.run(
+            ['ssh-keygen', '-t', 'ed25519', '-N', '', '-f',
+             str(key_path)], stdout=subprocess.DEVNULL, check=True)
+    else:
+        logger.info('SSH client key %s for FreedomBox service already exists',
+                    key_file)
+
+
 def is_ssh_hostkey_verified(hostname):
     """Check whether SSH Hostkey has already been verified.
 
