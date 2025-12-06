@@ -254,7 +254,9 @@ class AddRemoteRepositoryForm(EncryptedBackupsMixin, forms.Form):
     ssh_password = forms.CharField(
         label=_('SSH server password'), strip=True,
         help_text=_('Password of the SSH Server.<br />'
-                    'SSH key-based authentication is not yet possible.'),
+                    'Either provide a password, or add the FreedomBox '
+                    "service's SSH client public key (listed above) to the "
+                    'authorized keys list on the remote machine.'),
         widget=forms.PasswordInput(), required=False)
 
     field_order = ['repository', 'ssh_password'] + encryption_fields

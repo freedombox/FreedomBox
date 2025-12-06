@@ -13,6 +13,33 @@
   <form class="form" method="post">
     {% csrf_token %}
 
+    <hr>
+    <div>
+      <h4>{% trans "SSH Client Authentication Key"%}</h4>
+      <p>
+        {% blocktrans trimmed %}
+          {{ box_name }} service has the following SSH client public key:
+        {% endblocktrans %}
+      </p>
+      <pre>{{ ssh_client_public_key }}</pre>
+      <p>
+        {% blocktrans trimmed %}
+          If this public key is added to the authorized keys list on the remote
+          machine, then SSH key authentication will be used instead of
+          password-based authentication.
+        {% endblocktrans %}
+      </p>
+      <p>
+        {% blocktrans trimmed %}
+          Otherwise, {{ box_name }} service will attempt to connect using the
+          password provided in the form below. If successful, then the public
+          key will be automatically added to the authorized keys list, so that
+          future connections do not need the password.
+        {% endblocktrans %}
+      </p>
+    </div>
+    <hr>
+
     {{ form|bootstrap }}
 
     <div class="alert alert-warning d-flex align-items-center" role="alert">

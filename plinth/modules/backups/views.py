@@ -26,7 +26,7 @@ from plinth.views import AppView
 
 from . import (SESSION_PATH_VARIABLE, api, errors, forms,
                generate_ssh_client_auth_key, get_known_hosts_path,
-               is_ssh_hostkey_verified, privileged)
+               get_ssh_client_public_key, is_ssh_hostkey_verified, privileged)
 from .decorators import delete_tmp_backup_file
 from .repository import (BorgRepository, SshBorgRepository, get_instance,
                          get_repositories)
@@ -371,6 +371,7 @@ class AddRemoteRepositoryView(FormView):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
         context['title'] = _('Create remote backup repository')
+        context['ssh_client_public_key'] = get_ssh_client_public_key()
         return context
 
     def form_valid(self, form):

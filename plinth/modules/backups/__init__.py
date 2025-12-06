@@ -148,7 +148,16 @@ def generate_ssh_client_auth_key():
              str(key_path)], stdout=subprocess.DEVNULL, check=True)
     else:
         logger.info('SSH client key %s for FreedomBox service already exists',
-                    key_file)
+                    key_path)
+
+
+def get_ssh_client_public_key() -> str:
+    """Get SSH client public key for FreedomBox service."""
+    pubkey_path = pathlib.Path(cfg.data_dir) / '.ssh' / 'id_ed25519.pub'
+    with pubkey_path.open('r') as pubkey_file:
+        pubkey = pubkey_file.read()
+
+    return pubkey
 
 
 def is_ssh_hostkey_verified(hostname):
