@@ -13,6 +13,7 @@ Vagrant.configure(2) do |config|
     vb.cpus = Etc.nprocessors
     vb.memory = 2048
     vb.linked_clone = true
+    vb.customize ["modifyvm", :id, "--firmware", "efi"]
   end
   config.vm.provision "shell", run: 'always', inline: <<-SHELL
     # Disable automatic upgrades
