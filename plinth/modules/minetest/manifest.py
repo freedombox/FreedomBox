@@ -6,19 +6,19 @@ from plinth.clients import store_url
 
 clients = [{
     'name':
-        _('Minetest'),
+        _('Luanti'),
     'platforms': [{
         'type': 'download',
         'os': 'gnu-linux',
-        'url': 'https://www.minetest.net/downloads/'
+        'url': 'https://www.luanti.org/downloads/'
     }, {
         'type': 'download',
         'os': 'macos',
-        'url': 'https://www.minetest.net/downloads/'
+        'url': 'https://www.luanti.org/downloads/'
     }, {
         'type': 'download',
         'os': 'windows',
-        'url': 'https://www.minetest.net/downloads/'
+        'url': 'https://www.luanti.org/downloads/'
     }, {
         'type': 'store',
         'os': 'android',
@@ -32,7 +32,7 @@ clients = [{
     }, {
         'type': 'package',
         'format': 'deb',
-        'name': 'minetest'
+        'name': 'luanti'
     }]
 }]
 

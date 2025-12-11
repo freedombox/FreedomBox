@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""FreedomBox app for Minetest server."""
+"""FreedomBox app for Luanti (formally Minetest) server."""
 
 import augeas
 from django.urls import reverse_lazy
@@ -30,10 +30,11 @@ _mods = [
 
 _description = [
     format_lazy(
-        _('Minetest is a multiplayer infinite-world block sandbox. This '
-          'module enables the Minetest server to be run on this '
-          '{box_name}, on the default port (30000). To connect to the server, '
-          'a <a href="http://www.minetest.net/downloads/">Minetest client</a> '
+        _('Luanti, formally known as Minetest, is a multiplayer '
+          'infinite-world block sandbox. This module enables the Luanti '
+          'server to be run on this {box_name}, on the default port (30000). '
+          'To connect to the server, a '
+          '<a href="https://www.luanti.org/downloads/">Luanti client</a> '
           'is needed.'), box_name=_(cfg.box_name)),
 ]
 
@@ -42,7 +43,7 @@ AUG_PATH = '/files' + CONFIG_FILE + '/.anon'
 
 
 class MinetestApp(app_module.App):
-    """FreedomBox app for Minetest."""
+    """FreedomBox app for Luanti (formally Minetest)."""
 
     app_id = 'minetest'
 
@@ -53,11 +54,11 @@ class MinetestApp(app_module.App):
         super().__init__()
 
         info = app_module.Info(
-            app_id=self.app_id, version=self._version, name=_('Minetest'),
+            app_id=self.app_id, version=self._version, name=_('Luanti'),
             icon_filename='minetest', description=_description,
             manual_page='Minetest', clients=manifest.clients,
             tags=manifest.tags,
-            donation_url='https://www.minetest.net/get-involved/#donate')
+            donation_url='https://www.luanti.org/donate/')
         self.add(info)
 
         menu_item = menu.Menu('menu-minetest', info.name, info.icon_filename,
