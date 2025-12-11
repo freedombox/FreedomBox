@@ -58,7 +58,7 @@ class TransmissionApp(app_module.App):
 
     app_id = 'transmission'
 
-    _version = 7
+    _version = 8
 
     DAEMON = 'transmission-daemon'
 
@@ -110,7 +110,7 @@ class TransmissionApp(app_module.App):
 
         webserver = Webserver('webserver-transmission', 'transmission-plinth',
                               urls=['https://{host}/transmission'],
-                              last_updated_version=6)
+                              last_updated_version=8)
         self.add(webserver)
 
         daemon = Daemon(
