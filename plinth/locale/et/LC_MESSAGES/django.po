@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-09 01:26+0000\n"
-"PO-Revision-Date: 2025-12-06 09:00+0000\n"
+"PO-Revision-Date: 2025-12-12 08:00+0000\n"
 "Last-Translator: Priit Jõerüüt <jrthwlate@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Estonian <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/et/>\n"
@@ -22,7 +22,7 @@ msgstr ""
 #: plinth/config.py:103
 #, python-brace-format
 msgid "Static configuration {etc_path} is setup properly"
-msgstr ""
+msgstr "Staatiline seadistus asukohas „{etc_path}“ on korrektne"
 
 #: plinth/container.py:140
 #, python-brace-format
@@ -194,11 +194,11 @@ msgstr ""
 
 #: plinth/modules/avahi/manifest.py:14
 msgid "Auto-discovery"
-msgstr ""
+msgstr "Automaatne tuvastus"
 
 #: plinth/modules/avahi/manifest.py:14 plinth/modules/backups/manifest.py:17
 msgid "Local"
-msgstr ""
+msgstr "Kohalik"
 
 #: plinth/modules/avahi/manifest.py:14
 msgid "mDNS"
@@ -229,7 +229,7 @@ msgstr ""
 #: plinth/modules/upgrades/__init__.py:152
 #, python-brace-format
 msgid "Go to {app_name}"
-msgstr ""
+msgstr "Ava {app_name}"
 
 #: plinth/modules/backups/__init__.py:218
 #, python-brace-format
@@ -268,20 +268,26 @@ msgid ""
 "This many latest backups are kept and the rest are removed. A value of \"0\" "
 "disables backups of this type. Triggered at specified hour every day."
 msgstr ""
+"Siinmääratud arv varukoopiaid hoitakse alles ja muud eemaldatakse. Kui "
+"väärtus on „0“, siis see varunduse võimalus pole kasutusel. Käivitatakse "
+"määratud tunnil kord päevas."
 
 #: plinth/modules/backups/forms.py:65
 msgid "Number of weekly backups to keep"
-msgstr ""
+msgstr "Alleshoitavaid iganädalaseid varukoopiaid"
 
 #: plinth/modules/backups/forms.py:67
 msgid ""
 "This many latest backups are kept and the rest are removed. A value of \"0\" "
 "disables backups of this type. Triggered at specified hour every Sunday."
 msgstr ""
+"Siinmääratud arv varukoopiaid hoitakse alles ja muud eemaldatakse. Kui "
+"väärtus on „0“, siis see varunduse võimalus pole kasutusel. Käivitatakse "
+"määratud tunnil igal pühapäeval."
 
 #: plinth/modules/backups/forms.py:72
 msgid "Number of monthly backups to keep"
-msgstr ""
+msgstr "Alleshoitavaid igakuiseid varukoopiaid"
 
 #: plinth/modules/backups/forms.py:74
 msgid ""
@@ -289,28 +295,33 @@ msgid ""
 "disables backups of this type. Triggered at specified hour first day of "
 "every month."
 msgstr ""
+"Siinmääratud arv varukoopiaid hoitakse alles ja muud eemaldatakse. Kui "
+"väärtus on „0“, siis see varunduse võimalus pole kasutusel. Käivitatakse "
+"määratud tunnil iga kuu esimesel päeval."
 
 #: plinth/modules/backups/forms.py:79
 msgid "Hour of the day to trigger backup operation"
-msgstr ""
+msgstr "Varunduse kellaaeg"
 
 #: plinth/modules/backups/forms.py:81
 msgid ""
 "In 24 hour format. Services may become temporarily unavailable while running "
 "backup operation at this time of the day."
 msgstr ""
+"24-tunnises vormingus. Varunduse käivitumisel võib muude teenuste saadavus "
+"ajutiselt kaduda."
 
 #: plinth/modules/backups/forms.py:85 plinth/modules/backups/forms.py:107
 msgid "Included apps"
-msgstr ""
+msgstr "Kaasatud rakendused"
 
 #: plinth/modules/backups/forms.py:85 plinth/modules/backups/forms.py:107
 msgid "Apps to include in the backup"
-msgstr ""
+msgstr "Varukoopiasse kaasatavad rakendused"
 
 #: plinth/modules/backups/forms.py:101
 msgid "Repository"
-msgstr "Tarkvarahoidla"
+msgstr "Varukoopiate hoidla"
 
 #: plinth/modules/backups/forms.py:103
 #: plinth/modules/backups/templates/backups_delete.html:17
@@ -323,19 +334,19 @@ msgstr "Nimi"
 
 #: plinth/modules/backups/forms.py:104
 msgid "(Optional) Set a name for this backup archive"
-msgstr ""
+msgstr "Sisesta varukoopia nimi (kui soovid)"
 
 #: plinth/modules/backups/forms.py:125
 msgid "Select the apps you want to restore"
-msgstr ""
+msgstr "Vali taastatavad rakendused"
 
 #: plinth/modules/backups/forms.py:141 plinth/modules/kiwix/forms.py:21
 msgid "Upload File"
-msgstr ""
+msgstr "Laadi fail üles"
 
 #: plinth/modules/backups/forms.py:143
 msgid "Backup files have to be in .tar.gz format"
-msgstr ""
+msgstr "Varukoopiate failid peavad olema .tar.gz vormingus"
 
 #: plinth/modules/backups/forms.py:145
 #, python-brace-format
@@ -344,10 +355,13 @@ msgid ""
 "file previously downloaded from the result of a successful backup on a "
 "{box_name}. It must have a .tar.gz extension."
 msgstr ""
+"Vali oma arvutist üleslaaditav varukoopia fail. Selleks pead varasemalt mõne "
+"„{box_name}“ serveris tehtud varukoopia olema alla laadinud. Failil peab "
+"olema .tar.gz laiend."
 
 #: plinth/modules/backups/forms.py:154
 msgid "Repository path format incorrect."
-msgstr ""
+msgstr "Varukoopiate hoidla vorming on vigane."
 
 #: plinth/modules/backups/forms.py:181
 #: plinth/modules/letsencrypt/manifest.py:11
@@ -376,7 +390,7 @@ msgstr "Salafraas"
 
 #: plinth/modules/backups/forms.py:187
 msgid "Passphrase; Only needed when using encryption."
-msgstr ""
+msgstr "Salafraasi on vaja vaid krüptimise kasutamisel."
 
 #: plinth/modules/backups/forms.py:190
 msgid "Confirm Passphrase"
@@ -5029,21 +5043,21 @@ msgstr ""
 
 #: plinth/modules/networks/templates/connection_show.html:40
 msgid "Edit connection"
-msgstr ""
+msgstr "Muuda ühendust"
 
 #: plinth/modules/networks/templates/connection_show.html:47
 #: plinth/modules/networks/templates/connections_list.html:61
 msgid "Deactivate"
-msgstr ""
+msgstr "Lülita välja"
 
 #: plinth/modules/networks/templates/connection_show.html:54
 #: plinth/modules/networks/templates/connections_list.html:69
 msgid "Activate"
-msgstr ""
+msgstr "Lülita sisse"
 
 #: plinth/modules/networks/templates/connection_show.html:60
 msgid "Delete connection"
-msgstr ""
+msgstr "Kustuta ühendus"
 
 #: plinth/modules/networks/templates/connection_show.html:63
 #: plinth/modules/networks/templates/connections_diagram.html:19
@@ -5051,91 +5065,91 @@ msgstr ""
 #: plinth/modules/networks/templates/connections_diagram.html:51
 #: plinth/modules/networks/templates/connections_diagram.html:73
 msgid "Connection"
-msgstr ""
+msgstr "Ühendus"
 
 #: plinth/modules/networks/templates/connection_show.html:68
 msgid "Primary connection"
-msgstr ""
+msgstr "Põhiühendus"
 
 #: plinth/modules/networks/templates/connection_show.html:81
 #: plinth/modules/storage/templates/storage.html:23
 msgid "Device"
-msgstr ""
+msgstr "Seade"
 
 #: plinth/modules/networks/templates/connection_show.html:85
 msgid "State"
-msgstr ""
+msgstr "Olek"
 
 #: plinth/modules/networks/templates/connection_show.html:90
 msgid "State reason"
-msgstr ""
+msgstr "Oleku põhjus"
 
 #: plinth/modules/networks/templates/connection_show.html:99
 msgid "MAC address"
-msgstr ""
+msgstr "MAC-aadress"
 
 #: plinth/modules/networks/templates/connection_show.html:103
 msgid "Interface"
-msgstr ""
+msgstr "Võrguliides"
 
 #: plinth/modules/networks/templates/connection_show.html:107
 #: plinth/modules/snapshot/templates/snapshot_delete_selected.html:19
 #: plinth/modules/snapshot/templates/snapshot_manage.html:34
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:27
 msgid "Description"
-msgstr ""
+msgstr "Kirjeldus"
 
 #: plinth/modules/networks/templates/connection_show.html:113
 msgid "Physical Link"
-msgstr ""
+msgstr "Füüsiline link"
 
 #: plinth/modules/networks/templates/connection_show.html:118
 msgid "Link state"
-msgstr ""
+msgstr "Lingi olek"
 
 #: plinth/modules/networks/templates/connection_show.html:121
 msgid "cable is connected"
-msgstr ""
+msgstr "kaabel on ühendatud lahti"
 
 #: plinth/modules/networks/templates/connection_show.html:124
 msgid "please check cable"
-msgstr ""
+msgstr "palun kontrolli kaabli olekut"
 
 #: plinth/modules/networks/templates/connection_show.html:128
 #: plinth/modules/networks/templates/connection_show.html:144
 msgid "Speed"
-msgstr ""
+msgstr "Kiirus"
 
 #: plinth/modules/networks/templates/connection_show.html:130
 #, python-format
 msgid "%(ethernet_speed)s Mbit/s"
-msgstr ""
+msgstr "%(ethernet_speed)s Mbit/s"
 
 #: plinth/modules/networks/templates/connection_show.html:146
 #, python-format
 msgid "%(wireless_bitrate)s Mbit/s"
-msgstr ""
+msgstr "%(wireless_bitrate)s Mbit/s"
 
 #: plinth/modules/networks/templates/connection_show.html:158
 msgid "Signal strength"
-msgstr ""
+msgstr "Signaali tugevus"
 
 #: plinth/modules/networks/templates/connection_show.html:174
 #: plinth/modules/networks/templates/connections_fields.html:67
 msgid "IPv4"
-msgstr ""
+msgstr "IPv4"
 
 #: plinth/modules/networks/templates/connection_show.html:179
 #: plinth/modules/networks/templates/connection_show.html:222
 #: plinth/modules/shadowsocks/forms.py:36
 #: plinth/modules/shadowsocksserver/forms.py:42
 msgid "Method"
-msgstr ""
+msgstr "Meetod"
 
 #: plinth/modules/networks/templates/connection_show.html:188
 #: plinth/modules/networks/templates/connection_show.html:229
 msgid "IP address"
-msgstr ""
+msgstr "IP-aadress"
 
 #: plinth/modules/networks/templates/connection_show.html:204
 #: plinth/modules/networks/templates/connection_show.html:245
