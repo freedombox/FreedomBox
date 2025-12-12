@@ -160,6 +160,23 @@ def get_ssh_client_public_key() -> str:
     return pubkey
 
 
+def copy_ssh_client_public_key(hostname: str, username: str,
+                               password: str) -> tuple[bool, str]:
+    """Copy the SSH client public key to the remote server.
+
+    Returns whether the copy was successful, and any error message.
+    """
+    pubkey_path = pathlib.Path(cfg.data_dir) / '.ssh' / 'id_ed25519.pub'
+    env = os.environ.copy()
+    env['SSHPASS'] = password
+    process = subprocess.run([
+        'sshpass', '-e', 'ssh-copy-id', '-i',
+        str(pubkey_path), f'{username}@{hostname}'
+    ], stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=False, env=env)
+    error_message = process.stderr.decode() if process.returncode else ''
+    return (process.returncode == 0, error_message)
+
+
 def is_ssh_hostkey_verified(hostname):
     """Check whether SSH Hostkey has already been verified.
 

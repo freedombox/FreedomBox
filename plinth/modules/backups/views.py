@@ -24,8 +24,8 @@ from plinth.errors import PlinthError
 from plinth.modules import backups, storage
 from plinth.views import AppView
 
-from . import (SESSION_PATH_VARIABLE, api, errors, forms,
-               generate_ssh_client_auth_key, get_known_hosts_path,
+from . import (SESSION_PATH_VARIABLE, api, copy_ssh_client_public_key, errors,
+               forms, generate_ssh_client_auth_key, get_known_hosts_path,
                get_ssh_client_public_key, is_ssh_hostkey_verified, privileged)
 from .decorators import delete_tmp_backup_file
 from .repository import (BorgRepository, SshBorgRepository, get_instance,
@@ -436,16 +436,38 @@ class VerifySshHostkeyView(FormView):
         with known_hosts_path.open('a', encoding='utf-8') as known_hosts_file:
             known_hosts_file.write(ssh_public_key + '\n')
 
+    def _check_copy_ssh_client_public_key(self):
+        """ Try to copy FreedomBox's SSH client public key to the host."""
+        repo = self._get_repository()
+        result, message = copy_ssh_client_public_key(repo.hostname,
+                                                     repo.username,
+                                                     repo.ssh_password)
+        if result:
+            logger.info(
+                "Copied SSH client public key to remote host's authorized "
+                "keys.")
+            if _save_repository(self.request, repo):
+                return redirect(reverse_lazy('backups:index'))
+        else:
+            logger.warning('Failed to copy SSH client public key: %s', message)
+            messages.error(self.request, message)
+            # Remove the repository so that the user can have another go at
+            # creating it.
+            try:
+                repo.remove()
+                messages.error(self.request, _('Repository removed.'))
+            except KeyError:
+                pass
+
+        return redirect(reverse_lazy('backups:add-remote-repository'))
+
     def get(self, *args, **kwargs):
         """Skip this view if host is already verified."""
         if not is_ssh_hostkey_verified(self._get_repository().hostname):
             return super().get(*args, **kwargs)
 
         messages.success(self.request, _('SSH host already verified.'))
-        if _save_repository(self.request, self._get_repository()):
-            return redirect(reverse_lazy('backups:index'))
-
-        return redirect(reverse_lazy('backups:add-remote-repository'))
+        return self._check_copy_ssh_client_public_key()
 
     def form_valid(self, form):
         """Create and store the repository."""
@@ -453,10 +475,7 @@ class VerifySshHostkeyView(FormView):
         with handle_common_errors(self.request):
             self._add_ssh_hostkey(ssh_public_key)
             messages.success(self.request, _('SSH host verified.'))
-            if _save_repository(self.request, self._get_repository()):
-                return redirect(reverse_lazy('backups:index'))
-
-        return redirect(reverse_lazy('backups:add-remote-repository'))
+            return self._check_copy_ssh_client_public_key()
 
 
 def _save_repository(request, repository):

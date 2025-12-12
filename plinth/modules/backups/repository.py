@@ -315,10 +315,24 @@ class SshBorgRepository(BaseBorgRepository):
         self._umount_ignore_errors()
 
     @property
-    def hostname(self):
+    def hostname(self) -> str:
         """Return hostname from the remote path."""
         _, hostname, _ = split_path(self._path)
         return hostname.split('%')[0]  # XXX: Likely incorrect to split
+
+    @property
+    def username(self) -> str:
+        """Return username from the remote path."""
+        username, _, _ = split_path(self._path)
+        return username
+
+    @property
+    def ssh_password(self) -> str | None:
+        """Return SSH password if it is stored, otherwise None."""
+        if 'ssh_password' in self.credentials:
+            return self.credentials['ssh_password']
+
+        return None
 
     @property
     def _mountpoint(self):
