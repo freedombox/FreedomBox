@@ -1,0 +1,46 @@
+{% comment %}
+# SPDX-License-Identifier: AGPL-3.0-or-later
+{% endcomment %}
+
+{% load i18n %}
+
+<li id="id_theme_menu" class="dropdown nav-item">
+  <a href="#" title="{% trans "Toggle theme (auto)" %}"
+     class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
+     role="button" aria-expanded="false" aria-haspopup="true"
+     id="id_theme_menu_link">
+    <span class="fa fa-adjust nav-icon" id="id_active_theme_icon"></span>
+    <span class="nav-text d-md-none" id="id_toggle_theme_text">
+      {% trans "Toggle theme" %}
+    </span>
+  </a>
+  <ul class="dropdown-menu" role="menu" aria-labelledby="id_theme_menu_link">
+    <li>
+      <button type="button" class="dropdown-item d-flex align-items-center"
+              data-bs-theme-value="light" data-bs-icon-value="fa-sun"
+              aria-pressed="false">
+        <span class="fa fa-sun nav-icon me-2"></span>
+        {% trans "Light" %}
+        <span class="fa fa-check nav-icon ms-auto d-none"></span>
+      </button>
+    </li>
+    <li>
+      <button type="button" class="dropdown-item d-flex align-items-center"
+              data-bs-theme-value="dark" data-bs-icon-value="fa-moon"
+              aria-pressed="false">
+        <span class="fa fa-moon nav-icon me-2"></span>
+        {% trans "Dark" %}
+        <span class="fa fa-check nav-icon ms-auto d-none"></span>
+      </button>
+    </li>
+    <li>
+      <button type="button" class="dropdown-item d-flex align-items-center"
+              data-bs-theme-value="auto" data-bs-icon-value="fa-adjust"
+              aria-pressed="true">
+        <span class="fa fa-adjust nav-icon me-2"></span>
+        {% trans "Auto" %}
+        <span class="fa fa-check nav-icon ms-auto d-none"></span>
+      </button>
+    </li>
+  </ul>
+</li>

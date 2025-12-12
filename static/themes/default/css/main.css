@@ -6,14 +6,13 @@
     --neutral-light-color: #f5f5f5; /* Light grey */
     --freedombox-blue-color: #4989D4; /* Blue */
     --progress-color: #3498db; /* Blue */
-    --freedombox-form-disabled-bg-color: #e9ecef; /* Grey */
     --freedombox-navbar-color: white;
+    --freedombox-navbar-shadow-color: rgba(0, 0, 0, 0.25);
+    --freedombox-toggle-button-bg: #ccc;
+}
 
-    /* Missing variables in Bootstrap 5.2 copied from Bootstrap 5.3 */
-    --bs-secondary-bg: #e9ecef;
-    --bs-form-invalid-color: #dc3545;
-    --bs-form-invalid-border-color: #dc3545;
-    --bs-secondary-border-subtle: #c4c8cb;
+[data-bs-theme="dark"] {
+    --freedombox-toggle-button-bg: #888;
 }
 
 /*
@@ -50,20 +49,20 @@ h6:not(:first-child) {
 
 /* Default style removed in bootstrap 4 */
 .btn-default {
-    --bs-btn-color: #333;
-    --bs-btn-bg: #fff;
-    --bs-btn-border-color: #ccc;
-    --bs-btn-hover-color: #333;
-    --bs-btn-hover-bg: #e6e6e6;
-    --bs-btn-hover-border-color: #adadad;
+    --bs-btn-color: var(--bs-body-color);
+    --bs-btn-bg: var(--bs-body-bg);
+    --bs-btn-border-color: var(--bs-tertiary-color);
+    --bs-btn-hover-color: var(--bs-body-color);
+    --bs-btn-hover-bg: var(--bs-secondary-bg);
+    --bs-btn-hover-border-color: var(--bs-tertiary-color);
     --bs-btn-focus-shadow-rgb: 192, 192, 192;
-    --bs-btn-active-color: #333;
-    --bs-btn-active-bg: #e6e6e6;
-    --bs-btn-active-border-color: #adadad;
-    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-    --bs-btn-disabled-color: #333;
-    --bs-btn-disabled-bg: #e6e6e6;
-    --bs-btn-disabled-border-color: #adadad;
+    --bs-btn-active-color: var(--bs-body-color);
+    --bs-btn-active-bg: var(--bs-secondary-bg);
+    --bs-btn-active-border-color: var(--bs-tertiary-color);
+    --bs-btn-active-shadow: inset 0 3px 5px var(--bs-border-color-translucent);
+    --bs-btn-disabled-color: var(--bs-body-color);
+    --bs-btn-disabled-bg: var(--bs-secondary-bg);
+    --bs-btn-disabled-border-color: var(--bs-tertiary-color);
 }
 
 /* Help block removed from bootstrap 4, needs updated django-bootstrap-from */
@@ -71,7 +70,7 @@ h6:not(:first-child) {
     display: block;
     margin-top: 0.3125rem;
     margin-bottom: 0.625rem;
-    color: var(--bs-secondary);
+    color: var(--bs-secondary-color);
 }
 
 /* .close was renamed to .alert-dismissable.btn-close in Bootstrap 5, needs
@@ -99,7 +98,7 @@ form .alert .close {
 
 /* Disabled form elements show as gray, removed in Bootstrap 5 */
 .form-control:disabled, .form-control[readonly] {
-    background-color: var(--freedombox-form-disabled-bg-color);
+    background-color: var(--bs-secondary-bg);
     opacity: 1;
 }
 
@@ -228,28 +227,6 @@ body {
     vertical-align: middle;
 }
 
-.running-status-parent {
-    display: inline-block;
-}
-
-.running-status {
-    border-radius: 50%;
-    border: 1px solid black;
-    width: 0.5rem;
-    height: 0.5rem;
-    display: inline-block;
-}
-
-.running-status.loading {
-    border: 0.25rem solid var(--neutral-light-color);
-    border-top: 0.25rem solid var(--progress-color);
-    border-radius: 50%;
-    width: 1rem;
-    height: 1rem;
-    display: inline-block;
-    animation: spin 1s linear infinite;
-}
-
 @keyframes spin {
     0% {
         transform: rotate(0deg);
@@ -314,16 +291,21 @@ html {
 /* Tags */
 .tag {
     --bs-btn-padding-y: 0.25rem; /* Make the badge shorter */
+    border-style: none;
+}
+
+#selected-tags .tag {
+    border-style: solid;
 }
 
 /* Tag Input Container */
 .tag-input {
     display: flex;
     align-items: center;
-    border: 1px solid #ced4da;
+    border: 1px solid var(--bs-border-color);
     border-radius: .25rem;
     padding: .375rem .75rem;
-    background-color: #fff;
+    background-color: var(--bs-body-bg);
     margin-bottom: 2rem;
 }
 
@@ -472,7 +454,7 @@ footer {
  */
 .main-header {
     background: var(--freedombox-blue-color);
-    box-shadow: 0 0.25rem 0.375rem 0 rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0.25rem 0.375rem 0 var(--freedombox-navbar-shadow-color);
     border: none;
 }
 
@@ -520,6 +502,10 @@ footer {
 .main-header .navbar-brand.active,
 .main-header .nav-link.active {
     border-bottom: var(--freedombox-navbar-color) 3px solid;
+}
+
+.main-header .dropdown-menu .active .fa-check {
+    display: block !important;
 }
 
 /* Breadcrumbs */
@@ -584,7 +570,7 @@ footer {
 
 .card-tags {
     font-weight: 400;
-    color: var(--bs-secondary);
+    color: var(--bs-secondary-color);
     font-size: 0.875rem;
 
     /* Show ellipsis after 3 lines. */
@@ -711,9 +697,9 @@ footer {
     border-radius: 0.8125rem;
     width: 3.125rem;
     height: 1.625rem;
-    background: #ccc;
-    --bs-btn-hover-bg: #ccc;
-    --bs-btn-disabled-bg: #ccc;
+    background: var(--freedombox-toggle-button-bg);
+    --bs-btn-hover-bg: var(--freedombox-toggle-button-bg);
+    --bs-btn-disabled-bg: var(--freedombox-toggle-button-bg);;
     --bs-btn-disabled-border-color: transparent;
     position: relative;
 }
@@ -724,7 +710,7 @@ footer {
     height: 1.5rem;
     width: 1.5rem;
     border-radius: 100%;
-    background: #fff;
+    background: var(--bs-body-bg);
     position: absolute;
     top: 50%;
     left: 0%;
@@ -744,8 +730,8 @@ footer {
 
 .toggle-button.running-status-button::before {
     top: 0;
-    border: 0.25rem solid var(--neutral-light-color);
-    border-top: 0.25rem solid var(--progress-color);
+    border: 0.25rem solid var(--bs-body-bg);
+    border-top-color: var(--freedombox-blue-color);
     animation: spin 1s linear infinite;
 }
 
@@ -758,8 +744,8 @@ footer {
  */
 .running-status-button-before {
     display: inline-block;
-    border: 0.25rem solid var(--neutral-light-color);
-    border-top: 0.25rem solid var(--progress-color);
+    border: 0.25rem solid var(--bs-btn-color);
+    border-top-color: transparent;
     border-radius: 50%;
     width: 1rem;
     height: 1rem;
@@ -767,6 +753,8 @@ footer {
     margin-left: 0.625rem;
     margin-bottom: -0.25rem;
     margin-right: -1.625rem;
+    position: relative;
+    z-index: 10;
 }
 
 .running-status-button:disabled {
@@ -782,7 +770,7 @@ input[type='submit'].running-status-button {
  */
 .select-all-label {
     border: 1px solid var(--bs-secondary-border-subtle);
-    background-color: var(--neutral-light-color);
+    background-color: var(--bs-tertiary-bg);
     border-radius: 0.25rem;
     padding: 0.5rem 1rem 0.25rem;
     margin-left: -1rem;

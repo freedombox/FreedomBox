@@ -8,7 +8,7 @@ from plinth.tests import functional
 pytestmark = [pytest.mark.apps, pytest.mark.homeassistant]
 
 
-class TestHomeAssitantApp(functional.BaseAppTests):
+class TestHomeAssistantApp(functional.BaseAppTests):
     """Basic tests for Home Assistant app."""
     app_name = 'homeassistant'
     has_service = True

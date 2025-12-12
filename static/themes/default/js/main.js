@@ -85,6 +85,11 @@ function onSubmitAddProgress(event) {
             // For push buttons
             const beforeElement = document.createElement('div');
             beforeElement.classList.add('running-status-button-before');
+            button.classList.forEach(className => {
+                if (className.startsWith('btn-')) {
+                    beforeElement.classList.add(className);
+                }
+            });
             button.parentNode.insertBefore(beforeElement, button);
         } else if (button.tagName == "BUTTON") {
             // For toggle buttons

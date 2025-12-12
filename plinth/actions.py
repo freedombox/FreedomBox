@@ -130,6 +130,9 @@ def run_privileged_method(func, module_name, action_name, args, kwargs):
     if raw_output:
         request['raw_output'] = raw_output
 
+    if not log_error:
+        request['log_error'] = False
+
     client_socket = _request_to_server(request)
 
     if raw_output:
@@ -424,14 +427,19 @@ def privileged_handle_json_request(
                                                       bool):
             raise TypeError('Incorrect "raw_output" parameter')
 
+        if 'log_error' in request and not isinstance(request['log_error'],
+                                                     bool):
+            raise TypeError('Incorrect "log_error" parameter')
+
         return request
 
     try:
         request = _parse_request()
+        log_error = request.get('log_error', True)
         arguments = {'args': request['args'], 'kwargs': request['kwargs']}
         _setup_thread_storage()
         return_value = _privileged_call(request['module'], request['action'],
-                                        arguments)
+                                        arguments, log_error)
 
         if isinstance(return_value, io.BufferedReader):
             raw_output = request.get('raw_output', False)
@@ -452,7 +460,7 @@ def privileged_handle_json_request(
     return json.dumps(return_value, cls=JSONEncoder)
 
 
-def _privileged_call(module_name, action_name, arguments):
+def _privileged_call(module_name, action_name, arguments, log_error=True):
     """Import the module and run action as superuser"""
     if '.' in module_name:
         raise SyntaxError('Invalid module name')
@@ -500,11 +508,12 @@ def _privileged_call(module_name, action_name, arguments):
         return_value = {'result': 'success', 'return': return_values}
     except Exception as exception:
         return_value = get_return_value_from_exception(exception)
-        logger.exception(
-            'Error running action: %s..%s(..): %s\nstdout:\n%s\nstderr:\n%s\n',
-            module_name, action_name, exception,
-            return_value['exception']['stdout'],
-            return_value['exception']['stderr'])
+        if log_error:
+            logger.exception(
+                'Error running action: %s..%s(..): %s\nstdout:\n%s\n'
+                'stderr:\n%s\n', module_name, action_name, exception,
+                return_value['exception']['stdout'],
+                return_value['exception']['stderr'])
 
     return return_value
 
