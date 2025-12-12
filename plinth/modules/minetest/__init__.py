@@ -11,8 +11,8 @@ from plinth.daemon import Daemon
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users.components import UsersAndGroups
-from plinth.package import Package, Packages, install
-from plinth.utils import Version, format_lazy
+from plinth.package import Package, Packages
+from plinth.utils import format_lazy
 
 from . import manifest, privileged
 
@@ -38,7 +38,7 @@ _description = [
           'is needed.'), box_name=_(cfg.box_name)),
 ]
 
-CONFIG_FILE = '/etc/minetest/minetest.conf'
+CONFIG_FILE = '/etc/luanti/default.conf'
 AUG_PATH = '/files' + CONFIG_FILE + '/.anon'
 
 
@@ -47,18 +47,18 @@ class MinetestApp(app_module.App):
 
     app_id = 'minetest'
 
-    _version = 2
+    _version = 3
 
     def __init__(self) -> None:
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(
-            app_id=self.app_id, version=self._version, name=_('Luanti'),
-            icon_filename='minetest', description=_description,
-            manual_page='Minetest', clients=manifest.clients,
-            tags=manifest.tags,
-            donation_url='https://www.luanti.org/donate/')
+        info = app_module.Info(app_id=self.app_id, version=self._version,
+                               name=_('Luanti'), icon_filename='minetest',
+                               description=_description,
+                               manual_page='Minetest',
+                               clients=manifest.clients, tags=manifest.tags,
+                               donation_url='https://www.luanti.org/donate/')
         self.add(info)
 
         menu_item = menu.Menu('menu-minetest', info.name, info.icon_filename,
@@ -73,14 +73,14 @@ class MinetestApp(app_module.App):
             tags=info.tags, login_required=False)
         self.add(shortcut)
 
-        packages = Packages('packages-minetest', ['minetest-server'] + _mods)
+        packages = Packages('packages-minetest', ['luanti-server'] + _mods)
         self.add(packages)
 
         firewall = Firewall('firewall-minetest', info.name,
                             ports=['minetest-plinth'], is_external=True)
         self.add(firewall)
 
-        daemon = Daemon('daemon-minetest', 'minetest-server',
+        daemon = Daemon('daemon-minetest', 'luanti-server',
                         listen_ports=[(30000, 'udp4')])
         self.add(daemon)
 
@@ -93,27 +93,17 @@ class MinetestApp(app_module.App):
                                        **manifest.backup)
         self.add(backup_restore)
 
-    def setup(self, old_version):
+    def setup(self, old_version) -> None:
         """Install and configure the app."""
         super().setup(old_version)
+        privileged.setup()
         if not old_version:
             self.enable()
 
-    def force_upgrade(self, packages):
-        """Force upgrade minetest to resolve conffile prompt."""
-        if 'minetest-server' not in packages:
-            return False
-
-        # Allow upgrade from 5.3.0 to 5.6.1
-        package = packages['minetest-server']
-        if Version(package['new_version']) > Version('5.7~'):
-            return False
-
-        config = get_configuration()
-        install(['minetest-server'], force_configuration='new')
-        privileged.configure(**config)
-
-        return True
+    def uninstall(self) -> None:
+        """Uninstall the app."""
+        super().uninstall()
+        privileged.uninstall()
 
 
 def load_augeas():
@@ -126,32 +116,34 @@ def load_augeas():
     return aug
 
 
-def get_max_players(aug):
+def get_max_players(aug) -> int:
     """Return the maximum players allowed on the server at one time."""
     value = aug.get(AUG_PATH + '/max_users')
     if value:
         return int(value)
 
+    return 15  # Default value
 
-def is_creative_mode_enabled(aug):
+
+def is_creative_mode_enabled(aug) -> bool:
     """Return whether creative mode is enabled."""
     value = aug.get(AUG_PATH + '/creative_mode')
     return value == 'true'
 
 
-def is_pvp_enabled(aug):
+def is_pvp_enabled(aug) -> bool:
     """Return whether PVP is enabled."""
     value = aug.get(AUG_PATH + '/enable_pvp')
-    return value == 'true'
+    return value != 'false'
 
 
-def is_damage_enabled(aug):
+def is_damage_enabled(aug) -> bool:
     """Return whether damage is enabled."""
     value = aug.get(AUG_PATH + '/enable_damage')
-    return value == 'true'
+    return value != 'false'
 
 
-def get_configuration():
+def get_configuration() -> dict[str, int | bool]:
     """Return the current configuration."""
     aug = load_augeas()
     conf = {

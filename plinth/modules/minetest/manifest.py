@@ -38,12 +38,12 @@ clients = [{
 
 backup = {
     'config': {
-        'files': ['/etc/minetest/minetest.conf']
+        'files': ['/etc/luanti/default.conf']
     },
     'data': {
-        'directories': ['/var/games/minetest-server/']
+        'directories': ['/var/lib/private/luanti/default/']
     },
-    'services': ['minetest-server']
+    'services': ['luanti-server']
 }
 
 tags = [_('Game server'), _('Block sandbox'), _('Platform')]
