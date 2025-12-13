@@ -358,8 +358,6 @@ def _maintenance_mode():
 @privileged
 def dump_database():
     """Dump database to file."""
-    DB_BACKUP_FILE.parent.mkdir(parents=True, exist_ok=True)
-
     with _maintenance_mode():
         with DB_BACKUP_FILE.open('w', encoding='utf-8') as file_handle:
             subprocess.run([
