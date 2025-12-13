@@ -11,7 +11,7 @@ from django.utils.translation import gettext as _
 
 from plinth import views
 
-from . import privileged
+from . import get_download_dir, privileged
 from .forms import TransmissionForm
 
 logger = logging.getLogger(__name__)
@@ -25,8 +25,7 @@ class TransmissionAppView(views.AppView):
     def get_initial(self):
         """Get the current settings from Transmission server."""
         status = super().get_initial()
-        configuration = privileged.get_configuration()
-        status['storage_path'] = configuration['download-dir']
+        status['storage_path'] = get_download_dir()
         status['hostname'] = socket.gethostname()
 
         return status
@@ -38,6 +37,7 @@ class TransmissionAppView(views.AppView):
         if old_status['storage_path'] != new_status['storage_path']:
             new_configuration = {
                 'download-dir': new_status['storage_path'],
+                'download_dir': new_status['storage_path'],
             }
             privileged.merge_configuration(new_configuration)
             messages.success(self.request, _('Configuration updated'))

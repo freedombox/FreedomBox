@@ -6,8 +6,9 @@ Functional, browser based tests for transmission app.
 import os
 
 import pytest
-from plinth.tests import functional
 from splinter.exceptions import ElementDoesNotExist
+
+from plinth.tests import functional
 
 pytestmark = [pytest.mark.apps, pytest.mark.transmission, pytest.mark.sso]
 
@@ -57,9 +58,10 @@ def _remove_all_torrents(browser):
             break
 
         torrents.first.click()
-        functional.eventually(browser.is_element_not_present_by_css,
-                              args=['#toolbar-remove.disabled'])
-        browser.find_by_id('toolbar-remove').click()
+        functional.eventually(
+            browser.is_element_not_present_by_css,
+            args=['#toolbar-remove.disabled,#toolbar-delete.disabled'])
+        browser.find_by_css('#toolbar-remove,#toolbar-delete').first.click()
         functional.eventually(
             browser.is_element_not_present_by_css,
             args=['#dialog-container[style="display: none;"]'])
