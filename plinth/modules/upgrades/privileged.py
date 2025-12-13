@@ -75,6 +75,16 @@ Package: python3-pympler
 Pin: release n=sid
 Pin-Priority: 200
 
+Explanation: matrix-synapse depends on python3-rpds-py (>= 0.25.0)
+Package: python3-rpds-py
+Pin: release n=sid
+Pin-Priority: 500
+
+Explanation: matrix-synapse depends on typing-extensions (>=4.14.1)
+Package: python3-typing-extensions
+Pin: release n=sid
+Pin-Priority: 500
+
 Explanation: Make janus package and its dependencies installable from Debian
 Explanation: 'unstable' distribution.
 Package: janus
