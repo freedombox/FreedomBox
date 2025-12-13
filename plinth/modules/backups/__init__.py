@@ -33,7 +33,7 @@ class BackupsApp(app_module.App):
 
     app_id = 'backups'
 
-    _version = 3
+    _version = 4
 
     can_be_disabled = False
 

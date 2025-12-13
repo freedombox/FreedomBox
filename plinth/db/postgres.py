@@ -93,7 +93,6 @@ def dump_database(backup_file: str | pathlib.Path, database_name: str):
     file if it exists.
     """
     backup_path = pathlib.Path(backup_file)
-    backup_path.parent.mkdir(parents=True, exist_ok=True)
     with action_utils.service_ensure_running('postgresql'):
         with open(backup_path, 'w', encoding='utf-8') as file_handle:
             _run_as([

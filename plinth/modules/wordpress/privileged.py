@@ -142,7 +142,6 @@ def is_public() -> bool:
 @privileged
 def dump_database():
     """Dump database to file."""
-    _db_backup_file.parent.mkdir(parents=True, exist_ok=True)
     with action_utils.service_ensure_running('mysql'):
         with _db_backup_file.open('w', encoding='utf-8') as file_handle:
             action_utils.run([

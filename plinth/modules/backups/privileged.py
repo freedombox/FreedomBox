@@ -211,6 +211,8 @@ def is_mounted(mount_point: str) -> bool:
 @privileged
 def setup(path: str):
     """Create repository if it does not already exist."""
+    _create_backup_data_directory()
+
     try:
         _run(['borg', 'info', path], check=True)
     except subprocess.CalledProcessError:
@@ -219,6 +221,17 @@ def setup(path: str):
             os.makedirs(parent)
 
         _init_repository(path, encryption='none')
+
+
+def _create_backup_data_directory():
+    """Create the backups-data with proper permissions."""
+    old_umask = os.umask(0o077)
+    try:
+        BACKUPS_DATA_PATH.mkdir(exist_ok=True)
+        BACKUPS_DATA_PATH.chmod(0o700)
+        shutil.chown(BACKUPS_DATA_PATH, 'root', 'root')
+    finally:
+        os.umask(old_umask)
 
 
 def _init_repository(path: str, encryption: str,
@@ -464,7 +477,6 @@ def _assert_app_id(app_id):
 def dump_settings(app_id: str, settings: dict[str, int | float | bool | str]):
     """Dump an app's settings to a JSON file."""
     _assert_app_id(app_id)
-    BACKUPS_DATA_PATH.mkdir(exist_ok=True)
     settings_path = BACKUPS_DATA_PATH / f'{app_id}-settings.json'
     settings_path.write_text(json.dumps(settings))
 
