@@ -2,7 +2,6 @@
 """Configuration helper for Zoph server."""
 
 import configparser
-import os
 import pathlib
 import re
 import subprocess
@@ -159,7 +158,6 @@ def dump_database():
     """
     with action_utils.service_ensure_running('mysql'):
         db_name = _get_db_config()['db_name']
-        os.makedirs(os.path.dirname(DB_BACKUP_FILE), exist_ok=True)
         with open(DB_BACKUP_FILE, 'w', encoding='utf-8') as db_backup_file:
             action_utils.run(['mysqldump', db_name], stdout=db_backup_file,
                              check=True)

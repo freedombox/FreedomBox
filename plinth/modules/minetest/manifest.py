@@ -6,19 +6,19 @@ from plinth.clients import store_url
 
 clients = [{
     'name':
-        _('Minetest'),
+        _('Luanti'),
     'platforms': [{
         'type': 'download',
         'os': 'gnu-linux',
-        'url': 'https://www.minetest.net/downloads/'
+        'url': 'https://www.luanti.org/downloads/'
     }, {
         'type': 'download',
         'os': 'macos',
-        'url': 'https://www.minetest.net/downloads/'
+        'url': 'https://www.luanti.org/downloads/'
     }, {
         'type': 'download',
         'os': 'windows',
-        'url': 'https://www.minetest.net/downloads/'
+        'url': 'https://www.luanti.org/downloads/'
     }, {
         'type': 'store',
         'os': 'android',
@@ -32,18 +32,18 @@ clients = [{
     }, {
         'type': 'package',
         'format': 'deb',
-        'name': 'minetest'
+        'name': 'luanti'
     }]
 }]
 
 backup = {
     'config': {
-        'files': ['/etc/minetest/minetest.conf']
+        'files': ['/etc/luanti/default.conf']
     },
     'data': {
-        'directories': ['/var/games/minetest-server/']
+        'directories': ['/var/lib/private/luanti/default/']
     },
-    'services': ['minetest-server']
+    'services': ['luanti-server']
 }
 
 tags = [_('Game server'), _('Block sandbox'), _('Platform')]

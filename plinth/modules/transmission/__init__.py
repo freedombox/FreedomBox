@@ -58,7 +58,7 @@ class TransmissionApp(app_module.App):
 
     app_id = 'transmission'
 
-    _version = 7
+    _version = 8
 
     DAEMON = 'transmission-daemon'
 
@@ -91,7 +91,8 @@ class TransmissionApp(app_module.App):
                                       allowed_groups=list(groups))
         self.add(shortcut)
 
-        packages = Packages('packages-transmission', ['transmission-daemon'])
+        packages = Packages('packages-transmission', ['transmission-daemon'],
+                            rerun_setup_on_upgrade=True)
         self.add(packages)
 
         dropin_configs = DropinConfigs('dropin-configs-transmission', [
@@ -110,7 +111,7 @@ class TransmissionApp(app_module.App):
 
         webserver = Webserver('webserver-transmission', 'transmission-plinth',
                               urls=['https://{host}/transmission'],
-                              last_updated_version=6)
+                              last_updated_version=8)
         self.add(webserver)
 
         daemon = Daemon(
@@ -135,15 +136,30 @@ class TransmissionApp(app_module.App):
         """Install and configure the app."""
         super().setup(old_version)
 
-        if old_version and old_version <= 3 and self.is_enabled():
-            self.get_component('firewall-transmission').enable()
-
         new_configuration = {
             'rpc-whitelist-enabled': False,
-            'rpc-authentication-required': False
+            'rpc_whitelist_enabled': False,
+            'rpc-authentication-required': False,
+            'rpc_authentication_required': False,
         }
+
+        if old_version:
+            download_dir = get_download_dir()
+            new_configuration['download-dir'] = download_dir
+            new_configuration['download_dir'] = download_dir
+
         privileged.merge_configuration(new_configuration)
         add_user_to_share_group(SYSTEM_USER, TransmissionApp.DAEMON)
 
         if not old_version:
             self.enable()
+
+
+def get_download_dir() -> str:
+    """Return the configured download directory."""
+    configuration = privileged.get_configuration()
+    old = configuration.get('download-dir')  # Trixie and older
+    if old:
+        return old
+
+    return configuration.get('download_dir')  # Forky and newer
