@@ -22,12 +22,11 @@ Follow the instructions on the [[FreedomBox/Download|download]] page to download
 
  1. Decompress the downloaded VDI image (tool for [[http://www.7-zip.org/|Windows]], [[http://unarchiver.c3.cx/unarchiver|Mac]]).
 
- 1. Create a new VM in the !VirtualBox UI with OS type ''Linux'' and Version ''Debian'' (32/64-bit according to the downloaded image).
-{{attachment:virtualbox_os_type.png|VirtualBox Name and OS dialog}}
+ 1. Create a new VM in the !VirtualBox UI with OS type ''Linux'' and Version ''Debian'' (32/64-bit according to the downloaded image). {{attachment:virtualbox-create-1.png|VirtualBox Name and OS dialog}}
 
- 1. In the ''Hard disk'' dialog choose ''Use an existing virtual hard disk file'' and select the .vdi file you extracted in step 1.
+ 1. In the ''Hardware'' dialog choose ''Enable EFI (special OSes only)''. You may increase the Base Memory and Processors if desired. {{attachment:virtualbox-create-2.png|VirtualBox Hardware dialog}}
 
-{{attachment:virtualbox_harddisk_file.png|VirtualBox Hard disk dialog}}
+ 1. In the ''Hard disk'' dialog choose ''Use an existing virtual hard disk file'' and select the .vdi file you extracted in step 1. {{attachment:virtualbox-create-3.png|VirtualBox Hard disk selector}} {{attachment:virtualbox-create-4.png|VirtualBox Hard disk dialog}}
 
  1. When created, go to the virtual machine's Settings -> [Network] -> [Adapter 1]->[Attached to:] and choose the network type your want the machine to use according to the explanation in Network Configuration below. The recommended type is the ''Bridged adapter'' option, but be aware that this exposes the !FreedomBox's services to your entire local network.
 
