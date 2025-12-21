@@ -13,7 +13,8 @@ from django.utils.translation import gettext_lazy as _
 from plinth import cfg
 from plinth.utils import format_lazy
 
-from . import (_backup_handler, api, errors, get_known_hosts_path, privileged,
+from . import (_backup_handler, api, errors, get_known_hosts_path,
+               get_ssh_client_auth_key_paths, privileged,
                restore_archive_handler, split_path, store)
 from .schedule import Schedule
 
@@ -344,6 +345,11 @@ class SshBorgRepository(BaseBorgRepository):
         """Return whether remote path is mounted locally."""
         return privileged.is_mounted(self._mountpoint)
 
+    def replace_ssh_password_with_keyfile(self, keyfile_path: str):
+        """Add SSH keyfile credential and delete stored password."""
+        self.credentials['ssh_keyfile'] = keyfile_path
+        self.credentials.pop('ssh_password', None)
+
     def initialize(self):
         """Initialize the repository after mounting the target directory."""
         self._ensure_remote_directory()
@@ -405,16 +411,14 @@ class SshBorgRepository(BaseBorgRepository):
         if dir_path[0] == '~':
             dir_path = '.' + dir_path[1:]
 
-        password = self.credentials['ssh_password']
-
         # Ensure remote directory exists, check contents
-        env = {'SSHPASS': password}
+        _, key_path = get_ssh_client_auth_key_paths()
         known_hosts_path = str(get_known_hosts_path())
         subprocess.run([
-            'sshpass', '-e', 'ssh', '-o',
-            f'UserKnownHostsFile={known_hosts_path}', f'{username}@{hostname}',
-            'mkdir', '-p', dir_path
-        ], check=True, env=env)
+            'ssh', '-i',
+            str(key_path), '-o', f'UserKnownHostsFile={known_hosts_path}',
+            f'{username}@{hostname}', 'mkdir', '-p', dir_path
+        ], check=True)
 
 
 def get_repositories():

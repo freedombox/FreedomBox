@@ -26,7 +26,8 @@ from plinth.views import AppView
 
 from . import (SESSION_PATH_VARIABLE, api, copy_ssh_client_public_key, errors,
                forms, generate_ssh_client_auth_key, get_known_hosts_path,
-               get_ssh_client_public_key, is_ssh_hostkey_verified, privileged)
+               get_ssh_client_auth_key_paths, get_ssh_client_public_key,
+               is_ssh_hostkey_verified, privileged)
 from .decorators import delete_tmp_backup_file
 from .repository import (BorgRepository, SshBorgRepository, get_instance,
                          get_repositories)
@@ -446,11 +447,15 @@ class VerifySshHostkeyView(FormView):
             logger.info(
                 "Copied SSH client public key to remote host's authorized "
                 "keys.")
+            _pubkey_path, key_path = get_ssh_client_auth_key_paths()
+            repo.replace_ssh_password_with_keyfile(str(key_path))
             if _save_repository(self.request, repo):
                 return redirect(reverse_lazy('backups:index'))
         else:
             logger.warning('Failed to copy SSH client public key: %s', message)
-            messages.error(self.request, message)
+            messages.error(
+                self.request,
+                _('Failed to copy SSH client public key: %s') % message)
             # Remove the repository so that the user can have another go at
             # creating it.
             try:

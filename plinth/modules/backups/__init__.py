@@ -4,7 +4,7 @@
 import json
 import logging
 import os
-import pathlib
+from pathlib import Path
 import re
 import subprocess
 
@@ -132,14 +132,21 @@ def restore_from_upload(path, app_ids=None):
                      create_subvolume=False, backup_file=path)
 
 
-def get_known_hosts_path():
+def get_known_hosts_path() -> Path:
     """Return the path to the known hosts file."""
-    return pathlib.Path(cfg.data_dir) / '.ssh' / 'known_hosts'
+    return Path(cfg.data_dir) / '.ssh' / 'known_hosts'
+
+
+def get_ssh_client_auth_key_paths() -> tuple[Path, Path]:
+    """Return the paths to the SSH client public key and private key."""
+    key_path = Path(cfg.data_dir) / '.ssh' / 'id_ed25519'
+    pubkey_path = key_path.with_suffix('.pub')
+    return pubkey_path, key_path
 
 
 def generate_ssh_client_auth_key():
     """Generate SSH client authentication keypair, if needed."""
-    key_path = pathlib.Path(cfg.data_dir) / '.ssh' / 'id_ed25519'
+    _, key_path = get_ssh_client_auth_key_paths()
     if not key_path.exists():
         logger.info('Generating SSH client key %s for FreedomBox service',
                     key_path)
@@ -153,7 +160,7 @@ def generate_ssh_client_auth_key():
 
 def get_ssh_client_public_key() -> str:
     """Get SSH client public key for FreedomBox service."""
-    pubkey_path = pathlib.Path(cfg.data_dir) / '.ssh' / 'id_ed25519.pub'
+    pubkey_path, _ = get_ssh_client_auth_key_paths()
     with pubkey_path.open('r') as pubkey_file:
         pubkey = pubkey_file.read()
 
@@ -166,7 +173,7 @@ def copy_ssh_client_public_key(hostname: str, username: str,
 
     Returns whether the copy was successful, and any error message.
     """
-    pubkey_path = pathlib.Path(cfg.data_dir) / '.ssh' / 'id_ed25519.pub'
+    pubkey_path, _ = get_ssh_client_auth_key_paths()
     env = os.environ.copy()
     env['SSHPASS'] = password
     process = subprocess.run([
