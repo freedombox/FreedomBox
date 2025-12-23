@@ -251,15 +251,34 @@ class AddRemoteRepositoryForm(EncryptedBackupsMixin, forms.Form):
         help_text=_('Path of a new or existing repository. Example: '
                     '<i>user@host:~/path/to/repo/</i>'),
         validators=[repository_validator])
+    ssh_auth_type = forms.ChoiceField(
+        label=_('SSH Authentication Type'),
+        help_text=_('How to authenticate to the remote SSH server.<br />'
+                    'If Key-based Authentication is selected, then the '
+                    "FreedomBox service's SSH client public key must be added"
+                    " to the authorized keys list on the remote server.<br />"
+                    'If Password-based Authentication is selected, then '
+                    'FreedomBox will attempt to copy its SSH client public '
+                    'key to the remote server.'), widget=forms.RadioSelect(),
+        choices=[('key_auth', _('Key-based Authentication')),
+                 ('password_auth', _('Password-based Authentication'))])
     ssh_password = forms.CharField(
-        label=_('SSH server password'), strip=True,
-        help_text=_('Password of the SSH Server.<br />'
-                    'Either provide a password, or add the FreedomBox '
-                    "service's SSH client public key (listed above) to the "
-                    'authorized keys list on the remote machine.'),
-        widget=forms.PasswordInput(), required=False)
+        label=_('SSH server password'), widget=forms.PasswordInput(),
+        strip=True, help_text=_(
+            'Password of the SSH Server. Required only for Password-based '
+            'Authentication.'), required=False)
 
-    field_order = ['repository', 'ssh_password'] + encryption_fields
+    field_order = ['repository', 'ssh_auth_type', 'ssh_password'
+                   ] + encryption_fields
+
+    def clean(self):
+        super().clean()
+        ssh_password = self.cleaned_data.get('ssh_password')
+        if self.cleaned_data.get(
+                'ssh_auth_type') == 'password_auth' and not ssh_password:
+            raise forms.ValidationError(
+                _('SSH password is needed for password-based authentication.'))
+        return self.cleaned_data
 
     def clean_repository(self):
         """Validate repository form field."""

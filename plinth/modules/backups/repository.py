@@ -336,6 +336,14 @@ class SshBorgRepository(BaseBorgRepository):
         return None
 
     @property
+    def ssh_keyfile(self) -> str | None:
+        """Return path to SSH client key if stored, otherwise None."""
+        if 'ssh_keyfile' in self.credentials:
+            return self.credentials['ssh_keyfile']
+
+        return None
+
+    @property
     def _mountpoint(self):
         """Return the local mount point where repository is to be mounted."""
         return os.path.join(self.SSHFS_MOUNTPOINT, self.uuid)
