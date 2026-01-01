@@ -15,6 +15,8 @@ from plinth.tests import functional
 
 pytestmark = [pytest.mark.system, pytest.mark.backups]
 
+REMOTE_PATH = 'tester@localhost:~/backups'
+
 
 @pytest.fixture(scope='module', autouse=True)
 def fixture_background(session_browser):
@@ -64,6 +66,22 @@ def test_set_schedule(session_browser):
 
     _backup_schedule_assert(session_browser, enable=True, daily=10, weekly=20,
                             monthly=30, run_at=15, without_app='firewall')
+
+
+def test_remote_backup_location(session_browser):
+    """Test remote backup location operations."""
+    _add_remote_backup_location(session_browser)
+    assert _has_remote_backup_location(session_browser)
+
+    _remove_remote_backup_location(session_browser)
+    assert not _has_remote_backup_location(session_browser)
+
+    # Add it again without providing SSH password.
+    _add_remote_backup_location(session_browser, False)
+    assert _has_remote_backup_location(session_browser)
+
+    _remove_remote_backup_location(session_browser)
+    assert not _has_remote_backup_location(session_browser)
 
 
 def _assert_main_page_is_shown(session_browser):
@@ -197,3 +215,50 @@ def _upload_and_restore(browser, app_name, downloaded_file_path):
     with functional.wait_for_page_update(browser,
                                          expected_url='/plinth/sys/backups/'):
         functional.submit(browser, form_class='form-restore')
+
+
+def _has_remote_backup_location(browser) -> bool:
+    functional.nav_to_module(browser, 'backups')
+    return browser.is_text_present(REMOTE_PATH)
+
+
+def _add_remote_backup_location(browser, ssh_use_password=True):
+    if _has_remote_backup_location(browser):
+        _remove_remote_backup_location(browser)
+
+    browser.links.find_by_href(
+        '/plinth/sys/backups/repositories/add-remote/').first.click()
+    browser.find_by_name('repository').fill(REMOTE_PATH)
+    password = functional.get_password(
+        functional.config['DEFAULT']['username'])
+    if ssh_use_password:
+        browser.find_by_id('id_ssh_auth_type_1').first.check()
+        browser.find_by_name('ssh_password').fill(password)
+    else:
+        browser.find_by_id('id_ssh_auth_type_0').first.check()
+
+    browser.choose('id_encryption', 'repokey')
+    browser.find_by_name('encryption_passphrase').fill(password)
+    browser.find_by_name('confirm_encryption_passphrase').fill(password)
+    submit_button = browser.find_by_value('Create Location')
+    functional.submit(browser, element=submit_button)
+
+    assert browser.is_text_present('Added new remote SSH repository.')
+
+    if 'ssh-verify' in browser.url:
+        _verify_host_key(browser)
+
+
+def _remove_remote_backup_location(browser):
+    remote_locations = browser.find_by_tag('table')[1]
+    remote_locations.links.find_by_partial_href('/delete/').first.click()
+
+    submit_button = browser.find_by_value('Remove Location')
+    functional.submit(browser, element=submit_button)
+
+
+def _verify_host_key(browser):
+    browser.find_by_name('ssh_public_key').first.click()
+    submit_button = browser.find_by_value('Verify Host')
+    functional.submit(browser, element=submit_button)
+    assert browser.is_text_present('SSH host verified.')
