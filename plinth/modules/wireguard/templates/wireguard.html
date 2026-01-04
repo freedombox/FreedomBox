@@ -56,13 +56,25 @@
   </p>
 
   <div class="btn-toolbar">
-    <a title="{% trans 'Add a new peer' %}"
-       role="button" class="btn btn-default btn-add-client"
-       href="{% url 'wireguard:add-client' %}">
-      <span class="fa fa-plus" aria-hidden="true"></span>
-      {% trans "Add Allowed Client" %}
-    </a>
+    {% if not server.public_key %}
+      <form method="post" action="{% url 'wireguard:enable-server' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary"
+                title="{% trans 'Start WireGuard Server' %}">
+          <span class="fa fa-rocket" aria-hidden="true"></span>
+          {% trans "Start WireGuard Server" %}
+        </button>
+      </form>
+    {% else %}
+      <a title="{% trans 'Add a new peer' %}"
+         role="button" class="btn btn-default btn-add-client"
+         href="{% url 'wireguard:add-client' %}">
+        <span class="fa fa-plus" aria-hidden="true"></span>
+        {% trans "Add Allowed Client" %}
+      </a>
+    {% endif %}
   </div>
+
 
   <h3>{% trans "As a Client" %}</h3>
   <p>

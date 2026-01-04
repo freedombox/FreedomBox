@@ -9,6 +9,8 @@ from plinth.modules.wireguard import views
 
 urlpatterns = [
     re_path(r'^apps/wireguard/$', views.WireguardView.as_view(), name='index'),
+    re_path(r'^apps/wireguard/enable-server/$',
+            views.EnableServerView.as_view(), name='enable-server'),
     re_path(r'^apps/wireguard/client/add/$', views.AddClientView.as_view(),
             name='add-client'),
     re_path(r'^apps/wireguard/client/(?P<public_key>[^/]+)/show/$',

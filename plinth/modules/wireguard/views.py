@@ -11,7 +11,7 @@ from django.http import Http404
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
-from django.views.generic import FormView, TemplateView
+from django.views.generic import FormView, TemplateView, View
 
 from plinth import network
 from plinth.modules.names.components import DomainName
@@ -251,4 +251,20 @@ class DeleteServerView(SuccessMessageMixin, TemplateView):
         connection = network.get_connection_by_interface_name(interface)
         network.delete_connection(connection.get_uuid())
         messages.success(request, _('Server deleted.'))
+        return redirect('wireguard:index')
+
+
+class EnableServerView(SuccessMessageMixin, View):
+    """View to enable the WireGuard server."""
+
+    def post(self, request):
+        """Create server interface."""
+        try:
+            utils.setup_server()
+            messages.success(request,
+                             _('WireGuard server started successfully.'))
+        except Exception as error:
+            messages.error(
+                request,
+                _('Failed to start WireGuard server: {}').format(error))
         return redirect('wireguard:index')
