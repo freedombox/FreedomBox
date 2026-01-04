@@ -252,7 +252,11 @@
   </div>
 
   {% block container %}
-    <div class="container content-container">
+    <div id="content-block" class="container content-container"
+         {% if refresh_page_sec %}
+           hx-get="." hx-trigger="load delay:{{ refresh_page_sec }}s"
+           hx-select="#content-block" hx-target="#content-block" hx-swap="outerHTML"
+         {% endif %}>
         {% block content_row %}
             {% include 'messages.html' %}
 

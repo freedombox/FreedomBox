@@ -34,24 +34,6 @@ document.addEventListener('DOMContentLoaded', function (event) {
 });
 
 /*
- * Refresh page if marked for refresh.
- */
-document.addEventListener('DOMContentLoaded', function () {
-    const body = document.querySelector('body');
-    if (body.hasAttribute('data-refresh-page-sec')) {
-        let seconds = body.getAttribute('data-refresh-page-sec');
-        seconds = parseInt(seconds, 10);
-        if (isNaN(seconds))
-            return;
-
-        window.setTimeout(() => {
-            // Refresh the page without resubmitting the POST data.
-            window.location = window.location.href;
-        }, seconds * 1000);
-    }
-});
-
-/*
  * Return all submit buttons on the page
  */
 function getSubmitButtons() {
@@ -301,5 +283,18 @@ document.addEventListener('click', function (event) {
     if (typeof bootstrap !== 'undefined' && bootstrap.Collapse) {
         let bsCollapse = bootstrap.Collapse.getInstance(notifications);
         bsCollapse.hide();
+    }
+});
+
+/*
+ * Detect when hx-select element is not found in the response and reload the
+ * page. HTMX unfortunately does not seem to provide a JS event when hx-select
+ * element is not found in the response. However, in htmx:afterSwap event we can
+ * see that the target has no children and choose to refresh the whole page.
+ */
+document.addEventListener('htmx:afterSwap', function (event) {
+    const target = event.detail.target;
+    if (target && target.children.length === 0) {
+        window.location.reload();
     }
 });
