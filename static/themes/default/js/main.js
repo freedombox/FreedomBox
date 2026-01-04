@@ -272,11 +272,34 @@ document.addEventListener('DOMContentLoaded', async () => {
 /*
  * Text areas showing log lines have special behavior.
  */
-document.addEventListener('DOMContentLoaded', function(event) {
+document.addEventListener('DOMContentLoaded', function (event) {
     const logElements = document.querySelectorAll('textarea.log');
 
     // Scroll the textarea to the bottom so that last lines are visible.
     for (const element of logElements) {
         element.scrollTop = element.scrollHeight;
+    }
+});
+
+/*
+ * Close notifications dropdown when clicking outside, like the other dropdowns.
+ */
+document.addEventListener('click', function (event) {
+    // Ignore if notifications dropdown is not open
+    const notifications = document.querySelector('.notifications');
+    if (!notifications?.classList.contains('show')) {
+        return;
+    }
+
+    // Ignore if the click happened inside the notifications area or on the toggle button
+    const toggles = document.querySelectorAll('[data-bs-target=".notifications"]');
+    const clickedInsideToggle = Array.from(toggles).some(toggle => toggle.contains(event.target));
+    if (notifications.contains(event.target) || clickedInsideToggle) {
+        return;
+    }
+
+    if (typeof bootstrap !== 'undefined' && bootstrap.Collapse) {
+        let bsCollapse = bootstrap.Collapse.getInstance(notifications);
+        bsCollapse.hide();
     }
 });
