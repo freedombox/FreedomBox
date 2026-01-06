@@ -232,10 +232,10 @@ def _add_remote_backup_location(browser, ssh_use_password=True):
     password = functional.get_password(
         functional.config['DEFAULT']['username'])
     if ssh_use_password:
-        browser.find_by_id('id_ssh_auth_type_1').first.check()
+        browser.find_by_id('id_ssh_auth_type_password').first.check()
         browser.find_by_name('ssh_password').fill(password)
     else:
-        browser.find_by_id('id_ssh_auth_type_0').first.check()
+        browser.find_by_id('id_ssh_auth_type_key').first.check()
 
     browser.choose('id_encryption', 'repokey')
     browser.find_by_name('encryption_passphrase').fill(password)

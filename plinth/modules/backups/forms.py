@@ -184,7 +184,7 @@ class EncryptedBackupsMixin(forms.Form):
         choices=[('repokey', _('Key in Repository')), ('none', _('None'))])
     encryption_passphrase = forms.CharField(
         label=_('Passphrase'),
-        help_text=_('Passphrase; Only needed when using encryption.'),
+        help_text=_('Only needed when using encryption.'),
         widget=forms.PasswordInput(), required=False)
     confirm_encryption_passphrase = forms.CharField(
         label=_('Confirm Passphrase'), help_text=_('Repeat the passphrase.'),
@@ -264,9 +264,9 @@ class AddRemoteRepositoryForm(EncryptedBackupsMixin, forms.Form):
                  ('password_auth', _('Password-based Authentication'))])
     ssh_password = forms.CharField(
         label=_('SSH server password'), widget=forms.PasswordInput(),
-        strip=True, help_text=_(
-            'Password of the SSH Server. Required only for Password-based '
-            'Authentication.'), required=False)
+        strip=True,
+        help_text=_('Required only for password-based authentication.'),
+        required=False)
 
     field_order = ['repository', 'ssh_auth_type', 'ssh_password'
                    ] + encryption_fields

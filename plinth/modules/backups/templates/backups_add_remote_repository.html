@@ -17,36 +17,157 @@
   <h3>{{ title }}</h3>
 
   <form class="form" method="post">
+    {% if form.non_field_errors %}
+        <div class="alert alert-danger">
+            <a class="close" data-dismiss="alert">&times;</a>
+            {% for non_field_error in form.non_field_errors %}
+                {{ non_field_error }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
     {% csrf_token %}
 
-    <hr>
-    <div>
-      <h4>{% trans "SSH Client Authentication Key"%}</h4>
-      <p>
-        {% blocktrans trimmed %}
-          {{ box_name }} service has the following SSH client public key:
-        {% endblocktrans %}
-      </p>
-      <pre>{{ ssh_client_public_key }}</pre>
-      <p>
-        {% blocktrans trimmed %}
-          If this public key is added to the authorized keys list on the remote
-          machine, then SSH key authentication will be used instead of
-          password-based authentication.
-        {% endblocktrans %}
-      </p>
-      <p>
-        {% blocktrans trimmed %}
-          Otherwise, {{ box_name }} service will attempt to connect using the
-          password provided in the form below. If successful, then the public
-          key will be automatically added to the authorized keys list, so that
-          future connections do not need the password.
-        {% endblocktrans %}
-      </p>
+    <div class="form-group{% if form.repository.errors %}
+                has-error{% endif %}">
+      <label class="control-label" for="id_repository">
+        {{ form.repository.label }}
+      </label>
+      <div>
+        <input type="text" name="repository" class="form-control"
+               required id="id_repository">
+        {% for error in form.repository.errors %}
+            <span class="help-block {{ form.error_css_class }}">{{ error }}</span>
+        {% endfor %}
+        <p class="help-block">
+          {{ form.repository.help_text|safe }}
+        </p>
+      </div>
     </div>
-    <hr>
 
-    {{ form|bootstrap }}
+    <div class="form-group{% if form.ssh_auth_type.errors %}
+                has-error{% endif %} border border-primary rounded p-3">
+      <h4 class="control-label">{{ form.ssh_auth_type.label }}</h4>
+      <p class="help-block">
+        {{ form.ssh_auth_type.help_text|safe }}
+      </p>
+      {% for error in form.ssh_auth_type.errors %}
+        <span class="help-block {{ form.error_css_class }}">{{ error }}</span>
+      {% endfor %}
+      <fieldset class="form-group border border-secondary rounded p-3">
+        <div class="radio">
+          <label>
+            {{ form.ssh_auth_type.0.tag }}
+            {{ form.ssh_auth_type.0.choice_label }}
+          </label>
+        </div>
+
+        <div>
+          <p>
+            {% blocktrans trimmed %}
+              {{ box_name }} service has the following SSH client public key:
+            {% endblocktrans %}
+          </p>
+          <pre>{{ ssh_client_public_key }}</pre>
+          <p>
+            {% blocktrans trimmed %}
+              The public key must be added to the authorized keys list on the
+              remote machine.
+            {% endblocktrans %}
+          </p>
+        </div>
+      </fieldset>
+
+      <fieldset class="form-group border border-secondary rounded p-3">
+        <div class="radio">
+          <label>
+            {{ form.ssh_auth_type.0.tag }}
+            {{ form.ssh_auth_type.1.choice_label }}
+          </label>
+        </div>
+
+        <p>
+          {% blocktrans trimmed %}
+            {{ box_name }} service will attempt to connect using the provided
+            password. If successful, then the public key will be automatically
+            added to the authorized keys list, so that future connections do
+            not need the password.
+          {% endblocktrans %}
+        </p>
+
+        <div class="form-group{% if form.ssh_password.errors %}
+                    has-error{% endif %}">
+          <label class="control-label" for="id_ssh_password">
+            {{ form.ssh_password.label }}
+          </label>
+          <div>
+            <input type="password" name="ssh_password" class="form-control"
+                   id="id_ssh_password">
+            {% for error in form.ssh_password.errors %}
+              <span class="help-block {{ form.error_css_class }}">{{ error }}</span>
+            {% endfor %}
+            <p class="help-block">
+              {{ form.ssh_password.help_text|safe }}
+            </p>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+
+    <div class="form-group border border-primary rounded p-3">
+      <div class="form-group{% if form.encryption.errors %}
+                  has-error{% endif %}">
+        <label class="control-label" for="id_encryption">
+          {{ form.encryption.label }}
+        </label>
+        <div>
+          <select name="encryption" class="form-control" id="id_encryption">
+            <option value="repokey">{{ form.encryption.0.choice_label }}</option>
+            <option value="none">{{ form.encryption.1.choice_label }}</option>
+          </select>
+          {% for error in form.encryption.errors %}
+            <span class="help-block {{ form.error_css_class }}">{{ error }}</span>
+          {% endfor %}
+          <p class="help-block">
+            {{ form.encryption.help_text|safe }}
+          </p>
+        </div>
+      </div>
+
+      <div class="form-group{% if form.encryption_passphrase.errors %}
+                  has-error{% endif %}">
+        <label class="control-label" for="id_encryption_passphrase">
+          {{ form.encryption_passphrase.label }}
+        </label>
+        <div>
+          <input type="password" name="encryption_passphrase"
+                class="form-control" id="id_encryption_passphrase">
+          {% for error in form.encryption_passphrase.errors %}
+            <span class="help-block {{ form.error_css_class }}">{{ error }}</span>
+          {% endfor %}
+          <p class="help-block">
+            {{ form.encryption_passphrase.help_text|safe }}
+          </p>
+        </div>
+      </div>
+
+      <div class="form-group{% if form.confirm_encryption_passphrase.errors %}
+                  has-error{% endif %}">
+        <label class="control-label" for="id_confirm_encryption_passphrase">
+          {{ form.confirm_encryption_passphrase.label }}
+        </label>
+        <div>
+          <input type="password" name="confirm_encryption_passphrase"
+                class="form-control" id="id_confirm_encryption_passphrase">
+          {% for error in form.confirm_encryption_passphrase.errors %}
+            <span class="help-block {{ form.error_css_class }}">{{ error }}</span>
+          {% endfor %}
+          <p class="help-block">
+            {{ form.confirm_encryption_passphrase.help_text|safe }}
+          </p>
+        </div>
+      </div>
+    </div>
 
     <div class="alert alert-warning d-flex align-items-center" role="alert">
       <div class="me-2">
@@ -57,8 +178,8 @@
         {% blocktrans trimmed %}
           The credentials for this repository are stored on your {{ box_name }}.
           <br />
-          To restore a backup on a new {{ box_name }} you need the SSH credentials
-          and, if chosen, the encryption passphrase.
+          To restore a backup on a new {{ box_name }} you need the SSH
+          credentials and, if chosen, the encryption passphrase.
         {% endblocktrans %}
       </div>
     </div>
