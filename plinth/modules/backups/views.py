@@ -587,6 +587,23 @@ def mount_repository(request, uuid):
         return redirect('backups:verify-ssh-hostkey', uuid=uuid)
 
     repository = SshBorgRepository.load(uuid)
+    if repository.ssh_password:
+        logger.info('Migrating from SSH password to key authentication...')
+        generate_ssh_client_auth_key()
+        result, message = copy_ssh_client_public_key(repository.hostname,
+                                                     repository.username,
+                                                     repository.ssh_password)
+        if result:
+            logger.info("Copied SSH client public key to remote host's "
+                        "authorized keys.")
+            _pubkey_path, key_path = get_ssh_client_auth_key_paths()
+            repository.replace_ssh_password_with_keyfile(str(key_path))
+        else:
+            logger.warning('Failed to copy SSH client public key: %s', message)
+            messages.error(
+                request,
+                _('Failed to copy SSH client public key: %s') % message)
+
     try:
         repository.mount()
     except Exception as err:

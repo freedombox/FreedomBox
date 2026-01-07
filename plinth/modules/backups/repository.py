@@ -357,6 +357,7 @@ class SshBorgRepository(BaseBorgRepository):
         """Add SSH keyfile credential and delete stored password."""
         self.credentials['ssh_keyfile'] = keyfile_path
         self.credentials.pop('ssh_password', None)
+        self.save()
 
     def initialize(self):
         """Initialize the repository after mounting the target directory."""
