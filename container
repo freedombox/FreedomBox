@@ -474,9 +474,10 @@ def parse_arguments() -> argparse.Namespace:
             help='Type of the machine, container to virtual machine, to run '
             'operation on')
 
-    # Up
-    subparser = subparsers.add_parser('up', help='Bring up the container',
-                                      formatter_class=formatter_class)
+    # Start
+    subparser = subparsers.add_parser('start', help='Bring up the container',
+                                      formatter_class=formatter_class,
+                                      aliases=['up'])
     _add_common_args(subparser)
     subparser.add_argument('--image-size', default='16G',
                            help='Disk image size to resize to after download')
@@ -505,7 +506,8 @@ def parse_arguments() -> argparse.Namespace:
 
     # Stop
     subparser = subparsers.add_parser('stop', help='Stop the container',
-                                      formatter_class=formatter_class)
+                                      formatter_class=formatter_class,
+                                      aliases=['down'])
     _add_common_args(subparser)
 
     # Destroy
@@ -1459,7 +1461,7 @@ class VM(Machine):
         qcow_image.unlink(missing_ok=True)
 
 
-def subcommand_up(arguments: argparse.Namespace):
+def subcommand_start(arguments: argparse.Namespace):
     """Download, setup and bring up the container."""
     machine = Machine.get_instance(arguments.machine_type,
                                    arguments.distribution)
@@ -1563,7 +1565,13 @@ def main():
     logging.basicConfig(level='INFO', format='> %(message)s')
     arguments = parse_arguments()
 
-    subcommand = arguments.subcommand.replace('-', '_')
+    aliases = {
+        'up': 'start',
+        'down': 'stop',
+    }
+
+    subcommand: str = arguments.subcommand.replace('-', '_')
+    subcommand = aliases.get(subcommand, subcommand)
     subcommand_method = globals()['subcommand_' + subcommand]
     subcommand_method(arguments)
 
