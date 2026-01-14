@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-16 01:18+0000\n"
-"PO-Revision-Date: 2026-01-14 08:58+0000\n"
+"PO-Revision-Date: 2026-01-14 10:28+0000\n"
 "Last-Translator: Pierfrancesco Passerini <p.passerini@gmail.com>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/it/>\n"
@@ -8131,61 +8131,64 @@ msgid ""
 "Keep a maximum of this many yearly snapshots. The default value is 0 (keep "
 "no yearly snapshot)."
 msgstr ""
+"Limite massimo istantanee annuali. Il valore predefinito è 0 (nessuna "
+"istantanea annuale)."
 
 #: plinth/modules/snapshot/manifest.py:14
 msgid "Periodic"
-msgstr ""
+msgstr "Periodico"
 
 #: plinth/modules/snapshot/manifest.py:14
 msgid "Known good state"
-msgstr ""
+msgstr "Stato noto funzionante"
 
 #: plinth/modules/snapshot/manifest.py:14
 msgid "Btrfs"
-msgstr ""
+msgstr "Btrfs"
 
 #: plinth/modules/snapshot/templates/snapshot_delete_selected.html:12
 msgid "Delete the following snapshots permanently?"
-msgstr ""
+msgstr "Eliminare definitivamente le seguenti istantanee?"
 
 #: plinth/modules/snapshot/templates/snapshot_delete_selected.html:17
 #: plinth/modules/snapshot/templates/snapshot_manage.html:32
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:25
 msgid "Number"
-msgstr ""
+msgstr "Numero"
 
 #: plinth/modules/snapshot/templates/snapshot_delete_selected.html:18
 #: plinth/modules/snapshot/templates/snapshot_manage.html:33
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:26
 msgid "Date"
-msgstr ""
+msgstr "Data"
 
 #: plinth/modules/snapshot/templates/snapshot_delete_selected.html:42
 #: plinth/modules/snapshot/templates/snapshot_manage.html:25
 #: plinth/modules/snapshot/views.py:197
 msgid "Delete Snapshots"
-msgstr ""
+msgstr "Elimina le istantanee"
 
 #: plinth/modules/snapshot/templates/snapshot_manage.html:22
 msgid "Create Snapshot"
-msgstr ""
+msgstr "Crea istantanea"
 
 #: plinth/modules/snapshot/templates/snapshot_manage.html:35
+#, fuzzy
 msgid "Rollback"
-msgstr ""
+msgstr "Ripristino"
 
 #: plinth/modules/snapshot/templates/snapshot_manage.html:45
 msgid "will be used at next boot"
-msgstr ""
+msgstr "sarà utilizzato al prossimo avvio"
 
 #: plinth/modules/snapshot/templates/snapshot_manage.html:50
 msgid "in use"
-msgstr ""
+msgstr "in uso"
 
 #: plinth/modules/snapshot/templates/snapshot_manage.html:59
 #, python-format
 msgid "Rollback to snapshot #%(number)s"
-msgstr ""
+msgstr "Ripristina l'istantanea #%(number)s"
 
 #: plinth/modules/snapshot/templates/snapshot_not_supported.html:16
 #, python-format
@@ -8584,11 +8587,11 @@ msgstr ""
 
 #: plinth/modules/storage/templates/storage.html:27
 msgid "Used"
-msgstr ""
+msgstr "In uso"
 
 #: plinth/modules/storage/templates/storage.html:77
 msgid "Partition Expansion"
-msgstr ""
+msgstr "Espandi la partizione"
 
 #: plinth/modules/storage/templates/storage.html:79
 #, python-format
@@ -8597,18 +8600,23 @@ msgid ""
 "root partition.  Root partition can be expanded to use this space.  This "
 "will provide you additional free space to store your files."
 msgstr ""
+"Ci sono %(expandable_root_size)s di spazio disponibile, non allocato, dopo "
+"la partizione root. La partizione root può essere estesa per utilizzare tale "
+"spazio. Questo fornirà spazio libero aggiuntivo per salvare i dati."
 
 #: plinth/modules/storage/templates/storage.html:89
 #: plinth/modules/storage/templates/storage_expand.html:24
 #: plinth/modules/storage/views.py:55
 msgid "Expand Root Partition"
-msgstr ""
+msgstr "Espandi la partizione root"
 
 #: plinth/modules/storage/templates/storage.html:95
 msgid ""
 "Advanced storage operations such as disk partitioning and RAID management "
 "are provided by the <a href=\"/_cockpit/storage\">Cockpit</a> app."
 msgstr ""
+"Operazioni avanzate come il partizionamento dei dischi e la gestione del "
+"RAID sono disponibili nell'app <a href=\"/_cockpit/storage\">Cockpit</a>."
 
 #: plinth/modules/storage/templates/storage_expand.html:14
 #, python-format
@@ -8617,28 +8625,31 @@ msgid ""
 "%(expandable_root_size)s of additional free space will be available in your "
 "root partition."
 msgstr ""
+"Esegui un backup dei tuoi dati prima di procedere. Dopo questa operazione, %"
+"(expandable_root_size)s di spazio libero aggiuntivo sarà disponibile nella "
+"partizione root."
 
 #: plinth/modules/storage/views.py:67
 #, python-brace-format
 msgid "Error expanding partition: {exception}"
-msgstr ""
+msgstr "Errore durante l'espansione della partizione: {exception}"
 
 #: plinth/modules/storage/views.py:70
 msgid "Partition expanded successfully."
-msgstr ""
+msgstr "Partizione espansa con successo."
 
 #: plinth/modules/storage/views.py:87
 #, python-brace-format
 msgid "{drive_vendor} {drive_model} can be safely unplugged."
-msgstr ""
+msgstr "{drive_vendor} {drive_model} può essere rimosso."
 
 #: plinth/modules/storage/views.py:91
 msgid "Device can be safely unplugged."
-msgstr ""
+msgstr "Il dispositivo può essere rimosso."
 
 #: plinth/modules/storage/views.py:93
 msgid "Error ejecting device."
-msgstr ""
+msgstr "Errore nell'espulsione del dispositivo."
 
 #: plinth/modules/syncthing/__init__.py:23
 msgid ""
@@ -8647,6 +8658,10 @@ msgid ""
 "deletion of files on one device will be automatically replicated on all "
 "other devices that also run Syncthing."
 msgstr ""
+"Syncthing è un'applicazione per sincronizzare file tra più dispositivi, ad "
+"esempio il tuo computer desktop e il telefono cellulare. La creazione, "
+"modifica o eliminazione di file su un dispositivo viene automaticamente "
+"replicata su tutti gli altri dispositivi che lo eseguono."
 
 #: plinth/modules/syncthing/__init__.py:28
 #, python-brace-format
@@ -8659,10 +8674,16 @@ msgid ""
 "{box_name} is only available for users belonging to the \"admin\" or "
 "\"syncthing-access\" group."
 msgstr ""
+"Eseguire Syncthing su {box_name} offre un ulteriore punto di "
+"sincronizzazione dei dati, permettendo ai dispositivi di sincronizzarsi "
+"frequentemente. {box_name} gestisce una sola istanza di Syncthing condivisa "
+"tra più utenti, ma ogni utente può sincronizzare i propri dispositivi con "
+"cartelle distinte. L'interfaccia web su {box_name} è accessibile solo agli "
+"utenti dei gruppi \"admin\" o \"syncthing-access\"."
 
 #: plinth/modules/syncthing/__init__.py:55
 msgid "Administer Syncthing application"
-msgstr ""
+msgstr "Gestisci l'applicazione Syncthing"
 
 #: plinth/modules/syncthing/__init__.py:59
 #: plinth/modules/syncthing/manifest.py:12
@@ -8678,6 +8699,10 @@ msgid ""
 "several short notes called Tiddlers and link them together into a dense "
 "graph."
 msgstr ""
+"TiddlyWiki è un'applicazione interattiva che gira completamente nel browser. "
+"Ogni wiki è un file HTML indipendente salvato sul {box_name}. Invece di "
+"scrivere lunghe pagine wiki, TiddlyWiki ti incoraggia a creare diverse note "
+"brevi chiamate \"tiddler\" e collegarle tra loro in un grafo denso."
 
 #: plinth/modules/tiddlywiki/__init__.py:30
 msgid ""
@@ -8687,6 +8712,11 @@ msgid ""
 "TiddlyWiki. Encrypting individual tiddlers or password-protecting a wiki "
 "file is possible from within the application."
 msgstr ""
+"È un'applicazione versatile con un'ampia varietà di casi d'uso: quaderno non "
+"lineare, sito web, base di conoscenza, sistema di gestione attività e "
+"progetti, diario personale, ecc. I plugin possono estendere le funzionalità "
+"di TiddlyWiki. È possibile crittografare singoli tiddler o proteggere con "
+"password il file wiki direttamente dall'applicazione."
 
 #: plinth/modules/tiddlywiki/__init__.py:37
 #, python-brace-format
@@ -8694,27 +8724,29 @@ msgid ""
 "TiddlyWiki is downloaded from {box_name} website and not from Debian. Wikis "
 "need to be upgraded to newer version manually."
 msgstr ""
+"TiddlyWiki si scarica dal sito web di {box_name} e non da Debian. Le wiki "
+"devono essere aggiornate manualmente alla versione più recente."
 
 #: plinth/modules/tiddlywiki/__init__.py:46
 msgid "Create a new wiki or upload your existing wiki file to get started."
-msgstr ""
+msgstr "Per iniziare, crea una nuova wiki o carica il tuo file wiki esistente."
 
 #: plinth/modules/tiddlywiki/__init__.py:64
 #: plinth/modules/tiddlywiki/manifest.py:9
 msgid "TiddlyWiki"
-msgstr ""
+msgstr "TiddlyWiki"
 
 #: plinth/modules/tiddlywiki/forms.py:39
 msgid "A TiddlyWiki file with .html file extension"
-msgstr ""
+msgstr "Un file TiddlyWiki con estensione .html"
 
 #: plinth/modules/tiddlywiki/forms.py:43
 msgid "TiddlyWiki files must be in HTML format"
-msgstr ""
+msgstr "I file TiddlyWiki devono essere in formato HTML"
 
 #: plinth/modules/tiddlywiki/forms.py:46
 msgid "Upload an existing TiddlyWiki file from this computer."
-msgstr ""
+msgstr "Carica un file TiddlyWiki esistente da questo computer."
 
 #: plinth/modules/tiddlywiki/manifest.py:22
 msgid "Journal"
@@ -8722,7 +8754,7 @@ msgstr ""
 
 #: plinth/modules/tiddlywiki/manifest.py:23
 msgid "Digital garden"
-msgstr ""
+msgstr "Giardino digitale"
 
 #: plinth/modules/tiddlywiki/manifest.py:24
 msgid "Zettelkasten"
@@ -8733,6 +8765,8 @@ msgid ""
 "<strong>Hint</strong>: You can download a copy of this wiki from within "
 "TiddlyWiki before deleting it."
 msgstr ""
+"<strong>Suggerimento</strong>: prima di eliminarla, puoi scaricare una copia "
+"di questa wiki direttamente da TiddlyWiki."
 
 #: plinth/modules/tor/__init__.py:34 plinth/modules/torproxy/__init__.py:30
 msgid ""
@@ -8742,12 +8776,19 @@ msgid ""
 "the <a href=\"https://www.torproject.org/download/download-"
 "easy.html.en\">Tor Browser</a>."
 msgstr ""
+"Tor è un sistema di comunicazione anonimo. Per ulteriori dettagli visita il "
+"sito web <a href=\"https://www.torproject.org/\">Tor Project</a>. Per la "
+"massima protezione durante la navigazione web, Tor Project raccomanda di "
+"usare <a href=\"https://www.torproject.org/download/download-easy.html.en\">"
+"Tor Browser</a>."
 
 #: plinth/modules/tor/__init__.py:40
 msgid ""
 "This app provides relay services to contribute to Tor network and help "
 "others overcome censorship."
 msgstr ""
+"Questa app fornisce servizi di relay per contribuire alla rete Tor e aiutare "
+"gli altri a superare la censura."
 
 #: plinth/modules/tor/__init__.py:43
 #, python-brace-format
@@ -8756,6 +8797,9 @@ msgid ""
 "network. Using Tor browser, one can access {box_name} from the internet even "
 "when using an ISP that limits servers at home."
 msgstr ""
+"Questa app fornisce un dominio onion per esporre i servizi di {box_name} "
+"tramite la rete Tor. Con il Tor Browser, è possibile accedere a {box_name} "
+"da internet anche con un ISP che limita i server privati."
 
 #: plinth/modules/tor/__init__.py:63 plinth/modules/tor/manifest.py:61
 #: plinth/modules/torproxy/manifest.py:58
@@ -8764,7 +8808,7 @@ msgstr "Tor"
 
 #: plinth/modules/tor/__init__.py:77
 msgid "Tor Onion Service"
-msgstr ""
+msgstr "Servizio Tor Onion"
 
 #: plinth/modules/tor/__init__.py:82
 msgid "Tor Bridge Relay"
@@ -8772,15 +8816,15 @@ msgstr ""
 
 #: plinth/modules/tor/__init__.py:140
 msgid "Tor relay port available"
-msgstr ""
+msgstr "Porta Tor relay disponibile"
 
 #: plinth/modules/tor/__init__.py:152
 msgid "Obfs3 transport registered"
-msgstr ""
+msgstr "Trasporto Obfs3 registrato"
 
 #: plinth/modules/tor/__init__.py:163
 msgid "Obfs4 transport registered"
-msgstr ""
+msgstr "Trasporto Obfs4 registrato"
 
 #: plinth/modules/tor/__init__.py:176
 msgid "Onion service is version 3"
@@ -8794,15 +8838,20 @@ msgstr ""
 "[fingerprint]"
 
 #: plinth/modules/tor/forms.py:76
+#, fuzzy
 msgid "Use upstream bridges to connect to Tor network"
-msgstr ""
+msgstr "Usa un bridge per connetterti alla rete Tor"
 
 #: plinth/modules/tor/forms.py:78
+#, fuzzy
 msgid ""
 "When enabled, the bridges configured below will be used to connect to the "
 "Tor network. Use this option if your Internet Service Provider (ISP) blocks "
 "or censors connections to the Tor Network. This will disable relay modes."
 msgstr ""
+"Quando abilitati, i bridge di seguito configurati verranno usati per "
+"connettersi alla rete Tor. Usa questa opzione se il tuo ISP blocca o censura "
+"le connessioni alla rete Tor. Questo disabiliterà la modalità relay."
 
 #: plinth/modules/tor/forms.py:83
 msgid "Upstream bridges"
