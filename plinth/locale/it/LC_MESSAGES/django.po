@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-16 01:18+0000\n"
-"PO-Revision-Date: 2026-01-14 10:28+0000\n"
+"PO-Revision-Date: 2026-01-14 12:23+0000\n"
 "Last-Translator: Pierfrancesco Passerini <p.passerini@gmail.com>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/it/>\n"
@@ -8858,15 +8858,19 @@ msgid "Upstream bridges"
 msgstr ""
 
 #: plinth/modules/tor/forms.py:85
+#, fuzzy
 msgid ""
 "You can get some bridges from <a href=\"https://bridges.torproject.org/"
 "\">https://bridges.torproject.org/</a> and copy/paste the bridge information "
 "here. Currently supported transports are none, obfs3, obfs4 and scamblesuit."
 msgstr ""
+"Puoi trovare alcuni bridge su <a href=\"https://bridges.torproject.org/\">"
+"https://bridges.torproject.org/</a> e copiarli/incollarli qui. I protocolli "
+"supportati sono: nessuno, obfs3, obfs4 e scamblesuit."
 
 #: plinth/modules/tor/forms.py:95
 msgid "Enable Tor relay"
-msgstr ""
+msgstr "Abilita Tor relay"
 
 #: plinth/modules/tor/forms.py:96
 #, python-brace-format
@@ -8875,10 +8879,14 @@ msgid ""
 "the Tor network. Do this if you have more than 2 megabits/s of upload and "
 "download bandwidth."
 msgstr ""
+"Quando attivato, {box_name} funzionerà da relay Tor, contribuendo con la "
+"propria banda alla rete Tor. Attivarlo solo se si dispone di almeno 2 Mbit/s "
+"sia in upload che in download."
 
 #: plinth/modules/tor/forms.py:101
+#, fuzzy
 msgid "Enable Tor bridge relay"
-msgstr ""
+msgstr "Abilita Tor bridge relay"
 
 #: plinth/modules/tor/forms.py:103
 msgid ""
@@ -8886,6 +8894,10 @@ msgid ""
 "instead of public Tor relay database making it harder to censor this node. "
 "This helps others circumvent censorship."
 msgstr ""
+"Quando abilitato, le informazioni del relay vengono pubblicate nel database "
+"dei bridge Tor anziché nel database pubblico dei relay Tor, rendendo più "
+"difficile la censura di questo nodo. Ciò aiuta gli altri a superare le "
+"restrizioni."
 
 #: plinth/modules/tor/forms.py:108
 msgid "Enable Tor Onion Service"
@@ -8898,18 +8910,23 @@ msgid ""
 "wiki or chat) without revealing its location. Do not use this for strong "
 "anonymity yet."
 msgstr ""
+"Un servizio onion permetterà a {box_name} di offrire servizi (come wiki o "
+"chat) senza rivelare la propria posizione. Non è ancora adatto per anonimato "
+"forte."
 
 #: plinth/modules/tor/forms.py:125
+#, fuzzy
 msgid "Specify at least one upstream bridge to use upstream bridges."
-msgstr ""
+msgstr "Specifica almeno un bridge upstream per utilizzare i bridge upstream."
 
 #: plinth/modules/tor/manifest.py:15 plinth/modules/torproxy/manifest.py:14
 msgid "Tor Browser"
-msgstr ""
+msgstr "Tor Browser"
 
 #: plinth/modules/tor/manifest.py:31 plinth/modules/torproxy/manifest.py:30
+#, fuzzy
 msgid "Orbot: Proxy with Tor"
-msgstr ""
+msgstr "Orbot: proxy con Tor"
 
 #: plinth/modules/tor/manifest.py:57
 msgid "Onion services"
@@ -8937,13 +8954,17 @@ msgid "Error configuring app: {error}"
 msgstr "Errore nella configurazione dell'applicazione: {error}"
 
 #: plinth/modules/torproxy/__init__.py:37
-#, python-brace-format
+#, fuzzy, python-brace-format
 msgid ""
 "This app provides a web proxy on your {box_name} for internal networks on "
 "TCP port 9050 using the SOCKS protocol. This can be used by various apps to "
 "access the internet via the Tor network. ISP censorship can be circumvented "
 "using upstream bridges."
 msgstr ""
+"Questa app fornisce un proxy web su {box_name} sulla porta TCP 9050 usando "
+"il protocollo SOCKS rendendolo disponibile alle reti interne. Può essere "
+"usato da varie app per accedere a internet tramite la rete Tor. La censura "
+"ISP può essere aggirata usando gli upstream bridge."
 
 #: plinth/modules/torproxy/__init__.py:57
 msgid "Tor Proxy"
@@ -8951,21 +8972,21 @@ msgstr "Tor Proxy"
 
 #: plinth/modules/torproxy/__init__.py:81
 msgid "Tor Socks Proxy"
-msgstr ""
+msgstr "Tor Socks Proxy"
 
 #: plinth/modules/torproxy/__init__.py:154
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
-msgstr ""
+msgstr "URL di accesso {url} su tcp{kind} via Tor"
 
 #: plinth/modules/torproxy/__init__.py:166
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
-msgstr ""
+msgstr "Conferma l'uso di tor {url} su tcp{kind}"
 
 #: plinth/modules/torproxy/forms.py:15
 msgid "Download software packages over Tor"
-msgstr ""
+msgstr "Download pacchetti software tramite Tor"
 
 #: plinth/modules/torproxy/forms.py:16
 msgid ""
@@ -8973,6 +8994,9 @@ msgid ""
 "installations and upgrades. This adds a degree of privacy and security "
 "during software downloads."
 msgstr ""
+"Quando abilitato, il software verrà scaricato tramite la rete Tor per "
+"installazioni e aggiornamenti. Questo aggiunge un ulteriore livello di "
+"privacy e sicurezza durante i download."
 
 #: plinth/modules/transmission/__init__.py:25
 msgid "Transmission is a BitTorrent client with a web interface."
@@ -8983,10 +9007,12 @@ msgid ""
 "BitTorrent is a peer-to-peer file sharing protocol. Note that BitTorrent is "
 "not anonymous."
 msgstr ""
+"BitTorrent è un protocollo di condivisione file peer-to-peer. BitTorrent non "
+"è anonimo."
 
 #: plinth/modules/transmission/__init__.py:28
 msgid "Please do not change the default port of the Transmission daemon."
-msgstr ""
+msgstr "Non modificare la porta predefinita del demone Transmission."
 
 #: plinth/modules/transmission/__init__.py:30
 #, python-brace-format
@@ -9014,6 +9040,9 @@ msgid ""
 "apps, use the URL <a href=\"/transmission-remote/rpc\">/transmission-remote/"
 "rpc</a>."
 msgstr ""
+"Oltre che dall'interfaccia web, anche le app mobile e desktop possono "
+"controllare Transmission su {box_name} da remoto. Per configurarle, usa "
+"l'URL <a href=\"/transmission-remote/rpc\">/transmission-remote/rpc</a>."
 
 #: plinth/modules/transmission/__init__.py:44
 #, python-brace-format
@@ -9021,6 +9050,8 @@ msgid ""
 "<a href=\"{samba_url}\">Samba</a> shares can be set as the default download "
 "directory from the dropdown menu below."
 msgstr ""
+"Le condivisioni <a href=\"{samba_url}\">Samba</a> possono essere impostate "
+"come directory di download predefinite dal menu a tendina qui sotto."
 
 #: plinth/modules/transmission/__init__.py:48
 #, python-brace-format
@@ -9028,6 +9059,8 @@ msgid ""
 "After a download has completed, you can also access your files using the <a "
 "href=\"{sharing_url}\">Sharing</a> app."
 msgstr ""
+"Dopo aver completato un download, puoi accedere ai file anche tramite l'app "
+"<a href=\"{sharing_url}\">Condivisione</a>."
 
 #: plinth/modules/transmission/__init__.py:74
 #: plinth/modules/transmission/manifest.py:8
@@ -9036,11 +9069,11 @@ msgstr "Transmission"
 
 #: plinth/modules/transmission/manifest.py:15
 msgid "Tremotesf"
-msgstr ""
+msgstr "Tremotesf"
 
 #: plinth/modules/upgrades/__init__.py:34
 msgid "Check for and apply the latest software and security updates."
-msgstr ""
+msgstr "Controlla ed applica gli ultimi aggiornamenti software e di sicurezza."
 
 #: plinth/modules/upgrades/__init__.py:35
 msgid ""
