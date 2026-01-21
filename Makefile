@@ -101,7 +101,7 @@ install:
         $(INSTALL) -d $(DESTDIR)$${lib_dir} && \
 	rm -rf $(DESTDIR)$${lib_dir}/plinth $(DESTDIR)$${lib_dir}/plinth*.dist-info && \
         mv $${temp}/plinth $${temp}/plinth*.dist-info $(DESTDIR)$${lib_dir} && \
-	rm -f $(DESTDIR)$${lib_dir}/plinth*.dist-info/COPYING.md && \
+	rm -f $(DESTDIR)$${lib_dir}/plinth*.dist-info/licenses/COPYING.md && \
 	rm -f $(DESTDIR)$${lib_dir}/plinth*.dist-info/direct_url.json && \
         $(INSTALL) -D -t $(BIN_DIR) bin/plinth
 	$(INSTALL) -D -t $(LIB_DIR)/freedombox bin/freedombox-privileged
