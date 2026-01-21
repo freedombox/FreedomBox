@@ -66,7 +66,7 @@ development environment inside a systemd-nspawn container.
     folder: (This step requires at least 16GB of free disk space)
 
     ```bash
-    host$ ./container up
+    host$ ./container start
     ```
 
 1. To run unit tests:
@@ -97,20 +97,20 @@ development environment inside a systemd-nspawn container.
    1. Using an environment variable.
 
    ```bash
-   host$ DISTRIBUTION=stable ./container up
+   host$ DISTRIBUTION=stable ./container start
    host$ DISTRIBUTION=stable ./container ssh
    ```
 
    ```bash
    host$ export DISTRIBUTION=stable
-   host$ ./container up
+   host$ ./container start
    host$ ./container ssh
    ```
 
    2. Using the `--distribution` option for each command.
 
    ```bash
-   host$ ./container up --distribution=stable
+   host$ ./container start --distribution=stable
    host$ ./container ssh --distribution=stable
    ```
 
@@ -131,7 +131,7 @@ used simultaneously as they all use different disk images.
     example, to bring up a virtual machine instead of a container run:
 
     ```bash
-    host$ ./container up --machine-type=vm
+    host$ ./container start --machine-type=vm
     ```
 
 #### Using after Setup
@@ -164,9 +164,9 @@ Note: This development container has automatic upgrades disabled by default.
 
 #### Troubleshooting
 
-* Sometimes `host$ ./container destroy && ./container up` doesn't work. In such
+* Sometimes `host$ ./container destroy && ./container start` doesn't work. In such
   cases, try to delete the hidden `.container` folder and then `host$
-  ./container up`.
+  ./container start`.
 * Not all kinds of changes are automatically updated. Try `guest$ sudo mount -o
   remount /freedombox`.
 * I am getting an error that says `lo` is not managed by Network Manager
@@ -178,7 +178,7 @@ Note: This development container has automatic upgrades disabled by default.
     ```bash
     host$ sudo touch /etc/NetworkManager/conf.d/10-globally-managed-devices.conf
     host$ sudo service network-manager restart
-    host$ ./container destroy && ./container up
+    host$ ./container destroy && ./container start
     ```
 * File/directory not found errors when running tests can be fixed by clearing `__pycache__` directories.
 
