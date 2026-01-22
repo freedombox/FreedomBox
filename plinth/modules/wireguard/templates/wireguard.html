@@ -59,7 +59,7 @@
     {% if not server.public_key %}
       <form method="post" action="{% url 'wireguard:enable-server' %}">
         {% csrf_token %}
-        <button type="submit" class="btn btn-primary"
+        <button type="submit" class="btn btn-primary btn-start-server"
                 title="{% trans 'Start WireGuard Server' %}">
           <span class="fa fa-rocket" aria-hidden="true"></span>
           {% trans "Start WireGuard Server" %}

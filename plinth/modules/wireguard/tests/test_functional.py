@@ -67,6 +67,11 @@ class TestWireguardApp(functional.BaseAppTests):
     def _add_client(browser, key):
         """Add a client."""
         functional.nav_to_module(browser, 'wireguard')
+        # Start the server on FreedomBox, if needed.
+        start_server_button = browser.find_by_css('.btn-start-server')
+        if start_server_button:
+            start_server_button.first.click()
+
         browser.find_by_css('.btn-add-client').first.click()
         browser.find_by_id('id_public_key').fill(key)
         functional.submit(browser, form_class='form-add-client')
