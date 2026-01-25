@@ -30,8 +30,19 @@ class WireguardView(AppView):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
         info = utils.get_info()
-        context['server'] = info['my_server']
+        server_info = info['my_server']
+        context['server'] = server_info
         context['client_peers'] = info['my_client']['servers']
+        context['server_endpoints'] = []
+
+        if server_info:
+            domains = DomainName.list_names(filter_for_service='wireguard')
+            listen_port = server_info.get('listen_port')
+            context['server_endpoints'] = [
+                f'{domain}:{listen_port}' for domain in domains
+                if not domain.endswith('.local')
+            ]
+
         return context
 
 

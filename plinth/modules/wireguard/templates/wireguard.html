@@ -48,12 +48,24 @@
     {% blocktrans trimmed %}
       Public key for this {{ box_name }}:
     {% endblocktrans %}
-    {% if server.public_key %}
-      <pre>{{ server.public_key }}</pre>
-    {% else %}
-      <p>{% trans "Not configured yet." %}</p>
-    {% endif %}
   </p>
+  {% if server.public_key %}
+    <pre>{{ server.public_key }}</pre>
+  {% else %}
+    <p>{% trans "Not configured yet." %}</p>
+  {% endif %}
+
+  <p>
+    {% blocktrans trimmed %}
+      Endpoints for this {{ box_name }}:
+    {% endblocktrans %}
+  </p>
+  {% if server_endpoints %}
+    <pre>{% for endpoint in server_endpoints %}{{ endpoint }}
+{% endfor %}</pre>
+  {% else %}
+    <p>{% trans "Not configured yet." %}</p>
+  {% endif %}
 
   <div class="btn-toolbar">
     {% if not server.public_key %}
