@@ -46,6 +46,16 @@ class AddClientView(SuccessMessageMixin, FormView):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
         context['title'] = _('Add Allowed Client')
+
+        # Show next available IP.
+        try:
+            connection = utils._server_connection()
+            setting_name = utils.nm.SETTING_WIREGUARD_SETTING_NAME
+            settings = connection.get_setting_by_name(setting_name)
+            context['next_ip'] = utils._get_next_available_ip_address(settings)
+        except Exception:
+            context['next_ip'] = None
+
         return context
 
     def form_valid(self, form):
