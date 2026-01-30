@@ -127,6 +127,17 @@ def enable_connections(enable):
                 pass  # Connection is already inactive
 
 
+def delete_connections():
+    """Remove all WireGuard connections."""
+    setting_name = nm.SETTING_WIREGUARD_SETTING_NAME
+    client = network.get_nm_client()
+    for connection in client.get_connections():
+        if connection.get_connection_type() != setting_name:
+            continue
+
+        connection.delete()
+
+
 def _get_public_key_from_private_key(private_key):
     process = subprocess.run(['wg', 'pubkey'], check=True, capture_output=True,
                              input=private_key.encode())

@@ -96,3 +96,8 @@ class WireguardApp(app_module.App):
         super().setup(old_version)
         if not old_version:
             self.enable()
+
+    def uninstall(self):
+        """De-configure and uninstall the app."""
+        utils.delete_connections()
+        super().uninstall()
