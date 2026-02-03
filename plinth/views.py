@@ -682,10 +682,18 @@ class AppLogsView(TemplateView):
 
 def notification_dismiss(request, id):
     """Dismiss a notification."""
+    from django.http import HttpResponse
     from .notification import Notification
     notes = Notification.list(key=id, user=request.user)
     if notes:
         # If a notification is not found, no need to dismiss it.
         notes[0].dismiss()
+
+    # Don't redirect if the request is from HTMX.
+    if request.headers.get('HX-Request'):
+        response = HttpResponse(status=200)
+        # Trigger the notification-dismissed event to update the UI.
+        response['HX-Trigger'] = 'notification-dismissed'
+        return response
 
     return HttpResponseRedirect(_get_redirect_url_from_param(request))

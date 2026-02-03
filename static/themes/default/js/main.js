@@ -298,3 +298,24 @@ document.addEventListener('htmx:afterSwap', function (event) {
         window.location.reload();
     }
 });
+
+/*
+ * Decrement notification counter badge when a notification is dismissed via
+ * HTMX.
+ */
+document.addEventListener('notification-dismissed', function (evt) {
+    // There are 2 badges on the page. One for mobile navbar and one for desktop
+    // navbar.
+    const badges = document.querySelectorAll('.notifications-dropdown .badge');
+
+    badges.forEach(badge => {
+        const count = parseInt(badge.textContent.trim());
+
+        if (count > 1) {
+            badge.textContent = count - 1;
+        } else {
+            const dropdowns = document.querySelectorAll('.notifications-dropdown');
+            dropdowns.forEach(dropdown => dropdown.remove());
+        }
+    });
+});
