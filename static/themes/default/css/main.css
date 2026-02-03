@@ -945,10 +945,18 @@ section.app-description {
 .notification {
     padding: 0.625rem 0.9375rem;
     border-left: 0.3125rem solid;
+    max-height: 100rem;  /* HACK: Very high value for closing transition. */
 }
 
 .notification:not(:first-child) {
     border-top: 1px solid var(--bs-border-color-translucent);
+}
+
+.notification.htmx-swapping {
+    opacity: 0;
+    overflow: hidden;
+    max-height: 0;
+    transition: opacity 0.3s, max-height 0.3s;
 }
 
 .notification-time {
