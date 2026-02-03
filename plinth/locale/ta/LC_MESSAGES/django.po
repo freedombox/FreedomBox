@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-16 01:18+0000\n"
+"POT-Creation-Date: 2026-02-03 01:14+0000\n"
 "PO-Revision-Date: 2025-08-17 08:02+0000\n"
 "Last-Translator: தமிழ்நேரம் <anishprabu.t@gmail.com>\n"
 "Language-Team: Tamil <https://hosted.weblate.org/projects/freedombox/"
@@ -107,15 +107,15 @@ msgstr "இந்த வலை இடைமுகத்தை வழங்க �
 msgid "Use the language preference set in the browser"
 msgstr "உலாவியில் உள்ள மொழி விருப்பத்தேர்வைப் பயன்படுத்தவும்"
 
-#: plinth/menu.py:116 plinth/templates/base.html:123
+#: plinth/menu.py:116 plinth/templates/base.html:124
 msgid "Home"
 msgstr "வீடு"
 
-#: plinth/menu.py:117 plinth/templates/base.html:132
+#: plinth/menu.py:117 plinth/templates/base.html:133
 msgid "Apps"
 msgstr "பயன்பாடுகள்"
 
-#: plinth/menu.py:119 plinth/menu.py:126 plinth/templates/base.html:141
+#: plinth/menu.py:119 plinth/menu.py:126 plinth/templates/base.html:142
 msgid "System"
 msgstr "மண்டலம்"
 
@@ -3295,8 +3295,8 @@ msgstr "கருத்துக்களை சமர்ப்பிக்க�
 msgid "Contribute"
 msgstr "பங்களிப்பு"
 
-#: plinth/modules/help/__init__.py:53 plinth/templates/base.html:221
-#: plinth/templates/base.html:224 plinth/templates/help-menu.html:46
+#: plinth/modules/help/__init__.py:53 plinth/templates/base.html:222
+#: plinth/templates/base.html:225 plinth/templates/help-menu.html:46
 #: plinth/templates/help-menu.html:47 plinth/templates/index.html:96
 msgid "About"
 msgstr "பற்றி"
@@ -3927,7 +3927,7 @@ msgstr "வலை மாநாடு"
 
 #: plinth/modules/janus/templates/janus_video_room.html:204
 #: plinth/modules/jsxc/templates/jsxc_launch.html:117
-#: plinth/templates/base.html:277
+#: plinth/templates/base.html:282
 msgid "JavaScript license information"
 msgstr "சாவாச்கிரிப்ட் உரிம செய்தி"
 
@@ -5125,7 +5125,7 @@ msgstr ""
 #: plinth/modules/networks/templates/connection_show.html:40
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:72
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:73
-#: plinth/templates/base.html:171 plinth/templates/base.html:172
+#: plinth/templates/base.html:172 plinth/templates/base.html:173
 msgid "Edit"
 msgstr "தொகு"
 
@@ -6827,8 +6827,8 @@ msgstr "மறுதொடக்கம் செய்யுங்கள்"
 msgid "Shutdown"
 msgstr "பணிநிறுத்தம்"
 
-#: plinth/modules/power/templates/power.html:15 plinth/templates/base.html:186
-#: plinth/templates/base.html:187
+#: plinth/modules/power/templates/power.html:15 plinth/templates/base.html:187
+#: plinth/templates/base.html:188
 msgid "Restart"
 msgstr "மறுதொடக்கம்"
 
@@ -9775,7 +9775,7 @@ msgstr "தவறான விசை."
 
 #: plinth/modules/wireguard/forms.py:61
 #: plinth/modules/wireguard/templates/wireguard.html:17
-#: plinth/modules/wireguard/templates/wireguard.html:77
+#: plinth/modules/wireguard/templates/wireguard.html:101
 #: plinth/modules/wireguard/templates/wireguard_delete_server.html:24
 msgid "Public Key"
 msgstr "பொது விசை"
@@ -9880,7 +9880,7 @@ msgid "Allowed IPs"
 msgstr "அனுமதிக்கப்பட்ட ஐபிக்கள்"
 
 #: plinth/modules/wireguard/templates/wireguard.html:19
-#: plinth/modules/wireguard/templates/wireguard.html:78
+#: plinth/modules/wireguard/templates/wireguard.html:102
 msgid "Last Connected Time"
 msgstr "கடைசியாக இணைக்கப்பட்ட நேரம்"
 
@@ -9894,47 +9894,65 @@ msgstr "இந்த %(box_name)s உடன் இணைக்க எந்த �
 msgid "Public key for this %(box_name)s:"
 msgstr "இந்த %(box_name)s: கள்:"
 
-#: plinth/modules/wireguard/templates/wireguard.html:54
+#: plinth/modules/wireguard/templates/wireguard.html:55
+#: plinth/modules/wireguard/templates/wireguard.html:67
 msgid "Not configured yet."
 msgstr "இன்னும் கட்டமைக்கப்படவில்லை."
 
 #: plinth/modules/wireguard/templates/wireguard.html:59
+#, fuzzy, python-format
+#| msgid "Public key for this %(box_name)s:"
+msgid "Endpoints for this %(box_name)s:"
+msgstr "இந்த %(box_name)s: கள்:"
+
+#: plinth/modules/wireguard/templates/wireguard.html:75
+#: plinth/modules/wireguard/templates/wireguard.html:77
+msgid "Start WireGuard Server"
+msgstr ""
+
+#: plinth/modules/wireguard/templates/wireguard.html:81
 msgid "Add a new peer"
 msgstr "புதிய சகாக்களைச் சேர்க்கவும்"
 
-#: plinth/modules/wireguard/templates/wireguard.html:63
-#: plinth/modules/wireguard/views.py:48
+#: plinth/modules/wireguard/templates/wireguard.html:85
+#: plinth/modules/wireguard/views.py:59
 msgid "Add Allowed Client"
 msgstr "அனுமதிக்கப்பட்ட கிளையன்ட் சேர்க்கவும்"
 
-#: plinth/modules/wireguard/templates/wireguard.html:67
+#: plinth/modules/wireguard/templates/wireguard.html:91
 msgid "As a Client"
 msgstr "ஒரு வாடிக்கையாளராக"
 
-#: plinth/modules/wireguard/templates/wireguard.html:69
+#: plinth/modules/wireguard/templates/wireguard.html:93
 #, python-format
 msgid "Servers that %(box_name)s will connect to:"
 msgstr "%(box_name)s இணைக்கும் சேவையகங்கள்:"
 
-#: plinth/modules/wireguard/templates/wireguard.html:76
+#: plinth/modules/wireguard/templates/wireguard.html:100
 #: plinth/modules/wireguard/templates/wireguard_delete_server.html:20
 msgid "Endpoint"
 msgstr "முனைப்புள்ளி"
 
-#: plinth/modules/wireguard/templates/wireguard.html:100
+#: plinth/modules/wireguard/templates/wireguard.html:124
 msgid "No connections to remote servers are configured yet."
 msgstr "தொலை சேவையகங்களுக்கான தொடர்புகள் இன்னும் கட்டமைக்கப்படவில்லை."
 
-#: plinth/modules/wireguard/templates/wireguard.html:110
+#: plinth/modules/wireguard/templates/wireguard.html:134
 msgid "Add a new server"
 msgstr "புதிய சேவையகத்தைச் சேர்க்கவும்"
 
-#: plinth/modules/wireguard/templates/wireguard.html:114
-#: plinth/modules/wireguard/views.py:157
+#: plinth/modules/wireguard/templates/wireguard.html:138
+#: plinth/modules/wireguard/views.py:178
 msgid "Add Connection to Server"
 msgstr "சேவையகத்திற்கு இணைப்பைச் சேர்க்கவும்"
 
-#: plinth/modules/wireguard/templates/wireguard_add_client.html:19
+#: plinth/modules/wireguard/templates/wireguard_add_client.html:21
+#, fuzzy
+#| msgid "IP address to use for client:"
+msgid "IP address that will be assigned to this client"
+msgstr "கிளையண்டிற்கு பயன்படுத்த ஐபி முகவரி:"
+
+#: plinth/modules/wireguard/templates/wireguard_add_client.html:31
 msgid "Add Client"
 msgstr "கிளையன்ட் சேர்க்கவும்"
 
@@ -10023,61 +10041,71 @@ msgstr "இந்த இயந்திரத்தின் பொது வி
 msgid "IP address of this machine:"
 msgstr "இந்த இயந்திரத்தின் ஐபி முகவரி:"
 
-#: plinth/modules/wireguard/views.py:43
+#: plinth/modules/wireguard/views.py:54
 msgid "Added new client."
 msgstr "புதிய கிளையன்ட் சேர்க்கப்பட்டது."
 
-#: plinth/modules/wireguard/views.py:58 plinth/modules/wireguard/views.py:117
+#: plinth/modules/wireguard/views.py:79 plinth/modules/wireguard/views.py:138
 msgid "Client with public key already exists"
 msgstr "பொது விசையுடன் கூடிய வாடிக்கையாளர் ஏற்கனவே இருக்கிறார்"
 
-#: plinth/modules/wireguard/views.py:71
+#: plinth/modules/wireguard/views.py:92
 msgid "Allowed Client"
 msgstr "அனுமதிக்கப்பட்ட கிளையன்ட்"
 
-#: plinth/modules/wireguard/views.py:93
+#: plinth/modules/wireguard/views.py:114
 msgid "Updated client."
 msgstr "புதுப்பிக்கப்பட்ட வாங்கி."
 
-#: plinth/modules/wireguard/views.py:98
+#: plinth/modules/wireguard/views.py:119
 msgid "Modify Client"
 msgstr "கிளையண்டை மாற்றவும்"
 
-#: plinth/modules/wireguard/views.py:131
+#: plinth/modules/wireguard/views.py:152
 msgid "Delete Allowed Client"
 msgstr "அனுமதிக்கப்பட்ட கிளையன்ட் நீக்கு"
 
-#: plinth/modules/wireguard/views.py:140
+#: plinth/modules/wireguard/views.py:161
 msgid "Client deleted."
 msgstr "கிளையன்ட் நீக்கப்பட்டது."
 
-#: plinth/modules/wireguard/views.py:142
+#: plinth/modules/wireguard/views.py:163
 msgid "Client not found"
 msgstr "வாடிக்கையாளர் கண்டுபிடிக்கப்படவில்லை"
 
-#: plinth/modules/wireguard/views.py:152
+#: plinth/modules/wireguard/views.py:173
 msgid "Added new server."
 msgstr "புதிய சேவையகத்தைச் சேர்த்தது."
 
-#: plinth/modules/wireguard/views.py:173
+#: plinth/modules/wireguard/views.py:194
 msgid "Connection to Server"
 msgstr "சேவையகத்திற்கான இணைப்பு"
 
-#: plinth/modules/wireguard/views.py:191
+#: plinth/modules/wireguard/views.py:212
 msgid "Updated server."
 msgstr "புதுப்பிக்கப்பட்ட சேவையகம்."
 
-#: plinth/modules/wireguard/views.py:196
+#: plinth/modules/wireguard/views.py:217
 msgid "Modify Connection to Server"
 msgstr "சேவையகத்திற்கான இணைப்பை மாற்றவும்"
 
-#: plinth/modules/wireguard/views.py:233
+#: plinth/modules/wireguard/views.py:254
 msgid "Delete Connection to Server"
 msgstr "சேவையகத்திற்கான இணைப்பை நீக்கு"
 
-#: plinth/modules/wireguard/views.py:253
+#: plinth/modules/wireguard/views.py:274
 msgid "Server deleted."
 msgstr "சேவையகம் நீக்கப்பட்டது."
+
+#: plinth/modules/wireguard/views.py:286
+#, fuzzy
+#| msgid "Password changed successfully."
+msgid "WireGuard server started successfully."
+msgstr "கடவுச்சொல் வெற்றிகரமாக மாற்றப்பட்டது."
+
+#: plinth/modules/wireguard/views.py:290
+msgid "Failed to start WireGuard server: {}"
+msgstr ""
 
 #: plinth/modules/wordpress/__init__.py:20
 msgid ""
@@ -10446,35 +10474,35 @@ msgstr ""
 "சேவையகமாகும். இது இலவச மென்பொருளாகும், இது சேவையக பயன்பாடுகளை எளிதாக நிறுவவும் "
 "நிர்வகிக்கவும் உங்களை அனுமதிக்கிறது."
 
-#: plinth/templates/base.html:120
+#: plinth/templates/base.html:121
 msgid " Home"
 msgstr " வீடு"
 
-#: plinth/templates/base.html:128
+#: plinth/templates/base.html:129
 msgid " Apps"
 msgstr " பயன்பாடுகள்"
 
-#: plinth/templates/base.html:137
+#: plinth/templates/base.html:138
 msgid " System"
 msgstr " அமைப்பு"
 
-#: plinth/templates/base.html:178 plinth/templates/base.html:179
+#: plinth/templates/base.html:179 plinth/templates/base.html:180
 msgid "Change password"
 msgstr "கடவுச்சொல்லை மாற்றவும்"
 
-#: plinth/templates/base.html:192 plinth/templates/base.html:193
+#: plinth/templates/base.html:193 plinth/templates/base.html:194
 msgid "Shut down"
 msgstr "மூடு"
 
-#: plinth/templates/base.html:203 plinth/templates/base.html:241
+#: plinth/templates/base.html:204 plinth/templates/base.html:242
 msgid "Log out"
 msgstr "விடுபதிகை"
 
-#: plinth/templates/base.html:212 plinth/templates/base.html:215
+#: plinth/templates/base.html:213 plinth/templates/base.html:216
 msgid "Select language"
 msgstr "மொழியைத் தேர்ந்தெடுக்கவும்"
 
-#: plinth/templates/base.html:230 plinth/templates/base.html:232
+#: plinth/templates/base.html:231 plinth/templates/base.html:233
 msgid "Log in"
 msgstr "புகுபதிகை"
 
@@ -10742,7 +10770,7 @@ msgstr "இங்கே"
 msgid "Setting unchanged"
 msgstr "மாறாமல் அமைத்தல்"
 
-#: plinth/views.py:658
+#: plinth/views.py:654
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr "{app_id} ஐ நிறுவல் நீக்குவதற்கு முன்"

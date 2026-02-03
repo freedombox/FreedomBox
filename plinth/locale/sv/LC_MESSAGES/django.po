@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-16 01:18+0000\n"
+"POT-Creation-Date: 2026-02-03 01:14+0000\n"
 "PO-Revision-Date: 2024-07-30 01:31+0000\n"
 "Last-Translator: bittin1ddc447d824349b2 <bittin@reimu.nl>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/freedombox/"
@@ -107,15 +107,15 @@ msgstr "Språk att använda för att presentera detta webbgränssnitt"
 msgid "Use the language preference set in the browser"
 msgstr "Använd språkinställningen i webbläsaren"
 
-#: plinth/menu.py:116 plinth/templates/base.html:123
+#: plinth/menu.py:116 plinth/templates/base.html:124
 msgid "Home"
 msgstr "Hem"
 
-#: plinth/menu.py:117 plinth/templates/base.html:132
+#: plinth/menu.py:117 plinth/templates/base.html:133
 msgid "Apps"
 msgstr "Appar"
 
-#: plinth/menu.py:119 plinth/menu.py:126 plinth/templates/base.html:141
+#: plinth/menu.py:119 plinth/menu.py:126 plinth/templates/base.html:142
 msgid "System"
 msgstr "System"
 
@@ -3401,8 +3401,8 @@ msgstr "Skicka feedback"
 msgid "Contribute"
 msgstr "Bidrar"
 
-#: plinth/modules/help/__init__.py:53 plinth/templates/base.html:221
-#: plinth/templates/base.html:224 plinth/templates/help-menu.html:46
+#: plinth/modules/help/__init__.py:53 plinth/templates/base.html:222
+#: plinth/templates/base.html:225 plinth/templates/help-menu.html:46
 #: plinth/templates/help-menu.html:47 plinth/templates/index.html:96
 msgid "About"
 msgstr "Om"
@@ -4048,7 +4048,7 @@ msgstr ""
 
 #: plinth/modules/janus/templates/janus_video_room.html:204
 #: plinth/modules/jsxc/templates/jsxc_launch.html:117
-#: plinth/templates/base.html:277
+#: plinth/templates/base.html:282
 msgid "JavaScript license information"
 msgstr "JavaScript-licensinformation"
 
@@ -5319,7 +5319,7 @@ msgstr ""
 #: plinth/modules/networks/templates/connection_show.html:40
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:72
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:73
-#: plinth/templates/base.html:171 plinth/templates/base.html:172
+#: plinth/templates/base.html:172 plinth/templates/base.html:173
 msgid "Edit"
 msgstr "Redigera"
 
@@ -7096,8 +7096,8 @@ msgstr ""
 msgid "Shutdown"
 msgstr "Stänga ner"
 
-#: plinth/modules/power/templates/power.html:15 plinth/templates/base.html:186
-#: plinth/templates/base.html:187
+#: plinth/modules/power/templates/power.html:15 plinth/templates/base.html:187
+#: plinth/templates/base.html:188
 msgid "Restart"
 msgstr "Starta om"
 
@@ -10091,7 +10091,7 @@ msgstr "Ogiltig nyckel."
 
 #: plinth/modules/wireguard/forms.py:61
 #: plinth/modules/wireguard/templates/wireguard.html:17
-#: plinth/modules/wireguard/templates/wireguard.html:77
+#: plinth/modules/wireguard/templates/wireguard.html:101
 #: plinth/modules/wireguard/templates/wireguard_delete_server.html:24
 msgid "Public Key"
 msgstr "Offentlig nyckel"
@@ -10200,7 +10200,7 @@ msgid "Allowed IPs"
 msgstr "Tillåtna IPs"
 
 #: plinth/modules/wireguard/templates/wireguard.html:19
-#: plinth/modules/wireguard/templates/wireguard.html:78
+#: plinth/modules/wireguard/templates/wireguard.html:102
 msgid "Last Connected Time"
 msgstr "Senast ansluten tid"
 
@@ -10216,47 +10216,67 @@ msgstr ""
 msgid "Public key for this %(box_name)s:"
 msgstr "Offentlig nyckel för dessa %(box_name)s:"
 
-#: plinth/modules/wireguard/templates/wireguard.html:54
+#: plinth/modules/wireguard/templates/wireguard.html:55
+#: plinth/modules/wireguard/templates/wireguard.html:67
 msgid "Not configured yet."
 msgstr "Inte konfigurerad än."
 
 #: plinth/modules/wireguard/templates/wireguard.html:59
+#, fuzzy, python-format
+#| msgid "Public key for this %(box_name)s:"
+msgid "Endpoints for this %(box_name)s:"
+msgstr "Offentlig nyckel för dessa %(box_name)s:"
+
+#: plinth/modules/wireguard/templates/wireguard.html:75
+#: plinth/modules/wireguard/templates/wireguard.html:77
+#, fuzzy
+#| msgid "Standard Services"
+msgid "Start WireGuard Server"
+msgstr "Standard tjänster"
+
+#: plinth/modules/wireguard/templates/wireguard.html:81
 msgid "Add a new peer"
 msgstr "Lägga till en ny peer"
 
-#: plinth/modules/wireguard/templates/wireguard.html:63
-#: plinth/modules/wireguard/views.py:48
+#: plinth/modules/wireguard/templates/wireguard.html:85
+#: plinth/modules/wireguard/views.py:59
 msgid "Add Allowed Client"
 msgstr "Lägga till tillåten klient"
 
-#: plinth/modules/wireguard/templates/wireguard.html:67
+#: plinth/modules/wireguard/templates/wireguard.html:91
 msgid "As a Client"
 msgstr "Som klient"
 
-#: plinth/modules/wireguard/templates/wireguard.html:69
+#: plinth/modules/wireguard/templates/wireguard.html:93
 #, python-format
 msgid "Servers that %(box_name)s will connect to:"
 msgstr "Servrar som %(box_name)s kommer att ansluta till:"
 
-#: plinth/modules/wireguard/templates/wireguard.html:76
+#: plinth/modules/wireguard/templates/wireguard.html:100
 #: plinth/modules/wireguard/templates/wireguard_delete_server.html:20
 msgid "Endpoint"
 msgstr "Slutpunkt"
 
-#: plinth/modules/wireguard/templates/wireguard.html:100
+#: plinth/modules/wireguard/templates/wireguard.html:124
 msgid "No connections to remote servers are configured yet."
 msgstr "Inga anslutningar till fjärrservrar har konfigurerats ännu."
 
-#: plinth/modules/wireguard/templates/wireguard.html:110
+#: plinth/modules/wireguard/templates/wireguard.html:134
 msgid "Add a new server"
 msgstr "Lägga till en ny server"
 
-#: plinth/modules/wireguard/templates/wireguard.html:114
-#: plinth/modules/wireguard/views.py:157
+#: plinth/modules/wireguard/templates/wireguard.html:138
+#: plinth/modules/wireguard/views.py:178
 msgid "Add Connection to Server"
 msgstr "Lägga till anslutning till server"
 
-#: plinth/modules/wireguard/templates/wireguard_add_client.html:19
+#: plinth/modules/wireguard/templates/wireguard_add_client.html:21
+#, fuzzy
+#| msgid "IP address to use for client:"
+msgid "IP address that will be assigned to this client"
+msgstr "IP-adress som ska användas för klienten:"
+
+#: plinth/modules/wireguard/templates/wireguard_add_client.html:31
 msgid "Add Client"
 msgstr "Lägg till klient"
 
@@ -10345,61 +10365,71 @@ msgstr "Offentlig nyckel för denna maskin:"
 msgid "IP address of this machine:"
 msgstr "IP-adressen för denna maskin:"
 
-#: plinth/modules/wireguard/views.py:43
+#: plinth/modules/wireguard/views.py:54
 msgid "Added new client."
 msgstr "Lade till ny klient."
 
-#: plinth/modules/wireguard/views.py:58 plinth/modules/wireguard/views.py:117
+#: plinth/modules/wireguard/views.py:79 plinth/modules/wireguard/views.py:138
 msgid "Client with public key already exists"
 msgstr "Klient med offentlig nyckel finns redan"
 
-#: plinth/modules/wireguard/views.py:71
+#: plinth/modules/wireguard/views.py:92
 msgid "Allowed Client"
 msgstr "Tillåten klient"
 
-#: plinth/modules/wireguard/views.py:93
+#: plinth/modules/wireguard/views.py:114
 msgid "Updated client."
 msgstr "Uppdaterad klient."
 
-#: plinth/modules/wireguard/views.py:98
+#: plinth/modules/wireguard/views.py:119
 msgid "Modify Client"
 msgstr "Ändra klienten"
 
-#: plinth/modules/wireguard/views.py:131
+#: plinth/modules/wireguard/views.py:152
 msgid "Delete Allowed Client"
 msgstr "Ta bort tillåten klient"
 
-#: plinth/modules/wireguard/views.py:140
+#: plinth/modules/wireguard/views.py:161
 msgid "Client deleted."
 msgstr "Klienten har tagits bort."
 
-#: plinth/modules/wireguard/views.py:142
+#: plinth/modules/wireguard/views.py:163
 msgid "Client not found"
 msgstr "Klienten hittades inte"
 
-#: plinth/modules/wireguard/views.py:152
+#: plinth/modules/wireguard/views.py:173
 msgid "Added new server."
 msgstr "Lade till ny server."
 
-#: plinth/modules/wireguard/views.py:173
+#: plinth/modules/wireguard/views.py:194
 msgid "Connection to Server"
 msgstr "Anslutning till server"
 
-#: plinth/modules/wireguard/views.py:191
+#: plinth/modules/wireguard/views.py:212
 msgid "Updated server."
 msgstr "Uppdaterad server."
 
-#: plinth/modules/wireguard/views.py:196
+#: plinth/modules/wireguard/views.py:217
 msgid "Modify Connection to Server"
 msgstr "Ändra Anslutningen till Servern"
 
-#: plinth/modules/wireguard/views.py:233
+#: plinth/modules/wireguard/views.py:254
 msgid "Delete Connection to Server"
 msgstr "Ta bort anslutning till server"
 
-#: plinth/modules/wireguard/views.py:253
+#: plinth/modules/wireguard/views.py:274
 msgid "Server deleted."
 msgstr "Servern har tagits bort."
+
+#: plinth/modules/wireguard/views.py:286
+#, fuzzy
+#| msgid "Password changed successfully."
+msgid "WireGuard server started successfully."
+msgstr "Lösenordet har ändrats."
+
+#: plinth/modules/wireguard/views.py:290
+msgid "Failed to start WireGuard server: {}"
+msgstr ""
 
 #: plinth/modules/wordpress/__init__.py:20
 msgid ""
@@ -10781,35 +10811,35 @@ msgstr ""
 "Det är gratis programvara som låter dig enkelt installera och hantera "
 "serverappar."
 
-#: plinth/templates/base.html:120
+#: plinth/templates/base.html:121
 msgid " Home"
 msgstr " Hem"
 
-#: plinth/templates/base.html:128
+#: plinth/templates/base.html:129
 msgid " Apps"
 msgstr " Appar"
 
-#: plinth/templates/base.html:137
+#: plinth/templates/base.html:138
 msgid " System"
 msgstr " System"
 
-#: plinth/templates/base.html:178 plinth/templates/base.html:179
+#: plinth/templates/base.html:179 plinth/templates/base.html:180
 msgid "Change password"
 msgstr "Ändra lösenord"
 
-#: plinth/templates/base.html:192 plinth/templates/base.html:193
+#: plinth/templates/base.html:193 plinth/templates/base.html:194
 msgid "Shut down"
 msgstr "Stänga ner"
 
-#: plinth/templates/base.html:203 plinth/templates/base.html:241
+#: plinth/templates/base.html:204 plinth/templates/base.html:242
 msgid "Log out"
 msgstr "Logga ut"
 
-#: plinth/templates/base.html:212 plinth/templates/base.html:215
+#: plinth/templates/base.html:213 plinth/templates/base.html:216
 msgid "Select language"
 msgstr "Välj språk"
 
-#: plinth/templates/base.html:230 plinth/templates/base.html:232
+#: plinth/templates/base.html:231 plinth/templates/base.html:233
 msgid "Log in"
 msgstr "Logga in"
 
@@ -11086,7 +11116,7 @@ msgstr ""
 msgid "Setting unchanged"
 msgstr "Instänllningar oförändrade"
 
-#: plinth/views.py:658
+#: plinth/views.py:654
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr "innan du avinstallerar {app_id}"
@@ -12713,9 +12743,6 @@ msgstr "Gujarati"
 
 #~ msgid "You don't have any Custom Services enabled"
 #~ msgstr "Du har inga anpassade tjänster aktiverade"
-
-#~ msgid "Standard Services"
-#~ msgstr "Standard tjänster"
 
 #~ msgid ""
 #~ "When enabled, Syncthing's web interface will be available from <a href=\"/"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-16 01:18+0000\n"
+"POT-Creation-Date: 2026-02-03 01:14+0000\n"
 "PO-Revision-Date: 2025-12-19 20:00+0000\n"
 "Last-Translator: OwlGale <owlgale@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/freedombox/"
@@ -105,15 +105,15 @@ msgstr "Язык, используемый для представления д�
 msgid "Use the language preference set in the browser"
 msgstr "Использовать языковые настройки браузера"
 
-#: plinth/menu.py:116 plinth/templates/base.html:123
+#: plinth/menu.py:116 plinth/templates/base.html:124
 msgid "Home"
 msgstr "Главная"
 
-#: plinth/menu.py:117 plinth/templates/base.html:132
+#: plinth/menu.py:117 plinth/templates/base.html:133
 msgid "Apps"
 msgstr "Приложения"
 
-#: plinth/menu.py:119 plinth/menu.py:126 plinth/templates/base.html:141
+#: plinth/menu.py:119 plinth/menu.py:126 plinth/templates/base.html:142
 msgid "System"
 msgstr "Система"
 
@@ -3305,8 +3305,8 @@ msgstr "Отправить отзыв"
 msgid "Contribute"
 msgstr "Помочь проекту"
 
-#: plinth/modules/help/__init__.py:53 plinth/templates/base.html:221
-#: plinth/templates/base.html:224 plinth/templates/help-menu.html:46
+#: plinth/modules/help/__init__.py:53 plinth/templates/base.html:222
+#: plinth/templates/base.html:225 plinth/templates/help-menu.html:46
 #: plinth/templates/help-menu.html:47 plinth/templates/index.html:96
 msgid "About"
 msgstr "О проекте"
@@ -3960,7 +3960,7 @@ msgstr "Веб-конференция"
 
 #: plinth/modules/janus/templates/janus_video_room.html:204
 #: plinth/modules/jsxc/templates/jsxc_launch.html:117
-#: plinth/templates/base.html:277
+#: plinth/templates/base.html:282
 msgid "JavaScript license information"
 msgstr "Информация о лицензии JavaScript"
 
@@ -5177,7 +5177,7 @@ msgstr ""
 #: plinth/modules/networks/templates/connection_show.html:40
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:72
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:73
-#: plinth/templates/base.html:171 plinth/templates/base.html:172
+#: plinth/templates/base.html:172 plinth/templates/base.html:173
 msgid "Edit"
 msgstr "Редактировать"
 
@@ -6907,8 +6907,8 @@ msgstr "Перезагрузка"
 msgid "Shutdown"
 msgstr "Выключить"
 
-#: plinth/modules/power/templates/power.html:15 plinth/templates/base.html:186
-#: plinth/templates/base.html:187
+#: plinth/modules/power/templates/power.html:15 plinth/templates/base.html:187
+#: plinth/templates/base.html:188
 msgid "Restart"
 msgstr "Перезапустить"
 
@@ -9798,8 +9798,8 @@ msgid ""
 "Use the <a href='%(change_password_url)s'>change password form </a> to "
 "change the password."
 msgstr ""
-"Для смены пароля используйте форму <a href=\"%(change_password_url)s\">"
-"Изменить пароль</a>."
+"Для смены пароля используйте форму <a "
+"href=\"%(change_password_url)s\">Изменить пароль</a>."
 
 #: plinth/modules/users/templates/users_update.html:37
 #: plinth/templates/language-selection.html:17
@@ -9886,7 +9886,7 @@ msgstr "Недействительный ключ."
 
 #: plinth/modules/wireguard/forms.py:61
 #: plinth/modules/wireguard/templates/wireguard.html:17
-#: plinth/modules/wireguard/templates/wireguard.html:77
+#: plinth/modules/wireguard/templates/wireguard.html:101
 #: plinth/modules/wireguard/templates/wireguard_delete_server.html:24
 msgid "Public Key"
 msgstr "Открытый ключ"
@@ -9992,7 +9992,7 @@ msgid "Allowed IPs"
 msgstr "Разрешенные IP-адреса"
 
 #: plinth/modules/wireguard/templates/wireguard.html:19
-#: plinth/modules/wireguard/templates/wireguard.html:78
+#: plinth/modules/wireguard/templates/wireguard.html:102
 msgid "Last Connected Time"
 msgstr "Время последнего подключения"
 
@@ -10007,47 +10007,67 @@ msgstr ""
 msgid "Public key for this %(box_name)s:"
 msgstr "Открытый ключ для этого %(box_name)s:"
 
-#: plinth/modules/wireguard/templates/wireguard.html:54
+#: plinth/modules/wireguard/templates/wireguard.html:55
+#: plinth/modules/wireguard/templates/wireguard.html:67
 msgid "Not configured yet."
 msgstr "Еще не настроен."
 
 #: plinth/modules/wireguard/templates/wireguard.html:59
+#, fuzzy, python-format
+#| msgid "Public key for this %(box_name)s:"
+msgid "Endpoints for this %(box_name)s:"
+msgstr "Открытый ключ для этого %(box_name)s:"
+
+#: plinth/modules/wireguard/templates/wireguard.html:75
+#: plinth/modules/wireguard/templates/wireguard.html:77
+#, fuzzy
+#| msgid "Standard Services"
+msgid "Start WireGuard Server"
+msgstr "Стандартные службы"
+
+#: plinth/modules/wireguard/templates/wireguard.html:81
 msgid "Add a new peer"
 msgstr "Добавление нового однорангового узла"
 
-#: plinth/modules/wireguard/templates/wireguard.html:63
-#: plinth/modules/wireguard/views.py:48
+#: plinth/modules/wireguard/templates/wireguard.html:85
+#: plinth/modules/wireguard/views.py:59
 msgid "Add Allowed Client"
 msgstr "Добавить разрешенный клиент"
 
-#: plinth/modules/wireguard/templates/wireguard.html:67
+#: plinth/modules/wireguard/templates/wireguard.html:91
 msgid "As a Client"
 msgstr "Как клиент"
 
-#: plinth/modules/wireguard/templates/wireguard.html:69
+#: plinth/modules/wireguard/templates/wireguard.html:93
 #, python-format
 msgid "Servers that %(box_name)s will connect to:"
 msgstr "Серверы, к которым %(box_name)s будет подключаться:"
 
-#: plinth/modules/wireguard/templates/wireguard.html:76
+#: plinth/modules/wireguard/templates/wireguard.html:100
 #: plinth/modules/wireguard/templates/wireguard_delete_server.html:20
 msgid "Endpoint"
 msgstr "Конечная точка"
 
-#: plinth/modules/wireguard/templates/wireguard.html:100
+#: plinth/modules/wireguard/templates/wireguard.html:124
 msgid "No connections to remote servers are configured yet."
 msgstr "Подключения к удаленным серверам пока не настроены."
 
-#: plinth/modules/wireguard/templates/wireguard.html:110
+#: plinth/modules/wireguard/templates/wireguard.html:134
 msgid "Add a new server"
 msgstr "Добавить новый сервер"
 
-#: plinth/modules/wireguard/templates/wireguard.html:114
-#: plinth/modules/wireguard/views.py:157
+#: plinth/modules/wireguard/templates/wireguard.html:138
+#: plinth/modules/wireguard/views.py:178
 msgid "Add Connection to Server"
 msgstr "Добавить подключение к серверу"
 
-#: plinth/modules/wireguard/templates/wireguard_add_client.html:19
+#: plinth/modules/wireguard/templates/wireguard_add_client.html:21
+#, fuzzy
+#| msgid "IP address to use for client:"
+msgid "IP address that will be assigned to this client"
+msgstr "IP-адрес для использования клиентом:"
+
+#: plinth/modules/wireguard/templates/wireguard_add_client.html:31
 msgid "Add Client"
 msgstr "Добавить клиент"
 
@@ -10136,61 +10156,71 @@ msgstr "Открытый ключ этой машины:"
 msgid "IP address of this machine:"
 msgstr "IP-адрес этой машины:"
 
-#: plinth/modules/wireguard/views.py:43
+#: plinth/modules/wireguard/views.py:54
 msgid "Added new client."
 msgstr "Добавлен новый клиент."
 
-#: plinth/modules/wireguard/views.py:58 plinth/modules/wireguard/views.py:117
+#: plinth/modules/wireguard/views.py:79 plinth/modules/wireguard/views.py:138
 msgid "Client with public key already exists"
 msgstr "Клиент с открытым ключом уже существует"
 
-#: plinth/modules/wireguard/views.py:71
+#: plinth/modules/wireguard/views.py:92
 msgid "Allowed Client"
 msgstr "Разрешенный клиент"
 
-#: plinth/modules/wireguard/views.py:93
+#: plinth/modules/wireguard/views.py:114
 msgid "Updated client."
 msgstr "Обновленный клиент."
 
-#: plinth/modules/wireguard/views.py:98
+#: plinth/modules/wireguard/views.py:119
 msgid "Modify Client"
 msgstr "Изменить клиент"
 
-#: plinth/modules/wireguard/views.py:131
+#: plinth/modules/wireguard/views.py:152
 msgid "Delete Allowed Client"
 msgstr "Удалить разрешенный клиент"
 
-#: plinth/modules/wireguard/views.py:140
+#: plinth/modules/wireguard/views.py:161
 msgid "Client deleted."
 msgstr "Клиент удалён."
 
-#: plinth/modules/wireguard/views.py:142
+#: plinth/modules/wireguard/views.py:163
 msgid "Client not found"
 msgstr "Клиент не найден"
 
-#: plinth/modules/wireguard/views.py:152
+#: plinth/modules/wireguard/views.py:173
 msgid "Added new server."
 msgstr "Добавлен новый сервер."
 
-#: plinth/modules/wireguard/views.py:173
+#: plinth/modules/wireguard/views.py:194
 msgid "Connection to Server"
 msgstr "Подключение к серверу"
 
-#: plinth/modules/wireguard/views.py:191
+#: plinth/modules/wireguard/views.py:212
 msgid "Updated server."
 msgstr "Обновленный сервер."
 
-#: plinth/modules/wireguard/views.py:196
+#: plinth/modules/wireguard/views.py:217
 msgid "Modify Connection to Server"
 msgstr "Изменить подключение к серверу"
 
-#: plinth/modules/wireguard/views.py:233
+#: plinth/modules/wireguard/views.py:254
 msgid "Delete Connection to Server"
 msgstr "Удалить соединение с сервером"
 
-#: plinth/modules/wireguard/views.py:253
+#: plinth/modules/wireguard/views.py:274
 msgid "Server deleted."
 msgstr "Сервер удален."
+
+#: plinth/modules/wireguard/views.py:286
+#, fuzzy
+#| msgid "Password changed successfully."
+msgid "WireGuard server started successfully."
+msgstr "Пароль успешно изменён."
+
+#: plinth/modules/wireguard/views.py:290
+msgid "Failed to start WireGuard server: {}"
+msgstr ""
 
 #: plinth/modules/wordpress/__init__.py:20
 msgid ""
@@ -10554,35 +10584,35 @@ msgstr ""
 "обеспечение, позволяющее легко устанавливать серверные приложения и "
 "управлять ими."
 
-#: plinth/templates/base.html:120
+#: plinth/templates/base.html:121
 msgid " Home"
 msgstr " Главная"
 
-#: plinth/templates/base.html:128
+#: plinth/templates/base.html:129
 msgid " Apps"
 msgstr " Приложения"
 
-#: plinth/templates/base.html:137
+#: plinth/templates/base.html:138
 msgid " System"
 msgstr " Система"
 
-#: plinth/templates/base.html:178 plinth/templates/base.html:179
+#: plinth/templates/base.html:179 plinth/templates/base.html:180
 msgid "Change password"
 msgstr "Изменить пароль"
 
-#: plinth/templates/base.html:192 plinth/templates/base.html:193
+#: plinth/templates/base.html:193 plinth/templates/base.html:194
 msgid "Shut down"
 msgstr "Завершить работу"
 
-#: plinth/templates/base.html:203 plinth/templates/base.html:241
+#: plinth/templates/base.html:204 plinth/templates/base.html:242
 msgid "Log out"
 msgstr "Выход"
 
-#: plinth/templates/base.html:212 plinth/templates/base.html:215
+#: plinth/templates/base.html:213 plinth/templates/base.html:216
 msgid "Select language"
 msgstr "Выбрать язык"
 
-#: plinth/templates/base.html:230 plinth/templates/base.html:232
+#: plinth/templates/base.html:231 plinth/templates/base.html:233
 msgid "Log in"
 msgstr "Войти"
 
@@ -10848,7 +10878,7 @@ msgstr "Здесь"
 msgid "Setting unchanged"
 msgstr "Настройки без изменений"
 
-#: plinth/views.py:658
+#: plinth/views.py:654
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr "перед удалением {app_id}"
@@ -12447,9 +12477,6 @@ msgstr "Гуджарати"
 
 #~ msgid "You don't have any Custom Services enabled"
 #~ msgstr "У вас нет включенных пользовательских служб"
-
-#~ msgid "Standard Services"
-#~ msgstr "Стандартные службы"
 
 #, fuzzy
 #~| msgid ""

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-16 01:18+0000\n"
+"POT-Creation-Date: 2026-02-03 01:14+0000\n"
 "PO-Revision-Date: 2025-06-04 15:01+0000\n"
 "Last-Translator: András Szűcs "
 "<andrascc86288f63c44cb5@users.noreply.hosted.weblate.org>\n"
@@ -111,15 +111,15 @@ msgstr "A webes felület megjelenítéséhez használt nyelv"
 msgid "Use the language preference set in the browser"
 msgstr "A böngésző nyelvének használata"
 
-#: plinth/menu.py:116 plinth/templates/base.html:123
+#: plinth/menu.py:116 plinth/templates/base.html:124
 msgid "Home"
 msgstr "Kezdőlap"
 
-#: plinth/menu.py:117 plinth/templates/base.html:132
+#: plinth/menu.py:117 plinth/templates/base.html:133
 msgid "Apps"
 msgstr "Alkalmazások"
 
-#: plinth/menu.py:119 plinth/menu.py:126 plinth/templates/base.html:141
+#: plinth/menu.py:119 plinth/menu.py:126 plinth/templates/base.html:142
 msgid "System"
 msgstr "Rendszer"
 
@@ -3446,8 +3446,8 @@ msgstr "Visszajelzés küldése"
 msgid "Contribute"
 msgstr "Hozzájárulás"
 
-#: plinth/modules/help/__init__.py:53 plinth/templates/base.html:221
-#: plinth/templates/base.html:224 plinth/templates/help-menu.html:46
+#: plinth/modules/help/__init__.py:53 plinth/templates/base.html:222
+#: plinth/templates/base.html:225 plinth/templates/help-menu.html:46
 #: plinth/templates/help-menu.html:47 plinth/templates/index.html:96
 msgid "About"
 msgstr "Névjegy"
@@ -4087,7 +4087,7 @@ msgstr ""
 
 #: plinth/modules/janus/templates/janus_video_room.html:204
 #: plinth/modules/jsxc/templates/jsxc_launch.html:117
-#: plinth/templates/base.html:277
+#: plinth/templates/base.html:282
 msgid "JavaScript license information"
 msgstr "JavaScript licencinformáció"
 
@@ -5366,7 +5366,7 @@ msgstr ""
 #: plinth/modules/networks/templates/connection_show.html:40
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:72
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:73
-#: plinth/templates/base.html:171 plinth/templates/base.html:172
+#: plinth/templates/base.html:172 plinth/templates/base.html:173
 msgid "Edit"
 msgstr "Szerkesztés"
 
@@ -7168,8 +7168,8 @@ msgstr ""
 msgid "Shutdown"
 msgstr "Leállítás"
 
-#: plinth/modules/power/templates/power.html:15 plinth/templates/base.html:186
-#: plinth/templates/base.html:187
+#: plinth/modules/power/templates/power.html:15 plinth/templates/base.html:187
+#: plinth/templates/base.html:188
 msgid "Restart"
 msgstr "Újraindítás"
 
@@ -10194,7 +10194,7 @@ msgstr "Érvénytelen kulcs."
 
 #: plinth/modules/wireguard/forms.py:61
 #: plinth/modules/wireguard/templates/wireguard.html:17
-#: plinth/modules/wireguard/templates/wireguard.html:77
+#: plinth/modules/wireguard/templates/wireguard.html:101
 #: plinth/modules/wireguard/templates/wireguard_delete_server.html:24
 msgid "Public Key"
 msgstr "Nyilvános kulcs"
@@ -10303,7 +10303,7 @@ msgid "Allowed IPs"
 msgstr "Engedélyezett IP-címek"
 
 #: plinth/modules/wireguard/templates/wireguard.html:19
-#: plinth/modules/wireguard/templates/wireguard.html:78
+#: plinth/modules/wireguard/templates/wireguard.html:102
 msgid "Last Connected Time"
 msgstr "Utolsó csatlakozási idő"
 
@@ -10317,47 +10317,65 @@ msgstr "Ehhez a %(box_name)shoz még nincs partner konfigurálva."
 msgid "Public key for this %(box_name)s:"
 msgstr "A %(box_name)s nyilvános kulcsa:"
 
-#: plinth/modules/wireguard/templates/wireguard.html:54
+#: plinth/modules/wireguard/templates/wireguard.html:55
+#: plinth/modules/wireguard/templates/wireguard.html:67
 msgid "Not configured yet."
 msgstr "Még nincs konfigurálva."
 
 #: plinth/modules/wireguard/templates/wireguard.html:59
+#, fuzzy, python-format
+#| msgid "Public key for this %(box_name)s:"
+msgid "Endpoints for this %(box_name)s:"
+msgstr "A %(box_name)s nyilvános kulcsa:"
+
+#: plinth/modules/wireguard/templates/wireguard.html:75
+#: plinth/modules/wireguard/templates/wireguard.html:77
+msgid "Start WireGuard Server"
+msgstr ""
+
+#: plinth/modules/wireguard/templates/wireguard.html:81
 msgid "Add a new peer"
 msgstr "Új társ hozzáadása"
 
-#: plinth/modules/wireguard/templates/wireguard.html:63
-#: plinth/modules/wireguard/views.py:48
+#: plinth/modules/wireguard/templates/wireguard.html:85
+#: plinth/modules/wireguard/views.py:59
 msgid "Add Allowed Client"
 msgstr "Engedélyezett kliens hozzáadása"
 
-#: plinth/modules/wireguard/templates/wireguard.html:67
+#: plinth/modules/wireguard/templates/wireguard.html:91
 msgid "As a Client"
 msgstr "Ügyfélként"
 
-#: plinth/modules/wireguard/templates/wireguard.html:69
+#: plinth/modules/wireguard/templates/wireguard.html:93
 #, python-format
 msgid "Servers that %(box_name)s will connect to:"
 msgstr "Szerverek, amelyekhez a %(box_name)s csatlakozni fog:"
 
-#: plinth/modules/wireguard/templates/wireguard.html:76
+#: plinth/modules/wireguard/templates/wireguard.html:100
 #: plinth/modules/wireguard/templates/wireguard_delete_server.html:20
 msgid "Endpoint"
 msgstr "Végpont"
 
-#: plinth/modules/wireguard/templates/wireguard.html:100
+#: plinth/modules/wireguard/templates/wireguard.html:124
 msgid "No connections to remote servers are configured yet."
 msgstr "A távoli szerverekhez még nincsenek konfigurálva kapcsolatok."
 
-#: plinth/modules/wireguard/templates/wireguard.html:110
+#: plinth/modules/wireguard/templates/wireguard.html:134
 msgid "Add a new server"
 msgstr "Új szerver hozzáadása"
 
-#: plinth/modules/wireguard/templates/wireguard.html:114
-#: plinth/modules/wireguard/views.py:157
+#: plinth/modules/wireguard/templates/wireguard.html:138
+#: plinth/modules/wireguard/views.py:178
 msgid "Add Connection to Server"
 msgstr "Kapcsolat hozzáadása a szerverhez"
 
-#: plinth/modules/wireguard/templates/wireguard_add_client.html:19
+#: plinth/modules/wireguard/templates/wireguard_add_client.html:21
+#, fuzzy
+#| msgid "IP address to use for client:"
+msgid "IP address that will be assigned to this client"
+msgstr "A kliens által használt IP-cím:"
+
+#: plinth/modules/wireguard/templates/wireguard_add_client.html:31
 msgid "Add Client"
 msgstr "Kliens hozzáadása"
 
@@ -10446,61 +10464,71 @@ msgstr "A gép nyilvános kulcsa:"
 msgid "IP address of this machine:"
 msgstr "A gép IP-címe:"
 
-#: plinth/modules/wireguard/views.py:43
+#: plinth/modules/wireguard/views.py:54
 msgid "Added new client."
 msgstr "Új kliens hozzáadva."
 
-#: plinth/modules/wireguard/views.py:58 plinth/modules/wireguard/views.py:117
+#: plinth/modules/wireguard/views.py:79 plinth/modules/wireguard/views.py:138
 msgid "Client with public key already exists"
 msgstr "Ezzel a nyilvános kulccsal már létezik kliens"
 
-#: plinth/modules/wireguard/views.py:71
+#: plinth/modules/wireguard/views.py:92
 msgid "Allowed Client"
 msgstr "Engedélyezett kliens"
 
-#: plinth/modules/wireguard/views.py:93
+#: plinth/modules/wireguard/views.py:114
 msgid "Updated client."
 msgstr "Kliens frissítve."
 
-#: plinth/modules/wireguard/views.py:98
+#: plinth/modules/wireguard/views.py:119
 msgid "Modify Client"
 msgstr "Ügyfél módosítása"
 
-#: plinth/modules/wireguard/views.py:131
+#: plinth/modules/wireguard/views.py:152
 msgid "Delete Allowed Client"
 msgstr "Engedélyezett kliensek törlése"
 
-#: plinth/modules/wireguard/views.py:140
+#: plinth/modules/wireguard/views.py:161
 msgid "Client deleted."
 msgstr "Ügyfél törölve."
 
-#: plinth/modules/wireguard/views.py:142
+#: plinth/modules/wireguard/views.py:163
 msgid "Client not found"
 msgstr "Az ügyfél nem található"
 
-#: plinth/modules/wireguard/views.py:152
+#: plinth/modules/wireguard/views.py:173
 msgid "Added new server."
 msgstr "Új szerver hozzáadva."
 
-#: plinth/modules/wireguard/views.py:173
+#: plinth/modules/wireguard/views.py:194
 msgid "Connection to Server"
 msgstr "Kapcsolat a szerverhez"
 
-#: plinth/modules/wireguard/views.py:191
+#: plinth/modules/wireguard/views.py:212
 msgid "Updated server."
 msgstr "Szerver frissítve."
 
-#: plinth/modules/wireguard/views.py:196
+#: plinth/modules/wireguard/views.py:217
 msgid "Modify Connection to Server"
 msgstr "Szerverrel létesített kapcsolat módosítása"
 
-#: plinth/modules/wireguard/views.py:233
+#: plinth/modules/wireguard/views.py:254
 msgid "Delete Connection to Server"
 msgstr "Szerverrel létesített kapcsolat törlése"
 
-#: plinth/modules/wireguard/views.py:253
+#: plinth/modules/wireguard/views.py:274
 msgid "Server deleted."
 msgstr "Szerver törölve."
+
+#: plinth/modules/wireguard/views.py:286
+#, fuzzy
+#| msgid "Password changed successfully."
+msgid "WireGuard server started successfully."
+msgstr "A jelszó módosítása sikeres."
+
+#: plinth/modules/wireguard/views.py:290
+msgid "Failed to start WireGuard server: {}"
+msgstr ""
 
 #: plinth/modules/wordpress/__init__.py:20
 msgid ""
@@ -10904,35 +10932,35 @@ msgid ""
 "is free software that lets you install and manage server apps with ease."
 msgstr ""
 
-#: plinth/templates/base.html:120
+#: plinth/templates/base.html:121
 msgid " Home"
 msgstr " Kezdőlap"
 
-#: plinth/templates/base.html:128
+#: plinth/templates/base.html:129
 msgid " Apps"
 msgstr " Alkalmazások"
 
-#: plinth/templates/base.html:137
+#: plinth/templates/base.html:138
 msgid " System"
 msgstr " Rendszer"
 
-#: plinth/templates/base.html:178 plinth/templates/base.html:179
+#: plinth/templates/base.html:179 plinth/templates/base.html:180
 msgid "Change password"
 msgstr "Jelszómódosítás"
 
-#: plinth/templates/base.html:192 plinth/templates/base.html:193
+#: plinth/templates/base.html:193 plinth/templates/base.html:194
 msgid "Shut down"
 msgstr "Leállítás"
 
-#: plinth/templates/base.html:203 plinth/templates/base.html:241
+#: plinth/templates/base.html:204 plinth/templates/base.html:242
 msgid "Log out"
 msgstr "Kijelentkezés"
 
-#: plinth/templates/base.html:212 plinth/templates/base.html:215
+#: plinth/templates/base.html:213 plinth/templates/base.html:216
 msgid "Select language"
 msgstr "Válassz nyelvet"
 
-#: plinth/templates/base.html:230 plinth/templates/base.html:232
+#: plinth/templates/base.html:231 plinth/templates/base.html:233
 msgid "Log in"
 msgstr "Bejelentkezés"
 
@@ -11216,7 +11244,7 @@ msgstr ""
 msgid "Setting unchanged"
 msgstr "A beállítás változatlan"
 
-#: plinth/views.py:658
+#: plinth/views.py:654
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr ""
