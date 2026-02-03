@@ -54,13 +54,7 @@
               <div class="btn-toolbar">
                 {% for action in note.actions %}
                   {% if action.type == "dismiss" %}
-                    <a href="{% url 'notification_dismiss' id=note.id %}?next={{ request.path|iriencode }}"
-                       hx-get="{% url 'notification_dismiss' id=note.id %}"
-                       hx-target="#notification-{{ note.id }}"
-                       hx-swap="delete swap:300ms"
-                       role="button" class="btn btn-default">
-                      {% trans "Dismiss" %}
-                    </a>
+                    {% include 'notifications-dismiss-button.html' with id=note.id %}
                   {% else %}
                     <a href="{% url action.url %}" role="button"
                        class="btn btn-{{ action.class|default:'default' }}">

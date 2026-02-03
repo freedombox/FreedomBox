@@ -41,11 +41,5 @@
      role="button" class="btn btn-primary">
     {% trans "Go to Distribution Update" %}
   </a>
-  <a href="{% url 'notification_dismiss' id=id %}?next={{ request.path|iriencode }}"
-     hx-get="{% url 'notification_dismiss' id=id %}"
-     hx-target="#notification-{{ id }}"
-     hx-swap="delete swap:300ms"
-     role="button" class="btn btn-default">
-    {% trans "Dismiss" %}
-  </a>
+  {% include 'notifications-dismiss-button.html' with id=id %}
 </p>
