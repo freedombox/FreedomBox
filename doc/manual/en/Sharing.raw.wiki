@@ -20,15 +20,13 @@ The content can be shared publicly or restricted to the users of listed allowed 
 
 === Setting Up Shares ===
 
-For the users to access the content through their browser it must exist and have a share. A share is an entry in the Sharing app relating:
- * the Name (an thereby the URL) with which the users will ask for the content,
- * the Disk Path of the content to be served and
- * the sharing mode. On restricted mode, it also has the list of allowed groups.
-Many shares can coexist in the same server.
-
-Only admins can create, edit or remove shares. They'll find the Sharing app in the Apps section of !FreedomBox web interface. Sharing app is an easy to use web application with an evident interface.
-
-Each share has its own sharing mode (public or restricted) setting. Only groups recognized by !FreedomBox service can be combined in the list of allowed groups. Groups created in the CLI won't be offered by the Sharing app. 
+ * In Plinth enable the Sharing App. Only admins can create, edit or remove shares. They'll find the Sharing app in the Apps section of the !FreedomBox web interface. Many shares can coexist in the same server.
+ * Add a new share
+   * Give it a name (an thereby the URL) with which the users will ask for the content. In the example above it would be called ''content_name''.
+   * The Disk Path of the content to be served. This path is relative to ''root'' on your !FreedomBox. For instance ''/var/lib/freedombox/sharing/content_name'' might be a choice.
+   * Sharing mode. On restricted mode, it also has the list of allowed groups. Only groups recognized by !FreedomBox service can be combined in the list of allowed groups. Groups created in the CLI won't be offered by the Sharing app. 
+ * Create the directory specified under ''Disk Path'' on your !FreedomBox through ''Cockpit'', ''Nautilus'' or remote login.
+ * Make sure the user, who will provide the content, has write access to that directory for instance by making him the owner of that directory. 
 
 === Providing/Updating Content ===
 
