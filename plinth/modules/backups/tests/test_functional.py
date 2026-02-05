@@ -190,6 +190,7 @@ def _download_file_logged_in(browser, url, suffix=''):
 
 
 def _download(browser, archive_name=None):
+    """Download a backup archive to a temporary file on disk."""
     functional.nav_to_module(browser, 'backups')
     href = f'/plinth/sys/backups/root/download/{archive_name}/'
     url = functional.base_url + href
@@ -198,11 +199,13 @@ def _download(browser, archive_name=None):
 
 
 def _open_main_page(browser):
+    """Open the FreedomBox interface main page."""
     with functional.wait_for_page_update(browser):
         browser.links.find_by_href('/plinth/').first.click()
 
 
 def _upload_and_restore(browser, app_name, downloaded_file_path):
+    """Upload a backup archive from the disk and perform restore operation."""
     functional.nav_to_module(browser, 'backups')
     with functional.wait_for_page_update(browser):
         browser.links.find_by_href('/plinth/sys/backups/upload/').first.click()
@@ -218,11 +221,14 @@ def _upload_and_restore(browser, app_name, downloaded_file_path):
 
 
 def _has_remote_backup_location(browser) -> bool:
+    """Return whether atleast one remote backup location is configured."""
     functional.nav_to_module(browser, 'backups')
-    return browser.is_text_present(REMOTE_PATH)
+    return browser.is_element_present_by_css(
+        f'.repository[data-repository-name="{REMOTE_PATH}"]')
 
 
 def _add_remote_backup_location(browser, ssh_use_password=True):
+    """Add a remote backup location."""
     if _has_remote_backup_location(browser):
         _remove_remote_backup_location(browser)
 
@@ -232,16 +238,15 @@ def _add_remote_backup_location(browser, ssh_use_password=True):
     password = functional.get_password(
         functional.config['DEFAULT']['username'])
     if ssh_use_password:
-        browser.find_by_id('id_ssh_auth_type_password').first.check()
+        browser.find_by_id('id_ssh_auth_type_1').check()
         browser.find_by_name('ssh_password').fill(password)
     else:
-        browser.find_by_id('id_ssh_auth_type_key').first.check()
+        browser.find_by_id('id_ssh_auth_type_0').check()
 
     browser.choose('id_encryption', 'repokey')
     browser.find_by_name('encryption_passphrase').fill(password)
     browser.find_by_name('confirm_encryption_passphrase').fill(password)
-    submit_button = browser.find_by_value('Create Location')
-    functional.submit(browser, element=submit_button)
+    functional.submit(browser, form_class='form-add-remote-repository')
 
     assert browser.is_text_present('Added new remote SSH repository.')
 
@@ -250,15 +255,15 @@ def _add_remote_backup_location(browser, ssh_use_password=True):
 
 
 def _remove_remote_backup_location(browser):
-    remote_locations = browser.find_by_tag('table')[1]
-    remote_locations.links.find_by_partial_href('/delete/').first.click()
-
-    submit_button = browser.find_by_value('Remove Location')
-    functional.submit(browser, element=submit_button)
+    """Remove the remote backup location with known remote path."""
+    repository = browser.find_by_css(
+        f'.repository[data-repository-name="{REMOTE_PATH}"]').first
+    repository.find_by_css('.repository-remove').first.click()
+    functional.submit(browser, form_class='form-remove-location')
 
 
 def _verify_host_key(browser):
+    """Verify the remote location's SSH host key."""
     browser.find_by_name('ssh_public_key').first.click()
-    submit_button = browser.find_by_value('Verify Host')
-    functional.submit(browser, element=submit_button)
+    functional.submit(browser, form_class='form-verify-ssh-hostkey')
     assert browser.is_text_present('SSH host verified.')
