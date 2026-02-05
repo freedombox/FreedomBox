@@ -23,8 +23,8 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    const keyAuth = document.getElementById('id_ssh_auth_type_key');
-    const passwordAuth = document.getElementById('id_ssh_auth_type_password');
+    const keyAuth = document.getElementById('id_ssh_auth_type_0');
+    const passwordAuth = document.getElementById('id_ssh_auth_type_1');
     const sshPasswordField = document.getElementById('id_ssh_password');
     const encryptionType = document.getElementById('id_encryption');
     const encryptionPassphraseField = document.getElementById('id_encryption_passphrase');
