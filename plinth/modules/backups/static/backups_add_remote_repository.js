@@ -31,24 +31,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const encryptionConfirmPassphraseField = document.getElementById('id_confirm_encryption_passphrase');
 
     function handleAuthTypeChange() {
-        if (keyAuth.checked) {
-            sshPasswordField.value = "";
-            sshPasswordField.disabled = true;
+        if (passwordAuth.checked) {
+            sshPasswordField.parentElement.parentElement.style.display = 'block';
         } else {
-            sshPasswordField.disabled = false;
+            sshPasswordField.parentElement.parentElement.style.display = 'none';
         }
     }
 
     function handleEncryptionTypeChange() {
+        let display = 'none';
         if (encryptionType.value === "repokey") {
-            encryptionPassphraseField.disabled = false;
-            encryptionConfirmPassphraseField.disabled = false;
-        } else {
-            encryptionPassphraseField.value = "";
-            encryptionPassphraseField.disabled = true;
-            encryptionConfirmPassphraseField.value = "";
-            encryptionConfirmPassphraseField.disabled = true;
+            display = 'block';
         }
+
+        encryptionPassphraseField.parentElement.parentElement.style.display = display;
+        encryptionConfirmPassphraseField.parentElement.parentElement.style.display = display;
     }
 
     keyAuth.addEventListener('change', handleAuthTypeChange);
