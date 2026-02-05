@@ -148,15 +148,17 @@ def get_ssh_client_auth_key_paths() -> tuple[Path, Path]:
 def generate_ssh_client_auth_key():
     """Generate SSH client authentication keypair, if needed."""
     _, key_path = get_ssh_client_auth_key_paths()
-    if not key_path.exists():
-        logger.info('Generating SSH client key %s for FreedomBox service',
-                    key_path)
-        subprocess.run(
-            ['ssh-keygen', '-t', 'ed25519', '-N', '', '-f',
-             str(key_path)], stdout=subprocess.DEVNULL, check=True)
-    else:
+    key_path.parent.mkdir(parents=True, exist_ok=True)
+    if key_path.exists():
         logger.info('SSH client key %s for FreedomBox service already exists',
                     key_path)
+        return
+
+    logger.info('Generating SSH client key %s for FreedomBox service',
+                key_path)
+    subprocess.run(
+        ['ssh-keygen', '-t', 'ed25519', '-N', '', '-f',
+         str(key_path)], stdout=subprocess.DEVNULL, check=True)
 
 
 def get_ssh_client_public_key() -> str:
