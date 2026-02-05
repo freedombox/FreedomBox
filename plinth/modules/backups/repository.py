@@ -330,18 +330,12 @@ class SshBorgRepository(BaseBorgRepository):
     @property
     def ssh_password(self) -> str | None:
         """Return SSH password if it is stored, otherwise None."""
-        if 'ssh_password' in self.credentials:
-            return self.credentials['ssh_password']
-
-        return None
+        return self.credentials.get('ssh_password')
 
     @property
     def ssh_keyfile(self) -> str | None:
         """Return path to SSH client key if stored, otherwise None."""
-        if 'ssh_keyfile' in self.credentials:
-            return self.credentials['ssh_keyfile']
-
-        return None
+        return self.credentials.get('ssh_keyfile')
 
     @property
     def _mountpoint(self):
