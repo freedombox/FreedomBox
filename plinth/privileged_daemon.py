@@ -260,7 +260,6 @@ def _shutdown_server() -> None:
     This must be run in a thread separate from the server.serve_forever()
     otherwise it will deadlock waiting for the shutdown to complete.
     """
-    global _server
     logger.info('SIGTERM received, shutting down the server.')
     if _server:
         _server.shutdown()
