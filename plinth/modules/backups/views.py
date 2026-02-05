@@ -6,7 +6,6 @@ Views for the backups app.
 import contextlib
 import logging
 import os
-import subprocess
 from urllib.parse import unquote
 
 from django.contrib import messages
@@ -24,8 +23,8 @@ from plinth.errors import PlinthError
 from plinth.modules import backups, storage
 from plinth.views import AppView
 
-from . import (SESSION_PATH_VARIABLE, api, copy_ssh_client_public_key, errors,
-               forms, generate_ssh_client_auth_key, get_known_hosts_path,
+from . import (SESSION_PATH_VARIABLE, api, errors, forms,
+               generate_ssh_client_auth_key, get_known_hosts_path,
                get_ssh_client_auth_key_paths, get_ssh_client_public_key,
                is_ssh_hostkey_verified, privileged)
 from .decorators import delete_tmp_backup_file
@@ -40,6 +39,19 @@ def handle_common_errors(request: HttpRequest):
     """If any known Borg exceptions occur, show proper error messages."""
     try:
         yield
+    except errors.SshError as exception:
+        if exception.returncode in (6, 7):
+            message = _('SSH host public key could not be verified.')
+        elif (exception.returncode == 5
+              or 'Permission denied' in exception.stderr.decode()):
+            message = _('Authentication to remote server failed.')
+        else:
+            message = _(
+                'Error establishing connection to server: {} {} {}').format(
+                    str(exception), exception.stdout.decode(),
+                    exception.stderr.decode())
+
+        messages.error(request, message)
     except errors.BorgError as exception:
         messages.error(request, exception.args[0])
 
@@ -346,11 +358,11 @@ class AddRepositoryView(FormView):
             encryption_passphrase = None
 
         credentials = {'encryption_passphrase': encryption_passphrase}
+        repository = BorgRepository(path, credentials)
         with handle_common_errors(self.request):
-            repository = BorgRepository(path, credentials)
-            if _save_repository(self.request, repository):
-                messages.success(self.request, _('Added new repository.'))
-                return super().form_valid(form)
+            _save_repository(self.request, repository)
+            messages.success(self.request, _('Added new repository.'))
+            return super().form_valid(form)
 
         return redirect(reverse_lazy('backups:add-repository'))
 
@@ -440,62 +452,13 @@ class VerifySshHostkeyView(FormView):
         with known_hosts_path.open('a', encoding='utf-8') as known_hosts_file:
             known_hosts_file.write(ssh_public_key + '\n')
 
-    def _check_save_repository(self):
+    def _save_repository_and_redirect(self):
         """Save the repository and redirect according to the result."""
-        if _save_repository(self.request, self._get_repository()):
+        with handle_common_errors(self.request):
+            _save_repository(self.request, self._get_repository())
             return redirect(reverse_lazy('backups:index'))
 
         return redirect(reverse_lazy('backups:add-remote-repository'))
-
-    def _check_copy_ssh_client_public_key(self):
-        """Try to copy FreedomBox's SSH client public key to the host."""
-        repo = self._get_repository()
-        ssh_password = repo.ssh_password
-        if ssh_password:
-            result, message = copy_ssh_client_public_key(
-                repo.hostname, repo.username, repo.ssh_password)
-            if result:
-                logger.info("Copied SSH client public key to remote host's "
-                            "authorized keys.")
-                _pubkey_path, key_path = get_ssh_client_auth_key_paths()
-                repo.replace_ssh_password_with_keyfile(str(key_path))
-                return self._check_save_repository()
-
-            logger.warning('Failed to copy SSH client public key: %s', message)
-            messages.error(
-                self.request,
-                _('Failed to copy SSH client public key: %s') % message)
-
-        else:
-            logger.error(
-                'SSH password is required to copy SSH client public key.')
-            messages.error(
-                self.request,
-                _('SSH password is required to copy SSH public key.'))
-
-        # Remove the repository so that the user can have another go at
-        # creating it.
-        try:
-            repo.remove()
-            messages.error(self.request, _('Repository removed.'))
-        except KeyError:
-            pass
-
-        return redirect(reverse_lazy('backups:add-remote-repository'))
-
-    def _check_next_step(self):
-        """Check whether we need to copy the SSH client public key.
-
-        Otherwise, save the repository and redirect.
-        """
-        if self._get_repository().ssh_keyfile:
-            # SSH keyfile credential is stored. Assume it is already copied to
-            # the remote host. Check the connection.
-            logger.info('Check connection using SSH keyfile...')
-            return self._check_save_repository()
-
-        logger.info('Copy SSH client public key to remote host...')
-        return self._check_copy_ssh_client_public_key()
 
     def get(self, *args, **kwargs):
         """Skip this view if host is already verified."""
@@ -503,16 +466,14 @@ class VerifySshHostkeyView(FormView):
             return super().get(*args, **kwargs)
 
         messages.success(self.request, _('SSH host already verified.'))
-        return self._check_next_step()
+        return self._save_repository_and_redirect()
 
     def form_valid(self, form):
         """Create and store the repository."""
         ssh_public_key = form.cleaned_data['ssh_public_key']
-        with handle_common_errors(self.request):
-            self._add_ssh_hostkey(ssh_public_key)
-            messages.success(self.request, _('SSH host verified.'))
-
-        return self._check_next_step()
+        self._add_ssh_hostkey(ssh_public_key)
+        messages.success(self.request, _('SSH host verified.'))
+        return self._save_repository_and_redirect()
 
 
 def _save_repository(request, repository):
@@ -521,29 +482,16 @@ def _save_repository(request, repository):
         repository.initialize()
         repository.verified = True
         repository.save()
-        return True
-    except subprocess.CalledProcessError as exception:
-        if exception.returncode in (6, 7):
-            message = _('SSH host public key could not be verified.')
-        elif exception.returncode == 5:
-            message = _('Authentication to remote server failed.')
-        else:
-            message = _('Error establishing connection to server: {}').format(
-                str(exception))
-    except Exception as exception:
-        message = str(exception)
-        logger.exception('Error adding repository: %s', exception)
+    except Exception:
+        # Remove the repository so that the user can have another go at
+        # creating it.
+        try:
+            repository.remove()
+            messages.error(request, _('Repository removed.'))
+        except KeyError:
+            pass
 
-    messages.error(request, message)
-    # Remove the repository so that the user can have another go at
-    # creating it.
-    try:
-        repository.remove()
-        messages.error(request, _('Repository removed.'))
-    except KeyError:
-        pass
-
-    return False
+        raise
 
 
 class RemoveRepositoryView(TemplateView):
@@ -587,25 +535,9 @@ def mount_repository(request, uuid):
         return redirect('backups:verify-ssh-hostkey', uuid=uuid)
 
     repository = SshBorgRepository.load(uuid)
-    if repository.ssh_password:
-        logger.info('Migrating from SSH password to key authentication...')
-        generate_ssh_client_auth_key()
-        result, message = copy_ssh_client_public_key(repository.hostname,
-                                                     repository.username,
-                                                     repository.ssh_password)
-        if result:
-            logger.info("Copied SSH client public key to remote host's "
-                        "authorized keys.")
-            _pubkey_path, key_path = get_ssh_client_auth_key_paths()
-            repository.replace_ssh_password_with_keyfile(str(key_path))
-        else:
-            logger.warning('Failed to copy SSH client public key: %s', message)
-            messages.error(
-                request,
-                _('Failed to copy SSH client public key: %s') % message)
-
     try:
-        repository.mount()
+        with handle_common_errors(request):
+            repository.mount()
     except Exception as err:
         msg = "%s: %s" % (_('Mounting failed'), str(err))
         messages.error(request, msg)

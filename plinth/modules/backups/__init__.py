@@ -1,12 +1,13 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """FreedomBox app to manage backup archives."""
 
+import contextlib
 import json
 import logging
 import os
-from pathlib import Path
 import re
 import subprocess
+from pathlib import Path
 
 from django.utils.text import get_valid_filename
 from django.utils.translation import gettext_lazy as _
@@ -16,7 +17,7 @@ from plinth import app as app_module
 from plinth import cfg, glib, menu
 from plinth.package import Packages
 
-from . import api, manifest, privileged
+from . import api, errors, manifest, privileged
 
 logger = logging.getLogger(__name__)
 
@@ -167,21 +168,38 @@ def get_ssh_client_public_key() -> str:
     return pubkey
 
 
-def copy_ssh_client_public_key(hostname: str, username: str,
-                               password: str) -> tuple[bool, str]:
+def copy_ssh_client_public_key(pubkey_path: str, hostname: str, username: str,
+                               password: str):
     """Copy the SSH client public key to the remote server.
 
     Returns whether the copy was successful, and any error message.
     """
     pubkey_path, _ = get_ssh_client_auth_key_paths()
     env = os.environ.copy()
-    env['SSHPASS'] = password
-    process = subprocess.run([
-        'sshpass', '-e', 'ssh-copy-id', '-i',
-        str(pubkey_path), f'{username}@{hostname}'
-    ], stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=False, env=env)
-    error_message = process.stderr.decode() if process.returncode else ''
-    return (process.returncode == 0, error_message)
+    env['SSHPASS'] = str(password)
+    with raise_ssh_error():
+        try:
+            subprocess.run([
+                'sshpass', '-e', 'ssh-copy-id', '-i',
+                str(pubkey_path), f'{username}@{hostname}'
+            ], stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True,
+                           env=env)
+            logger.info("Copied SSH client public key to remote host's "
+                        "authorized keys.")
+        except subprocess.CalledProcessError as exception:
+            logger.warning('Failed to copy SSH client public key: %s',
+                           exception.stderr)
+            raise
+
+
+@contextlib.contextmanager
+def raise_ssh_error() -> None:
+    """Convert subprocess error to SshError."""
+    try:
+        yield
+    except subprocess.CalledProcessError as exception:
+        raise errors.SshError(exception.returncode, exception.cmd,
+                              exception.output, exception.stderr)
 
 
 def is_ssh_hostkey_verified(hostname):

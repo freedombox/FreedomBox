@@ -131,8 +131,7 @@ def _reraise_known_errors(err):
 
 @reraise_known_errors
 @privileged
-def mount(mountpoint: str, remote_path: str, ssh_keyfile: str | None = None,
-          password: secret_str | None = None,
+def mount(mountpoint: str, remote_path: str, ssh_keyfile: str,
           user_known_hosts_file: str = '/dev/null'):
     """Mount a remote ssh path via sshfs."""
     try:
@@ -156,16 +155,9 @@ def mount(mountpoint: str, remote_path: str, ssh_keyfile: str | None = None,
         'sshfs', remote_path, mountpoint, '-o',
         f'UserKnownHostsFile={user_known_hosts_file}', '-o',
         'StrictHostKeyChecking=yes', '-o', 'reconnect', '-o',
-        'ServerAliveInterval=15', '-o', 'ServerAliveCountMax=3'
+        'ServerAliveInterval=15', '-o', 'ServerAliveCountMax=3', '-o',
+        'IdentityFile=' + ssh_keyfile
     ]
-    if ssh_keyfile:
-        cmd += ['-o', 'IdentityFile=' + ssh_keyfile]
-    else:
-        if not password:
-            raise ValueError('mount requires either a password or ssh_keyfile')
-        cmd += ['-o', 'password_stdin']
-        input_ = password.encode()
-
     action_utils.run(cmd, check=True, timeout=TIMEOUT, input=input_)
 
 
