@@ -15,6 +15,7 @@ from django.utils.translation import gettext_noop
 
 from plinth import app as app_module
 from plinth import cfg, glib, menu
+from plinth.modules.names.components import DomainName
 from plinth.package import Packages
 
 from . import api, errors, manifest, privileged
@@ -154,11 +155,14 @@ def generate_ssh_client_auth_key():
                     key_path)
         return
 
+    domain_name = DomainName.list_names()[0]
     logger.info('Generating SSH client key %s for FreedomBox service',
                 key_path)
-    subprocess.run(
-        ['ssh-keygen', '-t', 'ed25519', '-N', '', '-f',
-         str(key_path)], stdout=subprocess.DEVNULL, check=True)
+    subprocess.run([
+        'ssh-keygen', '-t', 'ed25519', '-N', '', '-C',
+        f'freedombox@{domain_name}', '-f',
+        str(key_path)
+    ], stdout=subprocess.DEVNULL, check=True)
 
 
 def get_ssh_client_public_key() -> str:
