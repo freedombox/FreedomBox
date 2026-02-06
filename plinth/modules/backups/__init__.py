@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """FreedomBox app to manage backup archives."""
 
+import collections.abc
 import contextlib
 import json
 import logging
@@ -180,14 +181,13 @@ def copy_ssh_client_public_key(pubkey_path: str, hostname: str, username: str,
 
     Returns whether the copy was successful, and any error message.
     """
-    pubkey_path, _ = get_ssh_client_auth_key_paths()
     env = os.environ.copy()
     env['SSHPASS'] = str(password)
     with raise_ssh_error():
         try:
             subprocess.run([
-                'sshpass', '-e', 'ssh-copy-id', '-i',
-                str(pubkey_path), f'{username}@{hostname}'
+                'sshpass', '-e', 'ssh-copy-id', '-i', pubkey_path,
+                f'{username}@{hostname}'
             ], stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True,
                            env=env)
             logger.info("Copied SSH client public key to remote host's "
@@ -199,7 +199,7 @@ def copy_ssh_client_public_key(pubkey_path: str, hostname: str, username: str,
 
 
 @contextlib.contextmanager
-def raise_ssh_error() -> None:
+def raise_ssh_error() -> collections.abc.Generator[None]:
     """Convert subprocess error to SshError."""
     try:
         yield
