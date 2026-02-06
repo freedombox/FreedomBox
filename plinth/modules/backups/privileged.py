@@ -49,7 +49,7 @@ KNOWN_ERRORS = [
         'raise_as': errors.BorgRepositoryDoesNotExistError,
     },
     {
-        'errors': ['passphrase supplied in .* is incorrect'],
+        'errors': ['[Pp]assphrase supplied in .* is incorrect'],
         'message': _('Incorrect encryption passphrase'),
         'raise_as': errors.BorgError,
     },
