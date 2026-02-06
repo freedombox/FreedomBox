@@ -102,6 +102,7 @@ class ShowClientView(SuccessMessageMixin, TemplateView):
         context['endpoints'] = [
             domain + ':' + str(server_info['listen_port'])
             for domain in domains
+            if not domain.endswith('.local')
         ]
         return context
 
