@@ -9,6 +9,44 @@
 {% block configuration %}
   <h3>{% trans "As a Server" %}</h3>
 
+  {% if server.public_key %}
+  <h4>{% trans "Server" %}</h4>
+
+  <p>
+    {% blocktrans trimmed %}
+      Information for this {{ box_name }}:
+    {% endblocktrans %}
+  </p>
+
+  <div class="table-responsive">
+    <table class="table" id="server-info-table">
+      <tr>
+        <th>{% trans "Property" %}</th>
+        <th>{% trans "Value" %}</th>
+      </tr>
+        <tr>
+          <td>{% trans "Public Key" %}</td>
+          <td>{{ server.public_key }}</td>
+        </tr>
+          <tr>
+            <td>{% trans "Endpoint(s)" %}</td>
+            <td>
+              {% for endpoint in server_endpoints %}{{ endpoint }}
+{% endfor %}</td>
+        </tr>
+        <tr>
+          <td>
+            {% blocktrans trimmed %}
+              {{ box_name }} VPN IP for services
+            {% endblocktrans %}
+          </td>
+          <td>{{ server.ip_address }}</td>
+        </tr>
+    </table>
+  </div>
+
+  <h4>{% trans "Peers" %}</h4>
+
   <p>{% trans "Peers allowed to connect to this server:" %}</p>
 
   <div class="table-responsive">
@@ -44,31 +82,17 @@
     </table>
   </div>
 
-  <p>
-    {% blocktrans trimmed %}
-      Public key for this {{ box_name }}:
-    {% endblocktrans %}
-  </p>
-  {% if server.public_key %}
-    <pre>{{ server.public_key }}</pre>
-  {% else %}
-    <p>{% trans "Not configured yet." %}</p>
-  {% endif %}
-
-  <p>
-    {% blocktrans trimmed %}
-      Endpoints for this {{ box_name }}:
-    {% endblocktrans %}
-  </p>
-  {% if server_endpoints %}
-    <pre>{% for endpoint in server_endpoints %}{{ endpoint }}
-{% endfor %}</pre>
-  {% else %}
-    <p>{% trans "Not configured yet." %}</p>
-  {% endif %}
-
   <div class="btn-toolbar">
-    {% if not server.public_key %}
+      <a title="{% trans 'Add a new peer' %}"
+         role="button" class="btn btn-default btn-add-client"
+         href="{% url 'wireguard:add-client' %}">
+        <span class="fa fa-plus" aria-hidden="true"></span>
+        {% trans "Add Allowed Client" %}
+      </a>
+  </div>
+  {% else %}
+    <div>
+      <p class="alert alert-info">{% trans "WireGuard server not started yet." %}</p>
       <form method="post" action="{% url 'wireguard:enable-server' %}">
         {% csrf_token %}
         <button type="submit" class="btn btn-primary btn-start-server"
@@ -77,15 +101,8 @@
           {% trans "Start WireGuard Server" %}
         </button>
       </form>
-    {% else %}
-      <a title="{% trans 'Add a new peer' %}"
-         role="button" class="btn btn-default btn-add-client"
-         href="{% url 'wireguard:add-client' %}">
-        <span class="fa fa-plus" aria-hidden="true"></span>
-        {% trans "Add Allowed Client" %}
-      </a>
+    </div>
     {% endif %}
-  </div>
 
 
   <h3>{% trans "As a Client" %}</h3>
