@@ -115,6 +115,6 @@ def _is_anonymous_read_allowed(browser) -> bool:
 
 def _shortcut_exists(browser) -> bool:
     """Check that the Kiwix shortcut exists on the front page."""
-    browser.visit(_default_url)
+    browser.visit(_default_url + '/freedombox/')
     links_found = browser.links.find_by_href('/kiwix')
     return len(links_found) == 1

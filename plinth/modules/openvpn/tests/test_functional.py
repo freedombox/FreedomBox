@@ -31,10 +31,12 @@ class TestOpenvpnApp(functional.BaseAppTests):
         if not functional.user_exists(session_browser, 'nonvpnuser'):
             functional.create_user(session_browser, 'nonvpnuser', groups=[])
 
-        functional.login_with_account(session_browser, base_url, 'vpnuser')
+        functional.login_with_account(session_browser,
+                                      base_url + '/freedombox/', 'vpnuser')
         _download_profile(session_browser)
 
-        functional.login_with_account(session_browser, base_url, 'nonvpnuser')
+        functional.login_with_account(session_browser,
+                                      base_url + '/freedombox/', 'nonvpnuser')
         _not_on_front_page(session_browser)
 
         functional.login(session_browser)

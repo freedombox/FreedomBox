@@ -368,7 +368,8 @@ def _create_admin_account(browser, username, password):
 
 def login(browser):
     """Login to the FreedomBox interface with default test account."""
-    login_with_account(browser, base_url, config['DEFAULT']['username'],
+    login_with_account(browser, base_url + '/freedombox/',
+                       config['DEFAULT']['username'],
                        config['DEFAULT']['password'])
 
 
@@ -560,7 +561,7 @@ def app_can_be_disabled(browser, app_name):
 # Front page utilities #
 ########################
 def find_on_front_page(browser, app_name):
-    browser.visit(base_url)
+    browser.visit(base_url + '/freedombox/')
     shortcuts = browser.links.find_by_href(f'/{app_name}/')
     return shortcuts
 
