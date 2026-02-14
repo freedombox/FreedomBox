@@ -35,8 +35,8 @@ def check_setup() -> bool:
 
 @privileged
 def set_super_user_password(password: secret_str):
-    """Set the superuser password with murmurd command."""
-    action_utils.run(['murmurd', '-readsupw'], input=password.encode(),
+    """Set the superuser password with mumble-server command."""
+    action_utils.run(['mumble-server', '-readsupw'], input=password.encode(),
                      check=False)
 
 

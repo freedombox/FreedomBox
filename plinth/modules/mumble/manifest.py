@@ -56,7 +56,7 @@ clients = [{
 
 backup = {
     'config': {
-        'files': ['/etc/mumble-server.ini']
+        'files': ['/etc/mumble/mumble-server.ini']
     },
     'data': {
         'directories': ['/var/lib/mumble-server']
