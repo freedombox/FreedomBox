@@ -18,6 +18,8 @@ import sys
 
 import django
 
+from datetime import datetime
+
 sys.path.insert(0, os.path.abspath('../../'))
 os.environ['DJANGO_SETTINGS_MODULE'] = 'plinth.settings'
 django.setup()
@@ -26,7 +28,7 @@ django.setup()
 
 # pylint: disable=invalid-name
 project = 'FreedomBox'
-copyright = '2021-2025, FreedomBox Authors'
+copyright = f'2021-{datetime.now().year}, FreedomBox Authors'
 author = 'FreedomBox Authors'
 
 # The short X.Y version
