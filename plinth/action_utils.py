@@ -371,12 +371,13 @@ def get_addresses() -> list[dict[str, str | bool]]:
         'url_address': hostname
     })
 
-    # XXX: When a hostname is resolved to IPv6 address, it may likely
-    # be link-local address.  Link local IPv6 addresses are valid only
-    # for a given link and need to be scoped with interface name such
-    # as '%eth0' to work.  Tools such as curl don't seem to handle
+    # When a hostname is resolved to IPv6 address, it may likely be link-local
+    # address. Link local IPv6 addresses are valid only for a given link and
+    # need to be scoped with interface name such as '%eth0' to work. Browsers
+    # refused to implement support for link-local addresses (with zone IDs) in
+    # URLs due to platform specific parsing rules and other implementation
+    # difficulties. mod_auth_openidc does not support them either.
     # this correctly.
-    # addresses.append({'kind': '6', 'address': hostname, 'numeric': False})
 
     return addresses
 
@@ -398,13 +399,15 @@ def get_ip_addresses() -> list[dict[str, str | bool]]:
         }
 
         if address['kind'] == '6' and address['numeric']:
-            if address['scope'] != 'link':
-                address['url_address'] = '[{0}]'.format(address['address'])
-            else:
-                address['url_address'] = '[{0}%{1}]'.format(
-                    address['url_address'], address['interface'])
+            address['url_address'] = '[{0}]'.format(address['address'])
 
-        addresses.append(address)
+        if address['scope'] != 'link':
+            # Do not include link local addresses. Browsers refused to
+            # implement support for link-local addresses (with zone IDs) in
+            # URLs due to platform specific parsing rules and other
+            # implementation difficulties. mod_auth_openidc does not support
+            # them either.
+            addresses.append(address)
 
     return addresses
 
