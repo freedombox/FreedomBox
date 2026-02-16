@@ -109,6 +109,7 @@ class AddServerForm(forms.Form):
 
     def get_settings(self):
         """Return NM settings dict from cleaned data."""
+        ip_address = self.cleaned_data['ip_address']
         settings = {
             'common': {
                 'type': 'wireguard',
@@ -116,8 +117,8 @@ class AddServerForm(forms.Form):
             },
             'ipv4': {
                 'method': 'manual',
-                'address': self.cleaned_data['ip_address'],
-                'netmask': '',
+                'address': ip_address,
+                'netmask': '255.255.255.0',
                 'gateway': '',
                 'dns': '',
                 'second_dns': '',
@@ -125,6 +126,7 @@ class AddServerForm(forms.Form):
             'wireguard': {
                 'peer_endpoint': self.cleaned_data['peer_endpoint'],
                 'peer_public_key': self.cleaned_data['peer_public_key'],
+                'ip_address': ip_address,
                 'private_key': self.cleaned_data['private_key'],
                 'preshared_key': self.cleaned_data['preshared_key'],
                 'default_route': self.cleaned_data['default_route'],

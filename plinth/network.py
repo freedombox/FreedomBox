@@ -507,8 +507,13 @@ def _update_wireguard_settings(connection, wireguard):
             peer.set_preshared_key_flags(nm.SettingSecretFlags.NONE)
             peer.set_preshared_key(wireguard['preshared_key'], False)
 
-        peer.append_allowed_ip('0.0.0.0/0', False)
-        peer.append_allowed_ip('::/0', False)
+        if wireguard['default_route']:
+            peer.append_allowed_ip('0.0.0.0/0', False)
+            peer.append_allowed_ip('::/0', False)
+        else:
+            ip_addr = wireguard['ip_address']
+            peer.append_allowed_ip(f'{ip_addr}/24', False)
+
         settings.clear_peers()
         settings.append_peer(peer)
 
