@@ -160,21 +160,19 @@ def copy_certificate(managing_app: str, source_private_key: str,
     certificate_path.parent.mkdir(mode=0o755, parents=True, exist_ok=True)
 
     # Private key is only accessible to the user owner
-    old_mask = os.umask(0o177)
-    shutil.copyfile(source_private_key_path, private_key_path)
+    with action_utils.umask(0o177):
+        shutil.copyfile(source_private_key_path, private_key_path)
 
-    if certificate_path != private_key_path:
-        # Certificate is only writable by the user owner
-        os.umask(0o133)
-        shutil.copyfile(source_certificate_path, certificate_path)
-    else:
-        # If private key and certificate are the same file, append one after
-        # the other.
-        source_certificate_bytes = source_certificate_path.read_bytes()
-        with private_key_path.open(mode='a+b') as file_handle:
-            file_handle.write(source_certificate_bytes)
-
-    os.umask(old_mask)
+        if certificate_path != private_key_path:
+            # Certificate is only writable by the user owner
+            with action_utils.umask(0o133):
+                shutil.copyfile(source_certificate_path, certificate_path)
+        else:
+            # If private key and certificate are the same file, append one
+            # after the other.
+            source_certificate_bytes = source_certificate_path.read_bytes()
+            with private_key_path.open(mode='a+b') as file_handle:
+                file_handle.write(source_certificate_bytes)
 
     shutil.chown(certificate_path, user=user_owner, group=group_owner)
     shutil.chown(private_key_path, user=user_owner, group=group_owner)
