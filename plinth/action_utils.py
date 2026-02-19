@@ -838,3 +838,13 @@ def run(command, **kwargs):
         raise exception
 
     return process
+
+
+@contextmanager
+def umask(mask) -> None:
+    """Set the umask temporarily for a operation and then revert it."""
+    old_umask = os.umask(mask)
+    try:
+        yield
+    finally:
+        os.umask(old_umask)

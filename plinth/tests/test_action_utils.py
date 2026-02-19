@@ -4,6 +4,7 @@ Test module for key/value store.
 """
 
 import json
+import os
 import pathlib
 import subprocess
 from unittest.mock import Mock, call, patch
@@ -17,7 +18,7 @@ from plinth.action_utils import (get_addresses, get_hostname,
                                  service_is_running, service_reload,
                                  service_restart, service_start, service_stop,
                                  service_try_reload_or_restart,
-                                 service_try_restart, service_unmask)
+                                 service_try_restart, service_unmask, umask)
 
 UNKNOWN = 'unknowndeamon'
 
@@ -298,3 +299,29 @@ def test_run_no_storage(subprocess_run):
     subprocess_run.return_value.stderr = 'test-stderr'
 
     run(['command', 'arg1', '--foo'], check=True)
+
+
+def test_umask(tmp_path):
+    """Test that setting umask works."""
+
+    def _asssert_umask(mask):
+        """Assert the current umask."""
+        old_umask = os.umask(0)
+        assert old_umask == mask
+        os.umask(old_umask)
+
+    original_umask = os.umask(0o1)
+    with umask(0o033):
+        _asssert_umask(0o033)
+        file1 = tmp_path / 'file1'
+        file1.touch()
+        assert file1.stat().st_mode & 0o033 == 0
+        with umask(0o077):
+            _asssert_umask(0o77)
+            file2 = tmp_path / 'file2'
+            file2.touch()
+            assert file2.stat().st_mode & 0o077 == 0
+
+        _asssert_umask(0o033)
+
+    os.umask(original_umask)
