@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-03 01:14+0000\n"
-"PO-Revision-Date: 2026-02-18 15:09+0000\n"
-"Last-Translator: Βασίλης Χατζηκαμάρης <vasilischat@gmail.com>\n"
+"PO-Revision-Date: 2026-02-22 13:17+0000\n"
+"Last-Translator: James Valleroy <jvalleroy@mailbox.org>\n"
 "Language-Team: Greek <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/el/>\n"
 "Language: el\n"
@@ -26,9 +26,8 @@ msgstr ""
 
 #: plinth/container.py:140
 #, fuzzy, python-brace-format
-#| msgid "Service {service_name} is running"
 msgid "Container {container_name} is running"
-msgstr "Το πρόγραμμα {service_name} είναι ενεργοποιημένο"
+msgstr "Το πρόγραμμα {container_name} είναι ενεργοποιημένο"
 
 #: plinth/context_processors.py:21 plinth/views.py:175
 msgid "FreedomBox"
@@ -260,7 +259,7 @@ msgstr ""
 #, fuzzy, python-brace-format
 #| msgid "About {box_name}"
 msgid "Go to {app_name}"
-msgstr "Σχετικά με το {box_name}"
+msgstr "Σχετικά με το {app_name}"
 
 #: plinth/modules/backups/__init__.py:218
 #, python-brace-format
@@ -1341,7 +1340,7 @@ msgstr ""
 #, fuzzy, python-format
 #| msgid "Delete site %(site)s"
 msgid "Delete library %(library)s"
-msgstr "Διαγραφή ιστότοπου %(site)s"
+msgstr "Διαγράψτε βιβλιοθήκη %(library)s"
 
 #: plinth/modules/calibre/views.py:39
 #, fuzzy
@@ -1488,7 +1487,7 @@ msgid "Webserver Home Page"
 msgstr "Αρχική σελίδα του διακομιστή διαδικτύου"
 
 #: plinth/modules/config/forms.py:37
-#, python-brace-format
+#, fuzzy, python-brace-format
 msgid ""
 "Choose the default page that must be served when someone visits your "
 "{box_name} on the web. A typical use case is to set your blog or wiki as the "
@@ -1500,7 +1499,7 @@ msgstr ""
 "{box_name} στο διαδίκτυο. Μια συνήθης χρήση είναι να ορίσετε το blog ή το "
 "wiki σας. Να σημειωθεί ότι αφού καθορίσετε την αρχική σελίδα σε κάτι "
 "διαφορετικό από την υπηρεσία {box_name} (Plinth), οι χρήστεσ πρέπει να "
-"γράψουν /plinth ή /freedombox για να αποκτήσουν πρόσβαση σε αυτή."
+"γράψουν /plinth ή /freedombox για να αποκτήσουν πρόσβαση σε αυτή {box_name}."
 
 #: plinth/modules/config/forms.py:48
 msgid "Show advanced apps and features"
@@ -2261,7 +2260,7 @@ msgstr "Η εγκατάσταση απέτυχε."
 #, fuzzy, python-format
 #| msgid "Delete connection %(name)s"
 msgid "Delete domain %(domain)s"
-msgstr "Διαγραφή της σύνδεσης %(name)s"
+msgstr "Διαγράψτε domain %(domain)s"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:91
 #, fuzzy
@@ -2482,20 +2481,16 @@ msgid "Status"
 msgstr "Κατάσταση"
 
 #: plinth/modules/ejabberd/templates/ejabberd.html:23
-#, fuzzy, python-format
-#| msgid ""
-#| "Your XMPP server domain is set to <b>%(domainname)s</b>. User IDs will "
-#| "look like <i>username@%(domainname)s</i>. You can setup your domain on "
-#| "the system <a href=\"%(index_url)s\">Configure</a> page."
+#, python-format
 msgid ""
 "Your XMPP server domain is set to <b>%(domain_name)s</b>. User IDs will look "
 "like <i>username@%(domain_name)s</i>. You can setup your domain on the "
 "system <a href=\"%(names_url)s\">Name Services</a> page."
 msgstr ""
-"To όνομα διαδικτύου για το διακομιστή XMPP έχει ρυθμιστεί ως το "
-"<b>%(domainname)s</b>. Ταυτότητες χρηστών θα είναι όπως: "
-"<i>username@%(domainname)s</i>. Μπορείτε να ρυθμίσετε το όνομα της υπηρεσίας "
-"στο <a href=\"%(index_url)s\">Ρυθμίστε</a> page."
+"To όνομα διαδικτύου για το διακομιστή XMPP έχει ρυθμιστεί ως το <b>%"
+"(domain_name)s</b>. Ταυτότητες χρηστών θα είναι όπως: <i>username@%"
+"(domain_name)s</i>. Μπορείτε να ρυθμίσετε το όνομα της υπηρεσίας στο <a "
+"href=\"%(names_url)s\">Ρυθμίστε</a> page."
 
 #: plinth/modules/ejabberd/templates/ejabberd.html:30
 #, fuzzy, python-format
@@ -2507,10 +2502,8 @@ msgid ""
 "Your XMPP server domain is not set. You can setup your domain on the system "
 "<a href=\"%(names_url)s\">Name Services</a> page."
 msgstr ""
-"To όνομα διαδικτύου για το διακομιστή XMPP έχει ρυθμιστεί ως το "
-"<b>%(domainname)s</b>. Ταυτότητες χρηστών θα είναι όπως: "
-"<i>username@%(domainname)s</i>. Μπορείτε να ρυθμίσετε το όνομα της υπηρεσίας "
-"στο <a href=\"%(index_url)s\">Ρυθμίστε</a> page."
+"Το domain XMPP server σας δεν έχει οριστεί. Μπορείτε να ρυθμίσετε τον τομέα "
+"σας στο σύστημα <a href=\"%(names_url)s\">Name Services</a> σελίδα."
 
 #: plinth/modules/email/__init__.py:26
 msgid ""
@@ -2898,7 +2891,7 @@ msgstr "Δεν υπάρχουν διαθέσιμα αποθετήρια."
 #, fuzzy, python-format
 #| msgid "Go to site %(site)s"
 msgid "Go to wiki %(wiki)s"
-msgstr "Μεταβείτε στην τοποθεσία %(site)s"
+msgstr "Μεταβείτε στην τοποθεσία %(wiki)s"
 
 #: plinth/modules/featherwiki/templates/featherwiki_configure.html:43
 #: plinth/modules/tiddlywiki/templates/tiddlywiki_configure.html:43
@@ -2911,7 +2904,7 @@ msgstr ""
 #, fuzzy, python-format
 #| msgid "Delete site %(site)s"
 msgid "Delete wiki %(wiki)s"
-msgstr "Διαγραφή ιστότοπου %(site)s"
+msgstr "Διαγραφή ιστότοπου %(wiki)s"
 
 #: plinth/modules/featherwiki/templates/featherwiki_delete.html:12
 #: plinth/modules/tiddlywiki/templates/tiddlywiki_delete.html:12
@@ -2995,10 +2988,9 @@ msgstr "Απέτυχε η προσθήκη χρήστη στην ομάδα."
 
 #: plinth/modules/featherwiki/views.py:138
 #: plinth/modules/tiddlywiki/views.py:139
-#, fuzzy, python-brace-format
-#| msgid "Could not delete {name}: {error}"
+#, python-brace-format
 msgid "Could not delete {name}"
-msgstr "Δεν ήταν δυνατή η διαγραφή του {name}: {error}"
+msgstr "Δεν ήταν δυνατή η διαγραφή του {name}"
 
 #: plinth/modules/firewall/__init__.py:25
 #, python-brace-format
@@ -3497,12 +3489,13 @@ msgstr ""
 "%(box_name)s."
 
 #: plinth/modules/help/templates/help_about.html:35
-#, fuzzy, python-format
-#| msgid "There is a new %(box_name)s version available."
+#, python-format
 msgid ""
 "There is a new %(box_name)s version <a href=\"%(upgrades_url)s\">available</"
 "a>."
-msgstr "Υπάρχει μια νέα έκδοση %(box_name)s διαθέσιμη."
+msgstr ""
+"Υπάρχει μια νέα έκδοση %(box_name)s <a href=\"%(upgrades_url)s\">διαθέσιμη</"
+"a>."
 
 #: plinth/modules/help/templates/help_about.html:40
 #: plinth/modules/upgrades/templates/upgrades_configure.html:42
@@ -4271,7 +4264,7 @@ msgstr "Δεν υπάρχουν διαθέσιμα αποθετήρια."
 #, fuzzy, python-format
 #| msgid "Delete site %(site)s"
 msgid "Delete package %(title)s"
-msgstr "Διαγραφή ιστότοπου %(site)s"
+msgstr "Διαγραφή ιστότοπου %(title)s"
 
 #: plinth/modules/kiwix/views.py:49
 msgid "Content package added."
@@ -4391,15 +4384,12 @@ msgid "Obtain"
 msgstr "Αποκτήσετε"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:112
-#, fuzzy, python-format
-#| msgid ""
-#| "No domains have been configured. <a href=\"%(config_url)s\">Configure "
-#| "domains</a> to be able to obtain certificates for them."
+#, python-format
 msgid ""
 "No domains have been configured. <a href=\"%(names_url)s\">Configure "
 "domains</a> to be able to obtain certificates for them."
 msgstr ""
-"Δεν έχουν ρυθμιστεί ονόματα διαδικτύου <a href=\"%(config_url)s\">Ρυθμίσετε "
+"Δεν έχουν ρυθμιστεί ονόματα διαδικτύου <a href=\"%(names_url)s\">Ρυθμίσετε "
 "όνομα διαδικτύου</a> για να μπορείτε να αποκτήσετε πιστοποιητικά για αυτό."
 
 #: plinth/modules/letsencrypt/views.py:40
@@ -4412,10 +4402,9 @@ msgstr ""
 "να διαρκέσει λίγα λεπτά για να τεθεί σε ισχύ."
 
 #: plinth/modules/letsencrypt/views.py:46
-#, fuzzy, python-brace-format
-#| msgid "Failed to revoke certificate for domain {domain}: {error}"
+#, python-brace-format
 msgid "Failed to revoke certificate for domain {domain}"
-msgstr "Απέτυχε η ανάκληση του πιστοποιητικού για το όνομα {domain}: {error}"
+msgstr "Απέτυχε η ανάκληση του πιστοποιητικού για το όνομα {domain}"
 
 #: plinth/modules/letsencrypt/views.py:59
 #: plinth/modules/letsencrypt/views.py:77
@@ -4425,10 +4414,9 @@ msgstr "Το πιστοποιητικό αποκτήθηκε με επιτυχί
 
 #: plinth/modules/letsencrypt/views.py:64
 #: plinth/modules/letsencrypt/views.py:82
-#, fuzzy, python-brace-format
-#| msgid "Failed to obtain certificate for domain {domain}: {error}"
+#, python-brace-format
 msgid "Failed to obtain certificate for domain {domain}"
-msgstr "Αποτυχία λήψης πιστοποιητικού για το όνομα {domain} {error}"
+msgstr "Αποτυχία λήψης πιστοποιητικού για το όνομα {domain}"
 
 #: plinth/modules/letsencrypt/views.py:95
 #, python-brace-format
@@ -4436,10 +4424,9 @@ msgid "Certificate successfully deleted for domain {domain}"
 msgstr "Το πιστοποιητικό διαγράφηκε επιτυχώς για το όνομα {domain}"
 
 #: plinth/modules/letsencrypt/views.py:100
-#, fuzzy, python-brace-format
-#| msgid "Failed to delete certificate for domain {domain}: {error}"
+#, python-brace-format
 msgid "Failed to delete certificate for domain {domain}"
-msgstr "Αποτυχία διαγραφής πιστοποιητικού για το όνομα {domain}: {error}"
+msgstr "Αποτυχία διαγραφής πιστοποιητικού για το όνομα {domain}"
 
 #: plinth/modules/matrixsynapse/__init__.py:26
 msgid ""
@@ -5131,10 +5118,9 @@ msgid "Created admin user: {username}"
 msgstr "Μη έγκυρο όνομα χρήστη: {username}"
 
 #: plinth/modules/miniflux/views.py:53
-#, fuzzy, python-brace-format
-#| msgid "An error occurred while creating the repository."
+#, python-brace-format
 msgid "An error occurred while creating the user: {error}."
-msgstr "Παρουσιάστηκε σφάλμα κατά τη δημιουργία του αποθετηρίου."
+msgstr "Παρουσιάστηκε σφάλμα κατά τη δημιουργία του αποθετηρίου: {error}."
 
 #: plinth/modules/miniflux/views.py:70
 #, fuzzy
@@ -5152,7 +5138,7 @@ msgstr "Μη έγκυρο όνομα χρήστη: {username}"
 #, fuzzy, python-brace-format
 #| msgid "An error occurred during configuration."
 msgid "An error occurred during password reset: {error}."
-msgstr "Παρουσιάστηκε σφάλμα κατά τη ρύθμιση παραμέτρων."
+msgstr "Παρουσιάστηκε σφάλμα κατά τη ρύθμιση παραμέτρων: {error}."
 
 #: plinth/modules/mumble/__init__.py:26
 msgid ""
@@ -5768,7 +5754,7 @@ msgstr "Ανοιχτό"
 #, fuzzy, python-brace-format
 #| msgid "Use upstream bridges to connect to Tor network"
 msgid "Specify how your {box_name} is connected to your network"
-msgstr "Χρησιμοποιήστε εξωτερικές γέφυρες για να συνδεθείτε στο δίκτυο Tor"
+msgstr "Καθορίστε πώς {box_name} είναι συνδεδεμένο με το δίκτυό σας"
 
 #: plinth/modules/networks/forms.py:382
 #, python-brace-format
@@ -6250,7 +6236,7 @@ msgstr "Υποβολή"
 #, fuzzy, python-format
 #| msgid "Direct connection to the Internet."
 msgid "How is Your %(box_name)s Connected to the Internet?"
-msgstr "Άμεση σύνδεση στο Internet."
+msgstr "Πώς είναι το %(box_name)s Συνδέεται με το Διαδίκτυο?"
 
 #: plinth/modules/networks/templates/network_topology_content.html:16
 #, python-format
@@ -6358,7 +6344,7 @@ msgstr ""
 #, fuzzy, python-format
 #| msgid "Delete %(username)s"
 msgid "Device: %(interface_name)s"
-msgstr "Διαγραφή %(username)s"
+msgstr "Συσκευή: %(interface_name)s"
 
 #: plinth/modules/networks/templates/wifi_scan.html:27
 #, fuzzy
@@ -7570,13 +7556,13 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/rssbridge/__init__.py:24
-#, python-brace-format
+#, fuzzy, python-brace-format
 msgid ""
 "When enabled, RSS-Bridge can be accessed by <a href=\"{users_url}\">any "
 "user</a> belonging to the feed-reader group."
 msgstr ""
 "Όταν είναι ενεργοποιημένο, το Tiny RSS είναι προσβάσιμο από κάθε <a href=\""
-"{users_url}\">χρήστη με {box_name} πιστοποιητικά</a>."
+"{users_url}\">χρήστη με πιστοποιητικά</a>."
 
 #: plinth/modules/rssbridge/__init__.py:28
 #, python-brace-format
@@ -9661,7 +9647,7 @@ msgstr ""
 #, fuzzy, python-format
 #| msgid "Delete site %(site)s"
 msgid "Released: %(date)s."
-msgstr "Διαγραφή ιστότοπου %(site)s"
+msgstr "Εκδόθηκε %(date)s"
 
 #: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:91
 #, fuzzy
@@ -9953,16 +9939,14 @@ msgid "Invalid password."
 msgstr "Εμφάνιση κωδικού"
 
 #: plinth/modules/users/forms.py:213 plinth/modules/users/forms.py:439
-#, fuzzy, python-brace-format
-#| msgid "Creating LDAP user failed."
+#, python-brace-format
 msgid "Creating LDAP user failed: {error}"
-msgstr "Η δημιουργία χρήστη LDAP απέτυχε."
+msgstr "Η δημιουργία χρήστη LDAP απέτυχε: {error}."
 
 #: plinth/modules/users/forms.py:225
-#, fuzzy, python-brace-format
-#| msgid "Failed to add new user to {group} group."
+#, python-brace-format
 msgid "Failed to add new user to {group} group: {error}"
-msgstr "Απέτυχε η προσθήκη νέου χρήστη στην ομάδα {group}."
+msgstr "Απέτυχε η προσθήκη νέου χρήστη στην ομάδα {group}: {error}."
 
 #: plinth/modules/users/forms.py:241
 msgid "Authorized SSH Keys"
@@ -10022,10 +10006,9 @@ msgid "Changing LDAP user password failed."
 msgstr "Η αλλαγή του κωδικού πρόσβασης χρήστη LDAP απέτυχε."
 
 #: plinth/modules/users/forms.py:447
-#, fuzzy, python-brace-format
-#| msgid "Failed to add new user to admin group."
+#, python-brace-format
 msgid "Failed to add new user to admin group: {error}"
-msgstr "Αποτυχία προσθήκης νέου χρήστη στην ομάδα διαχειριστών."
+msgstr "Αποτυχία προσθήκης νέου χρήστη στην ομάδα διαχειριστών: {error}."
 
 #: plinth/modules/users/forms.py:470
 msgid "User account created, you are now logged in"
@@ -10702,10 +10685,9 @@ msgid "Generic"
 msgstr "Γενικός"
 
 #: plinth/operation.py:120
-#, fuzzy, python-brace-format
-#| msgid "Error setting hostname: {exception}"
+#, python-brace-format
 msgid "Error: {name}: {exception}"
-msgstr "Σφάλμα κατά τη ρύθμιση του ονόματος του υπολογιστή: {exception}"
+msgstr "Σφάλμα κατά τη ρύθμιση του ονόματος του υπολογιστή {name}: {exception}"
 
 #: plinth/operation.py:123
 #, python-brace-format
@@ -10761,22 +10743,21 @@ msgid "Updating app"
 msgstr "Eνημερώνεται..."
 
 #: plinth/setup.py:80
-#, fuzzy, python-brace-format
-#| msgid "Error installing application: {error}"
+#, python-brace-format
 msgid "Error installing app: {exception}"
-msgstr "Σφάλμα κατά την εγκατάσταση της εφαρμογής: {error}"
+msgstr "Σφάλμα κατά την εγκατάσταση της εφαρμογής: {exception}"
 
 #: plinth/setup.py:82
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
 msgid "Error repairing app: {exception}"
-msgstr "Σφάλμα κατά την εγκατάσταση της εφαρμογής: {error}"
+msgstr "Σφάλμα κατά την εγκατάσταση της εφαρμογής: {exception}"
 
 #: plinth/setup.py:84
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
 msgid "Error updating app: {exception}"
-msgstr "Σφάλμα κατά την εγκατάσταση της εφαρμογής: {error}"
+msgstr "Σφάλμα κατά την εγκατάσταση της εφαρμογής: {exception}"
 
 #: plinth/setup.py:87
 #, fuzzy
@@ -10907,11 +10888,10 @@ msgid ""
 "the <a href=\"%(logs_url)s\">logs</a> to the bug report."
 msgstr ""
 "Αυτό είναι ένα εσωτερικό σφάλμα και όχι κάτι που προκαλέσατε ή μπορείτε να "
-"διορθώσετε. Αναφέρετε το σφάλμα στο <a href = \"https://salsa.debian.org/"
-"freedombox-team/plinth/issues\">κατάλογος σφαλμάτων </a> ώστε να μπορούμε να "
-"το διορθώσουμε. Επίσης, Παρακαλούμε επισυνάψτε το <a href = "
-"\"%(status_log_url)s\">αρχείο καταγραφής κατάστασης </a> στην αναφορά "
-"σφάλματος."
+"διορθώσετε. Αναφέρετε το σφάλμα στο <a href=\"https://salsa.debian.org/"
+"freedombox-team/freedombox/issues\">κατάλογος σφαλμάτων </a> ώστε να "
+"μπορούμε να το διορθώσουμε. Επίσης, Παρακαλούμε επισυνάψτε το <a href=\"%"
+"(logs_url)s\">αρχείο καταγραφής κατάστασης </a> στην αναφορά σφάλματος."
 
 #: plinth/templates/app-header.html:26
 msgid "Installation"
@@ -11071,8 +11051,8 @@ msgid ""
 "<em>%(service_name)s</em> is available only on internal networks or when the "
 "client is connected to %(box_name)s through VPN."
 msgstr ""
-"Η υπηρεσία <em>%(service_name)s</em> είναι διαθέσιμη μόνο σε εσωτερικά "
-"δίκτυα."
+"Το <em>%(service_name)s</em> είναι διαθέσιμο μόνο σε εσωτερικά δίκτυα ή όταν "
+"ο πελάτης συνδέεται με το %(box_name)s μέσω VPN."
 
 #: plinth/templates/internal-zone.html:25
 msgid "Currently there are no network interfaces configured as internal."
@@ -11135,9 +11115,9 @@ msgid ""
 "are not using the DMZ feature. You will need to set up port forwarding on "
 "your router. You should forward the following ports for %(service_name)s:"
 msgstr ""
-"Αν το FreedomBox είναι πίσω από ένα router, θα πρέπει να ρυθμίσετε την "
-"προώθηση των θυρών στο δρομολογητή σας. Θα πρέπει να προωθήσετε τις "
-"ακόλουθες θύρες για %(service_name)s:"
+"Αν το FreedomBox είναι <a href=\"%(networks_url)s\">πίσω από ένα router</a>, "
+"θα πρέπει να ρυθμίσετε την προώθηση των θυρών στο δρομολογητή σας. Θα πρέπει "
+"να προωθήσετε τις ακόλουθες θύρες για %(service_name)s:"
 
 #: plinth/templates/port-forwarding-info.html:42
 #, fuzzy
@@ -11260,7 +11240,7 @@ msgstr "Εγκατάσταση"
 #, fuzzy, python-format
 #| msgid "Edit user %(username)s"
 msgid "Uninstall App <em>%(app_name)s</em>?"
-msgstr "Επεξεργασία χρήστη %(username)s"
+msgstr "Εφαρμογή <em>%(app_name)s</em>?"
 
 #: plinth/templates/uninstall.html:17
 msgid ""
