@@ -19,6 +19,7 @@ Install the following Debian packages:
 
 * python3-sphinx
 * python3-sphinx-autobuild
+* python3-sphinx-book-theme
 * python3-django
 * python3-django-axes
 * python3-django-captcha

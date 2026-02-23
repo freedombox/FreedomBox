@@ -15,10 +15,9 @@ list see the documentation: http://www.sphinx-doc.org/en/master/config
 #
 import os
 import sys
+from datetime import datetime
 
 import django
-
-from datetime import datetime
 
 sys.path.insert(0, os.path.abspath('../../'))
 os.environ['DJANGO_SETTINGS_MODULE'] = 'plinth.settings'
@@ -28,7 +27,7 @@ django.setup()
 
 # pylint: disable=invalid-name
 project = 'FreedomBox'
-copyright = f'2021-{datetime.now().year}, FreedomBox Authors'
+copyright = f'2021-{datetime.now().year}'
 author = 'FreedomBox Authors'
 
 # The short X.Y version
@@ -84,15 +83,23 @@ pygments_style = None
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'alabaster'
+html_theme = 'sphinx_book_theme'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
 html_theme_options = {
-    'fixed_sidebar': True,
-    'show_related': True,
+    'home_page_in_toc': True,
+    'repository_provider': 'gitlab',
+    'repository_url': 'https://salsa.debian.org/freedombox-team/freedombox/',
+    'use_edit_page_button': True,
+    'use_source_button': True,
+    'use_repository_button': True,
+    'use_issues_button': True,
+    'path_to_docs': 'doc/dev/',
+    'extra_footer': 'Licensed under the <a href="https://creativecommons.org/'
+                    'licenses/by-sa/4.0/">CC BY-SA 4.0</a> license.',
 }
 
 # Add any paths that contain custom static files (such as style sheets) here,
@@ -223,3 +230,4 @@ autodoc_mock_imports = [
 ]
 
 html_favicon = './_static/favicon.ico'
+html_logo = './_static/logo.svg'
