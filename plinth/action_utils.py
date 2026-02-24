@@ -10,6 +10,7 @@ import shutil
 import subprocess
 import tempfile
 from contextlib import contextmanager
+from typing import Generator
 
 import augeas
 
@@ -841,7 +842,7 @@ def run(command, **kwargs):
 
 
 @contextmanager
-def umask(mask) -> None:
+def umask(mask) -> Generator:
     """Set the umask temporarily for a operation and then revert it."""
     old_umask = os.umask(mask)
     try:
