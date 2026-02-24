@@ -292,11 +292,26 @@ document.addEventListener('click', function (event) {
  * element is not found in the response. However, in htmx:afterSwap event we can
  * see that the target has no children and choose to refresh the whole page.
  */
-document.addEventListener('htmx:afterSwap', function (event) {
+document.body.addEventListener('htmx:afterSwap', function (event) {
     const target = event.detail.target;
     if (target && target.children.length === 0) {
         window.location.reload();
     }
+});
+
+/*
+ * If an error occurs during a HTMX request, then reload the page. It won't be a
+ * silent failure for the user and will imitate the behavior that was present
+ * before HTMX was introduced. For functional tests, this means that a clear
+ * browser is shown. Tests can decide to reload the page until the error is
+ * resolved.
+ */
+document.body.addEventListener('htmx:responseError', function (event) {
+    window.location.reload();
+});
+
+document.body.addEventListener("htmx:sendError", function(event) {
+    window.location.reload();
 });
 
 /*
