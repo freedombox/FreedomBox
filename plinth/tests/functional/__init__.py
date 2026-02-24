@@ -208,6 +208,12 @@ def wait_for_page_update(browser, timeout=300, expected_url=None):
     WebDriverWait(browser, timeout).until(_PageLoaded(page_body, expected_url))
 
 
+def page_reload(browser):
+    """Reload the page."""
+    with wait_for_page_update(browser):
+        browser.visit(browser.url)
+
+
 def _get_site_url(site_name):
     if site_name.startswith('share'):
         site_name = site_name.replace('_', '/')
@@ -457,10 +463,10 @@ def install(browser, app_name):
         script = 'return (document.readyState == "complete") && ' \
             '(!Boolean(document.querySelector(".app-operation"))) &&' \
             '(!Boolean(document.querySelector(".app-just-installed")));'
-        if not browser.execute_script(script):
+        if browser.is_element_present_by_css('.neterror'):
+            page_reload(browser)
+        elif not browser.execute_script(script):
             time.sleep(0.1)
-        elif browser.is_element_present_by_css('.neterror'):
-            browser.visit(browser.url)
         elif browser.is_element_present_by_css('.alert-danger'):
             break
         elif (browser.is_element_present_by_css('.app-checking-availability')
@@ -500,10 +506,10 @@ def uninstall(browser, app_name):
     while True:
         script = 'return (document.readyState == "complete") && ' \
             '(!Boolean(document.querySelector(".app-operation")));'
-        if not browser.execute_script(script):
+        if browser.is_element_present_by_css('.neterror'):
+            page_reload(browser)
+        elif not browser.execute_script(script):
             time.sleep(0.1)
-        elif browser.is_element_present_by_css('.neterror'):
-            browser.visit(browser.url)
         elif browser.is_element_present_by_css('.alert-danger'):
             raise RuntimeError('Uninstall failed')
         else:
