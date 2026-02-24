@@ -106,6 +106,7 @@ install:
         $(INSTALL) -D -t $(BIN_DIR) bin/plinth
 	$(INSTALL) -D -t $(LIB_DIR)/freedombox bin/freedombox-privileged
 	$(INSTALL) -D -t $(BIN_DIR) bin/freedombox-cmd
+	$(INSTALL) -D -t $(BIN_DIR) bin/freedombox-change-password
 
 	# Static web server files
 	rm -rf $(STATIC_FILES_DIRECTORY)
