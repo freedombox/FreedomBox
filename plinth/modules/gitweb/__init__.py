@@ -145,6 +145,17 @@ class GitwebWebserverAuth(Webserver):
         if not have_public_repos(repos):
             super().enable()
 
+    def set_enabled(self, enabled):
+        """Update the internal enabled state of the component.
+
+        Actually do nothing. This method is called when is_leader = False to
+        notify the enabled/disabled state of the app. Enabled/disabled state of
+        this component is actually decided by the webserver configuration. It
+        is expected that is_enabled is not called on this component to
+        determine if app is enabled or not.
+        """
+        pass
+
 
 class GitwebBackupRestore(BackupRestore):
     """Component to handle backup/restore for Gitweb."""
