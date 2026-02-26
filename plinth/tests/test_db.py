@@ -6,6 +6,7 @@ import threading
 import time
 
 from .. import db
+from ..db import dbconfig
 
 
 def test_db_lock_no_wait():
@@ -66,3 +67,22 @@ def test_db_lock_release():
     end_time = time.time()
     assert return_value
     assert end_time - start_time <= 0.23
+
+
+def test_dbconfig_get_credentials(tmp_path):
+    """Test that parsing a dbconfig-common file works."""
+    file_path = tmp_path / 'test.conf'
+    configuration = '''
+dbc_dbserver='localhost'
+dbc_dbname='miniflux'
+dbc_dbuser='miniflux'
+dbc_dbpass='gCcNyWjyPjDH'
+'''
+    file_path.write_text(configuration)
+    credentials = dbconfig.get_credentials(file_path)
+    assert credentials == {
+        'host': 'localhost',
+        'database': 'miniflux',
+        'user': 'miniflux',
+        'password': 'gCcNyWjyPjDH',
+    }
