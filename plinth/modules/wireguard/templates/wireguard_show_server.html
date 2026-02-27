@@ -40,6 +40,17 @@
               <th>{% trans "IP address of this machine:" %}</th>
               <td>{{ server.ip_address }}</td>
             </tr>
+            <tr class="server-default-route">
+              <th>
+                {% trans "All outgoing traffic is sent using this connection:" %}
+              </th>
+              <td>{% if server.default_route %}
+                    {% trans "Yes" %}
+                  {% else %}
+                    {% trans "No" %}
+                  {% endif %}
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
