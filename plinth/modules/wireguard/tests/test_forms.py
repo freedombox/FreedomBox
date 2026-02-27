@@ -6,7 +6,9 @@ Tests for wireguard module forms.
 import pytest
 from django.core.exceptions import ValidationError
 
-from plinth.modules.wireguard.forms import validate_endpoint, validate_key
+from plinth.modules.wireguard.forms import (validate_endpoint,
+                                            validate_ipv4_address_with_network,
+                                            validate_key)
 
 
 @pytest.mark.parametrize('key', [
@@ -62,3 +64,31 @@ def test_validate_endpoint_invalid_patterns(endpoint):
     """Test that invalid wireguard endpoint patterns are rejected."""
     with pytest.raises(ValidationError):
         validate_endpoint(endpoint)
+
+
+@pytest.mark.parametrize('value', [
+    '1.2.3.4',
+    '1.2.3.4/0',
+    '1.2.3.4/32',
+    '1.2.3.4/24',
+    '1.2.3.4/255.255.255.0',
+    '1.2.3.4/0.0.0.255',
+])
+def test_validate_ipv4_address_with_network_valid_patterns(value):
+    """Test  validating IPv4 address with network works for valid values."""
+    validate_ipv4_address_with_network(value)
+
+
+@pytest.mark.parametrize('value', [
+    '::1',
+    '1.2.3.4/',
+    'invalid-ip/24',
+    '1.2.3.4/x',
+    '1.2.3.4/-1',
+    '1.2.3.4/33',
+    '1.2.3.4/9.8.7.6',
+])
+def test_validate_ipv4_address_with_network_invalid_patterns(value):
+    """Test validating IPv4 address with network works for invalid values."""
+    with pytest.raises(ValidationError):
+        validate_ipv4_address_with_network(value)

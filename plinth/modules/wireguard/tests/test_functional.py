@@ -23,14 +23,14 @@ class TestWireguardApp(functional.BaseAppTests):
         {
             'peer_endpoint': 'wg1.example.org:1234',
             'peer_public_key': 'HBCqZk4B93N6q19zNleJkAVs+PEfWAPgPpKnrhL/CVw=',
-            'ip_address': '10.0.0.2',
+            'ip_address_and_network': '10.0.0.2/32',
             'private_key': '',
             'preshared_key': ''
         },
         {
             'peer_endpoint': 'wg2.example.org:5678',
             'peer_public_key': 'Z/iHo0vaeSN8Ykk5KwhQ819MMU5nyzD7y7xFFthlxXI=',
-            'ip_address': '192.168.0.2',
+            'ip_address_and_network': '192.168.0.2/24',
             'private_key': 'QC2xEZMn3bgNsSVFrU51+ALSUiUaWg6gRWigh3EeVm0=',
             'preshared_key': 'AHxZ4Rr8Ij4L1aq+ceusSIgBfluqiI9Vb5I2UtQFanI='
         },
@@ -70,7 +70,8 @@ class TestWireguardApp(functional.BaseAppTests):
         # Start the server on FreedomBox, if needed.
         start_server_button = browser.find_by_css('.btn-start-server')
         if start_server_button:
-            start_server_button.first.click()
+            with functional.wait_for_page_update(browser):
+                start_server_button.first.click()
 
         browser.find_by_css('.btn-add-client').first.click()
         browser.find_by_id('id_public_key').fill(key)
@@ -135,7 +136,8 @@ class TestWireguardApp(functional.BaseAppTests):
         href.first.click()
         assert get_value('peer-endpoint') == config['peer_endpoint']
         assert get_value('peer-public-key') == config['peer_public_key']
-        assert get_value('server-ip-address') == config['ip_address']
+        assert get_value('server-ip-address-and-network'
+                         ) == config['ip_address_and_network']
         assert get_value('peer-preshared-key') == (config['preshared_key']
                                                    or 'None')
 
@@ -147,7 +149,8 @@ class TestWireguardApp(functional.BaseAppTests):
         browser.find_by_id('id_peer_endpoint').fill(config['peer_endpoint'])
         browser.find_by_id('id_peer_public_key').fill(
             config['peer_public_key'])
-        browser.find_by_id('id_ip_address').fill(config['ip_address'])
+        browser.find_by_id('id_ip_address_and_network').fill(
+            config['ip_address_and_network'])
         browser.find_by_id('id_private_key').fill(config['private_key'])
         browser.find_by_id('id_preshared_key').fill(config['preshared_key'])
         functional.submit(browser, form_class='form-add-server')
@@ -161,7 +164,8 @@ class TestWireguardApp(functional.BaseAppTests):
         browser.find_by_id('id_peer_endpoint').fill(config2['peer_endpoint'])
         browser.find_by_id('id_peer_public_key').fill(
             config2['peer_public_key'])
-        browser.find_by_id('id_ip_address').fill(config2['ip_address'])
+        browser.find_by_id('id_ip_address_and_network').fill(
+            config2['ip_address_and_network'])
         browser.find_by_id('id_private_key').fill(config2['private_key'])
         browser.find_by_id('id_preshared_key').fill(config2['preshared_key'])
         functional.submit(browser, form_class='form-edit-server')

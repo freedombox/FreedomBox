@@ -101,8 +101,7 @@ class ShowClientView(SuccessMessageMixin, TemplateView):
         context['client'] = server_info['peers'][public_key]
         context['endpoints'] = [
             domain + ':' + str(server_info['listen_port'])
-            for domain in domains
-            if not domain.endswith('.local')
+            for domain in domains if not domain.endswith('.local')
         ]
         return context
 
@@ -227,7 +226,8 @@ class EditServerView(SuccessMessageMixin, FormView):
         if not server:
             raise Http404
 
-        initial['ip_address'] = server.get('ip_address')
+        initial['ip_address_and_network'] = server.get(
+            'ip_address_and_network')
         if server['peers']:
             peer = next(peer for peer in server['peers'].values())
             initial['peer_endpoint'] = peer['endpoint']
