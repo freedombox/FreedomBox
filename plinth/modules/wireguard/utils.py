@@ -40,7 +40,6 @@ def get_nm_info():
         info['listen_port'] = settings.get_listen_port()
         info['fwmark'] = settings.get_fwmark()
         info['mtu'] = settings.get_mtu()
-        info['default_route'] = settings.get_ip4_auto_default_route()
         info['peers'] = {}
         for peer_index in range(settings.get_peers_len()):
             peer = settings.get_peer(peer_index)
@@ -56,6 +55,13 @@ def get_nm_info():
                 peer_info['allowed_ips'].append(allowed_ip)
 
             info['peers'][peer_info['public_key']] = peer_info
+
+        # This is default route when all IPs are in allowed IPs list.
+        info['default_route'] = False
+        for peer_info in info['peers'].values():
+            if ('0.0.0.0/0' in peer_info['allowed_ips']
+                    and '::/0' in peer_info['allowed_ips']):
+                info['default_route'] = True
 
         settings_ipv4 = connection.get_setting_ip4_config()
         if settings_ipv4 and settings_ipv4.get_num_addresses():
