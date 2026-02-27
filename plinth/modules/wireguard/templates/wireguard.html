@@ -10,86 +10,87 @@
   <h3>{% trans "As a Server" %}</h3>
 
   {% if server.public_key %}
-  <h4>{% trans "Server" %}</h4>
+    <h4>{% trans "Server" %}</h4>
 
-  <p>
-    {% blocktrans trimmed %}
-      Information for this {{ box_name }}:
-    {% endblocktrans %}
-  </p>
+    <p>
+      {% blocktrans trimmed %}
+        Information for this {{ box_name }}:
+      {% endblocktrans %}
+    </p>
 
-  <div class="table-responsive">
-    <table class="table" id="server-info-table">
-      <tr>
-        <th>{% trans "Property" %}</th>
-        <th>{% trans "Value" %}</th>
-      </tr>
+    <div class="table-responsive">
+      <table class="table" id="server-info-table">
         <tr>
-          <td>{% trans "Public Key" %}</td>
-          <td>{{ server.public_key }}</td>
+          <th>{% trans "Property" %}</th>
+          <th>{% trans "Value" %}</th>
         </tr>
           <tr>
-            <td>{% trans "Endpoint(s)" %}</td>
-            <td>
-              {% for endpoint in server_endpoints %}{{ endpoint }}
-{% endfor %}</td>
-        </tr>
-        <tr>
-          <td>
-            {% blocktrans trimmed %}
-              {{ box_name }} VPN IP for services
-            {% endblocktrans %}
-          </td>
-          <td>{{ server.ip_address }}</td>
-        </tr>
-    </table>
-  </div>
-
-  <h4>{% trans "Peers" %}</h4>
-
-  <p>{% trans "Peers allowed to connect to this server:" %}</p>
-
-  <div class="table-responsive">
-    <table class="table" id="server-peers-list">
-      <tr>
-        <th>{% trans "Public Key" %}</th>
-        <th>{% trans "Allowed IPs" %}</th>
-        <th>{% trans "Last Connected Time" %}</th>
-      </tr>
-      {% if server.peers %}
-        {% for peer in server.peers.values %}
-          {% if peer.public_key %}
+            <td>{% trans "Public Key" %}</td>
+            <td>{{ server.public_key }}</td>
+          </tr>
             <tr>
+              <td>{% trans "Endpoint(s)" %}</td>
               <td>
-                <a href="{% url 'wireguard:show-client' peer.public_key|urlencode:'' %}">
-                  {{ peer.public_key }}
-                </a>
+                <pre>{% for endpoint in server_endpoints %}{{ endpoint }}
+{% endfor %}</pre>
               </td>
-              <td>{{ peer.allowed_ips|join:", " }}</td>
-              <td>{{ peer.status.latest_handshake|default:'' }}</td>
-            </tr>
-          {% endif %}
-        {% endfor %}
-      {% else %}
-        <tr>
-          <td colspan="3">
-            {% blocktrans trimmed %}
-              No peers configured to connect to this {{ box_name }} yet.
-            {% endblocktrans %}
-          </td>
-        </tr>
-      {% endif %}
-    </table>
-  </div>
+          </tr>
+          <tr>
+            <td>
+              {% blocktrans trimmed %}
+                {{ box_name }} VPN IP for services
+              {% endblocktrans %}
+            </td>
+            <td>{{ server.ip_address }}</td>
+          </tr>
+      </table>
+    </div>
 
-  <div class="btn-toolbar">
-      <a title="{% trans 'Add a new peer' %}"
-         role="button" class="btn btn-default btn-add-client"
-         href="{% url 'wireguard:add-client' %}">
-        <span class="fa fa-plus" aria-hidden="true"></span>
-        {% trans "Add Allowed Client" %}
-      </a>
-  </div>
+    <h4>{% trans "Peers" %}</h4>
+
+    <p>{% trans "Peers allowed to connect to this server:" %}</p>
+
+    <div class="table-responsive">
+      <table class="table" id="server-peers-list">
+        <tr>
+          <th>{% trans "Public Key" %}</th>
+          <th>{% trans "Allowed IPs" %}</th>
+          <th>{% trans "Last Connected Time" %}</th>
+        </tr>
+        {% if server.peers %}
+          {% for peer in server.peers.values %}
+            {% if peer.public_key %}
+              <tr>
+                <td>
+                  <a href="{% url 'wireguard:show-client' peer.public_key|urlencode:'' %}">
+                    {{ peer.public_key }}
+                  </a>
+                </td>
+                <td>{{ peer.allowed_ips|join:", " }}</td>
+                <td>{{ peer.status.latest_handshake|default:'' }}</td>
+              </tr>
+            {% endif %}
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td colspan="3">
+              {% blocktrans trimmed %}
+                No peers configured to connect to this {{ box_name }} yet.
+              {% endblocktrans %}
+            </td>
+          </tr>
+        {% endif %}
+      </table>
+    </div>
+
+    <div class="btn-toolbar">
+        <a title="{% trans 'Add a new peer' %}"
+           role="button" class="btn btn-default btn-add-client"
+           href="{% url 'wireguard:add-client' %}">
+          <span class="fa fa-plus" aria-hidden="true"></span>
+          {% trans "Add Allowed Client" %}
+        </a>
+    </div>
   {% else %}
     <div>
       <p class="alert alert-info">{% trans "WireGuard server not started yet." %}</p>
@@ -102,8 +103,7 @@
         </button>
       </form>
     </div>
-    {% endif %}
-
+  {% endif %}
 
   <h3>{% trans "As a Client" %}</h3>
   <p>
