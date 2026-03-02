@@ -301,7 +301,19 @@ def check_url(url: str, kind: str | None = None,
               wrapper: str | None = None,
               expected_output: str | None = None) -> bool:
     """Check whether a URL is accessible."""
-    command = ['curl', '--location', '-f', '-w', '%{response_code}']
+    # When testing a URL with cURL, following any redirections with --location.
+    # During those follows, store cookies that have been set and use them for
+    # later requests. mod_auth_openidc will set a cookie 'x_csrf' to prevent
+    # CSRF attacks and expect this cookie to sent back to it in later requests.
+    # If this cookie is not present, it will refuse to perform OIDC Discovery
+    # process resulting 404 errors and diagnostic failures for domains that
+    # have not been visited by a user recently. --cookie '' means the cURL will
+    # use an in-process cookie-jar for storing and retrieving cookies without
+    # writing to a file on the disk.
+    command = [
+        'curl', '--location', '--cookie', '', '--fail', '--write-out',
+        '%{response_code}'
+    ]
 
     if kind == '6':
         # extract zone index
