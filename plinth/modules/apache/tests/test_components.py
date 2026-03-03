@@ -473,7 +473,8 @@ def test_diagnose_url(get_addresses, check):
 def test_check_url(run):
     """Test checking whether a URL is accessible."""
     url = 'http://localhost/test'
-    basic_command = ['curl', '--location', '-f', '-w', '%{response_code}']
+    basic_command = ['curl', '--location', '--cookie', '', '--fail',
+                     '--write-out', '%{response_code}']
     extra_args = {'env': None, 'check': True, 'stdout': -1, 'stderr': -1}
 
     # Basic
