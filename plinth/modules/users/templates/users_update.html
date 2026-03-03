@@ -19,6 +19,11 @@
   </h3>
 
   <p>
+    {% url 'users:passkeys' object.username as passkeys_url %}
+    {% blocktrans trimmed %}
+      Use <a href="{{ passkeys_url }}">passkeys</a> for better security.
+    {% endblocktrans %}
+
     {% url 'users:change_password' object.username as change_password_url %}
 
     {% blocktrans trimmed %}

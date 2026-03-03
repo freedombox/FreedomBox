@@ -44,6 +44,28 @@ class UserProfile(models.Model):
     language = models.CharField(max_length=32, null=True, default=None)
 
 
+class UserPasskey(models.Model):
+    """Model to store passkeys for a user account."""
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.CASCADE, related_name='passkeys')
+
+    # Relying Party information
+    name = models.CharField(max_length=256, null=True, blank=True)
+    domain = models.CharField(max_length=256)
+    created_time = models.DateTimeField(auto_now_add=True)
+    last_used_time = models.DateTimeField(auto_now=True)
+
+    # Authenticator data
+    signature_counter = models.IntegerField(default=0)
+    registration_flags = models.IntegerField()
+    extensions = models.JSONField(null=True, blank=True)
+
+    # Credential data
+    aaguid = models.UUIDField(null=True, blank=True)
+    credential_id = models.BinaryField(unique=True)
+    public_key = models.BinaryField()
+
+
 @receiver(models.signals.post_save, sender=User)
 def _on_user_post_save(sender, instance, **kwargs):
     """When the user model is saved, user profile too."""
