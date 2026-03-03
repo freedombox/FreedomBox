@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Plinth\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-03 02:00+0000\n"
-"PO-Revision-Date: 2026-02-04 06:01+0000\n"
+"PO-Revision-Date: 2026-03-04 05:09+0000\n"
 "Last-Translator: 大王叫我来巡山 "
 "<hamburger2048@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.16-dev\n"
+"X-Generator: Weblate 5.17-dev\n"
 
 #: plinth/config.py:103
 #, python-brace-format
@@ -389,10 +389,8 @@ msgid "Passphrase"
 msgstr "密码"
 
 #: plinth/modules/backups/forms.py:187
-#, fuzzy
-#| msgid "Passphrase; Only needed when using encryption."
 msgid "Only needed when using encryption."
-msgstr "密码；只在用加密时需要。"
+msgstr "只在使用加密时需要。"
 
 #: plinth/modules/backups/forms.py:190
 msgid "Confirm Passphrase"
@@ -429,44 +427,32 @@ msgid ""
 msgstr "新的或已有存储库的路径。例如：<i>user@host:~/path/to/repo/</i>"
 
 #: plinth/modules/backups/forms.py:255
-#, fuzzy
-#| msgid "Authentication Mode"
 msgid "SSH Authentication Type"
-msgstr "身份验证模式"
+msgstr "SSH 身份认证模式"
 
 #: plinth/modules/backups/forms.py:256
-#, fuzzy
-#| msgid "Authentication to remote server failed."
 msgid "Choose how to authenticate to the remote SSH server."
-msgstr "远程服务器认证失败。"
+msgstr "选择如何进行身份认证登录远程 SSH 服务器。"
 
 #: plinth/modules/backups/forms.py:258
-#, fuzzy
-#| msgid "needs authentication"
 msgid "Key-based Authentication"
-msgstr "需要身份验证"
+msgstr "基于 Key 的身份认证"
 
 #: plinth/modules/backups/forms.py:259
-#, fuzzy
-#| msgid "Disable password authentication"
 msgid "Password-based Authentication"
-msgstr "禁用密码验证"
+msgstr "基于密码的身份认证"
 
 #: plinth/modules/backups/forms.py:261
 msgid "SSH server password"
 msgstr "SSH 服务器密码"
 
 #: plinth/modules/backups/forms.py:262
-#, fuzzy
-#| msgid "Disable password authentication"
 msgid "Required for password-based authentication."
-msgstr "禁用密码验证"
+msgstr "对基于密码的身份认证是必需的。"
 
 #: plinth/modules/backups/forms.py:275
-#, fuzzy
-#| msgid "Disable password authentication"
 msgid "SSH password is needed for password-based authentication."
-msgstr "禁用密码验证"
+msgstr "基于密码的身份认证需要SSH 密码。"
 
 #: plinth/modules/backups/forms.py:292
 msgid "Remote backup repository already exists."
@@ -787,10 +773,8 @@ msgid "Authentication to remote server failed."
 msgstr "远程服务器认证失败。"
 
 #: plinth/modules/backups/views.py:50
-#, fuzzy
-#| msgid "Error establishing connection to server: {}"
 msgid "Error establishing connection to server: {} {} {}"
-msgstr "启用到服务器的连接时错误：{}"
+msgstr "建立服务器连接出错：{} {} {}"
 
 #: plinth/modules/backups/views.py:82
 msgid "Backup schedule updated."
@@ -1406,14 +1390,7 @@ msgid "Webserver Home Page"
 msgstr "Web 服务器首页"
 
 #: plinth/modules/config/forms.py:37
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Choose the default page that must be served when someone visits your "
-#| "{box_name} on the web. A typical use case is to set your blog or wiki as "
-#| "the home page when someone visits the domain name. Note that once the "
-#| "home page is set to something other than {box_name} Service (Plinth), "
-#| "your users must explicitly type /plinth or /freedombox to reach "
-#| "{box_name} Service (Plinth)."
+#, python-brace-format
 msgid ""
 "Choose the default page that must be served when someone visits your "
 "{box_name} on the web. A typical use case is to set your blog or wiki as the "
@@ -1423,8 +1400,8 @@ msgid ""
 msgstr ""
 "选择别人访问你的 {box_name} 时需要看到的默认页面。一个典型用法是，你可以选择"
 "你的博客或者 Wiki 来作为别人访问域名时的首页。请注意，一旦首页设置到了 "
-"{box_name} 服务（Plinth）之外的其它地方，你的用户必须明确输入 /plinth 或 /"
-"freedombox 来访问 {box_name} 服务（Plinth）。"
+"{box_name} 服务（Plinth）之外的其它地方，你的用户必须明确输入 /freedombox 来"
+"访问 {box_name} 服务（Plinth）。"
 
 #: plinth/modules/config/forms.py:48
 msgid "Show advanced apps and features"
@@ -1537,7 +1514,7 @@ msgstr "使用以下 URL 来配置你的通信服务器："
 
 #: plinth/modules/coturn/templates/coturn.html:24
 msgid "Use the following shared authentication secret:"
-msgstr "使用以下共享的身份验证 secret："
+msgstr "使用以下共享的身份认证 secret："
 
 #: plinth/modules/datetime/__init__.py:21
 msgid ""
@@ -1937,7 +1914,7 @@ msgstr "如果你的提供商使用自签名的证书，请使用此选项。"
 msgid ""
 "If this option is selected, your username and password will be used for HTTP "
 "basic authentication."
-msgstr "如果选择了此选项，你的用户名和密码将用于 HTTP 基本身份验证。"
+msgstr "如果选择了此选项，你的用户名和密码将用于 HTTP 基本身份认证。"
 
 #: plinth/modules/dynamicdns/forms.py:42
 msgid "Leave this field empty if you want to keep your current password."
@@ -1977,7 +1954,7 @@ msgstr "接受所有 SSL 证书"
 
 #: plinth/modules/dynamicdns/forms.py:72
 msgid "Use HTTP basic authentication"
-msgstr "使用 HTTP 基本身份验证"
+msgstr "使用 HTTP 基本身份认证"
 
 #: plinth/modules/dynamicdns/forms.py:76 plinth/modules/names/forms.py:107
 #: plinth/modules/names/templates/names.html:19
@@ -2201,7 +2178,7 @@ msgstr "STUN/TURN服务器的公共URI列表，每行一个。"
 
 #: plinth/modules/ejabberd/forms.py:51 plinth/modules/matrixsynapse/forms.py:53
 msgid "Shared Authentication Secret"
-msgstr "共享的身份验证 Secret"
+msgstr "共享的身份认证 Secret"
 
 #: plinth/modules/ejabberd/forms.py:52 plinth/modules/matrixsynapse/forms.py:54
 msgid "Shared secret used to compute passwords for the TURN server."
@@ -5100,7 +5077,7 @@ msgstr ""
 
 #: plinth/modules/networks/forms.py:336
 msgid "Authentication Mode"
-msgstr "身份验证模式"
+msgstr "身份认证模式"
 
 #: plinth/modules/networks/forms.py:337
 msgid ""
@@ -5757,7 +5734,7 @@ msgstr "连接"
 
 #: plinth/modules/networks/views.py:45
 msgid "needs authentication"
-msgstr "需要身份验证"
+msgstr "需要身份认证"
 
 #: plinth/modules/networks/views.py:46
 msgid "requesting address"
@@ -6040,8 +6017,6 @@ msgid "OpenID Connect Provider"
 msgstr ""
 
 #: plinth/modules/oidc/templates/oauth2_provider/authorize.html:14
-#, fuzzy
-#| msgid "Applications"
 msgid "Application"
 msgstr "应用程序"
 
@@ -7589,7 +7564,7 @@ msgstr "使用 Secure Shell（SSH 远程登录"
 
 #: plinth/modules/ssh/forms.py:13
 msgid "Disable password authentication"
-msgstr "禁用密码验证"
+msgstr "禁用密码认证"
 
 #: plinth/modules/ssh/forms.py:14
 msgid ""
@@ -8956,10 +8931,8 @@ msgid "Invalid key."
 msgstr "无效的密钥。"
 
 #: plinth/modules/wireguard/forms.py:63
-#, fuzzy
-#| msgid "Enter a valid username."
 msgid "Enter a valid IPv4 address."
-msgstr "输入有效的用户名。"
+msgstr "输入有效的 IPv4 地址。"
 
 #: plinth/modules/wireguard/forms.py:65
 msgid "Enter a valid network prefix or net mask."
@@ -9065,16 +9038,13 @@ msgid "Value"
 msgstr ""
 
 #: plinth/modules/wireguard/templates/wireguard.html:32
-#, fuzzy
-#| msgid "Entry point"
 msgid "Endpoint(s)"
-msgstr "入口点"
+msgstr "端点"
 
 #: plinth/modules/wireguard/templates/wireguard.html:40
-#, fuzzy, python-format
-#| msgid "To %(box_name)s Ports"
+#, python-format
 msgid "%(box_name)s VPN IP for services"
-msgstr "到 %(box_name)s 端口"
+msgstr "服务的 %(box_name)s VPN IP"
 
 #: plinth/modules/wireguard/templates/wireguard.html:49
 msgid "Peers"
@@ -9108,10 +9078,8 @@ msgid "Add Allowed Client"
 msgstr ""
 
 #: plinth/modules/wireguard/templates/wireguard.html:96
-#, fuzzy
-#| msgid "WireGuard server started successfully."
 msgid "WireGuard server not started yet."
-msgstr "WireGuard 服务器启动成功。"
+msgstr "WireGuard 服务器还未启动。"
 
 #: plinth/modules/wireguard/templates/wireguard.html:100
 #: plinth/modules/wireguard/templates/wireguard.html:102
