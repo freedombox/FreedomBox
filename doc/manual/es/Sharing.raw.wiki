@@ -19,15 +19,15 @@ El contenido se puede compartir públicamente o restringido a usuarios de una li
 
 === Editando comparticiones ===
 
-Para que los usuarios accedan al contenido mediante su navegador debe existir y tener una compartición. Una compartición es una entrada en la aplicación Sharing que relaciona:
- * El Nombre (y por tanto la URL) que usarán los usuarios para solicitar el contenido,
- * el Ruta de acceso al contenido a servir y
- * el modo de compartición. Si es restringido, también contendrá la lista de grupos autorizados.
-En el mismo servidor pueden coexistir múltiples comparticiones.
+Cada compartición tiene su propio ajuste de modo de compartición (pública o restringida). Sólo los grupos que reconoce el servicio !FreedomBox se pueden combinar en la lista de grupos autorizados. La aplicación ''Sharing'' no ofrecerá los grupos creados en el interfaz de línea de órdenes. 
 
-Sólo los administradores pueden crear, editar o eliminar comparticiones. Encontrarán la aplicación ''Sharing'' en la sección Aplicacions del interfaz web de !FreedomBox. La aplicación ''Sharing'' es una aplicación web fácil de usar y con un interfaz evidente.
-
-Cada compartición tiene su priopio ajuste de modo de compartición (pública o restrigida). Sólo los grupos que reconoce el servicio !FreedomBox se pueden combinar en la lista de grupos autorizados. La aplicación ''Sharing'' no ofrecerá los grupos creados en el interfaz de línea de órdenes. 
+ * In el interfaz web de !FreedomBox, habilita la App ''Sharing''. Sólo los administradores pueden crear, editar o eliminar comparticiones. Encontrarán la aplicación ''Sharing'' en la sección Aplicaciones del interfaz web de !FreedomBox. En el mismo servidor pueden coexistir múltiples comparticiones.
+ * Añadir una nueva compartición:
+   * Dale un nombre (y por tanto la URL) que usarán los usuarios para solicitar el contenido, En el ejemplo anterior se llamaría  ''nombre del contenido''.
+   * La Ruta completa de acceso al contenido a servir. Por ejemplo ''/var/lib/freedombox/sharing/nombre_del_contenido''.
+   * El modo de compartición. Si es restringido, también contendrá la lista de grupos autorizados. Solo los grupos reconocidos por el servicio !FreedomBox se pueden combinar en la lista de grupos autorizados. La app no ofrecerá los grupos creados sólo en la línea de órdenes. 
+ * Crea el directorio especificado en ''Ruta de Disco'' en !FreedomBox mediante ''Cockpit'', ''Nautilus'' o ingreso remoto.
+ * Asegúrate de que el usuario que proporcione el contenido tiene permiso para escribir en el directorio, por ejemplo, haciéndole dueño del directorio. 
 
 === Provisionar/actualizar el contenido ===
 
