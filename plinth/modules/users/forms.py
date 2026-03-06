@@ -4,8 +4,11 @@
 import pwd
 import re
 
+from captcha.fields import CaptchaField
 from django import forms
 from django.contrib import auth, messages
+from django.contrib.auth.forms import \
+    AuthenticationForm as DjangoAuthenticationForm
 from django.contrib.auth.forms import SetPasswordForm, UserCreationForm
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth.models import Group, User
@@ -23,6 +26,24 @@ from plinth.views import messages_error
 
 from . import get_last_admin_user, privileged
 from .components import UsersAndGroups
+
+
+class AuthenticationForm(DjangoAuthenticationForm):
+    """Authentication form with an additional username field attributes."""
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs.update({
+            'autofocus': 'autofocus',
+            'autocapitalize': 'none',
+            'autocomplete': 'username'
+        })
+
+
+class CaptchaForm(forms.Form):
+    """Form with a CAPTCHA field to use after 3 invalid login attempts."""
+    captcha = CaptchaField(
+        label=_('Enter the letters in the image to proceed to the login page'))
 
 
 class ValidNewUsernameCheckMixin:

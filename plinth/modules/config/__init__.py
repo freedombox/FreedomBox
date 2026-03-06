@@ -94,7 +94,7 @@ def home_page_url2scid(url: str | None):
 
     if url in ('/plinth/', '/plinth', 'plinth', '/freedombox/', '/freedombox',
                'freedombox'):
-        return 'plinth'
+        return 'freedombox'
 
     if url and url.startswith('/~'):
         return 'uws-{}'.format(user_of_uws_url(url))
@@ -109,8 +109,8 @@ def home_page_url2scid(url: str | None):
 
 def _home_page_scid2url(shortcut_id: str) -> str | None:
     """Return the url for the given home page shortcut ID."""
-    url: str | None = '/plinth/'
-    if shortcut_id == 'plinth':
+    url: str | None = '/freedombox/'
+    if shortcut_id == 'freedombox':
         pass
     elif shortcut_id == 'apache-default':
         url = None
@@ -134,7 +134,7 @@ def _get_home_page_url() -> str | None:
     """Get the default application for the domain."""
     conf_file = privileged.APACHE_HOMEPAGE_CONFIG
     if not pathlib.Path(conf_file).exists():
-        return '/plinth/'
+        return '/freedombox/'
 
     aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
                         augeas.Augeas.NO_MODL_AUTOLOAD)

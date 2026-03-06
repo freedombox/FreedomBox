@@ -2,12 +2,22 @@
 """Configure Apache web server."""
 
 import glob
+import json
 import os
 import pathlib
 import re
+import shutil
+import urllib.parse
 
-from plinth import action_utils
-from plinth.actions import privileged
+import augeas
+
+from plinth import action_utils, utils
+from plinth.actions import privileged, secret_str
+
+openidc_config_path = pathlib.Path(
+    '/etc/apache2/conf-available/freedombox-openidc.conf')
+metadata_dir_path = pathlib.Path(
+    '/var/cache/apache2/mod_auth_openidc/metadata/')
 
 
 def _get_sort_key_of_version(version):
@@ -70,6 +80,8 @@ def setup(old_version: int):
         action_utils.run(['make-ssl-cert', 'generate-default-snakeoil'],
                          check=True)
 
+    _setup_oidc_config()
+
     with action_utils.WebserverChange() as webserver:
         # Disable mod_php as we have switched to mod_fcgi + php-fpm. Disable
         # before switching away from mpm_prefork otherwise switching fails due
@@ -114,6 +126,7 @@ def setup(old_version: int):
         webserver.enable('headers', kind='module')
 
         # Various modules for authentication/authorization
+        webserver.enable('auth_openidc', kind='module')
         webserver.enable('authnz_ldap', kind='module')
         webserver.enable('auth_pubtkt', kind='module')
 
@@ -135,9 +148,11 @@ def setup(old_version: int):
         webserver.enable('dav', kind='module')
         webserver.enable('dav_fs', kind='module')
 
-        # setup freedombox site
+        # setup freedombox configuration
+        webserver.enable('10-freedombox', kind='config')
         webserver.enable('freedombox', kind='config')
         webserver.enable('freedombox-tls', kind='config')
+        webserver.enable('freedombox-openidc.conf', kind='config')
 
         # enable serving Debian javascript libraries
         webserver.enable('javascript-common', kind='config')
@@ -149,6 +164,119 @@ def setup(old_version: int):
         webserver.disable('plinth', kind='site')
         webserver.disable('plinth-ssl', kind='site')
         webserver.enable('freedombox-default', kind='site')
+
+
+def _load_augeas():
+    """Initialize augeas for this app's configuration file."""
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug.transform('Httpd', str(openidc_config_path))
+    aug.set('/augeas/context', '/files' + str(openidc_config_path))
+    aug.load()
+
+    return aug
+
+
+def _get_mod_openidc_passphrase() -> str:
+    """Read existing mod-auth-openidc passphase.
+
+    Instead of generating a new passphrase every time, use existing one. If the
+    passphrase changes, all the existing sessions will be logged out and users
+    will have login to apps again.
+    """
+    aug = _load_augeas()
+    for directive in aug.match('*/directive'):
+        if aug.get(directive) == 'OIDCCryptoPassphrase':
+            return aug.get(directive + '/arg')
+
+    # Does not exist already, generate new
+    return utils.generate_password(size=64)
+
+
+@privileged
+def setup_oidc_client(netloc: str, client_id: str, client_secret: secret_str):
+    """Setup client ID and secret for provided domain.
+
+    netloc is hostname or IP address along with port as parsed by
+    urllib.parse.urlparse() method from a URL.
+    """
+    issuer = f'{netloc}/freedombox/o'
+    issuer_quoted = urllib.parse.quote_plus(issuer)
+    client_path = metadata_dir_path / f'{issuer_quoted}.client'
+    if client_path.exists():
+        try:
+            current_data = json.loads(client_path.read_text())
+            if (current_data['client_id'] == client_id
+                    and current_data['client_secret'] == client_secret):
+                return
+        except Exception:
+            pass
+
+    client_configuration = {
+        'client_id': client_id,
+        'client_secret': client_secret
+    }
+    previous_umask = os.umask(0o077)
+    try:
+        client_path.write_text(json.dumps(client_configuration))
+    finally:
+        os.umask(previous_umask)
+
+    shutil.chown(client_path, 'www-data', 'www-data')
+
+
+def _setup_oidc_config():
+    """Setup Apache as a OpenID Connect Relying Party.
+
+    Ensure that auth_openidc module's metadata directory is created. It will be
+    used to store provider-specific configuration. Since FreedomBox will be
+    configured with multiple domains and some of them may not be accessible due
+    to the access method, we need to configure a separate IDP for each domain.
+    This is also because auth_openidc does not allow IDP configuration with
+    relative URLs.
+
+    Keep the metadata directory and configuration file unreadable by non-admin
+    users since they contain module's crypto secret and OIDC client secret.
+    """
+    metadata_dir_path.parent.mkdir(mode=0o700, parents=True, exist_ok=True)
+    metadata_dir_path.mkdir(mode=0o700, exist_ok=True)
+    shutil.chown(metadata_dir_path.parent, 'www-data', 'www-data')
+    shutil.chown(metadata_dir_path, 'www-data', 'www-data')
+
+    # XXX: Default cache type is 'shm' or shared memory. This is lost when
+    # Apache is restarted and users/apps will have to reauthenticate. Improve
+    # this by using file (in tmpfs), redis, or memache caches.
+
+    passphrase = _get_mod_openidc_passphrase()
+    configuration = f'''##
+## OpenID Connect related configuration
+##
+<IfModule mod_auth_openidc.c>
+    OIDCCryptoPassphrase {passphrase}
+    OIDCMetadataDir {str(metadata_dir_path)}
+    # Use relative URL to redirect to the same origin as the resource
+    OIDCDiscoverURL /freedombox/apache/discover-idp/
+    OIDCSSLValidateServer Off
+    OIDCProviderMetadataRefreshInterval 86400
+
+    # Use relative URL to return to the original domain
+    OIDCRedirectURI /apache/oidc/callback
+    OIDCRemoteUserClaim sub
+
+    # The redirect URI must always be under a location protected by
+    # mod_openidc.
+    <Location /apache>
+        AuthType openid-connect
+        # Checking audience is not necessary, but we need to check some claim.
+        Require claim aud:apache
+    </Location>
+</IfModule>
+'''
+    previous_umask = os.umask(0o077)
+    try:
+        openidc_config_path.write_text(configuration)
+    finally:
+        os.umask(previous_umask)
 
 
 # TODO: Check that the (name, kind) is a managed by FreedomBox before

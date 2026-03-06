@@ -102,11 +102,9 @@ def test_read_config_file_with_missing_options():
 def compare_configurations(parser):
     """Compare two sets of configuration values."""
     assert parser.get('Path', 'file_root') == cfg.file_root
-    assert parser.get('Path', 'config_dir') == cfg.config_dir
     assert parser.get('Path', 'custom_static_dir') == cfg.custom_static_dir
     assert parser.get('Path', 'data_dir') == cfg.data_dir
     assert parser.get('Path', 'store_file') == cfg.store_file
-    assert parser.get('Path', 'actions_dir') == cfg.actions_dir
     assert parser.get('Path', 'doc_dir') == cfg.doc_dir
 
     assert parser.get('Network', 'host') == cfg.host

@@ -4,6 +4,7 @@ Functional, browser based tests for openvpn app.
 """
 
 import pytest
+
 from plinth.tests import functional
 
 pytestmark = [pytest.mark.apps, pytest.mark.openvpn]
@@ -30,10 +31,12 @@ class TestOpenvpnApp(functional.BaseAppTests):
         if not functional.user_exists(session_browser, 'nonvpnuser'):
             functional.create_user(session_browser, 'nonvpnuser', groups=[])
 
-        functional.login_with_account(session_browser, base_url, 'vpnuser')
+        functional.login_with_account(session_browser,
+                                      base_url + '/freedombox/', 'vpnuser')
         _download_profile(session_browser)
 
-        functional.login_with_account(session_browser, base_url, 'nonvpnuser')
+        functional.login_with_account(session_browser,
+                                      base_url + '/freedombox/', 'nonvpnuser')
         _not_on_front_page(session_browser)
 
         functional.login(session_browser)
@@ -64,5 +67,5 @@ def _download_profile(browser):
     """Return the content of the current user's OpenVPN profile."""
     browser.visit(base_url)
     browser.links.find_by_href(shortcut_href).click()
-    profile_url = f'{base_url}/plinth/apps/openvpn/profile/'
+    profile_url = f'{base_url}/freedombox/apps/openvpn/profile/'
     return functional.download_file(browser, profile_url)

@@ -8,10 +8,11 @@
 {% load static %}
 
 {% if notifications %}
-  <div class="notifications collapse no-no-js">
+  <div id="notifications" class="notifications collapse no-no-js" hx-swap-oob="true">
     <ul>
       {% for note in notifications %}
-        <li class="notification notification-{{ note.severity }}">
+        <li id="notification-{{ note.id }}"
+            class="notification notification-{{ note.severity }}">
           <div class="notification-header">
             <span class="notification-time"
                   title="{{ note.last_update_time|date:'DATETIME_FORMAT' }}">
@@ -53,10 +54,7 @@
               <div class="btn-toolbar">
                 {% for action in note.actions %}
                   {% if action.type == "dismiss" %}
-                    <a href="{% url 'notification_dismiss' id=note.id %}?next={{ request.path|iriencode }}"
-                       role="button" class="btn btn-default">
-                      {% trans "Dismiss" %}
-                    </a>
+                    {% include 'notifications-dismiss-button.html' with id=note.id %}
                   {% else %}
                     <a href="{% url action.url %}" role="button"
                        class="btn btn-{{ action.class|default:'default' }}">

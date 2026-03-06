@@ -50,7 +50,7 @@ class EjabberdApp(app_module.App):
 
     app_id = 'ejabberd'
 
-    _version = 9
+    _version = 10
 
     def __init__(self) -> None:
         """Create components for the app."""
@@ -98,8 +98,10 @@ class EjabberdApp(app_module.App):
                               urls=['http://{host}/bosh/'])
         self.add(webserver)
 
+        # Always setup certificates for all domains to keep configuration
+        # simple.
         letsencrypt = LetsEncrypt(
-            'letsencrypt-ejabberd', domains=get_domains, daemons=['ejabberd'],
+            'letsencrypt-ejabberd', domains='*', daemons=['ejabberd'],
             should_copy_certificates=True,
             private_key_path='/etc/ejabberd/letsencrypt/{domain}/ejabberd.pem',
             certificate_path='/etc/ejabberd/letsencrypt/{domain}/ejabberd.pem',
@@ -140,11 +142,10 @@ class EjabberdApp(app_module.App):
         logger.info('ejabberd service domain name - %s', domain_name)
 
         privileged.pre_install(domain_name)
-        # XXX: Configure all other domain names
         super().setup(old_version)
-        self.get_component('letsencrypt-ejabberd').setup_certificates(
-            [domain_name])
-        privileged.setup(domain_name)
+        # Setup certificates for all domains to keep configuration simple
+        self.get_component('letsencrypt-ejabberd').setup_certificates()
+        privileged.setup()
         if not old_version:
             self.enable()
 

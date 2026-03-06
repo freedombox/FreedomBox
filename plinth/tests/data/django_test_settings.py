@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.messages',
+    'oauth2_provider',
     'stronghold',
     'plinth',
 ]
@@ -50,6 +51,8 @@ MIDDLEWARE = (
 ROOT_URLCONF = 'plinth.tests.data.urls'
 
 SECRET_KEY = 'django_tests_secret_key'
+
+STRONGHOLD_PUBLIC_URLS = (r'^/o/', )
 
 TEMPLATES = [{
     'BACKEND': 'django.template.backends.django.DjangoTemplates',

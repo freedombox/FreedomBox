@@ -66,6 +66,27 @@ def fixture_login(session_browser):
     functional.login(session_browser)
 
 
+@pytest.fixture(name='syncthing_installed')
+def fixture_syncthing_installed(session_browser):
+    """Login and install the app."""
+    functional.login(session_browser)
+    functional.install(session_browser, 'syncthing')
+    functional.app_enable(session_browser, 'syncthing')
+    yield
+    functional.app_disable(session_browser, 'syncthing')
+
+
+def test_app_access(session_browser, syncthing_installed):
+    """Test that only logged-in users can access Syncthing web interface."""
+    functional.logout(session_browser)
+    functional.access_url(session_browser, 'syncthing')
+    assert functional.is_login_prompt(session_browser)
+
+    functional.login(session_browser)
+    functional.access_url(session_browser, 'syncthing')
+    assert functional.is_available(session_browser, 'syncthing')
+
+
 def test_create_user(session_browser):
     """Test creating a user."""
     _delete_user(session_browser, 'alice')
@@ -303,7 +324,7 @@ def _should_not_connect_passwordless_over_ssh(session_browser,
 def _rename_user(browser, old_name, new_name):
     functional.nav_to_module(browser, 'users')
     functional.click_link_by_href(browser,
-                                  f'/plinth/sys/users/{old_name}/edit/')
+                                  f'/freedombox/sys/users/{old_name}/edit/')
     browser.find_by_id('id_username').fill(new_name)
     browser.find_by_id('id_confirm_password').fill(_admin_password)
     functional.submit(browser, form_class='form-update')
@@ -311,7 +332,8 @@ def _rename_user(browser, old_name, new_name):
 
 def _set_email(browser, username, email):
     """Set the email field value for a user."""
-    functional.visit(browser, '/plinth/sys/users/{}/edit/'.format(username))
+    functional.visit(browser,
+                     '/freedombox/sys/users/{}/edit/'.format(username))
     browser.find_by_id('id_email').fill(email)
     browser.find_by_id('id_confirm_password').fill(_admin_password)
     functional.submit(browser, form_class='form-update')
@@ -319,7 +341,8 @@ def _set_email(browser, username, email):
 
 def _get_email(browser, username):
     """Return the email field value for a user."""
-    functional.visit(browser, '/plinth/sys/users/{}/edit/'.format(username))
+    functional.visit(browser,
+                     '/freedombox/sys/users/{}/edit/'.format(username))
     return browser.find_by_id('id_email').value
 
 
@@ -330,13 +353,13 @@ def _check_language(browser, language_code):
 
 
 def _get_ssh_keys(browser, username=None):
-    functional.visit(browser, '/plinth/')
+    functional.visit(browser, '/freedombox/')
     if username is None:
         browser.find_by_id('id_user_menu').click()
         functional.click_and_wait(browser,
                                   browser.find_by_id('id_user_edit_menu'))
     else:
-        functional.visit(browser, f'/plinth/sys/users/{username}/edit/')
+        functional.visit(browser, f'/freedombox/sys/users/{username}/edit/')
     return browser.find_by_id('id_ssh_keys').text
 
 
@@ -346,7 +369,7 @@ def _set_ssh_keys(browser, ssh_keys, username=None):
         functional.click_and_wait(browser,
                                   browser.find_by_id('id_user_edit_menu'))
     else:
-        functional.visit(browser, f'/plinth/sys/users/{username}/edit/')
+        functional.visit(browser, f'/freedombox/sys/users/{username}/edit/')
 
     current_user = browser.find_by_id('id_user_menu_link').text
     auth_password = functional.get_password(current_user)
@@ -358,7 +381,8 @@ def _set_ssh_keys(browser, ssh_keys, username=None):
 
 
 def _set_user_status(browser, username, status):
-    functional.visit(browser, '/plinth/sys/users/{}/edit/'.format(username))
+    functional.visit(browser,
+                     '/freedombox/sys/users/{}/edit/'.format(username))
     if status == 'inactive':
         browser.find_by_id('id_is_active').uncheck()
     elif status == 'active':
@@ -376,7 +400,8 @@ def _change_password(browser, new_password, current_password=None,
             browser, browser.find_by_id('id_change_password_menu'))
     else:
         functional.visit(
-            browser, '/plinth/sys/users/{}/change_password/'.format(username))
+            browser,
+            '/freedombox/sys/users/{}/change_password/'.format(username))
 
     current_user = browser.find_by_id('id_user_menu_link').text
     auth_password = current_password or functional.get_password(current_user)

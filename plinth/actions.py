@@ -369,7 +369,6 @@ class JSONEncoder(json.JSONEncoder):
 
 def _setup_thread_storage():
     """Setup collection of stdout/stderr from any process in this thread."""
-    global thread_storage
     thread_storage.stdout = b''
     thread_storage.stderr = b''
 
@@ -380,14 +379,12 @@ def _clear_thread_storage():
     Python documentation is silent on whether thread local storage will be
     cleaned up after a thread terminates.
     """
-    global thread_storage
     thread_storage.stdout = None
     thread_storage.stderr = None
 
 
 def get_return_value_from_exception(exception):
     """Return the value to return from server when an exception is raised."""
-    global thread_storage
     return_value = {
         'result': 'exception',
         'exception': {

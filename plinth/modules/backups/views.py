@@ -6,7 +6,6 @@ Views for the backups app.
 import contextlib
 import logging
 import os
-import subprocess
 from urllib.parse import unquote
 
 from django.contrib import messages
@@ -24,7 +23,9 @@ from plinth.errors import PlinthError
 from plinth.modules import backups, storage
 from plinth.views import AppView
 
-from . import (SESSION_PATH_VARIABLE, api, errors, forms, get_known_hosts_path,
+from . import (SESSION_PATH_VARIABLE, api, errors, forms,
+               generate_ssh_client_auth_key, get_known_hosts_path,
+               get_ssh_client_auth_key_paths, get_ssh_client_public_key,
                is_ssh_hostkey_verified, privileged)
 from .decorators import delete_tmp_backup_file
 from .repository import (BorgRepository, SshBorgRepository, get_instance,
@@ -38,6 +39,19 @@ def handle_common_errors(request: HttpRequest):
     """If any known Borg exceptions occur, show proper error messages."""
     try:
         yield
+    except errors.SshError as exception:
+        if exception.returncode in (6, 7):
+            message = _('SSH host public key could not be verified.')
+        elif (exception.returncode == 5
+              or 'Permission denied' in exception.stderr.decode()):
+            message = _('Authentication to remote server failed.')
+        else:
+            message = _(
+                'Error establishing connection to server: {} {} {}').format(
+                    str(exception), exception.stdout.decode(),
+                    exception.stderr.decode())
+
+        messages.error(request, message)
     except errors.BorgError as exception:
         messages.error(request, exception.args[0])
 
@@ -344,11 +358,11 @@ class AddRepositoryView(FormView):
             encryption_passphrase = None
 
         credentials = {'encryption_passphrase': encryption_passphrase}
+        repository = BorgRepository(path, credentials)
         with handle_common_errors(self.request):
-            repository = BorgRepository(path, credentials)
-            if _save_repository(self.request, repository):
-                messages.success(self.request, _('Added new repository.'))
-                return super().form_valid(form)
+            _save_repository(self.request, repository)
+            messages.success(self.request, _('Added new repository.'))
+            return super().form_valid(form)
 
         return redirect(reverse_lazy('backups:add-repository'))
 
@@ -358,10 +372,19 @@ class AddRemoteRepositoryView(FormView):
     form_class = forms.AddRemoteRepositoryForm
     template_name = 'backups_add_remote_repository.html'
 
+    def get(self, *args, **kwargs):
+        """Handle GET requests.
+
+        Generate SSH client authentication key if necessary.
+        """
+        generate_ssh_client_auth_key()
+        return super().get(*args, kwargs)
+
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
         context['title'] = _('Create remote backup repository')
+        context['ssh_client_public_key'] = get_ssh_client_public_key()
         return context
 
     def form_valid(self, form):
@@ -374,10 +397,13 @@ class AddRemoteRepositoryView(FormView):
         if form.cleaned_data.get('encryption') == 'none':
             encryption_passphrase = None
 
-        credentials = {
-            'ssh_password': form.cleaned_data.get('ssh_password'),
-            'encryption_passphrase': encryption_passphrase
-        }
+        credentials = {'encryption_passphrase': encryption_passphrase}
+        if form.cleaned_data.get('ssh_auth_type') == 'password_auth':
+            credentials['ssh_password'] = form.cleaned_data.get('ssh_password')
+        else:
+            _pubkey_path, key_path = get_ssh_client_auth_key_paths()
+            credentials['ssh_keyfile'] = str(key_path)
+
         with handle_common_errors(self.request):
             repository = SshBorgRepository(path, credentials)
             repository.verfied = False
@@ -426,27 +452,28 @@ class VerifySshHostkeyView(FormView):
         with known_hosts_path.open('a', encoding='utf-8') as known_hosts_file:
             known_hosts_file.write(ssh_public_key + '\n')
 
+    def _save_repository_and_redirect(self):
+        """Save the repository and redirect according to the result."""
+        with handle_common_errors(self.request):
+            _save_repository(self.request, self._get_repository())
+            return redirect(reverse_lazy('backups:index'))
+
+        return redirect(reverse_lazy('backups:add-remote-repository'))
+
     def get(self, *args, **kwargs):
         """Skip this view if host is already verified."""
         if not is_ssh_hostkey_verified(self._get_repository().hostname):
             return super().get(*args, **kwargs)
 
         messages.success(self.request, _('SSH host already verified.'))
-        if _save_repository(self.request, self._get_repository()):
-            return redirect(reverse_lazy('backups:index'))
-
-        return redirect(reverse_lazy('backups:add-remote-repository'))
+        return self._save_repository_and_redirect()
 
     def form_valid(self, form):
         """Create and store the repository."""
         ssh_public_key = form.cleaned_data['ssh_public_key']
-        with handle_common_errors(self.request):
-            self._add_ssh_hostkey(ssh_public_key)
-            messages.success(self.request, _('SSH host verified.'))
-            if _save_repository(self.request, self._get_repository()):
-                return redirect(reverse_lazy('backups:index'))
-
-        return redirect(reverse_lazy('backups:add-remote-repository'))
+        self._add_ssh_hostkey(ssh_public_key)
+        messages.success(self.request, _('SSH host verified.'))
+        return self._save_repository_and_redirect()
 
 
 def _save_repository(request, repository):
@@ -455,29 +482,16 @@ def _save_repository(request, repository):
         repository.initialize()
         repository.verified = True
         repository.save()
-        return True
-    except subprocess.CalledProcessError as exception:
-        if exception.returncode in (6, 7):
-            message = _('SSH host public key could not be verified.')
-        elif exception.returncode == 5:
-            message = _('Authentication to remote server failed.')
-        else:
-            message = _('Error establishing connection to server: {}').format(
-                str(exception))
-    except Exception as exception:
-        message = str(exception)
-        logger.exception('Error adding repository: %s', exception)
+    except Exception:
+        # Remove the repository so that the user can have another go at
+        # creating it.
+        try:
+            repository.remove()
+            messages.error(request, _('Repository removed.'))
+        except KeyError:
+            pass
 
-    messages.error(request, message)
-    # Remove the repository so that the user can have another go at
-    # creating it.
-    try:
-        repository.remove()
-        messages.error(request, _('Repository removed.'))
-    except KeyError:
-        pass
-
-    return False
+        raise
 
 
 class RemoveRepositoryView(TemplateView):
@@ -522,7 +536,8 @@ def mount_repository(request, uuid):
 
     repository = SshBorgRepository.load(uuid)
     try:
-        repository.mount()
+        with handle_common_errors(request):
+            repository.mount()
     except Exception as err:
         msg = "%s: %s" % (_('Mounting failed'), str(err))
         messages.error(request, msg)

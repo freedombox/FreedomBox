@@ -15,6 +15,8 @@ from plinth.tests import functional
 
 pytestmark = [pytest.mark.system, pytest.mark.backups]
 
+REMOTE_PATH = 'tester@localhost:~/backups'
+
 
 @pytest.fixture(scope='module', autouse=True)
 def fixture_background(session_browser):
@@ -66,8 +68,25 @@ def test_set_schedule(session_browser):
                             monthly=30, run_at=15, without_app='firewall')
 
 
+def test_remote_backup_location(session_browser):
+    """Test remote backup location operations."""
+    _add_remote_backup_location(session_browser)
+    assert _has_remote_backup_location(session_browser)
+
+    _remove_remote_backup_location(session_browser)
+    assert not _has_remote_backup_location(session_browser)
+
+    # Add it again without providing SSH password.
+    _add_remote_backup_location(session_browser, False)
+    assert _has_remote_backup_location(session_browser)
+
+    _remove_remote_backup_location(session_browser)
+    assert not _has_remote_backup_location(session_browser)
+
+
 def _assert_main_page_is_shown(session_browser):
-    assert (session_browser.url.endswith('/plinth/'))
+    assert (session_browser.url.endswith('/freedombox/')
+            or session_browser.url.endswith('/plinth/'))
 
 
 def _backup_download(session_browser, downloaded_file_info, archive_name):
@@ -108,7 +127,7 @@ def _backup_schedule_get(browser):
     functional.nav_to_module(browser, 'backups')
     with functional.wait_for_page_update(browser):
         browser.links.find_by_href(
-            '/plinth/sys/backups/root/schedule/').first.click()
+            '/freedombox/sys/backups/root/schedule/').first.click()
 
     without_apps = []
     elements = browser.find_by_name('backups_schedule-selected_apps')
@@ -140,7 +159,7 @@ def _backup_schedule_set(browser, enable, daily, weekly, monthly, run_at,
     functional.nav_to_module(browser, 'backups')
     with functional.wait_for_page_update(browser):
         browser.links.find_by_href(
-            '/plinth/sys/backups/root/schedule/').first.click()
+            '/freedombox/sys/backups/root/schedule/').first.click()
 
     if enable:
         browser.find_by_name('backups_schedule-enabled').check()
@@ -172,28 +191,81 @@ def _download_file_logged_in(browser, url, suffix=''):
 
 
 def _download(browser, archive_name=None):
+    """Download a backup archive to a temporary file on disk."""
     functional.nav_to_module(browser, 'backups')
-    href = f'/plinth/sys/backups/root/download/{archive_name}/'
+    href = f'/freedombox/sys/backups/root/download/{archive_name}/'
     url = functional.base_url + href
     file_path = _download_file_logged_in(browser, url, suffix='.tar.gz')
     return file_path
 
 
 def _open_main_page(browser):
+    """Open the FreedomBox interface main page."""
     with functional.wait_for_page_update(browser):
-        browser.links.find_by_href('/plinth/').first.click()
+        browser.links.find_by_href('/freedombox/').first.click()
 
 
 def _upload_and_restore(browser, app_name, downloaded_file_path):
+    """Upload a backup archive from the disk and perform restore operation."""
     functional.nav_to_module(browser, 'backups')
     with functional.wait_for_page_update(browser):
-        browser.links.find_by_href('/plinth/sys/backups/upload/').first.click()
+        browser.links.find_by_href(
+            '/freedombox/sys/backups/upload/').first.click()
 
     fileinput = browser.find_by_id('id_backups-file')
     fileinput.fill(downloaded_file_path)
     # submit upload form
     functional.submit(browser, form_class='form-upload')
     # submit restore form
-    with functional.wait_for_page_update(browser,
-                                         expected_url='/plinth/sys/backups/'):
+    with functional.wait_for_page_update(
+            browser, expected_url='/freedombox/sys/backups/'):
         functional.submit(browser, form_class='form-restore')
+
+
+def _has_remote_backup_location(browser) -> bool:
+    """Return whether atleast one remote backup location is configured."""
+    functional.nav_to_module(browser, 'backups')
+    return browser.is_element_present_by_css(
+        f'.repository[data-repository-name="{REMOTE_PATH}"]')
+
+
+def _add_remote_backup_location(browser, ssh_use_password=True):
+    """Add a remote backup location."""
+    if _has_remote_backup_location(browser):
+        _remove_remote_backup_location(browser)
+
+    browser.links.find_by_href(
+        '/freedombox/sys/backups/repositories/add-remote/').first.click()
+    browser.find_by_name('repository').fill(REMOTE_PATH)
+    password = functional.get_password(
+        functional.config['DEFAULT']['username'])
+    if ssh_use_password:
+        browser.find_by_id('id_ssh_auth_type_1').check()
+        browser.find_by_name('ssh_password').fill(password)
+    else:
+        browser.find_by_id('id_ssh_auth_type_0').check()
+
+    browser.choose('id_encryption', 'repokey')
+    browser.find_by_name('encryption_passphrase').fill(password)
+    browser.find_by_name('confirm_encryption_passphrase').fill(password)
+    functional.submit(browser, form_class='form-add-remote-repository')
+
+    assert browser.is_text_present('Added new remote SSH repository.')
+
+    if 'ssh-verify' in browser.url:
+        _verify_host_key(browser)
+
+
+def _remove_remote_backup_location(browser):
+    """Remove the remote backup location with known remote path."""
+    repository = browser.find_by_css(
+        f'.repository[data-repository-name="{REMOTE_PATH}"]').first
+    repository.find_by_css('.repository-remove').first.click()
+    functional.submit(browser, form_class='form-remove-location')
+
+
+def _verify_host_key(browser):
+    """Verify the remote location's SSH host key."""
+    browser.find_by_name('ssh_public_key').first.click()
+    functional.submit(browser, form_class='form-verify-ssh-hostkey')
+    assert browser.is_text_present('SSH host verified.')

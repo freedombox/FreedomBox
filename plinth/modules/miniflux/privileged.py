@@ -4,15 +4,13 @@
 import json
 import os
 import pathlib
-import shutil
 from typing import Tuple
-from urllib.parse import urlparse
 
 import pexpect
 
 from plinth import action_utils
 from plinth.actions import privileged, secret_str
-from plinth.db import postgres
+from plinth.db import postgres, dbconfig
 from plinth.utils import is_non_empty_file
 
 STATIC_SETTINGS = {
@@ -22,7 +20,7 @@ STATIC_SETTINGS = {
 }
 
 ENV_VARS_FILE = '/etc/miniflux/freedombox.conf'
-DATABASE_FILE = '/etc/miniflux/database'
+DBCONFIG_PATH = '/etc/dbconfig-common/miniflux.conf'
 DB_BACKUP_FILE = '/var/lib/plinth/backups-data/miniflux-database.sql'
 
 
@@ -53,20 +51,6 @@ def pre_setup():
 
     new_settings = existing_settings | STATIC_SETTINGS
     vars_file.write_text(_dict_to_env_file(new_settings))
-
-
-@privileged
-def setup(old_version: int):
-    """Perform post-install actions for Miniflux."""
-    # Fix incorrect permissions on database file in version 2.2.0-2. See
-    # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1081562 . Can be
-    # removed after the fix for the bug reaches Trixie/testing.
-    shutil.chown(DATABASE_FILE, user='miniflux', group='root')
-    if not old_version or action_utils.service_is_enabled('miniflux'):
-        # If the service was tried too many times already, it won't
-        # successfully restart.
-        action_utils.service_reset_failed('miniflux')
-        action_utils.service_restart('miniflux')
 
 
 def _run_miniflux_interactively(command: str, username: str,
@@ -132,28 +116,16 @@ def uninstall():
     ])
 
 
-def _get_database_config():
-    """Retrieve database credentials."""
-    db_connection_string = pathlib.Path(DATABASE_FILE).read_text().strip()
-    parsed_url = urlparse(db_connection_string)
-    return {
-        'user': parsed_url.username,
-        'password': parsed_url.password,
-        'database': parsed_url.path.lstrip('/'),
-        'host': parsed_url.hostname,
-    }
-
-
 @privileged
 def dump_database():
     """Dump database to file."""
-    config = _get_database_config()
+    config = dbconfig.get_credentials(DBCONFIG_PATH)
     postgres.dump_database(DB_BACKUP_FILE, config['database'])
 
 
 @privileged
 def restore_database():
     """Restore database from file."""
-    config = _get_database_config()
+    config = dbconfig.get_credentials(DBCONFIG_PATH)
     postgres.restore_database(DB_BACKUP_FILE, config['database'],
                               config['user'], config['password'])

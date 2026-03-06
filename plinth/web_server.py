@@ -72,8 +72,19 @@ def init():
         'engine.autoreload.match': AUTORELOAD_REGEX,
     })
 
+    def _logging_middleware(application):
+        """A WSGI middleware to log messages before executing them."""
+
+        def _wrapper(environ, start_response):
+            """Log request, then hand control to original app."""
+            logger.info("%s %s", environ['REQUEST_METHOD'],
+                        environ['PATH_INFO'])
+            return application(environ, start_response)
+
+        return _wrapper
+
     application = web_framework.get_wsgi_application()
-    cherrypy.tree.graft(application, cfg.server_dir)
+    cherrypy.tree.graft(_logging_middleware(application), cfg.server_dir)
 
     static_dir = os.path.join(cfg.file_root, 'static')
     _mount_static_directory(static_dir, web_framework.get_static_url())
@@ -151,8 +162,8 @@ class StaticFiles(app_module.FollowerComponent):
         static files from the directory are served over the given web path. The
         web path will be prepended with the FreedomBox's configured base web
         path. For example, {'/foo': '/usr/share/foo'} means that
-        '/usr/share/foo/bar.png' will be served over '/plinth/foo/bar.png' if
-        FreedomBox is configured to be served on '/plinth'.
+        '/usr/share/foo/bar.png' will be served over '/freedombox/foo/bar.png'
+        if FreedomBox is configured to be served on '/freedombox'.
 
         """
         super().__init__(component_id)

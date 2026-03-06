@@ -40,7 +40,6 @@ def get_nm_info():
         info['listen_port'] = settings.get_listen_port()
         info['fwmark'] = settings.get_fwmark()
         info['mtu'] = settings.get_mtu()
-        info['default_route'] = settings.get_ip4_auto_default_route()
         info['peers'] = {}
         for peer_index in range(settings.get_peers_len()):
             peer = settings.get_peer(peer_index)
@@ -57,9 +56,18 @@ def get_nm_info():
 
             info['peers'][peer_info['public_key']] = peer_info
 
+        # This is default route when all IPs are in allowed IPs list.
+        info['default_route'] = False
+        for peer_info in info['peers'].values():
+            if ('0.0.0.0/0' in peer_info['allowed_ips']
+                    and '::/0' in peer_info['allowed_ips']):
+                info['default_route'] = True
+
         settings_ipv4 = connection.get_setting_ip4_config()
         if settings_ipv4 and settings_ipv4.get_num_addresses():
-            info['ip_address'] = settings_ipv4.get_address(0).get_address()
+            address = settings_ipv4.get_address(0)
+            info['ip_address_and_network'] = (address.get_address() + '/' +
+                                              str(address.get_prefix()))
 
         connections[info['interface']] = info
 
@@ -125,6 +133,17 @@ def enable_connections(enable):
                 network.deactivate_connection(connection.get_uuid())
             except network.ConnectionNotFound:
                 pass  # Connection is already inactive
+
+
+def delete_connections():
+    """Remove all WireGuard connections."""
+    setting_name = nm.SETTING_WIREGUARD_SETTING_NAME
+    client = network.get_nm_client()
+    for connection in client.get_connections():
+        if connection.get_connection_type() != setting_name:
+            continue
+
+        connection.delete()
 
 
 def _get_public_key_from_private_key(private_key):

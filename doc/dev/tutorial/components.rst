@@ -291,10 +291,8 @@ file ``transmission-plinth.conf``, add the following.
 
   <Location /transmission>
       ...
-      Include          includes/freedombox-single-sign-on.conf
-      <IfModule mod_auth_pubtkt.c>
-          TKTAuthToken "admin" "bit-torrent"
-      </IfModule>
+      Use AuthOpenIDConnect
+      Use RequireGroup bit-torrent
   </Location>
 
 Showing a shortcut in the front page

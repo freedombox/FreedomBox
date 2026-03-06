@@ -112,7 +112,7 @@ def _configure(browser, config):
 
     functional.nav_to_module(browser, 'dynamicdns')
     functional.click_link_by_href(browser,
-                                  '/plinth/sys/dynamicdns/domain/add/')
+                                  '/freedombox/sys/dynamicdns/domain/add/')
     for key, value in config.items():
         field_id = f'id_domain-{key}'
         if key == 'service_type':
@@ -130,7 +130,7 @@ def _configure(browser, config):
 
 def _assert_has_config(browser, config):
     functional.nav_to_module(browser, 'dynamicdns')
-    link = f'/plinth/sys/dynamicdns/domain/{config["domain"]}/edit/'
+    link = f'/freedombox/sys/dynamicdns/domain/{config["domain"]}/edit/'
     functional.click_link_by_href(browser, link)
     for key, value in config.items():
         if key == 'password':
@@ -153,6 +153,6 @@ def _get_domains(browser):
 def _delete_domain(browser, domain):
     """Delete a given domain."""
     functional.nav_to_module(browser, 'dynamicdns')
-    link = f'/plinth/sys/dynamicdns/domain/{domain}/delete/'
+    link = f'/freedombox/sys/dynamicdns/domain/{domain}/delete/'
     functional.click_link_by_href(browser, link)
     functional.submit(browser, form_class='form-delete')

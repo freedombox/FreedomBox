@@ -27,7 +27,7 @@ class TestTiddlyWikiApp(functional.BaseAppTests):
             return
 
         session_browser.links.find_by_href(
-            '/plinth/apps/tiddlywiki/create/').first.click()
+            '/freedombox/apps/tiddlywiki/create/').first.click()
         session_browser.find_by_id('id_tiddlywiki-name').fill(wiki_name)
         functional.submit(session_browser, form_class='form-tiddlywiki')
 
@@ -74,8 +74,8 @@ class TestTiddlyWikiApp(functional.BaseAppTests):
         new_wiki_name = 'A Midsummer Night\'s Dream'
         new_file_name = 'A_Midsummer_Nights_Dream.html'
         self._get_links_in_app_page(
-            session_browser,
-            '/plinth/apps/tiddlywiki/' + file_name + '/rename/').first.click()
+            session_browser, '/freedombox/apps/tiddlywiki/' + file_name +
+            '/rename/').first.click()
         session_browser.find_by_id('id_tiddlywiki-new_name').fill(
             new_wiki_name)
         functional.submit(session_browser, form_class='form-tiddlywiki')
@@ -89,7 +89,7 @@ class TestTiddlyWikiApp(functional.BaseAppTests):
         test_wiki_file = str(_test_data_dir / 'dummy_wiki.html')
 
         session_browser.links.find_by_href(
-            '/plinth/apps/tiddlywiki/upload/').first.click()
+            '/freedombox/apps/tiddlywiki/upload/').first.click()
         session_browser.attach_file('tiddlywiki-file', test_wiki_file)
         functional.submit(session_browser, form_class='form-tiddlywiki')
 
@@ -100,8 +100,8 @@ class TestTiddlyWikiApp(functional.BaseAppTests):
         self._create_wiki_file(session_browser)
 
         self._get_links_in_app_page(
-            session_browser,
-            '/plinth/apps/tiddlywiki/' + file_name + '/delete/').first.click()
+            session_browser, '/freedombox/apps/tiddlywiki/' + file_name +
+            '/delete/').first.click()
         functional.submit(session_browser, form_class='form-delete')
 
         self._assert_wiki_present(session_browser, file_name, present=False)

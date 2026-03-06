@@ -100,7 +100,7 @@ class DiagnosticsApp(app_module.App):
         results = super().diagnose()
         results.append(diagnose_port_listening(8000, 'tcp4'))
         results.extend(
-            diagnose_url_on_all('http://{host}/plinth/',
+            diagnose_url_on_all('http://{host}/freedombox/',
                                 check_certificate=False))
 
         return results

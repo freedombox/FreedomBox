@@ -28,17 +28,11 @@ Vagrant.configure(2) do |config|
   SHELL
   config.vm.provision "tests", run: "never", type: "shell", path: "plinth/tests/functional/install.sh"
   config.vm.post_up_message = "FreedomBox virtual machine is ready
-for development. Plinth will be available at https://localhost:4430/plinth
+for development. Plinth will be available at https://localhost:4430/freedombox
 (with an invalid SSL certificate). To watch logs:
 $ vagrant ssh
 $ sudo freedombox-logs
 "
 
-  config.trigger.after [:up, :resume, :reload] do |trigger|
-    trigger.info = "Set plinth user permissions for development environment"
-    trigger.run_remote = {
-      path: ".vagrant-scripts/plinth-user-permissions.py"
-    }
-  end
   config.vm.boot_timeout=1200
 end

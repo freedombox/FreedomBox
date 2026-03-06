@@ -337,7 +337,7 @@ def test_list_filter_user_and_group(note, user):
 @patch('plinth.notification.gettext')
 def test_display_context(gettext, note, user, rf):
     """Test display context for a notification."""
-    request = rf.get('/plinth/help/about/')
+    request = rf.get('/freedombox/help/about/')
 
     data = {
         'test-key1': 'test-value1',
@@ -396,7 +396,7 @@ def test_display_context(gettext, note, user, rf):
 
 def test_display_context_body_template(note, user, load_cfg, rf):
     """Test display context for a notification with body template."""
-    request = rf.get('/plinth/help/about/')
+    request = rf.get('/freedombox/help/about/')
 
     note.body_template = 'invalid-template.html'
     note.save()
@@ -412,7 +412,7 @@ def test_display_context_body_template(note, user, load_cfg, rf):
     context = Notification.get_display_context(request, user)
     context_note = context['notifications'][0]
     assert context_note['body'].content == \
-        b'Test notification body /plinth/help/about/\n'
+        b'Test notification body /freedombox/help/about/\n'
 
 
 @pytest.mark.django_db

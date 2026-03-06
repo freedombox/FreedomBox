@@ -21,7 +21,8 @@ DISABLED_APPS_TO_REMOVE := \
     tahoe \
     mldonkey \
     i2p \
-    ttrss
+    ttrss \
+    sso
 
 APP_FILES_TO_REMOVE := $(foreach app,$(DISABLED_APPS_TO_REMOVE),$(ENABLED_APPS_PATH)/$(app))
 
@@ -101,11 +102,12 @@ install:
         $(INSTALL) -d $(DESTDIR)$${lib_dir} && \
 	rm -rf $(DESTDIR)$${lib_dir}/plinth $(DESTDIR)$${lib_dir}/plinth*.dist-info && \
         mv $${temp}/plinth $${temp}/plinth*.dist-info $(DESTDIR)$${lib_dir} && \
-	rm -f $(DESTDIR)$${lib_dir}/plinth*.dist-info/COPYING.md && \
+	rm -f $(DESTDIR)$${lib_dir}/plinth*.dist-info/licenses/COPYING.md && \
 	rm -f $(DESTDIR)$${lib_dir}/plinth*.dist-info/direct_url.json && \
         $(INSTALL) -D -t $(BIN_DIR) bin/plinth
 	$(INSTALL) -D -t $(LIB_DIR)/freedombox bin/freedombox-privileged
 	$(INSTALL) -D -t $(BIN_DIR) bin/freedombox-cmd
+	$(INSTALL) -D -t $(BIN_DIR) bin/freedombox-change-password
 
 	# Static web server files
 	rm -rf $(STATIC_FILES_DIRECTORY)
@@ -229,7 +231,7 @@ provision-dev:
 	    sshpass bash-completion
 
 wait-while-first-setup:
-	while [ x$$(curl -k https://localhost/plinth/status/ 2> /dev/null | \
+	while [ x$$(curl -k https://localhost/freedombox/status/ 2> /dev/null | \
 	    json_pp 2> /dev/null | grep 'is_first_setup_running' | \
             tr -d '[:space:]' | cut -d':' -f2 ) != 'xfalse' ] ; do \
 	    sleep 1; echo -n .; done

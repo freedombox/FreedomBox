@@ -21,15 +21,18 @@ def test_homepage_mapping():
     func = home_page_url2scid
     assert func(None) == 'apache-default'
     assert func('/unknown/url') is None
-    assert func('/plinth/') == 'plinth'
-    assert func('/plinth') == 'plinth'
-    assert func('plinth') == 'plinth'
+    assert func('/plinth/') == 'freedombox'
+    assert func('/plinth') == 'freedombox'
+    assert func('plinth') == 'freedombox'
+    assert func('/freedombox/') == 'freedombox'
+    assert func('/freedombox') == 'freedombox'
+    assert func('freedombox') == 'freedombox'
     assert func('/index.html') == 'apache-default'
     assert func('/~user') == 'uws-user'
     assert func('/~user/whatever/else') == 'uws-user'
 
     func = _home_page_scid2url
-    assert func('plinth') == '/plinth/'
+    assert func('freedombox') == '/freedombox/'
     assert func('apache-default') is None
 
 
@@ -63,7 +66,7 @@ def test_homepage_mapping_skip_ci():
 
     # AC: Return None if it doesn't:
     os.rmdir(uws_directory)
-    assert _home_page_scid2url(uws_scid) == '/plinth/'
+    assert _home_page_scid2url(uws_scid) == '/freedombox/'
 
 
 @patch(
@@ -102,7 +105,7 @@ def test_homepage_field():
     uws_url = uws_url_of_user(user)
     uws_scid = home_page_url2scid(uws_url)
 
-    default_home_page = 'plinth'
+    default_home_page = 'freedombox'
     original_home_page = get_home_page() or default_home_page
     change_home_page(default_home_page)  # Set to known value explicitly
 
@@ -113,7 +116,7 @@ def test_homepage_field():
 
     # AC: valid changes actually happen:
     pathlib.Path(uws_directory).mkdir(parents=True)
-    for scid in ('b', 'a', uws_scid, 'apache-default', 'plinth'):
+    for scid in ('b', 'a', uws_scid, 'apache-default', 'freedombox'):
         change_home_page(scid)
         assert get_home_page() == scid
 

@@ -497,9 +497,8 @@ class AppOperationsView(TemplateView):
         context['app_id'] = self.app.app_id
         context['app_info'] = self.app.info
         context['operations'] = operation.manager.filter(self.app.app_id)
-        context['refresh_page_sec'] = 0
-        if context['operations']:
-            context['refresh_page_sec'] = 3
+        # Refresh periodically while operations are running
+        context['refresh_page_sec'] = 3 if context['operations'] else 0
 
         return context
 
@@ -532,10 +531,10 @@ class SetupView(TemplateView):
                                      != app_module.App.SetupState.NEEDS_SETUP)
 
         context['refresh_page_sec'] = None
-        if context['setup_state'] == app_module.App.SetupState.UP_TO_DATE:
-            context['refresh_page_sec'] = 0
-        elif context['operations']:
+        if context['operations']:
             context['refresh_page_sec'] = 3
+        elif context['setup_state'] == app_module.App.SetupState.UP_TO_DATE:
+            context['refresh_page_sec'] = 0
 
         return context
 
@@ -550,10 +549,7 @@ class SetupView(TemplateView):
                 # Give a moment for the setup process to start and show
                 # meaningful status.
                 time.sleep(1)
-                response = self.render_to_response(self.get_context_data())
-                # Post/Response/Get pattern for reloads
-                response.status_code = 303
-                return response
+                return redirect(request.path)
 
         return super().dispatch(request, *args, **kwargs)
 
@@ -686,10 +682,18 @@ class AppLogsView(TemplateView):
 
 def notification_dismiss(request, id):
     """Dismiss a notification."""
+    from django.http import HttpResponse
     from .notification import Notification
     notes = Notification.list(key=id, user=request.user)
     if notes:
         # If a notification is not found, no need to dismiss it.
         notes[0].dismiss()
+
+    # Don't redirect if the request is from HTMX.
+    if request.headers.get('HX-Request'):
+        response = HttpResponse(status=200)
+        # Trigger the notification-dismissed event to update the UI.
+        response['HX-Trigger'] = 'notification-dismissed'
+        return response
 
     return HttpResponseRedirect(_get_redirect_url_from_param(request))

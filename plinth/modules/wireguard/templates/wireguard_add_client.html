@@ -15,6 +15,18 @@
 
     {{ form|bootstrap }}
 
+    {% if next_ip %}
+      <div class="form-group">
+        <label for="id_next_ip" class="control-label">
+          {% trans "IP address that will be assigned to this client" %}
+        </label>
+        <div>
+          <input type="text" id="id_next_ip" class="form-control"
+                 value="{{ next_ip }}" disabled="disabled">
+        </div>
+      </div>
+    {% endif %}
+
     <input type="submit" class="btn btn-primary"
            value="{% trans "Add Client" %}"/>
   </form>

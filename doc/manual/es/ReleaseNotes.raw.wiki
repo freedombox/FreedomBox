@@ -8,6 +8,125 @@ For more technical details, see the [[https://salsa.debian.org/freedombox-team/f
 
 The following are the release notes for each !FreedomBox version.
 
+== FreedomBox 26.4 (2026-03-02) ==
+
+=== Highlights ===
+
+ * backups: Enable key-based SSH authentication for remote backups
+ * oidc: New app to implement OpenID Connect Provider
+ * apache: Implement protecting apps using OpenID Connect
+ * wireguard: Improve server section user experience flow
+
+=== Other Changes ===
+
+ * *: Remove some absolute file paths in SVGs
+ * *: Update URL base from /plinth to /freedombox
+ * README/HACKING: Update weblate project path to /freedombox
+ * Vagrantfile: Drop unnecessary sudo configuration for actions
+ * action_utils: Drop support for link-local IPv6 addresses
+ * action_utils: Fix issue with type checking a generator
+ * action_utils: Implement utility to change umask temporarily
+ * actions, privileged_daemon: Drop some unused global statements
+ * apache: Fix diagnosing URLs protected by OpenID Connect
+ * apache: Preserve host header when proxying to service
+ * backups: Arrange form for adding remote location
+ * backups: Avoid some repeated text in form help text
+ * backups: Copy SSH client public key to remote
+ * backups: Create .ssh folder before creating SSH key
+ * backups: Create a better comment in the generated SSH key file
+ * backups: Display SSH public key when adding remote
+ * backups: Fix issue with Javascript in add remote location form
+ * backups: Fix showing proper error for incorrect passphrase
+ * backups: Fix type checking errors
+ * backups: Generate SSH client key if needed
+ * backups: Migrate to SSH key auth when mounting
+ * backups: Minor refactoring
+ * backups: Show/hide form elements instead of disabling for simplicity
+ * backups: Simplify handling of migration to SSH keys
+ * backups: Test adding/removing remote location
+ * backups: Tweak appearance of add remote location form
+ * backups: Use SSH key instead of password
+ * backups: Use selected SSH credential for remote
+ * backups: tests: Simplify functional test using more classes
+ * bin: Add tool to change !FreedomBox password in Django database
+ * calibre: Use OpenID Connect instead of pubtkt based SSO
+ * cfg: Drop unused actions_dir option
+ * cfg: Drop unused config_dir option
+ * container: Align terminology in printed banner
+ * db: Create a utility to get credentials from dbconfig
+ * debian: Ensure that gbp creates a clean tarball prior to build
+ * deluge: Use OpenID Connect instead of pubtkt based SSO
+ * doc/dev: Set new theme for developer documentation
+ * doc/dev: Use OpenID Connect instead of pubtkt based SSO
+ * doc/dev: always have an up-to-date copyright year
+ * ejabberd: Fix setting up certificates for multiple domains
+ * email: Use OpenID Connect instead of pubtkt based SSO
+ * featherwiki: Use OpenID Connect instead of pubtkt based SSO
+ * gitweb: Fix issue with running post init due to missing method
+ * gitweb: Use OpenID Connect instead of pubtkt based SSO
+ * js: When page load fails during install, show it to user
+ * letsencrypt: When copying certificate reset the umask reliably
+ * locale/bg: Fix several translations with HTML links (Bulgarian)
+ * locale/de: Fix several translations with HTML links (German)
+ * locale: Update translations for Albanian, Catalan, Chinese (Simplified Han script), Czech, French, German, Greek, Italian, Swedish, Tamil, Turkish
+ * matrixsynapse: Update apache config to proxy Synapse client API
+ * miniflux: Get credentials from dbconfig-common directly
+ * miniflux: Revert workaround for a packaging bug with DB connection
+ * mumble: murmurd renamed to mumble-server
+ * oidc: Style the page for authorizing an OIDC app
+ * pyproject: Use new format to specify licenses
+ * quassel: Explicitly set permissions on the domain configuration file
+ * rssbridge: Use OpenID Connect instead of pubtkt based SSO
+ * searx: Use OpenID Connect instead of pubtkt based SSO
+ * sharing: Use OpenID Connect instead of pubtkt based SSO
+ * sso: Merge into users module, drop pubtkt related code
+ * syncthing: Use OpenID Connect instead of pubtkt based SSO
+ * syncthing: tests: Fix tests by allowing rapid restarts
+ * templates: Allow building pages without navigation bar and footer
+ * tests: functional: Fix expecting !FreedomBox to be home page
+ * tests: functional: Fix reloading error page during install/uninstall
+ * tests: functional: Increase systemd rate limits for starting units
+ * tiddlywiki: Use OpenID Connect instead of pubtkt based SSO
+ * transmission: Use OpenID Connect instead of pubtkt based SSO
+ * ui: Add animation for notification dismissal
+ * ui: Dismiss notifications without page reload
+ * ui: Refactor notification delete buttons to avoid repeating code
+ * web_framework: Allow !FreedomBox apps to override templates
+ * web_server: Log requests to WSGI app
+ * wireguard: Accept/use netmask with IP address for server connection
+ * wireguard: Fix format when showing multiple endpoints of the server
+ * wireguard: Fix showing default route setting in server edit form
+ * wireguard: Fix split tunneling
+ * wireguard: Show status of default route in server information page
+ * wireguard: filter .local addresses from showClient view
+ * wireguard: show server vpn ip in show client page
+ * wordpress: Use OpenID Connect instead of pubtkt based SSO when private
+
+== FreedomBox 26.3 (2026-02-02) ==
+
+=== Highlights ===
+
+ * ui: Use HTMX to eliminate full page reloads
+ * wireguard: Add 'Start Server' button to help with client setup
+
+=== Other Changes ===
+
+ * debian: Follows policy 4.7.3
+ * debian: Ignore lintian warning: service file missing Install section
+ * debian: Remove default Rules-Requires-Root
+ * debian: Remove preinst script
+ * debian: Update copyright years
+ * docs: Update container script usage
+ * lintian: Remove mismatched overrides
+ * locale: Update translations for Chinese (Simplified Han script), German, Italian, Turkish
+ * Makefile: Fix removing extra license file
+ * ui: Add HTMX as a dependency
+ * ui: Use HTMX to update notifications on partial page updates
+ * wireguard: Remove NM connections when app is uninstalled
+ * wireguard: Show next available client IP in Add Client form
+ * wireguard: Update functional tests to handle Start Server button
+ * wireguard: Show server endpoint on main app page
+
 == FreedomBox 26.2 (2026-01-20) ==
 
  * gitweb: Fix deleting last repo disables app

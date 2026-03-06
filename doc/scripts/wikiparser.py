@@ -13,7 +13,7 @@ from pathlib import Path
 from xml.sax.saxutils import escape
 
 BASE_URL = 'https://wiki.debian.org/'
-LOCAL_BASE = '/plinth/help/manual/{lang}/'
+LOCAL_BASE = '/freedombox/help/manual/{lang}/'
 ICONS_DIR = 'icons'
 
 DEFAULT_LANGUAGE = 'en'
@@ -624,21 +624,21 @@ def resolve_url(url, context):
 
     Locally available page in default language => shortcut to local copy:
     >>> resolve_url('FreedomBox/Contribute', {'language': '', 'title': ''})
-    '/plinth/help/manual/en/Contribute#'
+    '/freedombox/help/manual/en/Contribute#'
 
     Translated available page => shortcut to local copy:
     >>> resolve_url('es/FreedomBox/Contribute', {'language': '', 'title': ''})
-    '/plinth/help/manual/es/Contribute#'
+    '/freedombox/help/manual/es/Contribute#'
 
     Available page in default language refferred as translated => shortcut to
     local copy:
     >>> resolve_url('en/FreedomBox/Contribute', {'language': '', 'title': ''})
-    '/plinth/help/manual/en/Contribute#'
+    '/freedombox/help/manual/en/Contribute#'
 
     Unrecognized language => handle considering it as default language:
     >>> resolve_url('missing/FreedomBox/Contribute', {'language': '', \
     'title': ''})
-    '/plinth/help/manual/en/Contribute#'
+    '/freedombox/help/manual/en/Contribute#'
     """
 
     # Process first all easy, straight forward cases:
@@ -1191,11 +1191,11 @@ from="## BEGIN_INCLUDE", to="## END_INCLUDE")>>')
     [Paragraph([PlainText('a')]), Paragraph([PlainText('b ')])]
     >>> parse_wiki('{{{#!wiki caution\\n\\nOnce some other app is set as the \
 home page, you can only navigate to the !FreedomBox Service (Plinth) by \
-typing https://myfreedombox.rocks/plinth/ into the browser. <<BR>>\\n\
+typing https://myfreedombox.rocks/freedombox/ into the browser. <<BR>>\\n\
 ''/freedombox'' can also be used as an alias to ''/plinth''\\n}}}')
     [Admonition('caution', [Paragraph([PlainText('Once some other app is set \
 as the home page, you can only navigate to the FreedomBox Service (Plinth) by \
-typing '), Url('https://myfreedombox.rocks/plinth/'), PlainText(' into the \
+typing '), Url('https://myfreedombox.rocks/freedombox/'), PlainText(' into the \
 browser. ')]), Paragraph([PlainText('/freedombox can also be used as an alias \
 to /plinth ')])])]
 
@@ -1761,7 +1761,7 @@ Features introduction</ulink>'
 
     >>> generate_inner_docbook([Link('../../Contribute', \
 [PlainText('Contribute')])], context={'title': 'FreedomBox/Manual/Hardware'})
-    '<ulink url="/plinth/help/manual/en/Contribute#">\
+    '<ulink url="/freedombox/help/manual/en/Contribute#">\
 Contribute</ulink>'
 
     >>> generate_inner_docbook([Link('/Code', \
@@ -1772,9 +1772,9 @@ Code</ulink>'
     >>> generate_inner_docbook([Link('DebianBug:1234', [PlainText('Bug')])])
     '<ulink url="https://bugs.debian.org/1234#">Bug</ulink>'
 
-    >>> generate_inner_docbook([Link('DebianPkg:plinth', \
+    >>> generate_inner_docbook([Link('DebianPkg:freedombox', \
 [PlainText('Plinth')])])
-    '<ulink url="https://packages.debian.org/plinth#">Plinth</ulink>'
+    '<ulink url="https://packages.debian.org/freedombox#">Plinth</ulink>'
 
     >>> generate_inner_docbook([Link('AliothList:freedombox-discuss', \
 [PlainText('Discuss')])])
@@ -1911,7 +1911,7 @@ PlainText(' on it. ')])])
     '<para>An alternative to downloading these images is to \
 <ulink url="https://wiki.debian.org/InstallingDebianOn/TI/BeagleBone#">\
  install Debian</ulink> on the BeagleBone and then \
-<ulink url="/plinth/help/manual/en/Debian#">install \
+<ulink url="/freedombox/help/manual/en/Debian#">install \
 FreedomBox</ulink> on it. </para>'
 
     >>> generate_inner_docbook([Paragraph([PlainText('After Roundcube is \

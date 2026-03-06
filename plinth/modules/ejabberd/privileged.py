@@ -45,7 +45,7 @@ def pre_install(domain_name: str):
 
 
 @privileged
-def setup(domain_name: str):
+def setup() -> None:
     """Enable LDAP authentication."""
     with open(EJABBERD_CONFIG, 'r', encoding='utf-8') as file_handle:
         conf = yaml.load(file_handle)
@@ -83,10 +83,16 @@ def setup(domain_name: str):
     conf['ldap_base'] = scalarstring.DoubleQuotedScalarString(
         'ou=users,dc=thisbox')
 
+    # Read all available certificates
+    conf['certfiles'].append(
+        scalarstring.DoubleQuotedScalarString(
+            '/etc/ejabberd/letsencrypt/*/ejabberd.pem'))
+    conf['certfiles'] = list(set(conf['certfiles']))
+
     with open(EJABBERD_CONFIG, 'w', encoding='utf-8') as file_handle:
         yaml.dump(conf, file_handle)
 
-    _upgrade_config(domain_name)
+    _upgrade_config()
 
     try:
         action_utils.run(['ejabberdctl', 'restart'], check=True)
@@ -95,7 +101,7 @@ def setup(domain_name: str):
                     err)
 
 
-def _upgrade_config(domain):
+def _upgrade_config() -> None:
     """Fix the config file by removing deprecated settings."""
     current_version = _get_version()
     if not current_version:
@@ -125,13 +131,9 @@ def _upgrade_config(domain):
             if listen_port['port'] == 5280:
                 listen_port['port'] = 5443
 
-    cert_dir = Path('/etc/ejabberd/letsencrypt') / domain
-    cert_file = str(cert_dir / 'ejabberd.pem')
-    cert_file = scalarstring.DoubleQuotedScalarString(cert_file)
-    conf['s2s_certfile'] = cert_file
-    for listen_port in conf['listen']:
-        if 'certfile' in listen_port:
-            listen_port['certfile'] = cert_file
+    # s2s_certfile is deprecated in favor of certfiles
+    if 's2s_certfile' in conf:
+        conf.pop('s2s_certfile')
 
     # Write changes back to the file
     with open(EJABBERD_CONFIG, 'w', encoding='utf-8') as file_handle:

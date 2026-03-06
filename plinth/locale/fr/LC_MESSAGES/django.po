@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-16 01:18+0000\n"
-"PO-Revision-Date: 2025-12-19 20:00+0000\n"
+"POT-Creation-Date: 2026-03-03 02:00+0000\n"
+"PO-Revision-Date: 2026-02-18 15:09+0000\n"
 "Last-Translator: Coucouf <coucouf@coucouf.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/fr/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.15.1\n"
+"X-Generator: Weblate 5.16.1-dev\n"
 
 #: plinth/config.py:103
 #, python-brace-format
@@ -106,15 +106,15 @@ msgstr "Langue de cette interface web"
 msgid "Use the language preference set in the browser"
 msgstr "Utiliser la langue du navigateur"
 
-#: plinth/menu.py:116 plinth/templates/base.html:123
+#: plinth/menu.py:116 plinth/templates/base.html:125
 msgid "Home"
 msgstr "Accueil"
 
-#: plinth/menu.py:117 plinth/templates/base.html:132
+#: plinth/menu.py:117 plinth/templates/base.html:134
 msgid "Apps"
 msgstr "Applis"
 
-#: plinth/menu.py:119 plinth/menu.py:126 plinth/templates/base.html:141
+#: plinth/menu.py:119 plinth/menu.py:126 plinth/templates/base.html:143
 msgid "System"
 msgstr "Système"
 
@@ -137,35 +137,39 @@ msgstr "Sécurité"
 msgid "Administration"
 msgstr "Administration"
 
-#: plinth/middleware.py:134
+#: plinth/middleware.py:144
 msgid "System is possibly under heavy load. Please retry later."
 msgstr "Le système est peut-être surchargé. Veuillez réessayer ultérieurement."
 
-#: plinth/middleware.py:147
+#: plinth/middleware.py:157
 #, python-brace-format
 msgid "Page not found: {url}"
 msgstr "Page introuvable : {url}"
 
-#: plinth/middleware.py:150
+#: plinth/middleware.py:160
 msgid "Error running operation."
 msgstr "Erreur d’exécution de l’opération."
 
-#: plinth/middleware.py:152
+#: plinth/middleware.py:162
 msgid "Error loading page."
 msgstr "Erreur lors du chargement de la page."
 
-#: plinth/modules/apache/__init__.py:33
+#: plinth/modules/apache/__init__.py:96
 msgid "Apache HTTP Server"
 msgstr "Serveur HTTP Apache"
 
-#: plinth/modules/apache/__init__.py:47
+#: plinth/modules/apache/__init__.py:112
 msgid "Web Server"
 msgstr "Serveur web"
 
-#: plinth/modules/apache/__init__.py:53
+#: plinth/modules/apache/__init__.py:118
 #, python-brace-format
 msgid "{box_name} Web Interface (Plinth)"
 msgstr "Interface web de la {box_name} (Plinth)"
+
+#: plinth/modules/apache/__init__.py:129
+msgid "Web app protected by FreedomBox"
+msgstr ""
 
 #: plinth/modules/apache/components.py:270
 #, python-brace-format
@@ -215,16 +219,16 @@ msgstr "Local"
 msgid "mDNS"
 msgstr "mDNS"
 
-#: plinth/modules/backups/__init__.py:24
+#: plinth/modules/backups/__init__.py:27
 msgid "Backups allows creating and managing backup archives."
 msgstr "Sauvegardes permet de créer et de gérer des archives de sauvegarde."
 
-#: plinth/modules/backups/__init__.py:46 plinth/modules/backups/__init__.py:176
-#: plinth/modules/backups/__init__.py:221
+#: plinth/modules/backups/__init__.py:49 plinth/modules/backups/__init__.py:247
+#: plinth/modules/backups/__init__.py:292
 msgid "Backups"
 msgstr "Sauvegardes"
 
-#: plinth/modules/backups/__init__.py:173
+#: plinth/modules/backups/__init__.py:244
 msgid ""
 "Enable an automatic backup schedule for data safety. Prefer an encrypted "
 "remote backup location or an extra attached disk."
@@ -233,19 +237,19 @@ msgstr ""
 "données. Il est préférable d’utiliser un emplacement de sauvegarde distant "
 "et chiffré, ou un disque externe additionnel."
 
-#: plinth/modules/backups/__init__.py:179
+#: plinth/modules/backups/__init__.py:250
 msgid "Enable a Backup Schedule"
 msgstr "Activer la planification des sauvegardes"
 
-#: plinth/modules/backups/__init__.py:183
-#: plinth/modules/backups/__init__.py:230 plinth/modules/privacy/__init__.py:84
+#: plinth/modules/backups/__init__.py:254
+#: plinth/modules/backups/__init__.py:301 plinth/modules/privacy/__init__.py:84
 #: plinth/modules/storage/__init__.py:326
 #: plinth/modules/upgrades/__init__.py:152
 #, python-brace-format
 msgid "Go to {app_name}"
 msgstr "Aller à {app_name}"
 
-#: plinth/modules/backups/__init__.py:218
+#: plinth/modules/backups/__init__.py:289
 #, python-brace-format
 msgid ""
 "A scheduled backup failed. Past {error_count} attempts for backup did not "
@@ -254,7 +258,7 @@ msgstr ""
 "Une sauvegarde régulière a échoué après {error_count} tentatives. Le dernier "
 "message d’erreur était : {error_message}"
 
-#: plinth/modules/backups/__init__.py:226
+#: plinth/modules/backups/__init__.py:297
 msgid "Error During Backup"
 msgstr "Erreur pendant la sauvegarde"
 
@@ -409,7 +413,9 @@ msgid "Passphrase"
 msgstr "Phrase secrète"
 
 #: plinth/modules/backups/forms.py:187
-msgid "Passphrase; Only needed when using encryption."
+#, fuzzy
+#| msgid "Passphrase; Only needed when using encryption."
+msgid "Only needed when using encryption."
 msgstr ""
 "Phrase secrète ; nécessaire uniquement dans le cas où le chiffrement est "
 "utilisé."
@@ -451,29 +457,57 @@ msgstr ""
 "chemin/vers/le/dépôt/</i>"
 
 #: plinth/modules/backups/forms.py:255
+#, fuzzy
+#| msgid "Authentication Mode"
+msgid "SSH Authentication Type"
+msgstr "Mode Authentification"
+
+#: plinth/modules/backups/forms.py:256
+#, fuzzy
+#| msgid "Authentication to remote server failed."
+msgid "Choose how to authenticate to the remote SSH server."
+msgstr "L’authentification sur le serveur distant a échoué."
+
+#: plinth/modules/backups/forms.py:258
+#, fuzzy
+#| msgid "needs authentication"
+msgid "Key-based Authentication"
+msgstr "nécessite une authentification"
+
+#: plinth/modules/backups/forms.py:259
+#, fuzzy
+#| msgid "Disable password authentication"
+msgid "Password-based Authentication"
+msgstr "Désactiver l’authentification par mot de passe"
+
+#: plinth/modules/backups/forms.py:261
 msgid "SSH server password"
 msgstr "Mot de passe du serveur SSH"
 
-#: plinth/modules/backups/forms.py:256
-msgid ""
-"Password of the SSH Server.<br />SSH key-based authentication is not yet "
-"possible."
-msgstr ""
-"Mot de passe du serveur SSH.<br>L’authentification par clé SSH n’est pas "
-"encore prise en charge."
+#: plinth/modules/backups/forms.py:262
+#, fuzzy
+#| msgid "Disable password authentication"
+msgid "Required for password-based authentication."
+msgstr "Désactiver l’authentification par mot de passe"
 
 #: plinth/modules/backups/forms.py:275
+#, fuzzy
+#| msgid "Disable password authentication"
+msgid "SSH password is needed for password-based authentication."
+msgstr "Désactiver l’authentification par mot de passe"
+
+#: plinth/modules/backups/forms.py:292
 msgid "Remote backup repository already exists."
 msgstr "Ce dépôt de sauvegarde distant existe déjà."
 
-#: plinth/modules/backups/forms.py:281
+#: plinth/modules/backups/forms.py:298
 msgid "Select verified SSH public key"
 msgstr "Sélectionnez une clé publique SSH vérifiée"
 
 #: plinth/modules/backups/manifest.py:14
 #: plinth/modules/backups/templates/backups_repository.html:92
 #: plinth/modules/backups/templates/backups_restore.html:27
-#: plinth/modules/backups/views.py:238 plinth/modules/snapshot/manifest.py:14
+#: plinth/modules/backups/views.py:252 plinth/modules/snapshot/manifest.py:14
 #: plinth/templates/toolbar.html:51 plinth/templates/toolbar.html:52
 msgid "Restore"
 msgstr "Restaurer"
@@ -554,17 +588,17 @@ msgid "Not enough space left on the disk or remote location."
 msgstr ""
 "Pas assez d'espace libre restant sur le disque ou sur l'emplacement distant."
 
-#: plinth/modules/backups/repository.py:93
+#: plinth/modules/backups/repository.py:95
 msgid "Existing repository is not encrypted."
 msgstr "Le dépôt existant n’est pas chiffré."
 
-#: plinth/modules/backups/repository.py:241
+#: plinth/modules/backups/repository.py:246
 #, python-brace-format
 msgid "{box_name} storage"
 msgstr "Stockage de la {box_name}"
 
 #: plinth/modules/backups/templates/backups.html:17
-#: plinth/modules/backups/views.py:124
+#: plinth/modules/backups/views.py:138
 msgid "Create a new backup"
 msgstr "Créer une nouvelle sauvegarde"
 
@@ -600,7 +634,23 @@ msgstr "Ajouter un emplacement de sauvegarde distant"
 msgid "Existing Backups"
 msgstr "Sauvegardes existantes"
 
-#: plinth/modules/backups/templates/backups_add_remote_repository.html:21
+#: plinth/modules/backups/templates/backups_add_remote_repository.html:69
+#, python-format
+msgid ""
+"The following SSH client public key must be added to the authorized keys "
+"list on the remote machine for %(box_name)s to be able to connect to the "
+"remote machine:"
+msgstr ""
+
+#: plinth/modules/backups/templates/backups_add_remote_repository.html:86
+#, python-format
+msgid ""
+"%(box_name)s service will attempt to connect using the provided password. If "
+"successful, then the public key will be automatically added to the "
+"authorized keys list, so that future connections do not need the password."
+msgstr ""
+
+#: plinth/modules/backups/templates/backups_add_remote_repository.html:131
 #: plinth/modules/backups/templates/backups_upload.html:28
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:27
 #: plinth/modules/diagnostics/templates/diagnostics_full.html:102
@@ -625,7 +675,7 @@ msgstr "Sauvegardes existantes"
 msgid "Caution:"
 msgstr "Attention :"
 
-#: plinth/modules/backups/templates/backups_add_remote_repository.html:24
+#: plinth/modules/backups/templates/backups_add_remote_repository.html:134
 #, python-format
 msgid ""
 "The credentials for this repository are stored on your %(box_name)s. <br /> "
@@ -637,7 +687,7 @@ msgstr ""
 "%(box_name)s, vous aurez besoin de ces informations de connexion SSH et, le "
 "cas échéant, de la phrase secrète de chiffrement."
 
-#: plinth/modules/backups/templates/backups_add_remote_repository.html:34
+#: plinth/modules/backups/templates/backups_add_remote_repository.html:144
 msgid "Create Location"
 msgstr "Créer un emplacement"
 
@@ -771,107 +821,109 @@ msgstr ""
 msgid "Verify Host"
 msgstr "Vérifier le serveur"
 
-#: plinth/modules/backups/views.py:68
-msgid "Backup schedule updated."
-msgstr "Planification des sauvegardes mise à jour."
-
-#: plinth/modules/backups/views.py:87
-msgid "Schedule Backups"
-msgstr "Planifier des sauvegardes"
-
-#: plinth/modules/backups/views.py:148
-msgid "Archive created."
-msgstr "Archive créée."
-
-#: plinth/modules/backups/views.py:160
-msgid "Delete Archive"
-msgstr "Supprimer l’archive"
-
-#: plinth/modules/backups/views.py:173
-msgid "Archive deleted."
-msgstr "Archive supprimée."
-
-#: plinth/modules/backups/views.py:187
-msgid "Upload and restore a backup"
-msgstr "Téléverser et restaurer une sauvegarde"
-
-#: plinth/modules/backups/views.py:216
-msgid "Upload successful."
-msgstr "Téléversement réussi."
-
-#: plinth/modules/backups/views.py:254
-msgid "No backup file found."
-msgstr "Aucun fichier de sauvegarde n’a été trouvé."
-
-#: plinth/modules/backups/views.py:262
-msgid "Restore from uploaded file"
-msgstr "Restaurer du fichier téléversé"
-
-#: plinth/modules/backups/views.py:276 plinth/modules/backups/views.py:297
-msgid "Restored files from backup."
-msgstr "Les fichiers ont été restaurés de la sauvegarde."
-
-#: plinth/modules/backups/views.py:327
-msgid "No additional disks available to add a repository."
-msgstr "Aucun disque supplémentaire n’est disponible pour ajouter un dépôt."
-
-#: plinth/modules/backups/views.py:335
-msgid "Create backup repository"
-msgstr "Créer un dépôt de sauvegarde"
-
-#: plinth/modules/backups/views.py:350
-msgid "Added new repository."
-msgstr "Nouveau dépôt ajouté."
-
-#: plinth/modules/backups/views.py:364
-msgid "Create remote backup repository"
-msgstr "Créer un dépôt de sauvegarde distant"
-
-#: plinth/modules/backups/views.py:386
-msgid "Added new remote SSH repository."
-msgstr "Ajouter un nouveau dépôt SSH distant."
-
-#: plinth/modules/backups/views.py:408
-msgid "Verify SSH hostkey"
-msgstr "Vérifier la clé d’authenticité du serveur SSH"
-
-#: plinth/modules/backups/views.py:434
-msgid "SSH host already verified."
-msgstr "Serveur SSH déjà vérifié."
-
-#: plinth/modules/backups/views.py:445
-msgid "SSH host verified."
-msgstr "Serveur SSH vérifié."
-
-#: plinth/modules/backups/views.py:461
+#: plinth/modules/backups/views.py:44
 msgid "SSH host public key could not be verified."
 msgstr "La clé publique d’authenticité du serveur SSH n’a pu être vérifiée."
 
-#: plinth/modules/backups/views.py:463
+#: plinth/modules/backups/views.py:47
 msgid "Authentication to remote server failed."
 msgstr "L’authentification sur le serveur distant a échoué."
 
-#: plinth/modules/backups/views.py:465
-msgid "Error establishing connection to server: {}"
+#: plinth/modules/backups/views.py:50
+#, fuzzy
+#| msgid "Error establishing connection to server: {}"
+msgid "Error establishing connection to server: {} {} {}"
 msgstr "Erreur lors de la connexion au serveur : {}"
 
-#: plinth/modules/backups/views.py:476
+#: plinth/modules/backups/views.py:82
+msgid "Backup schedule updated."
+msgstr "Planification des sauvegardes mise à jour."
+
+#: plinth/modules/backups/views.py:101
+msgid "Schedule Backups"
+msgstr "Planifier des sauvegardes"
+
+#: plinth/modules/backups/views.py:162
+msgid "Archive created."
+msgstr "Archive créée."
+
+#: plinth/modules/backups/views.py:174
+msgid "Delete Archive"
+msgstr "Supprimer l’archive"
+
+#: plinth/modules/backups/views.py:187
+msgid "Archive deleted."
+msgstr "Archive supprimée."
+
+#: plinth/modules/backups/views.py:201
+msgid "Upload and restore a backup"
+msgstr "Téléverser et restaurer une sauvegarde"
+
+#: plinth/modules/backups/views.py:230
+msgid "Upload successful."
+msgstr "Téléversement réussi."
+
+#: plinth/modules/backups/views.py:268
+msgid "No backup file found."
+msgstr "Aucun fichier de sauvegarde n’a été trouvé."
+
+#: plinth/modules/backups/views.py:276
+msgid "Restore from uploaded file"
+msgstr "Restaurer du fichier téléversé"
+
+#: plinth/modules/backups/views.py:290 plinth/modules/backups/views.py:311
+msgid "Restored files from backup."
+msgstr "Les fichiers ont été restaurés de la sauvegarde."
+
+#: plinth/modules/backups/views.py:341
+msgid "No additional disks available to add a repository."
+msgstr "Aucun disque supplémentaire n’est disponible pour ajouter un dépôt."
+
+#: plinth/modules/backups/views.py:349
+msgid "Create backup repository"
+msgstr "Créer un dépôt de sauvegarde"
+
+#: plinth/modules/backups/views.py:364
+msgid "Added new repository."
+msgstr "Nouveau dépôt ajouté."
+
+#: plinth/modules/backups/views.py:386
+msgid "Create remote backup repository"
+msgstr "Créer un dépôt de sauvegarde distant"
+
+#: plinth/modules/backups/views.py:412
+msgid "Added new remote SSH repository."
+msgstr "Ajouter un nouveau dépôt SSH distant."
+
+#: plinth/modules/backups/views.py:434
+msgid "Verify SSH hostkey"
+msgstr "Vérifier la clé d’authenticité du serveur SSH"
+
+#: plinth/modules/backups/views.py:468
+msgid "SSH host already verified."
+msgstr "Serveur SSH déjà vérifié."
+
+#: plinth/modules/backups/views.py:475
+msgid "SSH host verified."
+msgstr "Serveur SSH vérifié."
+
+#: plinth/modules/backups/views.py:490
 msgid "Repository removed."
 msgstr "Dépôt supprimé."
 
-#: plinth/modules/backups/views.py:490
+#: plinth/modules/backups/views.py:504
 msgid "Remove Repository"
 msgstr "Supprimer ce dépôt"
 
-#: plinth/modules/backups/views.py:500
+#: plinth/modules/backups/views.py:514
 msgid "Repository removed. Backups were not deleted."
 msgstr "Dépôt supprimé. Les sauvegardes n’ont pas été supprimées."
 
-#: plinth/modules/backups/views.py:511
+#: plinth/modules/backups/views.py:525
 msgid "Unmounting failed!"
 msgstr "Le démontage a échoué !"
 
-#: plinth/modules/backups/views.py:527 plinth/modules/backups/views.py:531
+#: plinth/modules/backups/views.py:542 plinth/modules/backups/views.py:546
 msgid "Mounting failed"
 msgstr "Le montage a échoué"
 
@@ -958,7 +1010,7 @@ msgstr ""
 
 #: plinth/modules/bepasty/forms.py:27
 #: plinth/modules/bepasty/templates/bepasty.html:30
-#: plinth/modules/users/forms.py:104
+#: plinth/modules/users/forms.py:125
 msgid "Permissions"
 msgstr "Autorisations"
 
@@ -1046,8 +1098,8 @@ msgstr "Listing"
 #: plinth/modules/tiddlywiki/templates/tiddlywiki_delete.html:34
 #: plinth/modules/wireguard/templates/wireguard_delete_client.html:24
 #: plinth/modules/wireguard/templates/wireguard_delete_server.html:35
-#: plinth/modules/wireguard/templates/wireguard_show_client.html:77
-#: plinth/modules/wireguard/templates/wireguard_show_server.html:78
+#: plinth/modules/wireguard/templates/wireguard_show_client.html:81
+#: plinth/modules/wireguard/templates/wireguard_show_server.html:89
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -1126,6 +1178,7 @@ msgstr "DNS"
 #: plinth/modules/bind/manifest.py:17 plinth/modules/mumble/manifest.py:67
 #: plinth/modules/radicale/manifest.py:91
 #: plinth/modules/shadowsocks/forms.py:24
+#: plinth/modules/wireguard/templates/wireguard.html:13
 msgid "Server"
 msgstr "Serveur"
 
@@ -1434,13 +1487,20 @@ msgid "Webserver Home Page"
 msgstr "Page d’accueil du serveur web"
 
 #: plinth/modules/config/forms.py:37
-#, python-brace-format
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "Choose the default page that must be served when someone visits your "
+#| "{box_name} on the web. A typical use case is to set your blog or wiki as "
+#| "the home page when someone visits the domain name. Note that once the "
+#| "home page is set to something other than {box_name} Service (Plinth), "
+#| "your users must explicitly type /plinth or /freedombox to reach "
+#| "{box_name} Service (Plinth)."
 msgid ""
 "Choose the default page that must be served when someone visits your "
 "{box_name} on the web. A typical use case is to set your blog or wiki as the "
 "home page when someone visits the domain name. Note that once the home page "
 "is set to something other than {box_name} Service (Plinth), your users must "
-"explicitly type /plinth or /freedombox to reach {box_name} Service (Plinth)."
+"explicitly type /freedombox to reach {box_name} Service (Plinth)."
 msgstr ""
 "Sélectionnez la page affichée par défaut lorsque quelqu’un visite votre "
 "{box_name} sur le Web. Vous pouvez typiquement utiliser cette option pour "
@@ -2062,7 +2122,7 @@ msgid "Invalid domain name"
 msgstr "Nom de domaine invalide"
 
 #: plinth/modules/dynamicdns/forms.py:82 plinth/modules/miniflux/forms.py:11
-#: plinth/modules/networks/forms.py:281 plinth/modules/users/forms.py:130
+#: plinth/modules/networks/forms.py:281 plinth/modules/users/forms.py:151
 msgid "Username"
 msgstr "Nom d’utilisateur"
 
@@ -2354,8 +2414,8 @@ msgstr "XMPP"
 #: plinth/modules/samba/templates/samba.html:67
 #: plinth/modules/tor/templates/tor.html:24
 #: plinth/modules/upgrades/templates/upgrades_configure.html:19
-#: plinth/modules/wireguard/templates/wireguard_show_client.html:48
-#: plinth/modules/wireguard/templates/wireguard_show_server.html:47
+#: plinth/modules/wireguard/templates/wireguard_show_client.html:52
+#: plinth/modules/wireguard/templates/wireguard_show_server.html:58
 msgid "Status"
 msgstr "État"
 
@@ -2420,9 +2480,13 @@ msgstr ""
 "automatiquement, pointant vers le premier compte administrateur."
 
 #: plinth/modules/email/__init__.py:41
+#, fuzzy
+#| msgid ""
+#| "<a href=\"/plinth/apps/roundcube/\">Roundcube app</a> provides web "
+#| "interface for users to access email."
 msgid ""
-"<a href=\"/plinth/apps/roundcube/\">Roundcube app</a> provides web interface "
-"for users to access email."
+"<a href=\"/freedombox/apps/roundcube/\">Roundcube app</a> provides web "
+"interface for users to access email."
 msgstr ""
 "<a href=\"/plinth/apps/roundcube/\">L’appli Roundcube</a> propose une "
 "interface Web pour accéder à vos courriels."
@@ -3348,8 +3412,8 @@ msgstr "Partager vos impressions"
 msgid "Contribute"
 msgstr "Participer"
 
-#: plinth/modules/help/__init__.py:53 plinth/templates/base.html:221
-#: plinth/templates/base.html:224 plinth/templates/help-menu.html:46
+#: plinth/modules/help/__init__.py:53 plinth/templates/base.html:223
+#: plinth/templates/base.html:226 plinth/templates/help-menu.html:46
 #: plinth/templates/help-menu.html:47 plinth/templates/index.html:96
 msgid "About"
 msgstr "À propos"
@@ -4023,7 +4087,7 @@ msgstr "Conférence Web"
 
 #: plinth/modules/janus/templates/janus_video_room.html:204
 #: plinth/modules/jsxc/templates/jsxc_launch.html:117
-#: plinth/templates/base.html:277
+#: plinth/templates/base.html:283
 msgid "JavaScript license information"
 msgstr "Information de licence JavaScript"
 
@@ -4767,8 +4831,8 @@ msgstr "Activer PVP"
 #: plinth/modules/minetest/forms.py:26
 msgid "Enabling Player Vs Player will allow players to damage other players."
 msgstr ""
-"Activer le paramètre joueur contre joueur (player versus player, PVP), "
-"permettra aux joueurs d’infliger des dommages aux autres joueurs."
+"Activer le mode joueur contre joueur (player versus player, PVP), permettra "
+"aux joueurs d’infliger des dommages aux autres joueurs."
 
 #: plinth/modules/minetest/forms.py:30
 msgid "Enable damage"
@@ -5263,9 +5327,9 @@ msgstr ""
 
 #: plinth/modules/names/templates/names.html:41
 #: plinth/modules/networks/templates/connection_show.html:40
-#: plinth/modules/wireguard/templates/wireguard_show_client.html:72
-#: plinth/modules/wireguard/templates/wireguard_show_server.html:73
-#: plinth/templates/base.html:171 plinth/templates/base.html:172
+#: plinth/modules/wireguard/templates/wireguard_show_client.html:76
+#: plinth/modules/wireguard/templates/wireguard_show_server.html:84
+#: plinth/templates/base.html:173 plinth/templates/base.html:174
 msgid "Edit"
 msgstr "Modifier"
 
@@ -5844,6 +5908,7 @@ msgstr "Supprimer la connexion"
 #: plinth/modules/networks/templates/connections_diagram.html:22
 #: plinth/modules/networks/templates/connections_diagram.html:51
 #: plinth/modules/networks/templates/connections_diagram.html:73
+#: plinth/modules/oidc/templates/oauth2_provider/authorize.html:17
 msgid "Connection"
 msgstr "Connexion"
 
@@ -6056,6 +6121,7 @@ msgid "Edit Connection"
 msgstr "Modifier la connexion"
 
 #: plinth/modules/networks/templates/connections_fields.html:13
+#: plinth/modules/oidc/templates/oauth2_provider/authorize.html:64
 #: plinth/templates/messages.html:14
 msgid "Error:"
 msgstr "Erreur :"
@@ -6269,11 +6335,17 @@ msgstr ""
 "%(box_name)s puisse fournir ses services."
 
 #: plinth/modules/networks/templates/router_configuration_content.html:32
+#, fuzzy
+#| msgid ""
+#| "If you don't have control over your router, choose not to configure it. "
+#| "To see options to overcome this limitation, choose 'I dont have a public "
+#| "IP address' option in <a href=\"/plinth/sys/networks/internet-connection-"
+#| "type/\">Internet connection type selection</a>."
 msgid ""
 "If you don't have control over your router, choose not to configure it. To "
 "see options to overcome this limitation, choose 'I dont have a public IP "
-"address' option in <a href=\"/plinth/sys/networks/internet-connection-type/"
-"\">Internet connection type selection</a>."
+"address' option in <a href=\"/freedombox/sys/networks/internet-connection-"
+"type/\">Internet connection type selection</a>."
 msgstr ""
 "Si vous n’avez pas le contrôle de votre routeur, choisissez l’option de ne "
 "pas le configurer. Pour plus d’informations sur les manières de contourner "
@@ -6687,6 +6759,40 @@ msgstr ""
 "Échec de la mise à jour du mot passe. Veuillez choisir un mot de passe plus "
 "sûr."
 
+#: plinth/modules/oidc/__init__.py:56
+msgid "OpenID Connect Provider"
+msgstr ""
+
+#: plinth/modules/oidc/templates/oauth2_provider/authorize.html:14
+#, fuzzy
+#| msgid "Applications"
+msgid "Application"
+msgstr "Applications"
+
+#: plinth/modules/oidc/templates/oauth2_provider/authorize.html:22
+#, fuzzy
+#| msgid "Authorized SSH Keys"
+msgid "Authorize App"
+msgstr "Clés SSH autorisées"
+
+#: plinth/modules/oidc/templates/oauth2_provider/authorize.html:37
+#, python-format
+msgid ""
+"<strong>%(app)s</strong> wants to access your account <strong> %(username)s</"
+"strong>"
+msgstr ""
+
+#: plinth/modules/oidc/templates/oauth2_provider/authorize.html:52
+#, fuzzy, python-format
+#| msgid "Authorized SSH Keys"
+msgid "Authorize %(app)s"
+msgstr "Clés SSH autorisées"
+
+#: plinth/modules/oidc/templates/oauth2_provider/authorize.html:59
+#, python-format
+msgid "Authorizing will redirect to %(url)s"
+msgstr ""
+
 #: plinth/modules/openvpn/__init__.py:20
 #, python-brace-format
 msgid ""
@@ -7024,8 +7130,8 @@ msgstr "Redémarrer"
 msgid "Shutdown"
 msgstr "Éteindre"
 
-#: plinth/modules/power/templates/power.html:15 plinth/templates/base.html:186
-#: plinth/templates/base.html:187
+#: plinth/modules/power/templates/power.html:15 plinth/templates/base.html:188
+#: plinth/templates/base.html:189
 msgid "Restart"
 msgstr "Redémarrer"
 
@@ -7187,7 +7293,7 @@ msgstr "Privoxy"
 #: plinth/modules/privoxy/__init__.py:119
 #, python-brace-format
 msgid "Access {url} with proxy {proxy} on tcp{kind}"
-msgstr "Accéder à l’URL {url} avec le mandataire {proxy} sur tcp{kind}"
+msgstr "Accéder à l’URL {url} via le mandataire {proxy} sur tcp{kind}"
 
 #: plinth/modules/privoxy/manifest.py:10
 msgid "Ad blocker"
@@ -7424,11 +7530,11 @@ msgid ""
 "uncheck this option. When unchecked, a text entry field is added to the "
 "login page so the user can specify to which account they wish to connect."
 msgstr ""
-"Lorsque l'option est activée, les utilisateurs ne peuvent que lire et "
+"Lorsque l’option est activée, les utilisateurs ne peuvent que lire et "
 "envoyer des courriels par cette {box_name}. Si vous souhaitez utiliser "
-"Roundcube avec un compte de courriel externe tel que GMail, vous devez "
-"décocher cette option. Lorsqu'elle est décochée, un champ d'entrée de texte "
-"est ajouté à la page de connexion pour que l'utilisateur puisse indiquer à "
+"Roundcube avec un compte de courriel externe tel que Gmail, vous devez "
+"décocher cette option. Lorsqu’elle est décochée, un champ supplémentaire est "
+"ajouté au formulaire de connexion pour que l’utilisateur puisse indiquer à "
 "quel compte il veut se connecter."
 
 #: plinth/modules/roundcube/manifest.py:23
@@ -7850,10 +7956,12 @@ msgid "N/A"
 msgstr "Non applicable"
 
 #: plinth/modules/security/templates/security_report.html:60
+#: plinth/modules/wireguard/templates/wireguard_show_server.html:48
 msgid "Yes"
 msgstr "Oui"
 
 #: plinth/modules/security/templates/security_report.html:62
+#: plinth/modules/wireguard/templates/wireguard_show_server.html:50
 msgid "No"
 msgstr "Non"
 
@@ -8145,10 +8253,17 @@ msgstr ""
 "paramétrage qui suit."
 
 #: plinth/modules/snapshot/__init__.py:25
+#, fuzzy
+#| msgid ""
+#| "Snapshots currently work on btrfs file systems only and on the root "
+#| "partition only. Snapshots are not a replacement for <a href=\"/plinth/sys/"
+#| "backups\">backups</a> since they can only be stored on the same "
+#| "partition. "
 msgid ""
 "Snapshots currently work on btrfs file systems only and on the root "
-"partition only. Snapshots are not a replacement for <a href=\"/plinth/sys/"
-"backups\">backups</a> since they can only be stored on the same partition. "
+"partition only. Snapshots are not a replacement for <a href=\"/freedombox/"
+"sys/backups\">backups</a> since they can only be stored on the same "
+"partition. "
 msgstr ""
 "Les instantanés ne fonctionnent actuellement que sur des systèmes de "
 "fichiers btrfs et sur la partition racine uniquement. Les instantanés ne "
@@ -8506,27 +8621,6 @@ msgstr "Algorithme"
 #: plinth/modules/ssh/templates/ssh.html:25
 msgid "Fingerprint"
 msgstr "Empreinte"
-
-#: plinth/modules/sso/__init__.py:27
-msgid "Single Sign On"
-msgstr "Authentification unique"
-
-#: plinth/modules/sso/forms.py:28
-msgid "Enter the letters in the image to proceed to the login page"
-msgstr ""
-"Saisissez les lettres sur l'image pour continuer vers la page de connexion"
-
-#: plinth/modules/sso/templates/captcha.html:20
-msgid "Proceed to Login"
-msgstr "Continuer vers la page de connexion"
-
-#: plinth/modules/sso/templates/login.html:23
-msgid "Login"
-msgstr "S’identifier"
-
-#: plinth/modules/sso/views.py:86
-msgid "Logged out successfully."
-msgstr "Déconnecté avec succès."
 
 #: plinth/modules/storage/__init__.py:24
 #, python-brace-format
@@ -9459,13 +9553,6 @@ msgstr ""
 msgid "Go to Distribution Update"
 msgstr "Aller à la mise à niveau de la distribution"
 
-#: plinth/modules/upgrades/templates/upgrades-dist-upgrade-notification.html:46
-#: plinth/modules/upgrades/templates/upgrades-new-release.html:22
-#: plinth/templates/notifications.html:58
-#: plinth/templates/operation-notification.html:23
-msgid "Dismiss"
-msgstr "Fermer"
-
 #: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:15
 #, python-format
 msgid ""
@@ -9481,8 +9568,8 @@ msgid ""
 msgstr ""
 "Votre %(box_name)s reçoit les mises à jour de sécurité, les correctifs "
 "importants et certaines fonctionnalités via les mises à jour courantes du "
-"système. Cependant pour assurer un cycle de vie logiciel plus long aux %"
-"(box_name)s, le système d’exploitation doit recevoir une mise à niveau "
+"système. Cependant pour assurer un cycle de vie logiciel plus long aux "
+"%(box_name)s, le système d’exploitation doit recevoir une mise à niveau "
 "majeure de la distribution tous les deux ans environ. Cette mise à niveau "
 "apporte des fonctionnalités et modifications majeures, et il peut arriver "
 "que certaines anciennes fonctionnalités disparaissent. Veuillez consulter le "
@@ -9747,37 +9834,42 @@ msgstr ""
 msgid "Users and Groups"
 msgstr "Utilisateurs et groupes"
 
-#: plinth/modules/users/__init__.py:86
+#: plinth/modules/users/__init__.py:90
 msgid "Access to all services and system settings"
 msgstr "Accès à tous les services et à la configuration du système"
 
-#: plinth/modules/users/__init__.py:139
+#: plinth/modules/users/__init__.py:143
 #, python-brace-format
 msgid "Check LDAP entry \"{search_item}\""
 msgstr "Vérification de l’entrée LDAP « {search_item} »"
 
-#: plinth/modules/users/__init__.py:154
+#: plinth/modules/users/__init__.py:158
 #, python-brace-format
 msgid "Check nslcd config \"{key} {value}\""
 msgstr "Vérifier la configuration nslcd \"{key} {value}\""
 
-#: plinth/modules/users/__init__.py:184
+#: plinth/modules/users/__init__.py:188
 #, python-brace-format
 msgid "Check nsswitch config \"{database}\""
 msgstr "Vérifier la configuration nsswitch \"{database}\""
 
-#: plinth/modules/users/forms.py:36
+#: plinth/modules/users/forms.py:46
+msgid "Enter the letters in the image to proceed to the login page"
+msgstr ""
+"Saisissez les lettres sur l'image pour continuer vers la page de connexion"
+
+#: plinth/modules/users/forms.py:57
 msgid "Username is taken or is reserved."
 msgstr "Le nom d’utilisateur est déjà pris ou est réservé."
 
-#: plinth/modules/users/forms.py:71
+#: plinth/modules/users/forms.py:92
 msgid ""
 "Optional. Used to send emails to reset password and important notifications."
 msgstr ""
 "Optionnel. Utilisé afin d'envoyer des courriels pour réinitialiser le mot de "
 "passe et pour les notifications importantes."
 
-#: plinth/modules/users/forms.py:107
+#: plinth/modules/users/forms.py:128
 msgid ""
 "Select which services should be available to the new user. The user will be "
 "able to log in to services that support single sign-on through LDAP, if they "
@@ -9792,22 +9884,22 @@ msgstr ""
 "peuvent également se connecter au système avec Secure Shell (SSH) et obtenir "
 "les privilèges d’administrateur (sudo)."
 
-#: plinth/modules/users/forms.py:125
+#: plinth/modules/users/forms.py:146
 msgid "Enter a valid username."
 msgstr "Entrez un nom d’utilisateur valide."
 
-#: plinth/modules/users/forms.py:132
+#: plinth/modules/users/forms.py:153
 msgid ""
 "Required. 150 characters or fewer. English letters, digits and @/./-/_ only."
 msgstr ""
 "Requis. 150 caractères ou moins. Lettres anglaises, chiffres et @/./-/_ "
 "uniquement."
 
-#: plinth/modules/users/forms.py:141
+#: plinth/modules/users/forms.py:162
 msgid "Authorization Password"
 msgstr "Mot de passe actuel"
 
-#: plinth/modules/users/forms.py:148
+#: plinth/modules/users/forms.py:169
 #, python-brace-format
 msgid ""
 "Enter the password for user \"{user}\" to authorize account modifications."
@@ -9815,25 +9907,25 @@ msgstr ""
 "Veuillez saisir votre mot de passe de l’utilisateur « {user} » pour "
 "confirmer ces modifications de compte."
 
-#: plinth/modules/users/forms.py:157
+#: plinth/modules/users/forms.py:178
 msgid "Invalid password."
 msgstr "Mot de passe incorrect."
 
-#: plinth/modules/users/forms.py:213 plinth/modules/users/forms.py:439
+#: plinth/modules/users/forms.py:234 plinth/modules/users/forms.py:460
 #, python-brace-format
 msgid "Creating LDAP user failed: {error}"
 msgstr "La création de l’utilisateur LDAP a échoué : {error}"
 
-#: plinth/modules/users/forms.py:225
+#: plinth/modules/users/forms.py:246
 #, python-brace-format
 msgid "Failed to add new user to {group} group: {error}"
 msgstr "L’ajout du nouvel utilisateur au groupe {group} a échoué : {error}"
 
-#: plinth/modules/users/forms.py:241
+#: plinth/modules/users/forms.py:262
 msgid "Authorized SSH Keys"
 msgstr "Clés SSH autorisées"
 
-#: plinth/modules/users/forms.py:243
+#: plinth/modules/users/forms.py:264
 msgid ""
 "Setting an SSH public key will allow this user to securely log in to the "
 "system without using a password. You may enter multiple keys, one on each "
@@ -9844,11 +9936,11 @@ msgstr ""
 "plusieurs clefs, une sur chaque ligne. Les lignes vides et celles commençant "
 "par # sont ignorées."
 
-#: plinth/modules/users/forms.py:252
+#: plinth/modules/users/forms.py:273
 msgid "Delete user"
 msgstr "Supprimer l'utilisateur"
 
-#: plinth/modules/users/forms.py:254
+#: plinth/modules/users/forms.py:275
 msgid ""
 "Deleting the user account will also remove all the files related to the "
 "user. Deleting files can be avoided by setting the user account as inactive."
@@ -9857,40 +9949,40 @@ msgstr ""
 "relatifs à l'utilisateur. L'effacement des fichiers peut être évité en "
 "définissant le compte de l'utilisateur comme inactif."
 
-#: plinth/modules/users/forms.py:305
+#: plinth/modules/users/forms.py:326
 msgid "Failed to delete user."
 msgstr "Échec de la suppression de l'utilisateur."
 
-#: plinth/modules/users/forms.py:320
+#: plinth/modules/users/forms.py:341
 msgid "Renaming LDAP user failed."
 msgstr "Le changement du nom de l’utilisateur LDAP a échoué."
 
-#: plinth/modules/users/forms.py:331
+#: plinth/modules/users/forms.py:352
 msgid "Failed to remove user from group."
 msgstr "Échec du retrait de l’utilisateur du groupe."
 
-#: plinth/modules/users/forms.py:341
+#: plinth/modules/users/forms.py:362
 msgid "Failed to add user to group."
 msgstr "Échec de l’ajout de l’utilisateur au groupe."
 
-#: plinth/modules/users/forms.py:348
+#: plinth/modules/users/forms.py:369
 msgid "Unable to set SSH keys."
 msgstr "Échec du paramétrage des clefs SSH."
 
-#: plinth/modules/users/forms.py:361
+#: plinth/modules/users/forms.py:382
 msgid "Failed to change user status."
 msgstr "Échec du changement de statut de l’utilisateur."
 
-#: plinth/modules/users/forms.py:402
+#: plinth/modules/users/forms.py:423
 msgid "Changing LDAP user password failed."
 msgstr "Le changement du mot de passe de l’utilisateur LDAP a échoué."
 
-#: plinth/modules/users/forms.py:447
+#: plinth/modules/users/forms.py:468
 #, python-brace-format
 msgid "Failed to add new user to admin group: {error}"
 msgstr "L’ajout du nouvel utilisateur au groupe admin a échoué : {error}"
 
-#: plinth/modules/users/forms.py:470
+#: plinth/modules/users/forms.py:491
 msgid "User account created, you are now logged in"
 msgstr "Compte utilisateur créé, vous êtes maintenant connecté"
 
@@ -9901,6 +9993,10 @@ msgstr "Gestion des comptes"
 #: plinth/modules/users/manifest.py:8
 msgid "App permissions"
 msgstr "Autorisations des applis"
+
+#: plinth/modules/users/templates/users_captcha.html:20
+msgid "Proceed to Login"
+msgstr "Continuer vers la page de connexion"
 
 #: plinth/modules/users/templates/users_change_password.html:11
 #, python-format
@@ -9915,7 +10011,7 @@ msgstr "Sauvegarder le mot de passe"
 #: plinth/modules/users/templates/users_create.html:19
 #: plinth/modules/users/templates/users_list.html:15
 #: plinth/modules/users/templates/users_list.html:17
-#: plinth/modules/users/views.py:43
+#: plinth/modules/users/views.py:109
 msgid "Create User"
 msgstr "Créer un utilisateur"
 
@@ -9968,7 +10064,7 @@ msgid "Skip this step"
 msgstr "Passer cette étape"
 
 #: plinth/modules/users/templates/users_list.html:11
-#: plinth/modules/users/views.py:61
+#: plinth/modules/users/views.py:127
 msgid "Users"
 msgstr "Utilisateurs"
 
@@ -9976,6 +10072,10 @@ msgstr "Utilisateurs"
 #, python-format
 msgid "Edit user %(username)s"
 msgstr "Paramètres du compte %(username)s"
+
+#: plinth/modules/users/templates/users_login.html:23
+msgid "Login"
+msgstr "S’identifier"
 
 #: plinth/modules/users/templates/users_update.html:17
 #, python-format
@@ -10020,30 +10120,34 @@ msgstr "Supprimer l'utilisateur et les fichiers"
 msgid "Cancel"
 msgstr "Annuler"
 
-#: plinth/modules/users/views.py:41
+#: plinth/modules/users/views.py:87
+msgid "Logged out successfully."
+msgstr "Déconnecté avec succès."
+
+#: plinth/modules/users/views.py:107
 #, python-format
 msgid "User %(username)s created."
 msgstr "Utilisateur %(username)s créé."
 
-#: plinth/modules/users/views.py:72
+#: plinth/modules/users/views.py:138
 #, python-format
 msgid "User %(username)s updated."
 msgstr "Utilisateur %(username)s mis à jour."
 
-#: plinth/modules/users/views.py:73
+#: plinth/modules/users/views.py:139
 msgid "Edit User"
 msgstr "Modification de l’utilisateur"
 
-#: plinth/modules/users/views.py:111
+#: plinth/modules/users/views.py:177
 #, python-format
 msgid "User %(username)s deleted."
 msgstr "L'utilisateur %(username)s supprimé."
 
-#: plinth/modules/users/views.py:130
+#: plinth/modules/users/views.py:196
 msgid "Change Password"
 msgstr "Changer Mot de Passe"
 
-#: plinth/modules/users/views.py:131
+#: plinth/modules/users/views.py:197
 msgid "Password changed successfully."
 msgstr "Le mot de passe a été changé."
 
@@ -10077,14 +10181,25 @@ msgstr ""
 msgid "Invalid key."
 msgstr "Clé invalide."
 
-#: plinth/modules/wireguard/forms.py:61
-#: plinth/modules/wireguard/templates/wireguard.html:17
-#: plinth/modules/wireguard/templates/wireguard.html:77
+#: plinth/modules/wireguard/forms.py:63
+#, fuzzy
+#| msgid "Enter a valid username."
+msgid "Enter a valid IPv4 address."
+msgstr "Entrez un nom d’utilisateur valide."
+
+#: plinth/modules/wireguard/forms.py:65
+msgid "Enter a valid network prefix or net mask."
+msgstr ""
+
+#: plinth/modules/wireguard/forms.py:71
+#: plinth/modules/wireguard/templates/wireguard.html:28
+#: plinth/modules/wireguard/templates/wireguard.html:56
+#: plinth/modules/wireguard/templates/wireguard.html:118
 #: plinth/modules/wireguard/templates/wireguard_delete_server.html:24
 msgid "Public Key"
 msgstr "Clé publique"
 
-#: plinth/modules/wireguard/forms.py:62
+#: plinth/modules/wireguard/forms.py:72
 msgid ""
 "Public key of the peer. Example: "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
@@ -10092,11 +10207,11 @@ msgstr ""
 "Clé publique du pair. Exemple : "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 
-#: plinth/modules/wireguard/forms.py:70
+#: plinth/modules/wireguard/forms.py:80
 msgid "Endpoint of the server"
 msgstr "Point de terminaison du serveur"
 
-#: plinth/modules/wireguard/forms.py:71
+#: plinth/modules/wireguard/forms.py:81
 msgid ""
 "Domain name and port in the form \"ip:port\". Example: "
 "demo.wireguard.com:12912 ."
@@ -10104,11 +10219,11 @@ msgstr ""
 "Nom de domaine et port sous la forme « ip:port ». Par exemple : "
 "demo.wireguard.com:12912 ."
 
-#: plinth/modules/wireguard/forms.py:76
+#: plinth/modules/wireguard/forms.py:86
 msgid "Public key of the server"
 msgstr "Clé publique du serveur"
 
-#: plinth/modules/wireguard/forms.py:77
+#: plinth/modules/wireguard/forms.py:87
 msgid ""
 "Provided by the server operator, a long string of characters. Example: "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
@@ -10116,25 +10231,32 @@ msgstr ""
 "Il s’agit d’une longue chaîne de caractères fournie par l’opérateur du "
 "serveur. Par exemple : MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 
-#: plinth/modules/wireguard/forms.py:82
+#: plinth/modules/wireguard/forms.py:92
 msgid "Client IP address provided by server"
 msgstr "Adresse IP du client fournie par le serveur"
 
-#: plinth/modules/wireguard/forms.py:83
+#: plinth/modules/wireguard/forms.py:94
+#, fuzzy
+#| msgid ""
+#| "IP address assigned to this machine on the VPN after connecting to the "
+#| "endpoint. This value is usually provided by the server operator. Example: "
+#| "192.168.0.10."
 msgid ""
 "IP address assigned to this machine on the VPN after connecting to the "
 "endpoint. This value is usually provided by the server operator. Example: "
-"192.168.0.10."
+"192.168.0.10. You can also specify the network. This will allow reaching "
+"machines in the network. Examples: 10.68.12.43/24 or "
+"10.68.12.43/255.255.255.0."
 msgstr ""
 "Adresse IP attribuée à cette machine sur le réseau privé virtuel VPN une "
 "fois connectée au serveur distant. Cette valeur est généralement fournie par "
 "l’opérateur du serveur. Par exemple : 192.18.0.10."
 
-#: plinth/modules/wireguard/forms.py:89
+#: plinth/modules/wireguard/forms.py:102
 msgid "Private key of this machine"
 msgstr "Clé privée de cette machine"
 
-#: plinth/modules/wireguard/forms.py:90
+#: plinth/modules/wireguard/forms.py:103
 msgid ""
 "Optional. New public/private keys are generated if left blank. Public key "
 "can then be provided to the server. This is the recommended way. However, "
@@ -10147,11 +10269,11 @@ msgstr ""
 "serveur insistent pour fournir eux même cette clé. Exemple : "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 
-#: plinth/modules/wireguard/forms.py:98
+#: plinth/modules/wireguard/forms.py:111
 msgid "Pre-shared key"
 msgstr "Clé pré-partagée"
 
-#: plinth/modules/wireguard/forms.py:99
+#: plinth/modules/wireguard/forms.py:112
 msgid ""
 "Optional. A shared secret key provided by the server to add an additional "
 "layer of security. Fill in only if provided. Example: "
@@ -10162,11 +10284,11 @@ msgstr ""
 "clé vous a été fournie. Exemple : "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs=."
 
-#: plinth/modules/wireguard/forms.py:105
+#: plinth/modules/wireguard/forms.py:118
 msgid "Use this connection to send all outgoing traffic"
 msgstr "Utiliser cette connexion pour y envoyer tout le trafic sortant"
 
-#: plinth/modules/wireguard/forms.py:107
+#: plinth/modules/wireguard/forms.py:120
 msgid "Typically checked for a VPN service through which all traffic is sent."
 msgstr ""
 "À activer lorsque le service de réseau privé virtuel VPN doit être utilisé "
@@ -10180,72 +10302,108 @@ msgstr "Client VPN"
 msgid "As a Server"
 msgstr "En tant que serveur"
 
-#: plinth/modules/wireguard/templates/wireguard.html:12
+#: plinth/modules/wireguard/templates/wireguard.html:16
+#, fuzzy, python-format
+#| msgid "Endpoints for this %(box_name)s:"
+msgid "Information for this %(box_name)s:"
+msgstr "Points de terminaison de cette %(box_name)s :"
+
+#: plinth/modules/wireguard/templates/wireguard.html:24
+msgid "Property"
+msgstr ""
+
+#: plinth/modules/wireguard/templates/wireguard.html:25
+msgid "Value"
+msgstr ""
+
+#: plinth/modules/wireguard/templates/wireguard.html:32
+#, fuzzy
+#| msgid "Endpoint"
+msgid "Endpoint(s)"
+msgstr "Serveur distant"
+
+#: plinth/modules/wireguard/templates/wireguard.html:40
+#, fuzzy, python-format
+#| msgid "To %(box_name)s Ports"
+msgid "%(box_name)s VPN IP for services"
+msgstr "Vers les ports %(box_name)s"
+
+#: plinth/modules/wireguard/templates/wireguard.html:49
+msgid "Peers"
+msgstr ""
+
+#: plinth/modules/wireguard/templates/wireguard.html:51
 msgid "Peers allowed to connect to this server:"
 msgstr "Pairs autorisés à se connecter à ce serveur :"
 
-#: plinth/modules/wireguard/templates/wireguard.html:18
+#: plinth/modules/wireguard/templates/wireguard.html:57
 msgid "Allowed IPs"
 msgstr "IP autorisées"
 
-#: plinth/modules/wireguard/templates/wireguard.html:19
-#: plinth/modules/wireguard/templates/wireguard.html:78
+#: plinth/modules/wireguard/templates/wireguard.html:58
+#: plinth/modules/wireguard/templates/wireguard.html:119
 msgid "Last Connected Time"
 msgstr "Dernière connexion"
 
-#: plinth/modules/wireguard/templates/wireguard.html:38
+#: plinth/modules/wireguard/templates/wireguard.html:77
 #, python-format
 msgid "No peers configured to connect to this %(box_name)s yet."
 msgstr ""
 "Aucun pair n’a été configuré pour se connecter à la %(box_name)s pour "
 "l’instant."
 
-#: plinth/modules/wireguard/templates/wireguard.html:48
-#, python-format
-msgid "Public key for this %(box_name)s:"
-msgstr "Clé publique de cette %(box_name)s :"
-
-#: plinth/modules/wireguard/templates/wireguard.html:54
-msgid "Not configured yet."
-msgstr "Pas encore configuré."
-
-#: plinth/modules/wireguard/templates/wireguard.html:59
+#: plinth/modules/wireguard/templates/wireguard.html:87
 msgid "Add a new peer"
 msgstr "Ajouter un nouveau pair"
 
-#: plinth/modules/wireguard/templates/wireguard.html:63
-#: plinth/modules/wireguard/views.py:48
+#: plinth/modules/wireguard/templates/wireguard.html:91
+#: plinth/modules/wireguard/views.py:59
 msgid "Add Allowed Client"
 msgstr "Ajouter un client autorisé"
 
-#: plinth/modules/wireguard/templates/wireguard.html:67
+#: plinth/modules/wireguard/templates/wireguard.html:96
+#, fuzzy
+#| msgid "WireGuard server started successfully."
+msgid "WireGuard server not started yet."
+msgstr "Le serveur WireGuard a été démarré."
+
+#: plinth/modules/wireguard/templates/wireguard.html:100
+#: plinth/modules/wireguard/templates/wireguard.html:102
+msgid "Start WireGuard Server"
+msgstr "Démarrer le serveur WireGuard"
+
+#: plinth/modules/wireguard/templates/wireguard.html:108
 msgid "As a Client"
 msgstr "En tant que client"
 
-#: plinth/modules/wireguard/templates/wireguard.html:69
+#: plinth/modules/wireguard/templates/wireguard.html:110
 #, python-format
 msgid "Servers that %(box_name)s will connect to:"
 msgstr "Serveurs auxquels la %(box_name)s se connecte :"
 
-#: plinth/modules/wireguard/templates/wireguard.html:76
+#: plinth/modules/wireguard/templates/wireguard.html:117
 #: plinth/modules/wireguard/templates/wireguard_delete_server.html:20
 msgid "Endpoint"
 msgstr "Serveur distant"
 
-#: plinth/modules/wireguard/templates/wireguard.html:100
+#: plinth/modules/wireguard/templates/wireguard.html:141
 msgid "No connections to remote servers are configured yet."
 msgstr "Aucune connexion vers un serveur distant n’est encore configurée."
 
-#: plinth/modules/wireguard/templates/wireguard.html:110
+#: plinth/modules/wireguard/templates/wireguard.html:151
 msgid "Add a new server"
 msgstr "Ajouter un nouveau serveur"
 
-#: plinth/modules/wireguard/templates/wireguard.html:114
-#: plinth/modules/wireguard/views.py:157
+#: plinth/modules/wireguard/templates/wireguard.html:155
+#: plinth/modules/wireguard/views.py:178
 msgid "Add Connection to Server"
 msgstr "Ajouter une connexion à un serveur"
 
-#: plinth/modules/wireguard/templates/wireguard_add_client.html:19
+#: plinth/modules/wireguard/templates/wireguard_add_client.html:21
+msgid "IP address that will be assigned to this client"
+msgstr "Adresse IP assignée à ce client"
+
+#: plinth/modules/wireguard/templates/wireguard_add_client.html:31
 msgid "Add Client"
 msgstr "Ajouter un client"
 
@@ -10289,25 +10447,29 @@ msgstr "Clé pré-partagée :"
 
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:33
 msgid "Server endpoints:"
-msgstr "Points de terminaisons du serveur :"
+msgstr "Points de terminaison du serveur :"
 
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:41
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:28
 msgid "Server public key:"
 msgstr "Clé publique du serveur :"
 
-#: plinth/modules/wireguard/templates/wireguard_show_client.html:53
-#: plinth/modules/wireguard/templates/wireguard_show_server.html:52
+#: plinth/modules/wireguard/templates/wireguard_show_client.html:45
+msgid "Server VPN IP address for services:"
+msgstr ""
+
+#: plinth/modules/wireguard/templates/wireguard_show_client.html:57
+#: plinth/modules/wireguard/templates/wireguard_show_server.html:63
 msgid "Data transmitted:"
 msgstr "Données envoyées :"
 
-#: plinth/modules/wireguard/templates/wireguard_show_client.html:57
-#: plinth/modules/wireguard/templates/wireguard_show_server.html:56
+#: plinth/modules/wireguard/templates/wireguard_show_client.html:61
+#: plinth/modules/wireguard/templates/wireguard_show_server.html:67
 msgid "Data received:"
 msgstr "Données reçues :"
 
-#: plinth/modules/wireguard/templates/wireguard_show_client.html:61
-#: plinth/modules/wireguard/templates/wireguard_show_server.html:60
+#: plinth/modules/wireguard/templates/wireguard_show_client.html:65
+#: plinth/modules/wireguard/templates/wireguard_show_server.html:71
 msgid "Latest handshake:"
 msgstr "Dernier établissement d’une liaison (« handshake ») :"
 
@@ -10334,61 +10496,73 @@ msgstr "Clé publique de cette machine :"
 msgid "IP address of this machine:"
 msgstr "Adresse IP de cette machine :"
 
-#: plinth/modules/wireguard/views.py:43
+#: plinth/modules/wireguard/templates/wireguard_show_server.html:45
+msgid "All outgoing traffic is sent using this connection:"
+msgstr ""
+
+#: plinth/modules/wireguard/views.py:54
 msgid "Added new client."
 msgstr "Nouveau client ajouté."
 
-#: plinth/modules/wireguard/views.py:58 plinth/modules/wireguard/views.py:117
+#: plinth/modules/wireguard/views.py:79 plinth/modules/wireguard/views.py:138
 msgid "Client with public key already exists"
 msgstr "Un client existe déjà avec cette clé publique"
 
-#: plinth/modules/wireguard/views.py:71
+#: plinth/modules/wireguard/views.py:92
 msgid "Allowed Client"
 msgstr "Client autorisé"
 
-#: plinth/modules/wireguard/views.py:93
+#: plinth/modules/wireguard/views.py:114
 msgid "Updated client."
 msgstr "Client mis à jour."
 
-#: plinth/modules/wireguard/views.py:98
+#: plinth/modules/wireguard/views.py:119
 msgid "Modify Client"
 msgstr "Modifier le client"
 
-#: plinth/modules/wireguard/views.py:131
+#: plinth/modules/wireguard/views.py:152
 msgid "Delete Allowed Client"
 msgstr "Supprimer un client autorisé"
 
-#: plinth/modules/wireguard/views.py:140
+#: plinth/modules/wireguard/views.py:161
 msgid "Client deleted."
 msgstr "Client supprimé."
 
-#: plinth/modules/wireguard/views.py:142
+#: plinth/modules/wireguard/views.py:163
 msgid "Client not found"
 msgstr "Client introuvable"
 
-#: plinth/modules/wireguard/views.py:152
+#: plinth/modules/wireguard/views.py:173
 msgid "Added new server."
 msgstr "Nouveau serveur ajouté."
 
-#: plinth/modules/wireguard/views.py:173
+#: plinth/modules/wireguard/views.py:194
 msgid "Connection to Server"
 msgstr "Connexion au seveur"
 
-#: plinth/modules/wireguard/views.py:191
+#: plinth/modules/wireguard/views.py:212
 msgid "Updated server."
 msgstr "Serveur mis à jour."
 
-#: plinth/modules/wireguard/views.py:196
+#: plinth/modules/wireguard/views.py:217
 msgid "Modify Connection to Server"
 msgstr "Modifier la connexion à un serveur"
 
-#: plinth/modules/wireguard/views.py:233
+#: plinth/modules/wireguard/views.py:255
 msgid "Delete Connection to Server"
 msgstr "Supprimer la connexion à un serveur"
 
-#: plinth/modules/wireguard/views.py:253
+#: plinth/modules/wireguard/views.py:275
 msgid "Server deleted."
 msgstr "Serveur supprimé."
+
+#: plinth/modules/wireguard/views.py:287
+msgid "WireGuard server started successfully."
+msgstr "Le serveur WireGuard a été démarré."
+
+#: plinth/modules/wireguard/views.py:291
+msgid "Failed to start WireGuard server: {}"
+msgstr "Échec du démarrage du serveur WireGuard : {}"
 
 #: plinth/modules/wordpress/__init__.py:20
 msgid ""
@@ -10588,6 +10762,24 @@ msgstr "fichier de configuration : {file}"
 msgid "Timeout waiting for package manager"
 msgstr "Aucune réponse du gestionnaire de paquets"
 
+#: plinth/settings.py:181
+msgid "Uniquely identify your user account with username"
+msgstr ""
+
+#: plinth/settings.py:183
+#, fuzzy
+#| msgid "requesting address"
+msgid "View email address"
+msgstr "demande d’adresse en cours"
+
+#: plinth/settings.py:185
+msgid "View basic profile information (such as name and email)"
+msgstr ""
+
+#: plinth/settings.py:187
+msgid "View permissions that account has"
+msgstr ""
+
 #: plinth/setup.py:44
 msgid "Installing app"
 msgstr "Installation de l’application"
@@ -10630,7 +10822,7 @@ msgstr "Erreur lors de l'exécution des diagnostics : {error}"
 
 #: plinth/setup.py:158
 msgid "Skipping repair, no failed checks"
-msgstr "Réparation ignorée, aucune vérification n'a échoué"
+msgstr "Réparation ignorée : aucun problème identifié lors des vérifications"
 
 #: plinth/setup.py:166
 #, python-brace-format
@@ -10757,35 +10949,35 @@ msgstr ""
 "et de la maîtrise de vos données. C’est un logiciel libre qui vous laisse "
 "installer et gérer facilement des applis de serveur."
 
-#: plinth/templates/base.html:120
+#: plinth/templates/base.html:122
 msgid " Home"
 msgstr " Accueil"
 
-#: plinth/templates/base.html:128
+#: plinth/templates/base.html:130
 msgid " Apps"
 msgstr " Applis"
 
-#: plinth/templates/base.html:137
+#: plinth/templates/base.html:139
 msgid " System"
 msgstr " Système"
 
-#: plinth/templates/base.html:178 plinth/templates/base.html:179
+#: plinth/templates/base.html:180 plinth/templates/base.html:181
 msgid "Change password"
 msgstr "Changer le mot de passe"
 
-#: plinth/templates/base.html:192 plinth/templates/base.html:193
+#: plinth/templates/base.html:194 plinth/templates/base.html:195
 msgid "Shut down"
 msgstr "Éteindre"
 
-#: plinth/templates/base.html:203 plinth/templates/base.html:241
+#: plinth/templates/base.html:205 plinth/templates/base.html:243
 msgid "Log out"
 msgstr "Se déconnecter"
 
-#: plinth/templates/base.html:212 plinth/templates/base.html:215
+#: plinth/templates/base.html:214 plinth/templates/base.html:217
 msgid "Select language"
 msgstr "Choisir la langue"
 
-#: plinth/templates/base.html:230 plinth/templates/base.html:232
+#: plinth/templates/base.html:232 plinth/templates/base.html:234
 msgid "Log in"
 msgstr "S’identifier"
 
@@ -10886,11 +11078,15 @@ msgstr ""
 "Actuellement les interfaces-réseau suivantes sont configurées comme "
 "internes : %(interface_list)s"
 
+#: plinth/templates/notifications-dismiss-button.html:11
+msgid "Dismiss"
+msgstr "Fermer"
+
 #: plinth/templates/notifications-dropdown.html:11
 msgid "Notifications"
 msgstr "Notifications"
 
-#: plinth/templates/notifications.html:18
+#: plinth/templates/notifications.html:19
 #, python-format
 msgid "%(time_since)s ago"
 msgstr "Il y a %(time_since)s"
@@ -11056,14 +11252,31 @@ msgstr "Ici"
 msgid "Setting unchanged"
 msgstr "Paramètre inchangé"
 
-#: plinth/views.py:658
+#: plinth/views.py:654
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr "avant la désinstallation de {app_id}"
 
-#: plinth/web_framework.py:122
+#: plinth/web_framework.py:126
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid ""
+#~ "Password of the SSH Server.<br />SSH key-based authentication is not yet "
+#~ "possible."
+#~ msgstr ""
+#~ "Mot de passe du serveur SSH.<br>L’authentification par clé SSH n’est pas "
+#~ "encore prise en charge."
+
+#~ msgid "Single Sign On"
+#~ msgstr "Authentification unique"
+
+#, python-format
+#~ msgid "Public key for this %(box_name)s:"
+#~ msgstr "Clé publique de cette %(box_name)s :"
+
+#~ msgid "Not configured yet."
+#~ msgstr "Pas encore configuré."
 
 #~ msgid "Minetest"
 #~ msgstr "Minetest"
@@ -12739,9 +12952,6 @@ msgstr "Gujarati"
 #~ msgid "You don't have any Custom Services enabled"
 #~ msgstr "Vous n'avez pas de Services Personnalisés actifs"
 
-#~ msgid "Standard Services"
-#~ msgstr "Services Standards"
-
 #~ msgid ""
 #~ "When enabled, Syncthing's web interface will be available from <a href=\"/"
 #~ "syncthing/\" data-turbolinks=\"false\">/syncthing</a>. Desktop and mobile "
@@ -13318,9 +13528,6 @@ msgstr "Gujarati"
 #~ msgstr ""
 #~ "BitTorrent\n"
 #~ " (Transmission)"
-
-#~ msgid "Applications"
-#~ msgstr "Applications"
 
 #~ msgid ""
 #~ "%(box_name)s setup is now complete.  To make your %(box_name)s "

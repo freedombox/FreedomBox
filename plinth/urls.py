@@ -3,7 +3,8 @@
 Django URLconf file containing all urls
 """
 from captcha import views as cviews
-from django.urls import include, re_path
+from django.urls import include, path, re_path
+from oauth2_provider import urls as oauth2_urls
 from stronghold.decorators import public
 
 from . import views
@@ -46,5 +47,9 @@ urlpatterns = [
 
     # Notifications
     re_path(r'^notification/(?P<id>[A-Za-z0-9-=]+)/dismiss/$',
-            views.notification_dismiss, name='notification_dismiss')
+            views.notification_dismiss, name='notification_dismiss'),
+
+    # OpenID Provider related URLs. They need to be under 'oauth2_provider:'
+    # namespace otherwise .well-known/openid-configuration will fail.
+    path('o/', include(oauth2_urls)),
 ]

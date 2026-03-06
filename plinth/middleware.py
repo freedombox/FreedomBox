@@ -4,6 +4,7 @@ Common Django middleware.
 """
 
 import logging
+import re
 
 from django import urls
 from django.conf import settings
@@ -58,7 +59,9 @@ class SetupMiddleware(MiddlewareMixin):
         except urls.Resolver404:
             return
 
-        if not resolver_match.namespaces or not len(resolver_match.namespaces):
+        non_app_namespaces = {'oauth2_provider'}
+        if (not resolver_match.namespaces or not len(resolver_match.namespaces)
+                or (set(resolver_match.namespaces) & non_app_namespaces)):
             # Requested URL does not belong to any application
             return
 
@@ -99,10 +102,17 @@ class AdminRequiredMiddleware(MiddlewareMixin):
            hasattr(view_func, 'IS_NON_ADMIN'):
             return
 
-        if not is_user_admin(request):
-            if not AdminRequiredMiddleware.check_user_group(
-                    view_func, request):
-                raise PermissionDenied
+        public_urls = settings.STRONGHOLD_PUBLIC_URLS
+        if any(re.match(url, request.path_info) for url in public_urls):
+            return
+
+        if is_user_admin(request):
+            return
+
+        if AdminRequiredMiddleware.check_user_group(view_func, request):
+            return
+
+        raise PermissionDenied
 
 
 class FirstSetupMiddleware(MiddlewareMixin):

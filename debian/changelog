@@ -1,3 +1,186 @@
+freedombox (26.4) unstable; urgency=medium
+
+  [ Joseph Nuthalapati ]
+  * ui: Dismiss notifications without page reload
+
+  [ Sunil Mohan Adapa ]
+  * ui: Refactor notification delete buttons to avoid repeating code
+  * ui: Add animation for notification dismissal
+  * actions, privileged_daemon: Drop some unused global statements
+  * backups: Avoid some repeated text in form help text
+  * backups: Fix issue with Javascript in add remote location form
+  * backups: Show/hide form elements instead of disabling for simplicity
+  * backups: Tweak appearance of add remote location form
+  * backups: tests: Simplify functional test using more classes
+  * backups: Minor refactoring
+  * backups: Simplify handling of migration to SSH keys
+  * backups: Create .ssh folder before creating SSH key
+  * backups: Fix showing proper error for incorrect passphrase
+  * backups: Create a better comment in the generated SSH key file
+  * backups: Fix type checking errors
+  * action_utils: Implement utility to change umask temporarily
+  * quassel: Explicitly set permissions on the domain configuration file
+  * letsencrypt: When copying certificate reset the umask reliably
+  * doc/dev: Set new theme for developer documentation
+  * action_utils: Fix issue with type checking a generator
+  * tests: functional: Increase systemd rate limits for starting units
+  * js: When page load fails during install, show it to user
+  * tests: functional: Fix reloading error page during install/uninstall
+  * locale/de: Fix several translations with HTML links (German)
+  * locale/bg: Fix several translations with HTML links (Bulgarian)
+  * bin: Add tool to change FreedomBox password in Django database
+  * ejabberd: Fix setting up certificates for multiple domains
+  * gitweb: Fix issue with running post init due to missing method
+  * wireguard: Fix format when showing multiple endpoints of the server
+  * wireguard: Fix showing default route setting in server edit form
+  * wireguard: Show status of default route in server information page
+  * wireguard: Accept/use netmask with IP address for server connection
+  * README/HACKING: Update weblate project path to /freedombox
+  * *: Remove some absolute file paths in SVGs
+  * matrixsynapse: Update apache config to proxy Synapse client API
+  * cfg: Drop unused config_dir option
+  * cfg: Drop unused actions_dir option
+  * Vagrantfile: Drop unnecessary sudo configuration for actions
+  * pyproject: Use new format to specify licenses
+  * action_utils: Drop support for link-local IPv6 addresses
+  * debian: Ensure that gbp creates a clean tarball prior to build
+  * syncthing: tests: Fix tests by allowing rapid restarts
+  * web_server: Log requests to WSGI app
+  * *: Update URL base from /plinth to /freedombox
+  * tests: functional: Fix expecting FreedomBox to be home page
+  * web_framework: Allow FreedomBox apps to override templates
+  * templates: Allow building pages without navigation bar and footer
+  * apache: Preserve host header when proxying to service
+  * oidc: New app to implement OpenID Connect Provider
+  * oidc: Style the page for authorizing an OIDC app
+  * apache: Implement protecting apps using OpenID Connect
+  * featherwiki: Use OpenID Connect instead of pubtkt based SSO
+  * syncthing: Use OpenID Connect instead of pubtkt based SSO
+  * searx: Use OpenID Connect instead of pubtkt based SSO
+  * rssbridge: Use OpenID Connect instead of pubtkt based SSO
+  * email: Use OpenID Connect instead of pubtkt based SSO
+  * calibre: Use OpenID Connect instead of pubtkt based SSO
+  * deluge: Use OpenID Connect instead of pubtkt based SSO
+  * gitweb: Use OpenID Connect instead of pubtkt based SSO
+  * tiddlywiki: Use OpenID Connect instead of pubtkt based SSO
+  * wordpress: Use OpenID Connect instead of pubtkt based SSO when private
+  * transmission: Use OpenID Connect instead of pubtkt based SSO
+  * doc/dev: Use OpenID Connect instead of pubtkt based SSO
+  * sharing: Use OpenID Connect instead of pubtkt based SSO
+  * sso: Merge into users module, drop pubtkt related code
+  * apache: Fix diagnosing URLs protected by OpenID Connect
+
+  [ 大王叫我来巡山 ]
+  * Translated using Weblate (Chinese (Simplified Han script))
+
+  [ Burak Yavuz ]
+  * Translated using Weblate (Turkish)
+
+  [ Coucouf ]
+  * Translated using Weblate (French)
+  * Translated using Weblate (French)
+
+  [ Besnik Bleta ]
+  * Translated using Weblate (Albanian)
+
+  [ Dietmar ]
+  * Translated using Weblate (German)
+
+  [ James Valleroy ]
+  * backups: Generate SSH client key if needed
+  * backups: Display SSH public key when adding remote
+  * backups: Copy SSH client public key to remote
+  * backups: Use SSH key instead of password
+  * backups: Use selected SSH credential for remote
+  * backups: Test adding/removing remote location
+  * backups: Arrange form for adding remote location
+  * backups: Migrate to SSH key auth when mounting
+  * Translated using Weblate (Greek)
+  * mumble: murmurd renamed to mumble-server
+  * Translated using Weblate (Tamil)
+  * locale: Update translation strings
+  * doc: Fetch latest manual
+  * apache: Fix check_url test
+
+  [ Frederico Gomes ]
+  * container: Align terminology in printed banner
+  * wireguard: filter .local addresses from showClient view
+  * wireguard: improved server section UX flow
+  * wireguard: show server vpn ip in show client page
+  * wireguard: Fix split tunneling
+  * miniflux: Revert workaround for a packaging bug with DB connection
+  * db: Create a utility to get credentials from dbconfig
+  * miniflux: Get credentials from dbconfig-common directly
+
+  [ Pierfrancesco Passerini ]
+  * Translated using Weblate (Italian)
+
+  [ Daniel Wiik ]
+  * Translated using Weblate (Swedish)
+  * Translated using Weblate (Swedish)
+
+  [ kosagi ]
+  * Translated using Weblate (Catalan)
+
+  [ Jiří Podhorecký ]
+  * Translated using Weblate (Czech)
+
+  [ Isak ]
+  * Translated using Weblate (Swedish)
+
+  [ Βασίλης Χατζηκαμάρης ]
+  * Translated using Weblate (Greek)
+
+  [ Benedek Nagy ]
+  * doc/dev: always have an up-to-date copyright year
+
+  [ தமிழ்நேரம் ]
+  * Translated using Weblate (Tamil)
+
+ -- James Valleroy <jvalleroy@mailbox.org>  Mon, 02 Mar 2026 21:35:46 -0500
+
+freedombox (26.3) unstable; urgency=medium
+
+  [ Frederico Gomes ]
+  * wireguard: Add 'Start Server' button
+  * docs: Update container script usage
+  * wireguard: Show next available client IP in Add Client form
+  * wireguard: Show server endpoint on main app page
+
+  [ James Valleroy ]
+  * wireguard: Update functional tests to handle Start Server button
+  * lintian: Remove mismatched overrides
+  * Makefile: Fix removing extra license file
+  * debian: Follows policy 4.7.3
+  * debian: Remove default Rules-Requires-Root
+  * debian: Remove preinst script
+  * debian: Update copyright years
+  * locale: Update translation strings
+  * doc: Fetch latest manual
+
+  [ Ettore Atalan ]
+  * Translated using Weblate (German)
+
+  [ Sunil Mohan Adapa ]
+  * debian: Ignore lintian warning: service file missing Install section
+  * wireguard: Remove NM connections when app is uninstalled
+  * ui: Use HTMX to update notifications on partial page updates
+
+  [ Joseph Nuthalapati ]
+  * ui: Add HTMX as a dependency
+  * ui: Use HTMX to eliminate full page reloads
+
+  [ Burak Yavuz ]
+  * Translated using Weblate (Turkish)
+
+  [ Pierfrancesco Passerini ]
+  * Translated using Weblate (Italian)
+
+  [ 大王叫我来巡山 ]
+  * Translated using Weblate (Chinese (Simplified Han script))
+
+ -- James Valleroy <jvalleroy@mailbox.org>  Mon, 02 Feb 2026 20:41:30 -0500
+
 freedombox (26.2~bpo13+1) trixie-backports; urgency=medium
 
   * Rebuild for trixie-backports.

@@ -4,8 +4,8 @@
 
 {% load i18n %}
 
-<div class="table-responsive">
-  <table class="table" id="archives-list">
+<div class="table-responsive repository" data-repository-name="{{ repository.name }}">
+  <table class="table" class="archives-list">
     <thead>
       <tr>
         <th colspan="2">
@@ -23,7 +23,7 @@
                 </span>
               {% endif %}
 
-              {{ repository.name }}
+              <span class="repository-name">{{ repository.name }}</span>
             </div>
 
             <div class="text-end">

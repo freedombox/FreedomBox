@@ -80,7 +80,7 @@ def _remove_share(browser, name):
 
 def _add_share(browser, name, path, group):
     """Add a share in sharing app."""
-    functional.visit(browser, '/plinth/apps/sharing/add/')
+    functional.visit(browser, '/freedombox/apps/sharing/add/')
     browser.fill('sharing-name', name)
     browser.fill('sharing-path', path)
     browser.find_by_css(
@@ -102,7 +102,7 @@ def _edit_share(browser, old_name, new_name, path, group):
 
 def _get_share(browser, name):
     """Return the row for a given share."""
-    functional.visit(browser, '/plinth/apps/sharing/')
+    functional.visit(browser, '/freedombox/apps/sharing/')
     return browser.find_by_id('share-{}'.format(name))[0]
 
 
@@ -148,4 +148,4 @@ def _verify_nonexistant_share(browser, name):
 def _verify_inaccessible_share(browser, name):
     """Verify that given URL for a given share name denies permission."""
     functional.visit(browser, f'/share/{name}')
-    functional.eventually(lambda: '/plinth' in browser.url, args=[])
+    functional.eventually(lambda: '/freedombox' in browser.url, args=[])

@@ -1,0 +1,12 @@
+{% comment %}
+# SPDX-License-Identifier: AGPL-3.0-or-later
+{% endcomment %}
+
+{% load i18n %}
+
+<a href="{% url 'notification_dismiss' id=id %}?next={{ request.path|iriencode }}"
+   hx-get="{% url 'notification_dismiss' id=id %}"
+   hx-target="#notification-{{ id }}" hx-swap="delete swap:300ms" role="button"
+   class="btn btn-default">
+  {% trans "Dismiss" %}
+</a>

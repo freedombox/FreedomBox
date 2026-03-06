@@ -34,24 +34,6 @@ document.addEventListener('DOMContentLoaded', function (event) {
 });
 
 /*
- * Refresh page if marked for refresh.
- */
-document.addEventListener('DOMContentLoaded', function () {
-    const body = document.querySelector('body');
-    if (body.hasAttribute('data-refresh-page-sec')) {
-        let seconds = body.getAttribute('data-refresh-page-sec');
-        seconds = parseInt(seconds, 10);
-        if (isNaN(seconds))
-            return;
-
-        window.setTimeout(() => {
-            // Refresh the page without resubmitting the POST data.
-            window.location = window.location.href;
-        }, seconds * 1000);
-    }
-});
-
-/*
  * Return all submit buttons on the page
  */
 function getSubmitButtons() {
@@ -245,7 +227,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     try {
         setInstallButtonState(false);
-        const response = await fetch(`/plinth/is-available/${appId}/`, {
+        const response = await fetch(`/freedombox/is-available/${appId}/`, {
             timeout: 2 * 60 * 1000  // 2 minutes
         });
 
@@ -302,4 +284,53 @@ document.addEventListener('click', function (event) {
         let bsCollapse = bootstrap.Collapse.getInstance(notifications);
         bsCollapse.hide();
     }
+});
+
+/*
+ * Detect when hx-select element is not found in the response and reload the
+ * page. HTMX unfortunately does not seem to provide a JS event when hx-select
+ * element is not found in the response. However, in htmx:afterSwap event we can
+ * see that the target has no children and choose to refresh the whole page.
+ */
+document.body.addEventListener('htmx:afterSwap', function (event) {
+    const target = event.detail.target;
+    if (target && target.children.length === 0) {
+        window.location.reload();
+    }
+});
+
+/*
+ * If an error occurs during a HTMX request, then reload the page. It won't be a
+ * silent failure for the user and will imitate the behavior that was present
+ * before HTMX was introduced. For functional tests, this means that a clear
+ * browser is shown. Tests can decide to reload the page until the error is
+ * resolved.
+ */
+document.body.addEventListener('htmx:responseError', function (event) {
+    window.location.reload();
+});
+
+document.body.addEventListener("htmx:sendError", function(event) {
+    window.location.reload();
+});
+
+/*
+ * Decrement notification counter badge when a notification is dismissed via
+ * HTMX.
+ */
+document.addEventListener('notification-dismissed', function (evt) {
+    // There are 2 badges on the page. One for mobile navbar and one for desktop
+    // navbar.
+    const badges = document.querySelectorAll('.notifications-dropdown .badge');
+
+    badges.forEach(badge => {
+        const count = parseInt(badge.textContent.trim());
+
+        if (count > 1) {
+            badge.textContent = count - 1;
+        } else {
+            const dropdowns = document.querySelectorAll('.notifications-dropdown');
+            dropdowns.forEach(dropdown => dropdown.remove());
+        }
+    });
 });

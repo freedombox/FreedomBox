@@ -1,12 +1,14 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """FreedomBox app to manage backup archives."""
 
+import collections.abc
+import contextlib
 import json
 import logging
 import os
-import pathlib
 import re
 import subprocess
+from pathlib import Path
 
 from django.utils.text import get_valid_filename
 from django.utils.translation import gettext_lazy as _
@@ -14,9 +16,10 @@ from django.utils.translation import gettext_noop
 
 from plinth import app as app_module
 from plinth import cfg, glib, menu
+from plinth.modules.names.components import DomainName
 from plinth.package import Packages
 
-from . import api, manifest, privileged
+from . import api, errors, manifest, privileged
 
 logger = logging.getLogger(__name__)
 
@@ -132,9 +135,77 @@ def restore_from_upload(path, app_ids=None):
                      create_subvolume=False, backup_file=path)
 
 
-def get_known_hosts_path():
+def get_known_hosts_path() -> Path:
     """Return the path to the known hosts file."""
-    return pathlib.Path(cfg.data_dir) / '.ssh' / 'known_hosts'
+    return Path(cfg.data_dir) / '.ssh' / 'known_hosts'
+
+
+def get_ssh_client_auth_key_paths() -> tuple[Path, Path]:
+    """Return the paths to the SSH client public key and private key."""
+    key_path = Path(cfg.data_dir) / '.ssh' / 'id_ed25519'
+    pubkey_path = key_path.with_suffix('.pub')
+    return pubkey_path, key_path
+
+
+def generate_ssh_client_auth_key():
+    """Generate SSH client authentication keypair, if needed."""
+    _, key_path = get_ssh_client_auth_key_paths()
+    key_path.parent.mkdir(parents=True, exist_ok=True)
+    if key_path.exists():
+        logger.info('SSH client key %s for FreedomBox service already exists',
+                    key_path)
+        return
+
+    domain_name = DomainName.list_names()[0]
+    logger.info('Generating SSH client key %s for FreedomBox service',
+                key_path)
+    subprocess.run([
+        'ssh-keygen', '-t', 'ed25519', '-N', '', '-C',
+        f'freedombox@{domain_name}', '-f',
+        str(key_path)
+    ], stdout=subprocess.DEVNULL, check=True)
+
+
+def get_ssh_client_public_key() -> str:
+    """Get SSH client public key for FreedomBox service."""
+    pubkey_path, _ = get_ssh_client_auth_key_paths()
+    with pubkey_path.open('r') as pubkey_file:
+        pubkey = pubkey_file.read()
+
+    return pubkey
+
+
+def copy_ssh_client_public_key(pubkey_path: str, hostname: str, username: str,
+                               password: str):
+    """Copy the SSH client public key to the remote server.
+
+    Returns whether the copy was successful, and any error message.
+    """
+    env = os.environ.copy()
+    env['SSHPASS'] = str(password)
+    with raise_ssh_error():
+        try:
+            subprocess.run([
+                'sshpass', '-e', 'ssh-copy-id', '-i', pubkey_path,
+                f'{username}@{hostname}'
+            ], stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True,
+                           env=env)
+            logger.info("Copied SSH client public key to remote host's "
+                        "authorized keys.")
+        except subprocess.CalledProcessError as exception:
+            logger.warning('Failed to copy SSH client public key: %s',
+                           exception.stderr)
+            raise
+
+
+@contextlib.contextmanager
+def raise_ssh_error() -> collections.abc.Generator[None]:
+    """Convert subprocess error to SshError."""
+    try:
+        yield
+    except subprocess.CalledProcessError as exception:
+        raise errors.SshError(exception.returncode, exception.cmd,
+                              exception.output, exception.stderr)
 
 
 def is_ssh_hostkey_verified(hostname):

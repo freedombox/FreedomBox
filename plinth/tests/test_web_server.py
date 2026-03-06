@@ -44,7 +44,7 @@ def test_static_files_mount(mount, load_cfg):
 
     calls = [
         call(
-            None, '/plinth/a', {
+            None, '/freedombox/a', {
                 '/': {
                     'tools.staticdir.root': '/b',
                     'tools.staticdir.on': True,
@@ -52,7 +52,7 @@ def test_static_files_mount(mount, load_cfg):
                 }
             }),
         call(
-            None, '/plinth/c', {
+            None, '/freedombox/c', {
                 '/': {
                     'tools.staticdir.root': '/d',
                     'tools.staticdir.on': True,

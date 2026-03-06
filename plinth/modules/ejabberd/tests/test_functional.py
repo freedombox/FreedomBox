@@ -118,7 +118,7 @@ def _jsxc_login(browser):
     """Login to JSXC."""
     username = functional.config['DEFAULT']['username']
     password = functional.config['DEFAULT']['password']
-    functional.visit(browser, '/plinth/apps/jsxc/jsxc/')
+    functional.visit(browser, '/freedombox/apps/jsxc/jsxc/')
     assert functional.eventually(browser.find_by_text,
                                  ['BOSH Server reachable.'])
     if browser.find_by_text('relogin'):

@@ -144,7 +144,8 @@ def _create_repo(browser, repo, access=None, ok_if_exists=False):
     """Create repository."""
     if not _repo_exists(browser, repo, access):
         _delete_repo(browser, repo, ignore_missing=True)
-        browser.links.find_by_href('/plinth/apps/gitweb/create/').first.click()
+        browser.links.find_by_href(
+            '/freedombox/apps/gitweb/create/').first.click()
         browser.find_by_id('id_gitweb-name').fill(repo)
         if access == 'private':
             browser.find_by_id('id_gitweb-is_private').check()
@@ -182,7 +183,7 @@ def _delete_repo(browser, repo, ignore_missing=False):
     if repo.endswith('.git'):
         repo = repo[:-4]
     delete_link = browser.links.find_by_href(
-        '/plinth/apps/gitweb/{}/delete/'.format(repo))
+        '/freedombox/apps/gitweb/{}/delete/'.format(repo))
     if delete_link or not ignore_missing:
         delete_link.first.click()
         functional.submit(browser, form_class='form-delete')
@@ -192,7 +193,7 @@ def _edit_repo_metadata(browser, repo, metadata):
     """Set repository metadata."""
     functional.nav_to_module(browser, 'gitweb')
     browser.links.find_by_href(
-        '/plinth/apps/gitweb/{}/edit/'.format(repo)).first.click()
+        '/freedombox/apps/gitweb/{}/edit/'.format(repo)).first.click()
     browser.find_by_id('id_gitweb-name').fill(metadata['name'])
     browser.find_by_id('id_gitweb-description').fill(metadata['description'])
     browser.find_by_id('id_gitweb-owner').fill(metadata['owner'])
@@ -214,7 +215,7 @@ def _get_repo_metadata(browser, repo):
     """Get repository metadata."""
     functional.nav_to_module(browser, 'gitweb')
     browser.links.find_by_href(
-        '/plinth/apps/gitweb/{}/edit/'.format(repo)).first.click()
+        '/freedombox/apps/gitweb/{}/edit/'.format(repo)).first.click()
     metadata = {}
     for item in ['name', 'description', 'owner']:
         metadata[item] = browser.find_by_id('id_gitweb-' + item).value
@@ -318,7 +319,7 @@ def _set_default_branch(browser, repo, branch):
     """Set default branch of the repository."""
     functional.nav_to_module(browser, 'gitweb')
     browser.links.find_by_href(
-        '/plinth/apps/gitweb/{}/edit/'.format(repo)).first.click()
+        '/freedombox/apps/gitweb/{}/edit/'.format(repo)).first.click()
     browser.find_by_id('id_gitweb-default_branch').select(branch)
     functional.submit(browser, form_class='form-gitweb')
 
@@ -327,7 +328,7 @@ def _set_repo_access(browser, repo, access):
     """Set repository as public or private."""
     functional.nav_to_module(browser, 'gitweb')
     browser.links.find_by_href(
-        '/plinth/apps/gitweb/{}/edit/'.format(repo)).first.click()
+        '/freedombox/apps/gitweb/{}/edit/'.format(repo)).first.click()
     if access == 'private':
         browser.find_by_id('id_gitweb-is_private').check()
     else:

@@ -14,6 +14,15 @@ PIP_OPTIONS=
 dpkg --compare-versions 23 \<= $PIP_VERSION && PIP_OPTIONS=--break-system-packages
 pip3 install $PIP_OPTIONS selenium==4.25.0 splinter==0.21.0 pytest-splinter pytest-reporter-html1
 
+echo "Increasing systemd rate limits for starting units"
+mkdir -p /etc/systemd/system.conf.d/
+# Increase the start limit from 5 times in 10 seconds to 20 times in 10 seconds.
+cat > /etc/systemd/system.conf.d/freedombox-functional-tests.conf << EOF
+[Manager]
+DefaultStartLimitBurst=20
+EOF
+systemctl daemon-reload
+
 echo "Installing geckodriver"
 (
     DL_DIR=/tmp/gecko

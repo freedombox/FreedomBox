@@ -41,8 +41,5 @@
      role="button" class="btn btn-primary">
     {% trans "Go to Distribution Update" %}
   </a>
-  <a href="{% url 'notification_dismiss' id=id %}?next={{ request.path|iriencode }}"
-     role="button" class="btn btn-default">
-    {% trans "Dismiss" %}
-  </a>
+  {% include 'notifications-dismiss-button.html' with id=id %}
 </p>

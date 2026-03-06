@@ -1,18 +1,24 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
+import subprocess
+
 from plinth.errors import PlinthError
 
 
 class BorgError(PlinthError):
-    """Generic borg errors"""
+    """Generic borg errors."""
 
 
 class BorgRepositoryDoesNotExistError(BorgError):
-    """Borg access to a repository works but the repository does not exist"""
+    """Borg access to a repository works but the repository does not exist."""
+
+
+class SshError(subprocess.CalledProcessError):
+    """Error when running an SSH command."""
 
 
 class SshfsError(PlinthError):
-    """Generic sshfs errors"""
+    """Generic sshfs errors."""
 
 
 class BorgRepositoryExists(BorgError):

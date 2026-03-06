@@ -24,3 +24,7 @@ freedombox: package-contains-documentation-outside-usr-share-doc [usr/lib/python
 # meant for user. However, don't install to /usr/libexec and follow systemd
 # convention instead.
 freedombox: executable-in-usr-lib [usr/lib/freedombox/freedombox-privileged]
+
+# [Install] section is missing for the privileged daemon service because it is
+# socket activated.
+freedombox: systemd-service-file-missing-install-key [usr/lib/systemd/system/freedombox-privileged.service]

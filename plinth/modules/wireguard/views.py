@@ -11,7 +11,7 @@ from django.http import Http404
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
-from django.views.generic import FormView, TemplateView
+from django.views.generic import FormView, TemplateView, View
 
 from plinth import network
 from plinth.modules.names.components import DomainName
@@ -30,8 +30,19 @@ class WireguardView(AppView):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
         info = utils.get_info()
-        context['server'] = info['my_server']
+        server_info = info['my_server']
+        context['server'] = server_info
         context['client_peers'] = info['my_client']['servers']
+        context['server_endpoints'] = []
+
+        if server_info:
+            domains = DomainName.list_names(filter_for_service='wireguard')
+            listen_port = server_info.get('listen_port')
+            context['server_endpoints'] = [
+                f'{domain}:{listen_port}' for domain in domains
+                if not domain.endswith('.local')
+            ]
+
         return context
 
 
@@ -46,6 +57,16 @@ class AddClientView(SuccessMessageMixin, FormView):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
         context['title'] = _('Add Allowed Client')
+
+        # Show next available IP.
+        try:
+            connection = utils._server_connection()
+            setting_name = utils.nm.SETTING_WIREGUARD_SETTING_NAME
+            settings = connection.get_setting_by_name(setting_name)
+            context['next_ip'] = utils._get_next_available_ip_address(settings)
+        except Exception:
+            context['next_ip'] = None
+
         return context
 
     def form_valid(self, form):
@@ -80,7 +101,7 @@ class ShowClientView(SuccessMessageMixin, TemplateView):
         context['client'] = server_info['peers'][public_key]
         context['endpoints'] = [
             domain + ':' + str(server_info['listen_port'])
-            for domain in domains
+            for domain in domains if not domain.endswith('.local')
         ]
         return context
 
@@ -205,7 +226,8 @@ class EditServerView(SuccessMessageMixin, FormView):
         if not server:
             raise Http404
 
-        initial['ip_address'] = server.get('ip_address')
+        initial['ip_address_and_network'] = server.get(
+            'ip_address_and_network')
         if server['peers']:
             peer = next(peer for peer in server['peers'].values())
             initial['peer_endpoint'] = peer['endpoint']
@@ -251,4 +273,20 @@ class DeleteServerView(SuccessMessageMixin, TemplateView):
         connection = network.get_connection_by_interface_name(interface)
         network.delete_connection(connection.get_uuid())
         messages.success(request, _('Server deleted.'))
+        return redirect('wireguard:index')
+
+
+class EnableServerView(SuccessMessageMixin, View):
+    """View to enable the WireGuard server."""
+
+    def post(self, request):
+        """Create server interface."""
+        try:
+            utils.setup_server()
+            messages.success(request,
+                             _('WireGuard server started successfully.'))
+        except Exception as error:
+            messages.error(
+                request,
+                _('Failed to start WireGuard server: {}').format(error))
         return redirect('wireguard:index')

@@ -105,7 +105,6 @@ class MinifluxApp(app_module.App):
                 'shared-daemon-miniflux-postgresql').ensure_running():
             super().setup(old_version)
 
-        privileged.setup(old_version)
         if not old_version:
             self.enable()
 

@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% comment %}
+# SPDX-License-Identifier: AGPL-3.0-or-later
+{% endcomment %}
+
+{% load i18n %}
+{% load static %}
+{% load bootstrap %}
+
+{% block wrapper %}
+  <div class="container narrow-container authorize-container">
+    <div class="d-flex flex-row align-items-center authorize-diagram">
+      <img src="{% static 'theme/img/application.svg' %}"
+           class="col-image network-entity" alt="{% trans "Application" %}"/>
+      <img src="{% static 'theme/img/network-connection.svg' %}"
+           class="col-image network-connection"
+           alt="{% trans "Connection" %}"/>
+      <img src="{% static 'theme/img/network-freedombox.svg' %}"
+           class="col-image network-entity" alt="{{ box_name }}"/>
+    </div>
+
+    <h3>{% trans "Authorize App" %}</h3>
+
+    {% if not error %}
+      <form id="authorizationForm" class="form form-authorize" method="post">
+        {% csrf_token %}
+
+        {% for field in form %}
+          {% if field.is_hidden %}
+            {{ field }}
+          {% endif %}
+        {% endfor %}
+
+        <ul class="list-group">
+          <li class="list-group-item">
+            {% trans application.name as app %}
+            {% blocktrans trimmed with username=request.user.username %}
+              <strong>{{ app }}</strong> wants to access your account <strong>
+                {{ username }}</strong>
+            {% endblocktrans %}
+          </li>
+          {% for scope in scopes_descriptions %}
+            <li class="list-group-item">{% trans scope %}</li>
+          {% endfor %}
+        </ul>
+
+        {{ form.errors }}
+        {{ form.non_field_errors }}
+
+        <div class="submit-container">
+          <input type="submit" class="btn btn-large btn-primary" name="allow"
+                 value="{% blocktrans trimmed with app=application.name %}
+                          Authorize {{ app }}
+                        {% endblocktrans %}"/>
+        </div>
+      </form>
+
+      <p class="text-secondary">
+        {% blocktrans trimmed with url=form.redirect_uri.value %}
+          Authorizing will redirect to {{ url }}
+        {% endblocktrans %}
+      </p>
+    {% else %}
+      <h3>{% trans "Error:" %} {{ error.error }}</h3>
+      <p>{{ error.description }}</p>
+    {% endif %}
+
+  </div>
+{% endblock %}

@@ -38,7 +38,7 @@ class TestShadowsocksApp(functional.BaseAppTests):
 
 def _configure(browser, server, password):
     """Configure shadowsocks client with given server details."""
-    functional.visit(browser, '/plinth/apps/shadowsocks/')
+    functional.visit(browser, '/freedombox/apps/shadowsocks/')
     browser.find_by_id('id_server').fill(server)
     browser.find_by_id('id_password').fill(password)
     functional.submit(browser, form_class='form-configuration')
@@ -46,7 +46,7 @@ def _configure(browser, server, password):
 
 def _get_configuration(browser):
     """Return the server and password currently configured in shadowsocks."""
-    functional.visit(browser, '/plinth/apps/shadowsocks/')
+    functional.visit(browser, '/freedombox/apps/shadowsocks/')
     server = browser.find_by_id('id_server').value
     password = browser.find_by_id('id_password').value
     return server, password

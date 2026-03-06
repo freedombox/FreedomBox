@@ -36,9 +36,20 @@
               <th>{% trans "Public key of this machine:" %}</th>
               <td>{{ server.public_key }}</td>
             </tr>
-            <tr class="server-ip-address">
+            <tr class="server-ip-address-and-network">
               <th>{% trans "IP address of this machine:" %}</th>
-              <td>{{ server.ip_address }}</td>
+              <td>{{ server.ip_address_and_network }}</td>
+            </tr>
+            <tr class="server-default-route">
+              <th>
+                {% trans "All outgoing traffic is sent using this connection:" %}
+              </th>
+              <td>{% if server.default_route %}
+                    {% trans "Yes" %}
+                  {% else %}
+                    {% trans "No" %}
+                  {% endif %}
+              </td>
             </tr>
           </tbody>
         </table>

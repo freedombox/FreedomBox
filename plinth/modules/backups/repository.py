@@ -13,7 +13,9 @@ from django.utils.translation import gettext_lazy as _
 from plinth import cfg
 from plinth.utils import format_lazy
 
-from . import (_backup_handler, api, errors, get_known_hosts_path, privileged,
+from . import (_backup_handler, api, copy_ssh_client_public_key, errors,
+               generate_ssh_client_auth_key, get_known_hosts_path,
+               get_ssh_client_auth_key_paths, privileged, raise_ssh_error,
                restore_archive_handler, split_path, store)
 from .schedule import Schedule
 
@@ -142,6 +144,9 @@ class BaseBorgRepository(abc.ABC):
         archive_path = self._get_archive_path(archive_name)
         privileged.delete_archive(archive_path,
                                   self._get_encryption_passpharse())
+
+    def migrate_credentials(self) -> None:
+        """Migrate any credentials."""
 
     def initialize(self):
         """Initialize / create a borg repository."""
@@ -315,10 +320,26 @@ class SshBorgRepository(BaseBorgRepository):
         self._umount_ignore_errors()
 
     @property
-    def hostname(self):
+    def hostname(self) -> str:
         """Return hostname from the remote path."""
         _, hostname, _ = split_path(self._path)
         return hostname.split('%')[0]  # XXX: Likely incorrect to split
+
+    @property
+    def username(self) -> str:
+        """Return username from the remote path."""
+        username, _, _ = split_path(self._path)
+        return username
+
+    @property
+    def ssh_password(self) -> str | None:
+        """Return SSH password if it is stored, otherwise None."""
+        return self.credentials.get('ssh_password')
+
+    @property
+    def ssh_keyfile(self) -> str | None:
+        """Return path to SSH client key if stored, otherwise None."""
+        return self.credentials.get('ssh_keyfile')
 
     @property
     def _mountpoint(self):
@@ -330,8 +351,22 @@ class SshBorgRepository(BaseBorgRepository):
         """Return whether remote path is mounted locally."""
         return privileged.is_mounted(self._mountpoint)
 
+    def migrate_credentials(self) -> None:
+        """Add SSH keyfile credential and delete stored password."""
+        if not self.ssh_password:
+            return
+
+        pubkey_path, keyfile_path = get_ssh_client_auth_key_paths()
+        generate_ssh_client_auth_key()
+        copy_ssh_client_public_key(str(pubkey_path), self.hostname,
+                                   self.username, self.ssh_password)
+        self.credentials['ssh_keyfile'] = str(keyfile_path)
+        self.credentials.pop('ssh_password', None)
+        self.save()
+
     def initialize(self):
         """Initialize the repository after mounting the target directory."""
+        self.migrate_credentials()
         self._ensure_remote_directory()
         self.mount()
         super().initialize()
@@ -341,17 +376,11 @@ class SshBorgRepository(BaseBorgRepository):
         if self.is_mounted:
             return
 
+        self.migrate_credentials()
         known_hosts_path = get_known_hosts_path()
-        kwargs = {'user_known_hosts_file': str(known_hosts_path)}
-        if 'ssh_password' in self.credentials and self.credentials[
-                'ssh_password']:
-            kwargs['password'] = self.credentials['ssh_password']
-
-        if 'ssh_keyfile' in self.credentials and self.credentials[
-                'ssh_keyfile']:
-            kwargs['ssh_keyfile'] = self.credentials['ssh_keyfile']
-
-        privileged.mount(self._mountpoint, self._path, **kwargs)
+        privileged.mount(self._mountpoint, self._path,
+                         ssh_keyfile=self.credentials['ssh_keyfile'],
+                         user_known_hosts_file=str(known_hosts_path))
 
     def umount(self):
         """Unmount the remote path that was mounted locally using sshfs."""
@@ -391,16 +420,16 @@ class SshBorgRepository(BaseBorgRepository):
         if dir_path[0] == '~':
             dir_path = '.' + dir_path[1:]
 
-        password = self.credentials['ssh_password']
-
         # Ensure remote directory exists, check contents
-        env = {'SSHPASS': password}
         known_hosts_path = str(get_known_hosts_path())
-        subprocess.run([
-            'sshpass', '-e', 'ssh', '-o',
-            f'UserKnownHostsFile={known_hosts_path}', f'{username}@{hostname}',
-            'mkdir', '-p', dir_path
-        ], check=True, env=env)
+        with raise_ssh_error():
+            subprocess.run([
+                'ssh', '-i',
+                str(self.ssh_keyfile), '-o',
+                f'UserKnownHostsFile={known_hosts_path}', '-o',
+                'BatchMode=yes', f'{username}@{hostname}', 'mkdir', '-p',
+                dir_path
+            ], stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
 
 
 def get_repositories():

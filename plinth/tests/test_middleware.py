@@ -63,7 +63,7 @@ class TestSetupMiddleware:
     @patch('django.urls.reverse', return_value='users:login')
     def test_404_urls(reverse, middleware, kwargs):
         """Test how middleware deals with 404 URLs."""
-        request = RequestFactory().get('/plinth/non-existing-url')
+        request = RequestFactory().get('/freedombox/non-existing-url')
         response = middleware.process_view(request, **kwargs)
         assert response is None
 
@@ -71,7 +71,7 @@ class TestSetupMiddleware:
     @patch('django.urls.reverse', return_value='users:login')
     def test_url_not_an_application(reverse, middleware, kwargs):
         """Test that none is returned for URLs that are not applications."""
-        request = RequestFactory().get('/plinth/')
+        request = RequestFactory().get('/freedombox/')
         response = middleware.process_view(request, **kwargs)
         assert response is None
 
@@ -83,7 +83,7 @@ class TestSetupMiddleware:
         resolve.return_value.namespaces = ['mockapp']
         app.get_setup_state = lambda: app_module.App.SetupState.UP_TO_DATE
 
-        request = RequestFactory().get('/plinth/mockapp')
+        request = RequestFactory().get('/freedombox/mockapp')
         request.user = AnonymousUser()
         response = middleware.process_view(request, **kwargs)
         assert response is None
@@ -99,7 +99,7 @@ class TestSetupMiddleware:
         resolve.return_value.namespaces = ['mockapp']
         view = Mock()
         setup_view.as_view.return_value = view
-        request = RequestFactory().get('/plinth/mockapp')
+        request = RequestFactory().get('/freedombox/mockapp')
         request.session = MagicMock()
 
         # Verify that anonymous users cannot access the setup page
@@ -152,7 +152,7 @@ class TestSetupMiddleware:
         app.get_setup_state = lambda: app_module.App.SetupState.UP_TO_DATE
 
         # Admin user can collect result
-        request = RequestFactory().get('/plinth/mockapp')
+        request = RequestFactory().get('/freedombox/mockapp')
         request.resolver_match = Mock()
         user = User(username='adminuser')
         user.save()
@@ -175,7 +175,7 @@ class TestSetupMiddleware:
         messages_success.reset_mock()
         messages_error.reset_mock()
         operation_manager.collect_results.reset_mock()
-        request = RequestFactory().get('/plinth/mockapp')
+        request = RequestFactory().get('/freedombox/mockapp')
         user = User(username='johndoe')
         user.save()
         request.user = user
@@ -201,7 +201,7 @@ class TestAdminMiddleware:
     @pytest.fixture(name='web_request')
     def fixture_web_request():
         """Fixture for returning kwargs."""
-        web_request = RequestFactory().get('/plinth/mockapp')
+        web_request = RequestFactory().get('/freedombox/mockapp')
         web_request.user = Mock()
         return web_request
 
@@ -254,6 +254,16 @@ class TestAdminMiddleware:
         kwargs = dict(kwargs)
         kwargs['view_func'] = public(HttpResponse)
 
+        response = middleware.process_view(web_request, **kwargs)
+        assert response is None
+
+    @staticmethod
+    def test_that_stronghold_allowed_urls_are_allowed_for_normal_user(
+            middleware, kwargs):
+        web_request = RequestFactory().get('/o/authorize/')
+        web_request.user = Mock()
+        web_request.user.groups.filter().exists = Mock(return_value=False)
+        web_request.session = MagicMock()
         response = middleware.process_view(web_request, **kwargs)
         assert response is None
 
