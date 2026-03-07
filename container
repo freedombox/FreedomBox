@@ -227,6 +227,7 @@ fi
 
 echo "> In machine: Upgrade packages"
 apt-get update
+apt-mark hold freedombox freedombox-doc-en freedombox-doc-es
 DEBIAN_FRONTEND=noninteractive apt-get -yq --with-new-pkgs upgrade
 
 # Install requirements for tests if not already installed as root
