@@ -6,8 +6,7 @@ require 'etc'
 
 Vagrant.configure(2) do |config|
   config.vm.box = "freedombox/freedombox-testing-dev"
-  config.vm.network "forwarded_port", guest: 443, host: 4430
-  config.vm.network "forwarded_port", guest: 445, host: 4450
+  config.vm.network "public_network"
   config.vm.synced_folder ".", "/freedombox", owner: "plinth", group: "plinth"
   config.vm.provider "virtualbox" do |vb|
     vb.cpus = Etc.nprocessors
@@ -28,7 +27,11 @@ Vagrant.configure(2) do |config|
   SHELL
   config.vm.provision "tests", run: "never", type: "shell", path: "plinth/tests/functional/install.sh"
   config.vm.post_up_message = "FreedomBox virtual machine is ready
-for development. Plinth will be available at https://localhost:4430/freedombox
+for development. To get the IP address:
+$ vagrant ssh
+$ ip address show
+
+FreedomBox interface will be available at https://<ip address>/freedombox
 (with an invalid SSL certificate). To watch logs:
 $ vagrant ssh
 $ sudo freedombox-logs
