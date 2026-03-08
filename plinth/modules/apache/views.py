@@ -39,7 +39,7 @@ class DiscoverIDPView(View):
             return HttpResponseBadRequest(f'Cannot handle "{method}" method')
 
         oidc_callback_parts = urlparse(oidc_callback)
-        request_host = request.META['HTTP_HOST']
+        request_host = request.get_host()
         if request_host != oidc_callback_parts.netloc:
             return HttpResponseBadRequest(
                 f'Cannot redirect from {request_host} to a different host '
