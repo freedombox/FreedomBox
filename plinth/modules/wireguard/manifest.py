@@ -27,11 +27,6 @@ clients = [{
     }, {
         'type': 'store',
         'os': 'android',
-        'store_name': 'f-droid',
-        'url': store_url('f-droid', _wireguard_package_id)
-    }, {
-        'type': 'store',
-        'os': 'android',
         'store_name': 'google-play',
         'url': store_url('google-play', _wireguard_package_id)
     }, {
