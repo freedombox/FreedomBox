@@ -15,7 +15,8 @@ clients = [{
     'platforms': [{
         'type': 'download',
         'os': 'windows',
-        'url': 'https://download.wireguard.com'
+        'url': ('https://download.wireguard.com/'
+                'windows-client/wireguard-installer.exe')
     }, {
         'type': 'download',
         'os': 'macos',
