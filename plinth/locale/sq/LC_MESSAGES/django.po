@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-03 02:00+0000\n"
-"PO-Revision-Date: 2026-02-04 06:01+0000\n"
+"PO-Revision-Date: 2026-03-04 05:09+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/sq/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.16-dev\n"
+"X-Generator: Weblate 5.17-dev\n"
 
 #: plinth/config.py:103
 #, python-brace-format
@@ -168,7 +168,7 @@ msgstr "Ndërfaqe Web e {box_name} (Plinth)"
 
 #: plinth/modules/apache/__init__.py:129
 msgid "Web app protected by FreedomBox"
-msgstr ""
+msgstr "Aplikacion web i mbrojtur nga FreedomBox"
 
 #: plinth/modules/apache/components.py:270
 #, python-brace-format
@@ -410,10 +410,8 @@ msgid "Passphrase"
 msgstr "Frazëkalim"
 
 #: plinth/modules/backups/forms.py:187
-#, fuzzy
-#| msgid "Passphrase; Only needed when using encryption."
 msgid "Only needed when using encryption."
-msgstr "Frazëkalim; I nevojshëm vetëm kur përdoret fshehtëzim."
+msgstr "I nevojshëm vetëm kur përdoret fshehtëzim."
 
 #: plinth/modules/backups/forms.py:190
 msgid "Confirm Passphrase"
@@ -452,44 +450,32 @@ msgstr ""
 "për/te/depoja/</i>"
 
 #: plinth/modules/backups/forms.py:255
-#, fuzzy
-#| msgid "Authentication Mode"
 msgid "SSH Authentication Type"
-msgstr "Mënyrë Mirëfilltësimi"
+msgstr "Lloj Mirëfilltësimi SSH"
 
 #: plinth/modules/backups/forms.py:256
-#, fuzzy
-#| msgid "Authentication to remote server failed."
 msgid "Choose how to authenticate to the remote SSH server."
-msgstr "Mirëfilltësimi te shërbyesi i largët dështoi."
+msgstr "Zgjidhni si të bëhet mirëfilltësimi te shërbyesi i largët SSH."
 
 #: plinth/modules/backups/forms.py:258
-#, fuzzy
-#| msgid "needs authentication"
 msgid "Key-based Authentication"
-msgstr "lyp mirëfilltësim"
+msgstr "Mirëfilltësim me bazë kyçe"
 
 #: plinth/modules/backups/forms.py:259
-#, fuzzy
-#| msgid "Disable password authentication"
 msgid "Password-based Authentication"
-msgstr "Çaktivizo mirëfilltësim fjalëkalimi"
+msgstr "Mirëfilltësim me bazë fjalëkalime"
 
 #: plinth/modules/backups/forms.py:261
 msgid "SSH server password"
 msgstr "Fjalëkalim shërbyesi SSH"
 
 #: plinth/modules/backups/forms.py:262
-#, fuzzy
-#| msgid "Disable password authentication"
 msgid "Required for password-based authentication."
-msgstr "Çaktivizo mirëfilltësim fjalëkalimi"
+msgstr "E domosdoshme për mirëfilltësim me bazë fjalëkalime."
 
 #: plinth/modules/backups/forms.py:275
-#, fuzzy
-#| msgid "Disable password authentication"
 msgid "SSH password is needed for password-based authentication."
-msgstr "Çaktivizo mirëfilltësim fjalëkalimi"
+msgstr "Fjalëkalimi SSH duhet për mirëfilltësim me bazë fjalëkalime."
 
 #: plinth/modules/backups/forms.py:292
 msgid "Remote backup repository already exists."
@@ -636,6 +622,9 @@ msgid ""
 "list on the remote machine for %(box_name)s to be able to connect to the "
 "remote machine:"
 msgstr ""
+"Kyçi vijues publik klienti SSH duhet shtuar te lista e kyçeve të autorizuara "
+"te makina e largët për %(box_name)s, për të qenë në gjendje të lidheni te "
+"makina e largët:"
 
 #: plinth/modules/backups/templates/backups_add_remote_repository.html:86
 #, python-format
@@ -644,6 +633,10 @@ msgid ""
 "successful, then the public key will be automatically added to the "
 "authorized keys list, so that future connections do not need the password."
 msgstr ""
+"Shërbimi %(box_name)s do të përpiqet të lidhet duke përdorur fjalëkalimin e "
+"dhënë. Në rast suksesi, atëherë kyçi publik do të shtohet automatikisht te "
+"lista e kyçeve të autorizuar, që lidhje të ardhshme të mos kenë nevojë për "
+"fjalëkalimin."
 
 #: plinth/modules/backups/templates/backups_add_remote_repository.html:131
 #: plinth/modules/backups/templates/backups_upload.html:28
@@ -822,10 +815,8 @@ msgid "Authentication to remote server failed."
 msgstr "Mirëfilltësimi te shërbyesi i largët dështoi."
 
 #: plinth/modules/backups/views.py:50
-#, fuzzy
-#| msgid "Error establishing connection to server: {}"
 msgid "Error establishing connection to server: {} {} {}"
-msgstr "Gabim gjatë vendosjes së lidhjes me shërbyesin: {}"
+msgstr "Gabim gjatë vendosjes së lidhjes me shërbyesin: {} {} {}"
 
 #: plinth/modules/backups/views.py:82
 msgid "Backup schedule updated."
@@ -1468,14 +1459,7 @@ msgid "Webserver Home Page"
 msgstr "Faqe Hyrëse Shërbyesi"
 
 #: plinth/modules/config/forms.py:37
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Choose the default page that must be served when someone visits your "
-#| "{box_name} on the web. A typical use case is to set your blog or wiki as "
-#| "the home page when someone visits the domain name. Note that once the "
-#| "home page is set to something other than {box_name} Service (Plinth), "
-#| "your users must explicitly type /plinth or /freedombox to reach "
-#| "{box_name} Service (Plinth)."
+#, python-brace-format
 msgid ""
 "Choose the default page that must be served when someone visits your "
 "{box_name} on the web. A typical use case is to set your blog or wiki as the "
@@ -1488,7 +1472,7 @@ msgstr ""
 "platformën tuaj wiki si faqe hyrëse, kur dikush viziton emrin e përkatësisë. "
 "Kini parasysh se pasi faqja hyrëse të jetë caktuar si diçka tjetër nga "
 "{box_name} Service (Plinth), përdoruesit tuaj duhet të shtypin shprehimisht /"
-"plinth ose /freedombox që të kapin {box_name} Service (Plinth)."
+"freedombox që të kapin Shërbimin {box_name} (Plinth)."
 
 #: plinth/modules/config/forms.py:48
 msgid "Show advanced apps and features"
@@ -2450,15 +2434,11 @@ msgstr ""
 "përgjegjës."
 
 #: plinth/modules/email/__init__.py:41
-#, fuzzy
-#| msgid ""
-#| "<a href=\"/plinth/apps/roundcube/\">Roundcube app</a> provides web "
-#| "interface for users to access email."
 msgid ""
 "<a href=\"/freedombox/apps/roundcube/\">Roundcube app</a> provides web "
 "interface for users to access email."
 msgstr ""
-"<a href=\"/plinth/apps/roundcube/\">Aplikacioni Roundcube</a> furnizon "
+"<a href=\"/freedombox/apps/roundcube/\">Aplikacioni Roundcube</a> furnizon "
 "ndërfaqe web për përdoruesit për të përdorur email-in."
 
 #: plinth/modules/email/__init__.py:43
@@ -6255,12 +6235,6 @@ msgstr ""
 "që kështu %(box_name)s-i të japë shërbimet."
 
 #: plinth/modules/networks/templates/router_configuration_content.html:32
-#, fuzzy
-#| msgid ""
-#| "If you don't have control over your router, choose not to configure it. "
-#| "To see options to overcome this limitation, choose 'I dont have a public "
-#| "IP address' option in <a href=\"/plinth/sys/networks/internet-connection-"
-#| "type/\">Internet connection type selection</a>."
 msgid ""
 "If you don't have control over your router, choose not to configure it. To "
 "see options to overcome this limitation, choose 'I dont have a public IP "
@@ -6269,8 +6243,8 @@ msgid ""
 msgstr ""
 "Nëse s’keni kontrollin e rrugëzuesit tuaj, zgjidhni të mos formësohet. Që të "
 "shihni mundësitë për kapërcimin e këtij kufizimi, zgjidhni mundësinë “S’kam "
-"adresë IP publike”, te <a href=\"/plinth/sys/networks/internet-connection-"
-"type/\">përzgjedhja e llojit të lidhjes tuaj Internet</a>."
+"adresë IP publike”, te <a href=\"/freedombox/sys/networks/internet-"
+"connection-type/\">përzgjedhja e llojit të lidhjes tuaj Internet</a>."
 
 #: plinth/modules/networks/templates/router_configuration_content.html:39
 msgid "Choose How You Wish to Configure Your Router"
@@ -6678,16 +6652,12 @@ msgid "OpenID Connect Provider"
 msgstr ""
 
 #: plinth/modules/oidc/templates/oauth2_provider/authorize.html:14
-#, fuzzy
-#| msgid "Action"
 msgid "Application"
-msgstr "Veprim"
+msgstr "Aplikacion"
 
 #: plinth/modules/oidc/templates/oauth2_provider/authorize.html:22
-#, fuzzy
-#| msgid "Authorized SSH Keys"
 msgid "Authorize App"
-msgstr "Kyçe SSH të autorizuar"
+msgstr "Autorizoni Aplikacion"
 
 #: plinth/modules/oidc/templates/oauth2_provider/authorize.html:37
 #, python-format
@@ -6695,17 +6665,18 @@ msgid ""
 "<strong>%(app)s</strong> wants to access your account <strong> %(username)s</"
 "strong>"
 msgstr ""
+"<strong>%(app)s</strong> dëshiron të përdorë llogarinë tuaj <strong> %"
+"(username)s</strong>"
 
 #: plinth/modules/oidc/templates/oauth2_provider/authorize.html:52
-#, fuzzy, python-format
-#| msgid "Authorized SSH Keys"
+#, python-format
 msgid "Authorize %(app)s"
-msgstr "Kyçe SSH të autorizuar"
+msgstr "Autorizoni %(app)s"
 
 #: plinth/modules/oidc/templates/oauth2_provider/authorize.html:59
 #, python-format
 msgid "Authorizing will redirect to %(url)s"
-msgstr ""
+msgstr "Autorizimi do të sjellë ridrejtimin për te %(url)s"
 
 #: plinth/modules/openvpn/__init__.py:20
 #, python-brace-format
@@ -8140,12 +8111,6 @@ msgstr ""
 "vjetra do të spastrohen automatikisht, në përputhje me rregullimet më poshtë."
 
 #: plinth/modules/snapshot/__init__.py:25
-#, fuzzy
-#| msgid ""
-#| "Snapshots currently work on btrfs file systems only and on the root "
-#| "partition only. Snapshots are not a replacement for <a href=\"/plinth/sys/"
-#| "backups\">backups</a> since they can only be stored on the same "
-#| "partition. "
 msgid ""
 "Snapshots currently work on btrfs file systems only and on the root "
 "partition only. Snapshots are not a replacement for <a href=\"/freedombox/"
@@ -8153,9 +8118,9 @@ msgid ""
 "partition. "
 msgstr ""
 "Fotografimet aktualisht funksionojnë vetëm në sisteme btrfs kartelash dhe "
-"vetëm në pjesë rrënjë. Fotografimet s’janë zëvendësim për <a href=\"/plinth/"
-"sys/backups\">kopjeruajtjet</a>, ngaqë mund të rikthehen vetëm në të njëjtën "
-"pjesë. "
+"vetëm në pjesë rrënjë. Fotografimet s’janë zëvendësim për <a href=\"/"
+"freeedombox/sys/backups\">kopjeruajtjet</a>, ngaqë mund të rikthehen vetëm "
+"në të njëjtën pjesë. "
 
 #: plinth/modules/snapshot/__init__.py:50
 msgid "Storage Snapshots"
@@ -8438,7 +8403,7 @@ msgstr ""
 
 #: plinth/modules/ssh/__init__.py:42
 msgid "Secure Shell Server"
-msgstr "Shërbyes Shelli të Sigurt (SSH)"
+msgstr "Shërbyes Shelli të Siguruar"
 
 #: plinth/modules/ssh/__init__.py:75
 msgid "Remotely login using Secure Shell (SSH)"
@@ -10031,14 +9996,12 @@ msgid "Invalid key."
 msgstr "Kyç i pavlefshëm."
 
 #: plinth/modules/wireguard/forms.py:63
-#, fuzzy
-#| msgid "Enter a valid username."
 msgid "Enter a valid IPv4 address."
-msgstr "Jepni një emër përdoruesi të vlefshëm."
+msgstr "Jepni një adresë IPv4 të vlefshme."
 
 #: plinth/modules/wireguard/forms.py:65
 msgid "Enter a valid network prefix or net mask."
-msgstr ""
+msgstr "Jepni një prefiks të vlefshëm rrjeti, ose një maskë rrjeti."
 
 #: plinth/modules/wireguard/forms.py:71
 #: plinth/modules/wireguard/templates/wireguard.html:28
@@ -10085,11 +10048,6 @@ msgid "Client IP address provided by server"
 msgstr "Adresë IP klienti e furnizuar nga shërbyesi\\"
 
 #: plinth/modules/wireguard/forms.py:94
-#, fuzzy
-#| msgid ""
-#| "IP address assigned to this machine on the VPN after connecting to the "
-#| "endpoint. This value is usually provided by the server operator. Example: "
-#| "192.168.0.10."
 msgid ""
 "IP address assigned to this machine on the VPN after connecting to the "
 "endpoint. This value is usually provided by the server operator. Example: "
@@ -10098,7 +10056,9 @@ msgid ""
 "10.68.12.43/255.255.255.0."
 msgstr ""
 "Adresë IP caktuar kësaj makine te VPN-ja, pas lidhjes me pikëmbarimin. Kjo "
-"vlerë zakonisht jepet nga operatori i shërbyesit. Shembull: 192.168.0.10."
+"vlerë zakonisht jepet nga operatori i shërbyesit. Shembull: 192.168.0.10. "
+"Mundeni edhe të tregoni rrjetin. Kjo do të lejojë të arrihet te makina te "
+"rrjeti. Shembuj: 10.68.12.43/24 ose 10.68.12.43/255.255.255.0."
 
 #: plinth/modules/wireguard/forms.py:102
 msgid "Private key of this machine"
@@ -10149,30 +10109,26 @@ msgid "As a Server"
 msgstr "Si Shërbyes"
 
 #: plinth/modules/wireguard/templates/wireguard.html:16
-#, fuzzy, python-format
-#| msgid "Endpoints for this %(box_name)s:"
+#, python-format
 msgid "Information for this %(box_name)s:"
-msgstr "Pikëmbarime për këtë %(box_name)s:"
+msgstr "Informacion për këtë %(box_name)s:"
 
 #: plinth/modules/wireguard/templates/wireguard.html:24
 msgid "Property"
-msgstr ""
+msgstr "Veti"
 
 #: plinth/modules/wireguard/templates/wireguard.html:25
 msgid "Value"
-msgstr ""
+msgstr "Vlerë"
 
 #: plinth/modules/wireguard/templates/wireguard.html:32
-#, fuzzy
-#| msgid "Endpoint"
 msgid "Endpoint(s)"
-msgstr "Pikëmbarim"
+msgstr "Pikëmbarim(e)"
 
 #: plinth/modules/wireguard/templates/wireguard.html:40
-#, fuzzy, python-format
-#| msgid "To %(box_name)s Ports"
+#, python-format
 msgid "%(box_name)s VPN IP for services"
-msgstr "Te Porta të %(box_name)s"
+msgstr "IP VPN-je %(box_name)s për shërbime"
 
 #: plinth/modules/wireguard/templates/wireguard.html:49
 msgid "Peers"
@@ -10206,10 +10162,8 @@ msgid "Add Allowed Client"
 msgstr "Shtoni Klient të Lejuar"
 
 #: plinth/modules/wireguard/templates/wireguard.html:96
-#, fuzzy
-#| msgid "WireGuard server started successfully."
 msgid "WireGuard server not started yet."
-msgstr "Shërbyesi WireGuard u nis me sukses."
+msgstr "Shërbyesi WireGuard s’është nisur ende."
 
 #: plinth/modules/wireguard/templates/wireguard.html:100
 #: plinth/modules/wireguard/templates/wireguard.html:102
@@ -10245,7 +10199,7 @@ msgstr "Shtoni Lidhje me Shërbyesin"
 
 #: plinth/modules/wireguard/templates/wireguard_add_client.html:21
 msgid "IP address that will be assigned to this client"
-msgstr "Adresë IP që do t’i jepet këtij klienti:"
+msgstr "Adresë IP që do t’i jepet këtij klienti"
 
 #: plinth/modules/wireguard/templates/wireguard_add_client.html:31
 msgid "Add Client"
@@ -10300,7 +10254,7 @@ msgstr "Kyç publik shërbyesi:"
 
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:45
 msgid "Server VPN IP address for services:"
-msgstr ""
+msgstr "Adresë IP shërbyesi VPN për shërbime:"
 
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:57
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:63
@@ -10342,7 +10296,7 @@ msgstr "Adresë IP e kësaj makine:"
 
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:45
 msgid "All outgoing traffic is sent using this connection:"
-msgstr ""
+msgstr "Krejt trafiku ikës dërgohet duke përdorur këtë lidhje:"
 
 #: plinth/modules/wireguard/views.py:54
 msgid "Added new client."
@@ -10604,20 +10558,20 @@ msgstr "Mbaroi koha teksa pritej për përgjegjës paketash"
 #: plinth/settings.py:181
 msgid "Uniquely identify your user account with username"
 msgstr ""
+"Identifikoni në mënyrë unike llogarinë tuaj të përdoruesit me emrin e "
+"përdoruesit"
 
 #: plinth/settings.py:183
-#, fuzzy
-#| msgid "requesting address"
 msgid "View email address"
-msgstr "po kërkohet adresë"
+msgstr "Shihni adresë email"
 
 #: plinth/settings.py:185
 msgid "View basic profile information (such as name and email)"
-msgstr ""
+msgstr "Shihni informacion elementar profili (fjala vjen, emër dhe email)"
 
 #: plinth/settings.py:187
 msgid "View permissions that account has"
-msgstr ""
+msgstr "Shihni lejet që ka ajo llogari"
 
 #: plinth/setup.py:44
 msgid "Installing app"

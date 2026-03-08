@@ -128,7 +128,7 @@ def setup(old_version: int):
         # Various modules for authentication/authorization
         webserver.enable('auth_openidc', kind='module')
         webserver.enable('authnz_ldap', kind='module')
-        webserver.enable('auth_pubtkt', kind='module')
+        webserver.disable('auth_pubtkt', kind='module')
 
         # enable some critical modules to avoid restart while installing
         # FreedomBox applications.

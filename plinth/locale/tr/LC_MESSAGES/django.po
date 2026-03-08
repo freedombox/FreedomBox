@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-03 02:00+0000\n"
-"PO-Revision-Date: 2026-02-04 06:01+0000\n"
+"PO-Revision-Date: 2026-03-04 05:09+0000\n"
 "Last-Translator: Burak Yavuz <hitowerdigit@hotmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/tr/>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.16-dev\n"
+"X-Generator: Weblate 5.17-dev\n"
 
 #: plinth/config.py:103
 #, python-brace-format
@@ -167,7 +167,7 @@ msgstr "{box_name} Web Arayüzü (Plinth)"
 
 #: plinth/modules/apache/__init__.py:129
 msgid "Web app protected by FreedomBox"
-msgstr ""
+msgstr "FreedomBox tarafından korunan web uygulaması"
 
 #: plinth/modules/apache/components.py:270
 #, python-brace-format
@@ -405,10 +405,8 @@ msgid "Passphrase"
 msgstr "Parola"
 
 #: plinth/modules/backups/forms.py:187
-#, fuzzy
-#| msgid "Passphrase; Only needed when using encryption."
 msgid "Only needed when using encryption."
-msgstr "Parola; Yalnızca şifreleme kullanırken gereklidir."
+msgstr "Yalnızca şifreleme kullanırken gereklidir."
 
 #: plinth/modules/backups/forms.py:190
 msgid "Confirm Passphrase"
@@ -446,44 +444,32 @@ msgstr ""
 "Yeni veya varolan bir depo yolu. Örnek: <i>user@host:~/path/to/repo/</i>"
 
 #: plinth/modules/backups/forms.py:255
-#, fuzzy
-#| msgid "Authentication Mode"
 msgid "SSH Authentication Type"
-msgstr "Kimlik Doğrulama Kipi"
+msgstr "SSH Kimlik Doğrulama Türü"
 
 #: plinth/modules/backups/forms.py:256
-#, fuzzy
-#| msgid "Authentication to remote server failed."
 msgid "Choose how to authenticate to the remote SSH server."
-msgstr "Uzak sunucuya kimlik doğrulama başarısız oldu."
+msgstr "Uzak SSH sunucusunda nasıl kimlik doğrulanacağını seçin."
 
 #: plinth/modules/backups/forms.py:258
-#, fuzzy
-#| msgid "needs authentication"
 msgid "Key-based Authentication"
-msgstr "kimlik doğrulaması gerekiyor"
+msgstr "Anahtar Tabanlı Kimlik Doğrulama"
 
 #: plinth/modules/backups/forms.py:259
-#, fuzzy
-#| msgid "Disable password authentication"
 msgid "Password-based Authentication"
-msgstr "Parola kimlik doğrulamasını etkisizleştir"
+msgstr "Parola Tabanlı Kimlik Doğrulama"
 
 #: plinth/modules/backups/forms.py:261
 msgid "SSH server password"
 msgstr "SSH Sunucu Parolası"
 
 #: plinth/modules/backups/forms.py:262
-#, fuzzy
-#| msgid "Disable password authentication"
 msgid "Required for password-based authentication."
-msgstr "Parola kimlik doğrulamasını etkisizleştir"
+msgstr "Parola tabanlı kimlik doğrulama için gereklidir."
 
 #: plinth/modules/backups/forms.py:275
-#, fuzzy
-#| msgid "Disable password authentication"
 msgid "SSH password is needed for password-based authentication."
-msgstr "Parola kimlik doğrulamasını etkisizleştir"
+msgstr "Parola tabanlı kimlik doğrulama için SSH parolası gereklidir."
 
 #: plinth/modules/backups/forms.py:292
 msgid "Remote backup repository already exists."
@@ -627,6 +613,9 @@ msgid ""
 "list on the remote machine for %(box_name)s to be able to connect to the "
 "remote machine:"
 msgstr ""
+"%(box_name)s'ın uzak makineye bağlanabilmesi için aşağıdaki SSH istemcisi "
+"ortak anahtarı, uzak makinedeki yetkili anahtarlar listesine eklenmek "
+"zorundadır:"
 
 #: plinth/modules/backups/templates/backups_add_remote_repository.html:86
 #, python-format
@@ -635,6 +624,10 @@ msgid ""
 "successful, then the public key will be automatically added to the "
 "authorized keys list, so that future connections do not need the password."
 msgstr ""
+"%(box_name)s hizmeti, sağlanan parolayı kullanarak bağlanmayı deneyecek. "
+"Eğer başarılı olursa, ortak anahtar otomatik olarak yetkili anahtarlar "
+"listesine eklenecektir, böylece gelecekteki bağlantılarda parolaya gerek "
+"kalmaz."
 
 #: plinth/modules/backups/templates/backups_add_remote_repository.html:131
 #: plinth/modules/backups/templates/backups_upload.html:28
@@ -812,10 +805,8 @@ msgid "Authentication to remote server failed."
 msgstr "Uzak sunucuya kimlik doğrulama başarısız oldu."
 
 #: plinth/modules/backups/views.py:50
-#, fuzzy
-#| msgid "Error establishing connection to server: {}"
 msgid "Error establishing connection to server: {} {} {}"
-msgstr "Sunucuyla bağlantı kurulurken hata oldu: {}"
+msgstr "Sunucuyla bağlantı kurulurken hata oldu: {} {} {}"
 
 #: plinth/modules/backups/views.py:82
 msgid "Backup schedule updated."
@@ -1454,14 +1445,7 @@ msgid "Webserver Home Page"
 msgstr "Web Sunucusu Ana Sayfası"
 
 #: plinth/modules/config/forms.py:37
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Choose the default page that must be served when someone visits your "
-#| "{box_name} on the web. A typical use case is to set your blog or wiki as "
-#| "the home page when someone visits the domain name. Note that once the "
-#| "home page is set to something other than {box_name} Service (Plinth), "
-#| "your users must explicitly type /plinth or /freedombox to reach "
-#| "{box_name} Service (Plinth)."
+#, python-brace-format
 msgid ""
 "Choose the default page that must be served when someone visits your "
 "{box_name} on the web. A typical use case is to set your blog or wiki as the "
@@ -1474,7 +1458,7 @@ msgstr ""
 "ziyaret ettiğinde blog'unuzu veya viki'nizi ana sayfa olarak ayarlamaktır. "
 "Ana sayfa {box_name} Hizmeti (Plinth) dışında bir şeye ayarlandığında, "
 "kullanıcılarınızın {box_name} Hizmeti'ne (Plinth) ulaşmak için açıkça /"
-"plinth veya /freedombox yazmak zorunda olduklarını unutmayın."
+"freedombox yazmak zorunda olduklarını unutmayın."
 
 #: plinth/modules/config/forms.py:48
 msgid "Show advanced apps and features"
@@ -2431,16 +2415,12 @@ msgstr ""
 "kullanıcıyı işaret ederek otomatik olarak oluşturulur."
 
 #: plinth/modules/email/__init__.py:41
-#, fuzzy
-#| msgid ""
-#| "<a href=\"/plinth/apps/roundcube/\">Roundcube app</a> provides web "
-#| "interface for users to access email."
 msgid ""
 "<a href=\"/freedombox/apps/roundcube/\">Roundcube app</a> provides web "
 "interface for users to access email."
 msgstr ""
-"<a href=\"/plinth/apps/roundcube/\">Roundcube uygulaması</a>, kullanıcıların "
-"e-postaya erişmesi için web arayüzü sağlar."
+"<a href=\"/freedombox/apps/roundcube/\">Roundcube uygulaması</a>, "
+"kullanıcıların e-postaya erişmesi için web arayüzü sağlar."
 
 #: plinth/modules/email/__init__.py:43
 msgid ""
@@ -6215,12 +6195,6 @@ msgstr ""
 "yönlendirecek şekilde yapılandırılması gerekecektir."
 
 #: plinth/modules/networks/templates/router_configuration_content.html:32
-#, fuzzy
-#| msgid ""
-#| "If you don't have control over your router, choose not to configure it. "
-#| "To see options to overcome this limitation, choose 'I dont have a public "
-#| "IP address' option in <a href=\"/plinth/sys/networks/internet-connection-"
-#| "type/\">Internet connection type selection</a>."
 msgid ""
 "If you don't have control over your router, choose not to configure it. To "
 "see options to overcome this limitation, choose 'I dont have a public IP "
@@ -6228,9 +6202,9 @@ msgid ""
 "type/\">Internet connection type selection</a>."
 msgstr ""
 "Eğer yönlendiriciniz üzerinde denetiminiz yoksa, yapılandırmamayı seçin. Bu "
-"sınırlamanın üstesinden gelme seçeneklerini görmek için <a href=\"/plinth/"
-"sys/networks/internet-connection-type/\">İnternet bağlantı türü seçiminde</"
-"a> 'Bir dış IP adresim yok' seçeneğini seçin."
+"sınırlamanın üstesinden gelme seçeneklerini görmek için <a href=\"/"
+"freedombox/sys/networks/internet-connection-type/\">İnternet bağlantı türü "
+"seçiminde</a> 'Bir dış IP adresim yok' seçeneğini seçin."
 
 #: plinth/modules/networks/templates/router_configuration_content.html:39
 msgid "Choose How You Wish to Configure Your Router"
@@ -6635,19 +6609,15 @@ msgstr "Parola güncelleme başarısız oldu. Lütfen daha güçlü bir parola s
 
 #: plinth/modules/oidc/__init__.py:56
 msgid "OpenID Connect Provider"
-msgstr ""
+msgstr "OpenID Connect Sağlayıcısı"
 
 #: plinth/modules/oidc/templates/oauth2_provider/authorize.html:14
-#, fuzzy
-#| msgid "Applications"
 msgid "Application"
-msgstr "Uygulamalar"
+msgstr "Uygulama"
 
 #: plinth/modules/oidc/templates/oauth2_provider/authorize.html:22
-#, fuzzy
-#| msgid "Authorized SSH Keys"
 msgid "Authorize App"
-msgstr "Yetkili SSH Anahtarları"
+msgstr "Uygulamayı Yetkilendir"
 
 #: plinth/modules/oidc/templates/oauth2_provider/authorize.html:37
 #, python-format
@@ -6655,17 +6625,18 @@ msgid ""
 "<strong>%(app)s</strong> wants to access your account <strong> %(username)s</"
 "strong>"
 msgstr ""
+"<strong>%(app)s</strong>, <strong> %(username)s</strong> hesabınıza erişmek "
+"istiyor"
 
 #: plinth/modules/oidc/templates/oauth2_provider/authorize.html:52
-#, fuzzy, python-format
-#| msgid "Authorized SSH Keys"
+#, python-format
 msgid "Authorize %(app)s"
-msgstr "Yetkili SSH Anahtarları"
+msgstr "%(app)s Uygulamasını Yetkilendir"
 
 #: plinth/modules/oidc/templates/oauth2_provider/authorize.html:59
 #, python-format
 msgid "Authorizing will redirect to %(url)s"
-msgstr ""
+msgstr "Yetkilendirme %(url)s adresine yönlendirecek"
 
 #: plinth/modules/openvpn/__init__.py:20
 #, python-brace-format
@@ -8089,12 +8060,6 @@ msgstr ""
 "temizlenecektir."
 
 #: plinth/modules/snapshot/__init__.py:25
-#, fuzzy
-#| msgid ""
-#| "Snapshots currently work on btrfs file systems only and on the root "
-#| "partition only. Snapshots are not a replacement for <a href=\"/plinth/sys/"
-#| "backups\">backups</a> since they can only be stored on the same "
-#| "partition. "
 msgid ""
 "Snapshots currently work on btrfs file systems only and on the root "
 "partition only. Snapshots are not a replacement for <a href=\"/freedombox/"
@@ -8103,8 +8068,8 @@ msgid ""
 msgstr ""
 "Anlık görüntüler şu anda sadece btrfs dosya sistemlerinde ve sadece kök "
 "bölümde çalışmaktadır. Anlık görüntüler, sadece aynı bölümde "
-"depolanabildikleri için <a href=\"/plinth/sys/backups\">yedeklemelerin</a> "
-"yerine geçmez. "
+"depolanabildikleri için <a href=\"/freedombox/sys/backups\">yedeklemelerin</"
+"a> yerine geçmez. "
 
 #: plinth/modules/snapshot/__init__.py:50
 msgid "Storage Snapshots"
@@ -9966,14 +9931,12 @@ msgid "Invalid key."
 msgstr "Geçersiz anahtar."
 
 #: plinth/modules/wireguard/forms.py:63
-#, fuzzy
-#| msgid "Enter a valid username."
 msgid "Enter a valid IPv4 address."
-msgstr "Geçerli bir kullanıcı adı girin."
+msgstr "Geçerli bir IPv4 adresi girin."
 
 #: plinth/modules/wireguard/forms.py:65
 msgid "Enter a valid network prefix or net mask."
-msgstr ""
+msgstr "Geçerli bir ağ öneki veya ağ maskesi girin."
 
 #: plinth/modules/wireguard/forms.py:71
 #: plinth/modules/wireguard/templates/wireguard.html:28
@@ -10019,11 +9982,6 @@ msgid "Client IP address provided by server"
 msgstr "Sunucu tarafından sağlanan istemci IP adresi"
 
 #: plinth/modules/wireguard/forms.py:94
-#, fuzzy
-#| msgid ""
-#| "IP address assigned to this machine on the VPN after connecting to the "
-#| "endpoint. This value is usually provided by the server operator. Example: "
-#| "192.168.0.10."
 msgid ""
 "IP address assigned to this machine on the VPN after connecting to the "
 "endpoint. This value is usually provided by the server operator. Example: "
@@ -10032,7 +9990,9 @@ msgid ""
 "10.68.12.43/255.255.255.0."
 msgstr ""
 "Uç noktaya bağlandıktan sonra VPN'de bu makineye atanan IP adresi. Bu değer "
-"genellikle sunucu işleticisi tarafından verilir. Örnek: 192.168.0.10."
+"genellikle sunucu işleticisi tarafından verilir. Örnek: 192.168.0.10. Ayrıca "
+"ağı da belirtebilirsiniz. Bu, ağdaki makinelere ulaşmayı sağlayacaktır. "
+"Örnekler: 10.68.12.43/24 veya 10.68.12.43/255.255.255.0."
 
 #: plinth/modules/wireguard/forms.py:102
 msgid "Private key of this machine"
@@ -10081,34 +10041,30 @@ msgid "As a Server"
 msgstr "Bir Sunucu Olarak"
 
 #: plinth/modules/wireguard/templates/wireguard.html:16
-#, fuzzy, python-format
-#| msgid "Endpoints for this %(box_name)s:"
+#, python-format
 msgid "Information for this %(box_name)s:"
-msgstr "Bu %(box_name)s için uç noktalar:"
+msgstr "Bu %(box_name)s için bilgiler:"
 
 #: plinth/modules/wireguard/templates/wireguard.html:24
 msgid "Property"
-msgstr ""
+msgstr "Özellik"
 
 #: plinth/modules/wireguard/templates/wireguard.html:25
 msgid "Value"
-msgstr ""
+msgstr "Değer"
 
 #: plinth/modules/wireguard/templates/wireguard.html:32
-#, fuzzy
-#| msgid "Endpoint"
 msgid "Endpoint(s)"
-msgstr "Uç nokta"
+msgstr "Uç nokta(lar)"
 
 #: plinth/modules/wireguard/templates/wireguard.html:40
-#, fuzzy, python-format
-#| msgid "To %(box_name)s Ports"
+#, python-format
 msgid "%(box_name)s VPN IP for services"
-msgstr "%(box_name)s Bağlantı Noktalarına"
+msgstr "Hizmetler için %(box_name)s VPN IP'si"
 
 #: plinth/modules/wireguard/templates/wireguard.html:49
 msgid "Peers"
-msgstr ""
+msgstr "Kişiler"
 
 #: plinth/modules/wireguard/templates/wireguard.html:51
 msgid "Peers allowed to connect to this server:"
@@ -10139,10 +10095,8 @@ msgid "Add Allowed Client"
 msgstr "İzin Verilen İstemci Ekle"
 
 #: plinth/modules/wireguard/templates/wireguard.html:96
-#, fuzzy
-#| msgid "WireGuard server started successfully."
 msgid "WireGuard server not started yet."
-msgstr "WireGuard sunucusu başarılı olarak başlatıldı."
+msgstr "WireGuard sunucusu henüz başlatılmadı."
 
 #: plinth/modules/wireguard/templates/wireguard.html:100
 #: plinth/modules/wireguard/templates/wireguard.html:102
@@ -10233,7 +10187,7 @@ msgstr "Sunucu ortak anahtarı:"
 
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:45
 msgid "Server VPN IP address for services:"
-msgstr ""
+msgstr "Hizmetler için Sunucu VPN IP adresi:"
 
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:57
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:63
@@ -10275,7 +10229,7 @@ msgstr "Bu makinenin IP adresi:"
 
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:45
 msgid "All outgoing traffic is sent using this connection:"
-msgstr ""
+msgstr "Tüm giden trafik bu bağlantı kullanılarak gönderilir:"
 
 #: plinth/modules/wireguard/views.py:54
 msgid "Added new client."
@@ -10534,21 +10488,19 @@ msgstr "Paket yöneticisini beklerken zaman aşımı oldu"
 
 #: plinth/settings.py:181
 msgid "Uniquely identify your user account with username"
-msgstr ""
+msgstr "Kullanıcı hesabınızı kullanıcı adı ile benzersiz bir şekilde tanımlayın"
 
 #: plinth/settings.py:183
-#, fuzzy
-#| msgid "requesting address"
 msgid "View email address"
-msgstr "adres isteniyor"
+msgstr "E-posta adresini görüntüle"
 
 #: plinth/settings.py:185
 msgid "View basic profile information (such as name and email)"
-msgstr ""
+msgstr "Temel profil bilgilerini görüntüle (ad ve e-posta gibi)"
 
 #: plinth/settings.py:187
 msgid "View permissions that account has"
-msgstr ""
+msgstr "Hesabın sahip olduğu izinleri görüntüle"
 
 #: plinth/setup.py:44
 msgid "Installing app"
