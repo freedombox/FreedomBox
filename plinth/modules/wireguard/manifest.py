@@ -26,6 +26,14 @@ clients = [{
         'format': 'deb',
         'name': 'wireguard'
     }, {
+        'type': 'package',
+        'format': 'rpm',
+        'name': 'wireguard-tools'
+    }, {
+        'type': 'package',
+        'format': 'brew',
+        'name': 'wireguard-tools'
+    }, {
         'type': 'download',
         'os': 'android',
         'url': ('https://www.wireguard.com/'
