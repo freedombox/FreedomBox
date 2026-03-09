@@ -45,20 +45,22 @@
             <td>
               {% for platform in client.platforms %}
                 {% if platform.type == 'download' %}
-                  <a class="btn btn-default" href="{{ platform.url }}" role="button">
-                    <span>
-                      {% with 'theme/icons/'|add:platform.os|add:'.png' as icon %}
-                        <img class="client-icon" src="{% static icon %}" />
-                        {% if platform.os == 'gnu-linux' %}
-                          {% trans 'GNU/Linux' %}
-                        {% elif platform.os == 'windows' %}
-                          {% trans 'Windows' %}
-                        {% elif platform.os == 'macos' %}
-                          {% trans 'macOS' %}
-                        {% endif %}
-                      {% endwith %}
-                    </span>
-                  </a>
+                  {% if platform.os == 'gnu-linux' or platform.os == 'macos' or platform.os == 'windows' %}
+                    <a class="btn btn-default" href="{{ platform.url }}" role="button">
+                      <span>
+                        {% with 'theme/icons/'|add:platform.os|add:'.png' as icon %}
+                          <img class="client-icon" src="{% static icon %}" />
+                          {% if platform.os == 'gnu-linux' %}
+                            {% trans 'GNU/Linux' %}
+                          {% elif platform.os == 'windows' %}
+                            {% trans 'Windows' %}
+                          {% elif platform.os == 'macos' %}
+                            {% trans 'macOS' %}
+                          {% endif %}
+                        {% endwith %}
+                      </span>
+                    </a>
+                  {% endif %}
                 {% endif %}
               {% endfor %}
             </td>
@@ -75,6 +77,16 @@
             <td>{{ client.name }}</td>
             <td>
               {% for platform in client.platforms %}
+                {% if platform.type == 'download' and platform.os == 'android' %}
+                  <a class="btn btn-default" href="{{ platform.url }}" role="button">
+                    <span>
+                      {% with 'theme/icons/'|add:platform.os|add:'.png' as icon %}
+                        <img class="client-icon" src="{% static icon %}" />
+                        {% trans 'Android APK' %}
+                      {% endwith %}
+                    </span>
+                  </a>
+                {% endif %}
                 {% if platform.type == 'store' and platform.os == 'android' or platform.os == 'ios' %}
                   <a class="btn btn-default" href="{{ platform.url }}" role="button">
                     <span>

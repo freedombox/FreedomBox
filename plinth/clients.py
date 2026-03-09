@@ -116,7 +116,7 @@ def _validate_platform_package(platform):
 
 def _validate_platform_download(platform):
     """Validate a platform of type download."""
-    assert platform['os'] in enum_values(Desktop_OS)
+    assert platform['os'] in enum_values(Desktop_OS) + enum_values(Mobile_OS)
     assert isinstance(platform['url'], (str, Promise))
 
 

@@ -26,6 +26,11 @@ clients = [{
         'format': 'deb',
         'name': 'wireguard'
     }, {
+        'type': 'download',
+        'os': 'android',
+        'url': ('https://www.wireguard.com/'
+                'install/#android-play-store-direct-apk-file')
+    }, {
         'type': 'store',
         'os': 'android',
         'store_name': 'google-play',
