@@ -119,15 +119,17 @@
             <td>
               {% for platform in client.platforms %}
                 {% if platform.type == 'package' %}
-                  {% if platform.format == 'deb' %}
-                    <div><strong>{% trans "Debian:" %}</strong> {{ platform.name }}</div>
-                  {% endif %}
-                  {% if platform.format == 'brew' %}
-                    <div><strong>{% trans "Homebrew:" %}</strong> {{ platform.name }}</div>
-                  {% endif %}
-                  {% if platform.format == 'rpm' %}
-                    <p><strong>{% trans "RPM:" %}</strong> {{ platform.name }}</p>
-                  {% endif %}
+                  <div>
+                    {% if platform.format == 'deb' %}
+                      <strong>{% trans "Debian:" %}</strong> {{ platform.name }}
+                    {% endif %}
+                    {% if platform.format == 'brew' %}
+                      <strong>{% trans "Homebrew:" %}</strong> {{ platform.name }}
+                    {% endif %}
+                    {% if platform.format == 'rpm' %}
+                      <strong>{% trans "RPM:" %}</strong> {{ platform.name }}
+                    {% endif %}
+                  </div>
                 {% endif %}
               {% endfor %}
             </td>
