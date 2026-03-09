@@ -44,7 +44,8 @@ def _check(client, condition):
 def _client_has_desktop(client):
     """Filter to find out whether an application has desktop clients"""
     return _check(
-        client, lambda platform: platform.get('os') in enum_values(Desktop_OS))
+        client, lambda platform: platform.get('os') in enum_values(Desktop_OS)
+        and platform.get('type') != 'package')
 
 
 def _client_has_mobile(client):
