@@ -4,6 +4,7 @@
 
 {% load i18n %}
 {% load static %}
+{% load plinth_extras %}
 
 <div class="card">
   <a href="{{ item.url }}">
@@ -12,9 +13,9 @@
         <span class="fa {{ item.icon }}"></span>
       {% else %}
         {% if item.app_id %}
-          <img src="{% static item.app_id %}/icons/{{ item.icon }}.svg"/>
+          {% icon item.app_id|add:'/icons/'|add:item.icon|add:'.svg' class='card-icon' %}
         {% else %}
-          <img src="{% static 'theme/icons/' %}{{ item.icon }}.svg"/>
+          {% icon item.icon class='card-icon' %}
         {% endif %}
       {% endif %}
     </div>

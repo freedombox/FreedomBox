@@ -3,6 +3,8 @@
 Test module for custom Django template tags.
 """
 
+from unittest.mock import patch
+
 from plinth.templatetags import plinth_extras
 
 
@@ -45,3 +47,59 @@ def test_highlighting():
         menu = plinth_extras.mark_active_menuitem(menu, check_path)
         _assert_active_url(menu, expected_active_path)
         assert _verify_active_menuitems(menu)
+
+
+@patch('plinth.web_server.resolve_static_path')
+def test_icon(resolve_static_path, tmp_path):
+    """Test that the icon tag works for basic usage."""
+    icon1 = tmp_path / 'icon1.svg'
+    icon1.write_text('<svg><cirlcle></circle></svg>')
+    resolve_static_path.return_value = icon1
+    return_value = plinth_extras.icon('icon1')
+    assert return_value == ('<svg class="svg-icon" data-icon-name="icon1" '
+                            '><cirlcle></circle></svg>')
+
+
+@patch('plinth.web_server.resolve_static_path')
+def test_icon_attributes(resolve_static_path, tmp_path):
+    """Test that the icon tag works with attributes."""
+    icon1 = tmp_path / 'icon1.svg'
+    icon1.write_text('<svg><cirlcle></circle></svg>')
+    resolve_static_path.return_value = icon1
+
+    attributes = {'class': 'test-class'}
+    return_value = plinth_extras.icon('icon1', **attributes)
+    assert return_value == ('<svg class="test-class" data-icon-name="icon1" '
+                            '><cirlcle></circle></svg>')
+
+    attributes = {'data-test': 'test-value'}
+    return_value = plinth_extras.icon('icon1', **attributes)
+    assert return_value == ('<svg data-test="test-value" class="svg-icon" '
+                            'data-icon-name="icon1" ><cirlcle></circle></svg>')
+
+
+@patch('plinth.utils.random_string')
+@patch('plinth.web_server.resolve_static_path')
+def test_icon_auto_ids(resolve_static_path, random_string, tmp_path):
+    """Test that the icon tag works for implementing automatic IDs."""
+    random_string.return_value = 'randomvalue'
+    icon2 = tmp_path / 'icon2.svg'
+    icon2.write_text('<svg><cirlcle id="autoidmagic-foo"></circle>'
+                     '<path id="autoidmagic-bar"></path></svg>')
+    resolve_static_path.return_value = icon2
+    return_value = plinth_extras.icon('icon2')
+    assert return_value == ('<svg class="svg-icon" data-icon-name="icon2" >'
+                            '<cirlcle id="randomvalue-foo"></circle>'
+                            '<path id="randomvalue-bar"></path></svg>')
+
+
+@patch('plinth.web_server.resolve_static_path')
+def test_icon_xml_stripping(resolve_static_path, tmp_path):
+    """Test that the icon tag strips the XML header."""
+    icon2 = tmp_path / 'icon2.svg'
+    icon2.write_text('<?xml version="1.0" encoding="utf-8">\n'
+                     '<svg><cirlcle></circle></svg>')
+    resolve_static_path.return_value = icon2
+    return_value = plinth_extras.icon('icon2')
+    assert return_value == ('<svg class="svg-icon" data-icon-name="icon2" >'
+                            '<cirlcle></circle></svg>')

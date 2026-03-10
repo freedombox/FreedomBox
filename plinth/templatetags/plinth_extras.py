@@ -4,8 +4,10 @@ import os
 from urllib.parse import urlparse
 
 from django import template
+from django.utils.safestring import mark_safe
 
 from plinth import clients as clients_module
+from plinth import utils, web_server
 
 register = template.Library()
 
@@ -88,3 +90,36 @@ def clients_get_platforms(clients):
                 other.append(platform)
 
     return {'web': web, 'other': other}
+
+
+@register.simple_tag(name='icon')
+def icon(url: str, *args, **kwargs):
+    """Insert an SVG icon inline."""
+    icon_name = url.rpartition('/')[2].partition('.')[0]
+
+    def add_attributes(text: str) -> str:
+        """Append attributes to the <svg> elment."""
+        if 'class' not in kwargs:
+            kwargs['class'] = 'svg-icon'
+
+        kwargs['data-icon-name'] = icon_name
+        attributes = ' '.join(
+            (f'{key}="{value}"' for key, value in kwargs.items()))
+        text = text.replace('<svg', f'<svg {attributes} ', count=1)
+        text = text.replace('autoidmagic-', utils.random_string() + '-')
+        return text
+
+    if '/' not in url:
+        # Only icon name specified
+        url = f'theme/icons/{url}.svg'
+
+    path = web_server.resolve_static_path(url)
+    try:
+        icon_lines = path.read_text().splitlines()
+    except FileNotFoundError:
+        raise ValueError(f'Icon {url} not found.')
+    else:
+        # Skip the line with <?xml> header.
+        icon_text = add_attributes('\n'.join(icon_lines[1:]))
+
+    return mark_safe(icon_text)

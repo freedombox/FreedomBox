@@ -5,7 +5,7 @@
 
 {% load i18n %}
 {% load static %}
-
+{% load plinth_extras %}
 
 {% block body_class %}index-page{% endblock %}
 
@@ -66,9 +66,9 @@
                             <img src="{{ shortcut.icon }}"/>
                           {% else %}
                             {% if shortcut.app_id %}
-                              <img src="{% static shortcut.app_id %}/icons/{{ shortcut.icon }}.svg"/>
+                              {% icon shortcut.app_id|add:'/icons/'|add:shortcut.icon|add:'.svg' class='card-icon' %}
                             {% else %}
-                              <img src="{% static 'theme/icons/' %}{{ shortcut.icon }}.svg"/>
+                              {% icon shortcut.icon class='card-icon' %}
                             {% endif %}
                           {% endif %}
                         </div>
