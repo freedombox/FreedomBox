@@ -63,7 +63,7 @@
                   {% endif %}
                         <div class="card-icon">
                           {% if shortcut.icon|first == "/" %}
-                            <img src="{{ shortcut.icon }}"/>
+                            <img src="{{ shortcut.icon }}">
                           {% else %}
                             {% if shortcut.app_id %}
                               {% icon shortcut.app_id|add:'/icons/'|add:shortcut.icon|add:'.svg' class='card-icon' %}
@@ -95,7 +95,7 @@
   <p>
     <a href="{% url 'help:about' %}" title="{% trans "About" %}">
       <img class="footer-logo" alt="{{ box_name }}"
-           src="{% static 'theme/img/freedombox-logo-powered.svg' %}"/>
+           src="{% static 'theme/img/freedombox-logo-powered.svg' %}">
     </a>
   </p>
 {% endblock %}
