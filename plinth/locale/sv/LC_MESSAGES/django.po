@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-03 02:00+0000\n"
-"PO-Revision-Date: 2026-02-16 12:09+0000\n"
+"PO-Revision-Date: 2026-03-11 22:09+0000\n"
 "Last-Translator: Daniel Wiik <d.wiik@outlook.com>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/sv/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.16-dev\n"
+"X-Generator: Weblate 5.17-dev\n"
 
 #: plinth/config.py:103
 #, python-brace-format
@@ -167,7 +167,7 @@ msgstr "{box_name} Webbgränssnitt (Plinth)"
 
 #: plinth/modules/apache/__init__.py:129
 msgid "Web app protected by FreedomBox"
-msgstr ""
+msgstr "Webapp skyddad av FreedomBox"
 
 #: plinth/modules/apache/components.py:270
 #, python-brace-format
@@ -407,10 +407,8 @@ msgid "Passphrase"
 msgstr "Lösenfras"
 
 #: plinth/modules/backups/forms.py:187
-#, fuzzy
-#| msgid "Passphrase; Only needed when using encryption."
 msgid "Only needed when using encryption."
-msgstr "Lösenfras Behövs bara när du använder kryptering."
+msgstr "Behövs bara när du använder kryptering."
 
 #: plinth/modules/backups/forms.py:190
 msgid "Confirm Passphrase"
@@ -449,44 +447,32 @@ msgstr ""
 "repo/</i>"
 
 #: plinth/modules/backups/forms.py:255
-#, fuzzy
-#| msgid "Authentication Mode"
 msgid "SSH Authentication Type"
-msgstr "Autentiseringsläge"
+msgstr "SSH-autentiseringstyp"
 
 #: plinth/modules/backups/forms.py:256
-#, fuzzy
-#| msgid "Authentication to remote server failed."
 msgid "Choose how to authenticate to the remote SSH server."
-msgstr "Autentisering till remote servern misslyckades."
+msgstr "Välj hur du autentiserar till fjärrservern för SSH."
 
 #: plinth/modules/backups/forms.py:258
-#, fuzzy
-#| msgid "needs authentication"
 msgid "Key-based Authentication"
-msgstr "behöver autentisering"
+msgstr "Nyckelbaserad autentisering"
 
 #: plinth/modules/backups/forms.py:259
-#, fuzzy
-#| msgid "Disable password authentication"
 msgid "Password-based Authentication"
-msgstr "Inaktivera lösenordsautentisering"
+msgstr "Lösenordsbaserad autentisering"
 
 #: plinth/modules/backups/forms.py:261
 msgid "SSH server password"
 msgstr "SSH server lösenord"
 
 #: plinth/modules/backups/forms.py:262
-#, fuzzy
-#| msgid "Disable password authentication"
 msgid "Required for password-based authentication."
-msgstr "Inaktivera lösenordsautentisering"
+msgstr "Krävs för lösenordsbaserad autentisering."
 
 #: plinth/modules/backups/forms.py:275
-#, fuzzy
-#| msgid "Disable password authentication"
 msgid "SSH password is needed for password-based authentication."
-msgstr "Inaktivera lösenordsautentisering"
+msgstr "SSH-lösenord behövs för lösenordsbaserad autentisering."
 
 #: plinth/modules/backups/forms.py:292
 msgid "Remote backup repository already exists."
@@ -630,6 +616,9 @@ msgid ""
 "list on the remote machine for %(box_name)s to be able to connect to the "
 "remote machine:"
 msgstr ""
+"Följande SSH-klients publika nyckel måste läggas till i den auktoriserade "
+"nycklellistan på fjärrmaskinen %(box_name)s för att kunna ansluta till "
+"fjärrmaskinen:"
 
 #: plinth/modules/backups/templates/backups_add_remote_repository.html:86
 #, python-format
@@ -638,6 +627,10 @@ msgid ""
 "successful, then the public key will be automatically added to the "
 "authorized keys list, so that future connections do not need the password."
 msgstr ""
+"%(box_name)s tjänsten kommer att försöka ansluta med det angivna lösenordet. "
+"Om den lyckas läggs den offentliga nyckeln automatiskt till i den "
+"auktoriserade nycklellistan, så att framtida anslutningar inte behöver "
+"lösenordet."
 
 #: plinth/modules/backups/templates/backups_add_remote_repository.html:131
 #: plinth/modules/backups/templates/backups_upload.html:28
@@ -816,10 +809,8 @@ msgid "Authentication to remote server failed."
 msgstr "Autentisering till remote servern misslyckades."
 
 #: plinth/modules/backups/views.py:50
-#, fuzzy
-#| msgid "Error establishing connection to server: {}"
 msgid "Error establishing connection to server: {} {} {}"
-msgstr "Fel vid upprättande av anslutning till servern: {}"
+msgstr "Fel vid upprättande av anslutning till servern: {} {} {}"
 
 #: plinth/modules/backups/views.py:82
 msgid "Backup schedule updated."
@@ -1462,14 +1453,7 @@ msgid "Webserver Home Page"
 msgstr "Webbserverens hemsida"
 
 #: plinth/modules/config/forms.py:37
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Choose the default page that must be served when someone visits your "
-#| "{box_name} on the web. A typical use case is to set your blog or wiki as "
-#| "the home page when someone visits the domain name. Note that once the "
-#| "home page is set to something other than {box_name} Service (Plinth), "
-#| "your users must explicitly type /plinth or /freedombox to reach "
-#| "{box_name} Service (Plinth)."
+#, python-brace-format
 msgid ""
 "Choose the default page that must be served when someone visits your "
 "{box_name} on the web. A typical use case is to set your blog or wiki as the "
@@ -1481,8 +1465,7 @@ msgstr ""
 "webben. Ett typiskt fall är att ställa in din blogg eller wiki som hemsida "
 "när någon besöker domännamnet. Observera att när hemsidan är inställd på "
 "något annat än {box_name} Service (Plinth), måste dina användare "
-"uttryckligen skriva / Plinth eller / freedombox för att nå {box_name} "
-"Service (Plinth)."
+"uttryckligen skriva /freedombox för att nå {box_name} Service (Plinth)."
 
 #: plinth/modules/config/forms.py:48
 msgid "Show advanced apps and features"
@@ -2432,15 +2415,11 @@ msgstr ""
 "på den första administratörsanvändaren."
 
 #: plinth/modules/email/__init__.py:41
-#, fuzzy
-#| msgid ""
-#| "<a href=\"/plinth/apps/roundcube/\">Roundcube app</a> provides web "
-#| "interface for users to access email."
 msgid ""
 "<a href=\"/freedombox/apps/roundcube/\">Roundcube app</a> provides web "
 "interface for users to access email."
 msgstr ""
-"<a href=\"/plinth/apps/roundcube/\">Roundcube app</a> ger användarna "
+"<a href=\"/freedombox/apps/roundcube/\">Roundcube app</a> ger användarna "
 "webbgränssnitt för att komma åt e-post."
 
 #: plinth/modules/email/__init__.py:43
@@ -6200,12 +6179,6 @@ msgstr ""
 "tjänsterna."
 
 #: plinth/modules/networks/templates/router_configuration_content.html:32
-#, fuzzy
-#| msgid ""
-#| "If you don't have control over your router, choose not to configure it. "
-#| "To see options to overcome this limitation, choose 'I dont have a public "
-#| "IP address' option in <a href=\"/plinth/sys/networks/internet-connection-"
-#| "type/\">Internet connection type selection</a>."
 msgid ""
 "If you don't have control over your router, choose not to configure it. To "
 "see options to overcome this limitation, choose 'I dont have a public IP "
@@ -6214,7 +6187,7 @@ msgid ""
 msgstr ""
 "Om du inte har kontroll över routern kan du välja att inte konfigurera den. "
 "Om du vill se alternativ för att övervinna denna begränsning väljer du 'Jag "
-"har ingen offentlig IP-adress' i <a href=\"/plinth/sys/networks/internet-"
+"har ingen offentlig IP-adress' i <a href=\"/freedombox/sys/networks/internet-"
 "connection-type/\">Val av typ av internetanslutning</a>."
 
 #: plinth/modules/networks/templates/router_configuration_content.html:39
@@ -6618,19 +6591,15 @@ msgstr "Lösenordsuppdateringen misslyckades. Välj ett starkare lösenord."
 
 #: plinth/modules/oidc/__init__.py:56
 msgid "OpenID Connect Provider"
-msgstr ""
+msgstr "Tjänsteleverantör för OpenID Connect"
 
 #: plinth/modules/oidc/templates/oauth2_provider/authorize.html:14
-#, fuzzy
-#| msgid "Applications"
 msgid "Application"
-msgstr "Applikationer"
+msgstr "Applikation"
 
 #: plinth/modules/oidc/templates/oauth2_provider/authorize.html:22
-#, fuzzy
-#| msgid "Authorized SSH Keys"
 msgid "Authorize App"
-msgstr "Auktoriserade SSH-nycklar"
+msgstr "Auktorisera app"
 
 #: plinth/modules/oidc/templates/oauth2_provider/authorize.html:37
 #, python-format
@@ -6638,17 +6607,18 @@ msgid ""
 "<strong>%(app)s</strong> wants to access your account <strong> %(username)s</"
 "strong>"
 msgstr ""
+"<strong>%(app)s</strong> vill komma åt ditt konto <strong> %(username)s</"
+"strong>"
 
 #: plinth/modules/oidc/templates/oauth2_provider/authorize.html:52
-#, fuzzy, python-format
-#| msgid "Authorized SSH Keys"
+#, python-format
 msgid "Authorize %(app)s"
-msgstr "Auktoriserade SSH-nycklar"
+msgstr "Tillåt %(app)s"
 
 #: plinth/modules/oidc/templates/oauth2_provider/authorize.html:59
 #, python-format
 msgid "Authorizing will redirect to %(url)s"
-msgstr ""
+msgstr "Tillåtelse kommer att omdirigera till %(url)s"
 
 #: plinth/modules/openvpn/__init__.py:20
 #, python-brace-format
@@ -8065,12 +8035,6 @@ msgstr ""
 "kommer att rensas automatiskt enligt inställningarna nedan."
 
 #: plinth/modules/snapshot/__init__.py:25
-#, fuzzy
-#| msgid ""
-#| "Snapshots currently work on btrfs file systems only and on the root "
-#| "partition only. Snapshots are not a replacement for <a href=\"/plinth/sys/"
-#| "backups\">backups</a> since they can only be stored on the same "
-#| "partition. "
 msgid ""
 "Snapshots currently work on btrfs file systems only and on the root "
 "partition only. Snapshots are not a replacement for <a href=\"/freedombox/"
@@ -8079,8 +8043,8 @@ msgid ""
 msgstr ""
 "Ögonblicksbilder fungerar för närvarande endast på Btrfs-filsystem och "
 "endast på rotpartitionen. Ögonblicksbilder är inte en ersättning för <a "
-"href=\"/plinth/sys/backups\">säkerhetskopior</a> eftersom de bara kan lagras "
-"på samma partition. "
+"href=\"/freedombox/sys/backups\">säkerhetskopior</a> eftersom de bara kan "
+"lagras på samma partition. "
 
 #: plinth/modules/snapshot/__init__.py:50
 msgid "Storage Snapshots"
@@ -9938,14 +9902,12 @@ msgid "Invalid key."
 msgstr "Ogiltig nyckel."
 
 #: plinth/modules/wireguard/forms.py:63
-#, fuzzy
-#| msgid "Enter a valid username."
 msgid "Enter a valid IPv4 address."
-msgstr "Ange ett giltigt användarnamn."
+msgstr "Ange en giltig IPv4-adress."
 
 #: plinth/modules/wireguard/forms.py:65
 msgid "Enter a valid network prefix or net mask."
-msgstr ""
+msgstr "Ange ett giltigt nätverksprefix eller netmask."
 
 #: plinth/modules/wireguard/forms.py:71
 #: plinth/modules/wireguard/templates/wireguard.html:28
@@ -9992,11 +9954,6 @@ msgid "Client IP address provided by server"
 msgstr "Klient-IP-adress som tillhandahålls av servern"
 
 #: plinth/modules/wireguard/forms.py:94
-#, fuzzy
-#| msgid ""
-#| "IP address assigned to this machine on the VPN after connecting to the "
-#| "endpoint. This value is usually provided by the server operator. Example: "
-#| "192.168.0.10."
 msgid ""
 "IP address assigned to this machine on the VPN after connecting to the "
 "endpoint. This value is usually provided by the server operator. Example: "
@@ -10004,9 +9961,11 @@ msgid ""
 "machines in the network. Examples: 10.68.12.43/24 or "
 "10.68.12.43/255.255.255.0."
 msgstr ""
-"IP-adress som tilldelats den här datorn på VPN efter anslutning till "
-"slutpunkten. Det här värdet tillhandahålls vanligtvis av serveroperatören. "
-"Exempel: 192.168.0.10."
+"IP-adressen som tilldelats denna maskin på VPN efter anslutning till "
+"slutpunkten. Detta värde tillhandahålls vanligtvis av serveroperatören. "
+"Exempel: 192.168.0.10. Du kan också ange nätverket. Detta gör det möjligt "
+"att nå maskiner i nätverket. Exempel: 10.68.12.43/24 eller 10.68.12.43/"
+"255.255.255.0."
 
 #: plinth/modules/wireguard/forms.py:102
 msgid "Private key of this machine"
@@ -10056,34 +10015,30 @@ msgid "As a Server"
 msgstr "Som en server"
 
 #: plinth/modules/wireguard/templates/wireguard.html:16
-#, fuzzy, python-format
-#| msgid "Endpoints for this %(box_name)s:"
+#, python-format
 msgid "Information for this %(box_name)s:"
-msgstr "Slutpunkter för detta %(box_name)s:"
+msgstr "Information för detta %(box_name)s:"
 
 #: plinth/modules/wireguard/templates/wireguard.html:24
 msgid "Property"
-msgstr ""
+msgstr "Egenskap"
 
 #: plinth/modules/wireguard/templates/wireguard.html:25
 msgid "Value"
-msgstr ""
+msgstr "Värde"
 
 #: plinth/modules/wireguard/templates/wireguard.html:32
-#, fuzzy
-#| msgid "Endpoint"
 msgid "Endpoint(s)"
 msgstr "Slutpunkt"
 
 #: plinth/modules/wireguard/templates/wireguard.html:40
-#, fuzzy, python-format
-#| msgid "To %(box_name)s Ports"
+#, python-format
 msgid "%(box_name)s VPN IP for services"
-msgstr "Till %(box_name)s Portar"
+msgstr "%(box_name)s VPN IP för tjänster"
 
 #: plinth/modules/wireguard/templates/wireguard.html:49
 msgid "Peers"
-msgstr ""
+msgstr "Peers"
 
 #: plinth/modules/wireguard/templates/wireguard.html:51
 msgid "Peers allowed to connect to this server:"
@@ -10115,10 +10070,8 @@ msgid "Add Allowed Client"
 msgstr "Lägga till tillåten klient"
 
 #: plinth/modules/wireguard/templates/wireguard.html:96
-#, fuzzy
-#| msgid "WireGuard server started successfully."
 msgid "WireGuard server not started yet."
-msgstr "WireGuard-server startades framgångsrikt."
+msgstr "WireGuardservern är inte startad ännu."
 
 #: plinth/modules/wireguard/templates/wireguard.html:100
 #: plinth/modules/wireguard/templates/wireguard.html:102
@@ -10209,7 +10162,7 @@ msgstr "Serverns offentliga nyckel:"
 
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:45
 msgid "Server VPN IP address for services:"
-msgstr ""
+msgstr "Server VPN IP-adress för tjänster:"
 
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:57
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:63
@@ -10251,7 +10204,7 @@ msgstr "IP-adressen för denna maskin:"
 
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:45
 msgid "All outgoing traffic is sent using this connection:"
-msgstr ""
+msgstr "All utgående trafik skickas med denna anslutning:"
 
 #: plinth/modules/wireguard/views.py:54
 msgid "Added new client."
@@ -10510,21 +10463,19 @@ msgstr "Timeout väntar på pakethanteraren"
 
 #: plinth/settings.py:181
 msgid "Uniquely identify your user account with username"
-msgstr ""
+msgstr "Unikt identifiera ditt användarkonto med användarnamn"
 
 #: plinth/settings.py:183
-#, fuzzy
-#| msgid "requesting address"
 msgid "View email address"
-msgstr "begära adress"
+msgstr "Visa e-postadress"
 
 #: plinth/settings.py:185
 msgid "View basic profile information (such as name and email)"
-msgstr ""
+msgstr "Visa grundläggande profilinformation (t.ex. namn och e-post)"
 
 #: plinth/settings.py:187
 msgid "View permissions that account has"
-msgstr ""
+msgstr "Visa behörigheter som kontot har"
 
 #: plinth/setup.py:44
 msgid "Installing app"
