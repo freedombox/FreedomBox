@@ -10,7 +10,7 @@
   <a href="{{ item.url }}">
     <div class="card-icon">
       {% if 'fa-' in item.icon %}
-        <span class="fa {{ item.icon }}"></span>
+        {% icon item.icon|slice:"3:" class='card-icon' %}
       {% else %}
         {% if item.app_id %}
           {% icon item.app_id|add:'/icons/'|add:item.icon|add:'.svg' class='card-icon' %}
