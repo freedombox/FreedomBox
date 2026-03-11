@@ -2,6 +2,8 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 {% endcomment %}
 
+{% load plinth_extras %}
+
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     {% for url, breadcrumb in breadcrumbs.items reversed %}
@@ -13,7 +15,7 @@
         <li class="breadcrumb-item">
           <a href="{{ url }}">
             {% if breadcrumb.url_name == 'index' %}
-              <span class="fa fa-home"></span>
+              {% icon 'home' %}
             {% else %}
               {{ breadcrumb.name }}
             {% endif %}
