@@ -115,11 +115,15 @@ def icon(url: str, *args, **kwargs):
 
     path = web_server.resolve_static_path(url)
     try:
-        icon_lines = path.read_text().splitlines()
+        icon_text = path.read_text()
     except FileNotFoundError:
         raise ValueError(f'Icon {url} not found.')
     else:
         # Skip the line with <?xml> header.
-        icon_text = add_attributes('\n'.join(icon_lines[1:]))
+        if icon_text and icon_text.startswith('<?xml'):
+            icon_lines = icon_text.splitlines()
+            icon_text = '\n'.join(icon_lines[1:])
+
+        icon_text = add_attributes(icon_text)
 
     return mark_safe(icon_text)

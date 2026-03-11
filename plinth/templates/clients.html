@@ -48,16 +48,14 @@
                   {% if platform.os == 'gnu-linux' or platform.os == 'macos' or platform.os == 'windows' %}
                     <a class="btn btn-default" href="{{ platform.url }}" role="button">
                       <span>
-                        {% with 'theme/icons/'|add:platform.os|add:'.png' as icon %}
-                          <img class="client-icon" src="{% static icon %}" />
-                          {% if platform.os == 'gnu-linux' %}
-                            {% trans 'GNU/Linux' %}
-                          {% elif platform.os == 'windows' %}
-                            {% trans 'Windows' %}
-                          {% elif platform.os == 'macos' %}
-                            {% trans 'macOS' %}
-                          {% endif %}
-                        {% endwith %}
+                        {% icon platform.os %}
+                        {% if platform.os == 'gnu-linux' %}
+                          {% trans 'GNU/Linux' %}
+                        {% elif platform.os == 'windows' %}
+                          {% trans 'Windows' %}
+                        {% elif platform.os == 'macos' %}
+                          {% trans 'macOS' %}
+                        {% endif %}
                       </span>
                     </a>
                   {% endif %}
@@ -80,26 +78,22 @@
                 {% if platform.type == 'download' and platform.os == 'android' %}
                   <a class="btn btn-default" href="{{ platform.url }}" role="button">
                     <span>
-                      {% with 'theme/icons/'|add:platform.os|add:'.png' as icon %}
-                        <img class="client-icon" src="{% static icon %}" />
-                        {% trans 'Android APK' %}
-                      {% endwith %}
+                      {% icon platform.os %}
+                      {% trans 'Android APK' %}
                     </span>
                   </a>
                 {% endif %}
                 {% if platform.type == 'store' and platform.os == 'android' or platform.os == 'ios' %}
                   <a class="btn btn-default" href="{{ platform.url }}" role="button">
                     <span>
-                      {% with 'theme/icons/'|add:platform.store_name|add:'.png' as icon %}
-                        <img class="client-icon" src="{% static icon %}" />
-                        {% if platform.store_name == 'google-play' %}
-                          {% trans 'Play Store' %}
-                        {% elif platform.store_name == 'f-droid' %}
-                          {% trans 'F-Droid' %}
-                        {% elif platform.store_name == 'app-store' %}
-                          {% trans 'App Store' %}
-                        {% endif %}
-                      {% endwith %}
+                      {% icon platform.store_name %}
+                      {% if platform.store_name == 'google-play' %}
+                        {% trans 'Play Store' %}
+                      {% elif platform.store_name == 'f-droid' %}
+                        {% trans 'F-Droid' %}
+                      {% elif platform.store_name == 'app-store' %}
+                        {% trans 'App Store' %}
+                      {% endif %}
                     </span>
                   </a>
                 {% endif %}
@@ -119,17 +113,20 @@
             <td>
               {% for platform in client.platforms %}
                 {% if platform.type == 'package' %}
-                  <div>
+                  <span class="client-package">
                     {% if platform.format == 'deb' %}
-                      <strong>{% trans "Debian:" %}</strong> {{ platform.name }}
+                      {% icon 'debian' %}
+                      {{ platform.name }}
                     {% endif %}
                     {% if platform.format == 'brew' %}
-                      <strong>{% trans "Homebrew:" %}</strong> {{ platform.name }}
+                      {% icon 'homebrew' %}
+                      {{ platform.name }}
                     {% endif %}
                     {% if platform.format == 'rpm' %}
-                      <strong>{% trans "RPM:" %}</strong> {{ platform.name }}
+                      {% icon 'fedora' %}
+                      {{ platform.name }}
                     {% endif %}
-                  </div>
+                  </span>
                 {% endif %}
               {% endfor %}
             </td>
