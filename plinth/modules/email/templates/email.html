@@ -4,11 +4,12 @@
 {% endcomment %}
 
 {% load i18n %}
+{% load plinth_extras %}
 
 {% block subsubmenu %}
   <a class="btn btn-default" role="button" href="/rspamd/">
     {% trans "Manage Spam" %}
-    <span class="fa fa-external-link"></span>
+    {% icon 'external-link' %}
   </a>
   <a class="btn btn-default" role="button"
      href="{% url 'email:aliases' %}">
@@ -34,7 +35,7 @@
             <a href="{% url 'email:dns' domain %}"
                title="{% blocktrans %}View domain: {{ domain }}{% endblocktrans %}">
               {{ domain }}</a>
-            {% if domain == primary_domain %}<div class="app-icon fa fa-tag"></div>{% endif %}
+            {% if domain == primary_domain %}{% icon 'tag' %}{% endif %}
           </div>
         {% endfor %}
       </div>
