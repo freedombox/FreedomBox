@@ -5,6 +5,7 @@
 
 {% load i18n %}
 {% load static %}
+{% load plinth_extras %}
 
 {% block page_head %}
   <link type="text/css" rel="stylesheet"
@@ -57,13 +58,15 @@
               <td class="share-operations">
                 <a class="share-edit btn btn-sm btn-default"
                    href="{% url 'sharing:edit' share.name %}">
-                  <span class="fa fa-pencil-square-o" aria-hidden="true"></span>
+                  {% icon 'pencil-square-o' %}
                 </a>
                 <form class="form" method="post"
                       action="{% url 'sharing:remove' share.name %}">
                   {% csrf_token %}
-                  <button class="share-remove btn btn-sm btn-default fa fa-trash-o"
-                          type="submit"></button>
+                  <button class="share-remove btn btn-sm btn-default"
+                          type="submit">
+                    {% icon 'trash-o' %}
+                  </button>
                 </form>
               </td>
             </tr>
