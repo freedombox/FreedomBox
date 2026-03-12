@@ -7,6 +7,7 @@
 {% load static %}
 {% load bootstrap %}
 {% load i18n %}
+{% load plinth_extras %}
 
 {% block page_head %}
   <link type="text/css" rel="stylesheet"
@@ -20,7 +21,7 @@
       {% if connection.primary %}
         <div class="alert alert-warning d-flex align-items-center" role="alert">
           <div class="me-2">
-            <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+            {% icon 'exclamation-triangle' %}
             <span class="visually-hidden">{% trans "Caution:" %}</span>
           </div>
           <div>
@@ -285,7 +286,7 @@
 
         <div class="alert alert-info d-flex align-items-center" role="alert">
           <div class="me-2">
-            <span class="fa fa-info-circle" aria-hidden="true"></span>
+            {% icon 'info-circle' %}
             <span class="visually-hidden">{% trans "Info:" %}</span>
           </div>
           <div>
@@ -310,7 +311,7 @@
 
         <div class="alert alert-info d-flex align-items-center" role="alert">
           <div class="me-2">
-            <span class="fa fa-info-circle" aria-hidden="true"></span>
+            {% icon 'info-circle' %}
             <span class="visually-hidden">{% trans "Info:" %}</span>
           </div>
           <div>
@@ -334,7 +335,7 @@
 
         <div class="alert alert-info d-flex align-items-center" role="alert">
           <div class="me-2">
-            <span class="fa fa-info-circle" aria-hidden="true"></span>
+            {% icon 'info-circle' %}
             <span class="visually-hidden">{% trans "Info:" %}</span>
           </div>
           <div>

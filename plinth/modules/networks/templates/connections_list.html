@@ -4,18 +4,19 @@
 
 {% load bootstrap %}
 {% load i18n %}
+{% load plinth_extras %}
 
   <h3>{% trans "Connections" %}</h3>
 
   <div class="btn-toolbar">
     <a href="{% url 'networks:scan' %}" class="btn btn-default"
        role="button" title="{% trans 'Nearby Wi-Fi Networks' %}">
-      <span class="fa fa-wifi" aria-hidden="true"></span>
+      {% icon 'wifi' %}
       {% trans "Nearby Wi-Fi Networks" %}
     </a>
     <a href="{% url 'networks:add' %}" class="btn btn-default"
        role="button" title="{% trans 'Add Connection' %}">
-      <span class="fa fa-plus" aria-hidden="true"></span>
+      {% icon 'plus' %}
       {% trans "Add Connection" %}
     </a>
   </div>
@@ -75,7 +76,7 @@
                    class="btn btn-default btn-sm"
                    role="button"
                    title="{% blocktrans with name=connection.name %}Delete connection {{ name }}{% endblocktrans %}">
-                  <span class="fa fa-trash-o" aria-hidden="true"></span>
+                  {% icon 'trash-o' %}
                 </a>
               {% endif %}
             </td>

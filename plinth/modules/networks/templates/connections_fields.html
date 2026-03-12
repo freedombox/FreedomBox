@@ -4,12 +4,13 @@
 
 {% load bootstrap %}
 {% load i18n %}
+{% load plinth_extras %}
 
 {% if form.non_field_errors %}
   <div class="alert alert-danger alert-dismissible
               d-flex align-items-center fade show">
     <div class="me-2">
-      <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+      {% icon 'exclamation-triangle' %}
       <span class="visually-hidden">{% trans "Error:" %}</span>
     </div>
     <div>
