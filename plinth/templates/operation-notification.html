@@ -4,10 +4,11 @@
 
 {% load i18n %}
 {% load static %}
+{% load plinth_extras %}
 
 <p>
   {% if data.state == "waiting" %}
-    <span class="fa fa-clock-o"></span>
+    {% icon 'clock-o' %}
   {% elif data.state == "running" %}
     <span class="fa fa-refresh fa-spin processing"></span>
   {% elif data.state == "completed" %}
