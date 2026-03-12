@@ -3,6 +3,7 @@
 {% endcomment %}
 
 {% load i18n %}
+{% load plinth_extras %}
 
 {% block toolbar %}
 
@@ -15,9 +16,9 @@
         <a target="_blank" rel="noopener noreferrer"
            class="btn btn-default button-secondary button-donate" role="button"
            href="{{ app_info.donation_url }}">
-          <span class="fa fa-heart"></span>
+          {% icon 'heart' %}
           {% trans "Donate" %}
-          <span class="fa fa-external-link"></span>
+          {% icon 'external-link' %}
         </a>
       {% endif %}
 
@@ -27,7 +28,7 @@
           <button type="button" class="btn btn-default dropdown-toggle"
                   data-bs-toggle="dropdown" aria-haspopup="true"
                   aria-expanded="false" id="id_extra_actions_button">
-            <span class="fa fa-cog" aria-hidden="true"></span>
+            {% icon 'cog' %}
           </button>
           <div class="dropdown-menu" aria-labelledby="id_extra_actions_button">
             {% if has_diagnostics %}
