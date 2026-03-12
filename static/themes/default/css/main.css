@@ -364,6 +364,24 @@ footer {
     margin: 0.125em 0.25em;
 }
 
+@keyframes spin {
+    0% {
+        transform: none;
+    }
+    100% {
+        transform: rotate(1turn);
+    }
+}
+
+.svg-icon.spin {
+    animation: spin 2s infinite linear;
+}
+
+.svg-icon[data-icon-name="spinner"].spin {
+    /* Spin in discrete steps of 8 */
+    animation: spin 1s infinite steps(8);
+}
+
 /*
  * Bootstrap extensions
  */
@@ -675,11 +693,7 @@ footer {
  */
 .firstboot-spinner {
     text-align: center;
-}
-
-.firstboot-spinner span.fa {
-    float: none;
-    margin: auto;
+    font-size: 4em;
 }
 
 .next-steps {
@@ -1076,4 +1090,17 @@ textarea.log {
         margin: 0 auto;
         width: 80%;
     }
+}
+
+/*
+ * Upgrades app pages
+ */
+.upgrades-status-icon,
+.upgrades-dist-upgrade-running-icon {
+    font-size: 3rem;
+}
+
+.upgrades-status-icon svg,
+.upgrades-dist-upgrade-running-icon svg {
+    margin-left: 0;
 }

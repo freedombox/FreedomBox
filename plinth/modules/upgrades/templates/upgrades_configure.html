@@ -17,17 +17,17 @@
   </div>
 
   <h3>{% trans "Status" %}</h3>
-  <div class="upgrades-status-frame clearfix">
-    <div class="upgrade-status-icon pull-left">
+  <div class="upgrades-status-frame d-flex align-items-center">
+    <div class="upgrades-status-icon">
       {% if is_busy %}
-        <span class="fa fa-refresh fa-spin fa-3x fa-pull-left text-info"></span>
+        {% icon 'refresh' class='svg-icon spin text-info' %}
       {% elif new_version %}
-        <span class="fa fa-frown-o fa-3x fa-pull-left text-warning"></span>
+        {% icon 'frown-o' class='svg-icon text-warning' %}
       {% else %}
-        <span class="fa fa-smile-o fa-3x fa-pull-left text-body-tertiary"></span>
+        {% icon 'smile-o' class='svg-icon text-body-tertiary' %}
       {% endif %}
     </div>
-    <p>
+    <div>
       {% blocktrans trimmed %}
         You are running {{ os_release }} and {{ box_name }} version {{ version }}.
       {% endblocktrans %}
@@ -41,7 +41,7 @@
       {% else %}
         {% blocktrans %}{{ box_name }} is up to date.{% endblocktrans %}
       {% endif %}
-    </p>
+    </div>
   </div>
 {% endblock %}
 

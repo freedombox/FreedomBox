@@ -6,6 +6,7 @@
 {% load bootstrap %}
 {% load i18n %}
 {% load static %}
+{% load plinth_extras %}
 
 {% block content %}
   <h3>{% trans "Distribution Update" %}</h3>
@@ -26,16 +27,16 @@
   </p>
 
   {% if status.running %}
-    <div class="upgrades-dist-upgrade clearfix">
-      <div class="upgrades-dist-upgrade-running-icon pull-left">
-        <span class="fa fa-refresh fa-spin fa-3x fa-pull-left text-info"></span>
+    <div class="upgrades-dist-upgrade d-flex align-items-center">
+      <div class="upgrades-dist-upgrade-running-icon">
+        {% icon 'refresh' class='svg-icon spin text-info' %}
       </div>
-      <p>
+      <div>
         {% blocktrans trimmed %}
           Distribution update is currently running. This operation may take
           several hours. Most apps will be unavailable during this period.
         {% endblocktrans %}
-      </p>
+      </div>
     </div>
   {% else %}
     {% if not status.updates_enabled or not status.dist_upgrade_enabled or not status.has_free_space or not status.current_codename %}
