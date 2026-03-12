@@ -5,6 +5,7 @@
 
 {% load bootstrap %}
 {% load i18n %}
+{% load plinth_extras %}
 
 {% block configuration %}
 
@@ -13,7 +14,7 @@
   <div class="btn-toolbar">
     <a href="{% url 'users:create' %}" class="btn btn-primary"
        role="button" title="{% trans 'Create User' %}">
-      <span class="fa fa-plus" aria-hidden="true"></span>
+      {% icon 'plus' %}
       {% trans 'Create User' %}
     </a>
   </div>
@@ -30,8 +31,7 @@
             </a>
 
             {% if not user.is_active %}
-              <span class="fa fa-ban primary"
-                    aria-hidden="true"></span>
+              {% icon 'ban' %}
             {% endif %}
 
           </div>
