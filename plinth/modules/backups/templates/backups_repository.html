@@ -3,6 +3,7 @@
 {% endcomment %}
 
 {% load i18n %}
+{% load plinth_extras %}
 
 <div class="table-responsive repository" data-repository-name="{{ repository.name }}">
   <table class="table" class="archives-list">
@@ -14,12 +15,11 @@
                  data-bs-toggle="collapse" data-bs-target="#{{ uuid }}">
               <span class="fa fa-chevron-right fa-fw" aria-hidden="true"></span>
               {% if repository.error %}
-                <span class="fa fa-exclamation-triangle mount-error"
-                      aria-hidden="true" title="{{ repository.error }}">
-                </span>
+                <span title={{ repository.error }}>
+                  {% icon 'exclamation-triangle' %}</span>
               {% elif repository.is_encrypted %}
-                <span class="fa fa-lock encrypted"
-                      aria-hidden="true" title="{% trans "This repository is encrypted" %}">
+                <span title="{% trans "This repository is encrypted" %}">
+                  {% icon 'lock' class='svg-icon encrypted' %}
                 </span>
               {% endif %}
 
@@ -29,7 +29,7 @@
             <div class="text-end">
               <a class="repository-schedule btn btn-sm btn-primary"
                  href="{% url 'backups:schedule' uuid %}">
-                <span class="fa fa-clock-o" aria-hidden="true"></span>
+                {% icon 'clock-o' %}
                 {% trans "Schedule" %}
               </a>
 
@@ -42,7 +42,7 @@
                     {% csrf_token %}
                     <button type="submit" class="btn btn-sm btn-default"
                            title="{% trans 'Unmount Location' %}">
-                      <span class="fa fa-eject" aria-hidden="true"></span>
+                      {% icon 'eject' %}
                     </button>
                   </form>
 
@@ -53,7 +53,7 @@
                     {% csrf_token %}
                     <button type="submit" class="btn btn-sm btn-default"
                             title="{% trans 'Mount Location' %}">
-                      <span class="fa fa-eye" aria-hidden="true"></span>
+                      {% icon 'eye' %}
                     </button>
                   </form>
 
@@ -66,7 +66,7 @@
                 <a title="{% trans 'Remove Backup Location. This will not delete the remote backup.' %}"
                    role="button" class="repository-remove btn btn-sm btn-default"
                    href="{% url 'backups:repository-remove' uuid %}">
-                  <span class="fa fa-trash-o" aria-hidden="true"></span>
+                  {% icon 'trash-o' %}
                 </a>
 
               {% endif %}
@@ -93,8 +93,7 @@
               </a>
               <a class="archive-delete btn btn-sm btn-default"
                  href="{% url 'backups:delete' uuid archive.name %}">
-                <span class="fa fa-trash-o" aria-hidden="true">
-                </span>
+                {% icon 'trash-o' %}
               </a>
             </td>
           </tr>
