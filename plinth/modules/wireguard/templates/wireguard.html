@@ -5,6 +5,7 @@
 
 {% load bootstrap %}
 {% load i18n %}
+{% load plinth_extras %}
 
 {% block configuration %}
   <h3>{% trans "As a Server" %}</h3>
@@ -87,7 +88,7 @@
         <a title="{% trans 'Add a new peer' %}"
            role="button" class="btn btn-default btn-add-client"
            href="{% url 'wireguard:add-client' %}">
-          <span class="fa fa-plus" aria-hidden="true"></span>
+          {% icon 'plus' %}
           {% trans "Add Allowed Client" %}
         </a>
     </div>
@@ -98,7 +99,7 @@
         {% csrf_token %}
         <button type="submit" class="btn btn-primary btn-start-server"
                 title="{% trans 'Start WireGuard Server' %}">
-          <span class="fa fa-rocket" aria-hidden="true"></span>
+          {% icon 'rocket' %}
           {% trans "Start WireGuard Server" %}
         </button>
       </form>
@@ -151,7 +152,7 @@
     <a title="{% trans 'Add a new server' %}"
        role="button" class="btn btn-default btn-add-server"
        href="{% url 'wireguard:add-server' %}">
-      <span class="fa fa-plus" aria-hidden="true"></span>
+      {% icon 'plus' %}
       {% trans "Add Connection to Server" %}
     </a>
   </div>
