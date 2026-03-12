@@ -117,7 +117,7 @@ def set_config(frontend: str, kite_name: str, kite_secret: secret_str):
 
 
 @privileged
-def remove_service(service: dict[str, str]):
+def remove_service(service: dict[str, str | bool]):
     """Search and remove the service(s) that match all given parameters."""
     aug = _augeas_load()
     service = utils.load_service(service)
@@ -132,7 +132,7 @@ def remove_service(service: dict[str, str]):
             lines = file.readlines()
             for i, line in enumerate(lines):
                 if line.startswith('service_on') and \
-                        all(param in line for param in service.values()):
+                        all(str(param) in line for param in service.values()):
                     lines[i] = ""
                     service_found = True
                     break
@@ -170,7 +170,7 @@ def _add_service(aug, service):
 
 
 @privileged
-def add_service(service: dict[str, str]):
+def add_service(service: dict[str, str | bool]):
     """Add one service."""
     aug = _augeas_load()
     service = utils.load_service(service)
