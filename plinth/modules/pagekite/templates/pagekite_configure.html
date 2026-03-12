@@ -6,6 +6,7 @@
 {% load bootstrap %}
 {% load i18n %}
 {% load static %}
+{% load plinth_extras %}
 
 {% block configuration %}
   {{ block.super }}
@@ -15,7 +16,7 @@
   <div class="btn-toolbar">
     <a href="{% url 'pagekite:add-custom-service' %}" class="btn btn-default"
        role="button" title="{% trans 'Add Custom Service' %}">
-      <span class="fa fa-plus" aria-hidden="true"></span>
+      {% icon 'plus' %}
       {% trans 'Add Custom Service' %}
     </a>
   </div>
@@ -45,7 +46,7 @@
             </div>
             <button type="submit" class="btn btn-default"
                     title="{% trans "Delete this service" %}">
-              <span class="fa fa-trash-o" aria-hidden="true"></span>
+              {% icon 'trash-o' %}
             </button>
           </form>
         </div>
