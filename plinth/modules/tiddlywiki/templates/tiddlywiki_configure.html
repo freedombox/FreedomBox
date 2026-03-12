@@ -5,6 +5,7 @@
 
 {% load bootstrap %}
 {% load i18n %}
+{% load plinth_extras %}
 
 {% block configuration %}
   {{ block.super }}
@@ -14,12 +15,12 @@
   <div class="btn-toolbar">
     <a href="{% url 'tiddlywiki:create' %}" class="btn btn-default"
        role="button" title="{% trans 'Create Wiki' %}">
-      <span class="fa fa-plus" aria-hidden="true"></span>
+      {% icon 'plus' %}
       {% trans 'Create Wiki' %}
     </a>
     <a href="{% url 'tiddlywiki:upload' %}" class="btn btn-default"
        role="button" title="{% trans 'Upload Wiki' %}">
-      <span class="fa fa-upload" aria-hidden="true"></span>
+      {% icon 'upload' %}
       {% trans 'Upload Wiki' %}
     </a>
   </div>
@@ -41,14 +42,14 @@
                  class="wiki-edit btn btn-default btn-sm secondary"
                  role="button"
                  title="{% blocktrans %}Rename wiki {{ wiki }}{% endblocktrans %}">
-                <span class="fa fa-pencil-square-o" aria-hidden="true"></span>
+                {% icon 'pencil-square-o' %}
               </a>
 
               <a href="{% url 'tiddlywiki:delete' wiki %}"
                  class="wiki-delete btn btn-default btn-sm secondary"
                  role="button"
                  title="{% blocktrans %}Delete wiki {{ wiki }}{% endblocktrans %}">
-                <span class="fa fa-trash-o" aria-hidden="true"></span>
+                {% icon 'trash-o' %}
               </a>
             </div>
           {% endfor %}
