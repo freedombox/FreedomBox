@@ -447,17 +447,13 @@ footer {
 }
 
 /* Icon when collapsible content is shown */
-.collapsible-button .fa {
-    margin-left: 0.3125rem;
+.collapsible-button.collapsed [data-icon-name="chevron-right"] {
+    transform: none;
 }
 
-.collapsible-button .fa-chevron-right:before,
-.no-js .collapsible-button.collapsed .fa-chevron-right:before {
-    content: "\f078";
-}
-
-.collapsible-button.collapsed .fa-chevron-right:before {
-    content: "\f054";
+.collapsible-button [data-icon-name="chevron-right"],
+.no-js .collapsible-button.collapsed [data-icon-name="chevron-right"] {
+    transform: rotate(0.25turn);
 }
 
 /* No-JS fallbacks for collapsible content */
