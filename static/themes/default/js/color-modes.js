@@ -51,21 +51,19 @@
         const themeSwitcherText = document.querySelector('#id_toggle_theme_text');
         const activeThemeIcon = document.querySelector('#id_active_theme_icon');
         const btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`);
-        const iconOfActiveBtn = btnToActive.dataset.bsIconValue;
 
         document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
             element.classList.remove('active');
             element.setAttribute('aria-pressed', 'false');
-            const iconOfBtn = element.dataset.bsIconValue;
-            if (activeThemeIcon.classList.contains(iconOfBtn)) {
-                activeThemeIcon.classList.remove(iconOfBtn);
-            }
         });
 
         btnToActive.classList.add('active');
         btnToActive.setAttribute('aria-pressed', 'true');
-        activeThemeIcon.classList.add(iconOfActiveBtn);
-        const themeSwitcherLabel = `${themeSwitcherText.textContent} (${btnToActive.dataset.bsThemeValue})`;
+
+        const activeIcon = btnToActive.querySelector('.svg-icon:first-child');
+        activeThemeIcon.innerHTML = activeIcon.outerHTML;
+
+        const themeSwitcherLabel = `${themeSwitcherText.textContent.trim()} (${btnToActive.dataset.bsThemeValue})`;
         themeSwitcher.setAttribute('title', themeSwitcherLabel);
 
         if (focus) {
