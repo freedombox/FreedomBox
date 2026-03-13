@@ -65,9 +65,11 @@ def get_nm_info():
 
         settings_ipv4 = connection.get_setting_ip4_config()
         if settings_ipv4 and settings_ipv4.get_num_addresses():
-            address = settings_ipv4.get_address(0)
-            info['ip_address_and_network'] = (address.get_address() + '/' +
-                                              str(address.get_prefix()))
+            nm_address = settings_ipv4.get_address(0)
+            address = nm_address.get_address()
+            prefix = str(nm_address.get_prefix())
+            info['ip_address'] = address
+            info['ip_address_and_network'] = address + '/' + prefix
 
         connections[info['interface']] = info
 
