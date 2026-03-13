@@ -24,14 +24,14 @@ class Menu(app.FollowerComponent):
         name is the label of the menu item.
 
         icon is the icon to be displayed for the menu item. Icon can be the
-        name of a glyphicon from the Fork Awesome font's icon set:
-        https://forkawesome.github.io/Fork-Awesome/icons/. In this case, the
-        icon name starts with the string 'fa-'. Alternatively, the icon can
-        also be a file under the directory plinth/modules/<app>/static/icons/,
-        provided without an extension. SVG icons are preferred. Currently, both
-        PNG and SVG icons with the same name are used. For example, if the
-        value of icon is 'myicon' and app_id in App class is 'myapp', then two
-        icons files plinth/modules/myapp/static/icons/myicon.svg and
+        name of an SVG icon from the static/theme/icons directory. In this
+        case, the icon name starts with the string 'fa-' (a tribute to the
+        fork-awesome project). Alternatively, the icon can also be a file under
+        the directory plinth/modules/<app>/static/icons/, provided without an
+        extension. SVG icons are preferred. Currently, both PNG and SVG icons
+        with the same name are used. For example, if the value of icon is
+        'myicon' and app_id in App class is 'myapp', then two icons files
+        plinth/modules/myapp/static/icons/myicon.svg and
         plinth/modules/myapp/static/icons/myicon.png are used in the interface.
 
         tags is a list of tags that describe the app. Tags help users to find
