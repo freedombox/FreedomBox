@@ -160,6 +160,13 @@ def _generate_private_key():
     return process.stdout.decode().strip()
 
 
+def generate_client_keypair():
+    """Generate client private/public keypair."""
+    private_key = _generate_private_key()
+    public_key = _get_public_key_from_private_key(private_key)
+    return private_key, public_key
+
+
 def _find_next_interface():
     """Find next unused wireguard interface name."""
     output = subprocess.check_output(['wg', 'show',
