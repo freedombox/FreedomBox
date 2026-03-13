@@ -194,23 +194,20 @@ body {
     padding-left: 40px;
 }
 
-.navbar .fa:not(.fa-bars) {
-    margin-right: 0.25rem;
-}
-
 .no-brand .navbar-brand {
     display: none;
 }
 
-.navbar-brand .fa {
-    float: left;
-    margin-top: -0.4375rem;
-    padding: 0.5rem;
+.navbar-brand {
+    font-size: 2.5rem;
+    display: block;
+    height: 3.25rem;
+    padding: 0;
+    margin-right: -1.125rem;
 }
 
-.navbar-brand {
-    height: 3.3125rem;
-    margin-right: -1.25rem;
+.navbar-brand svg {
+    vertical-align: -6%;
 }
 
 @media (max-width: 767px) {
@@ -488,6 +485,11 @@ footer {
     border: none;
 }
 
+.main-header .navbar {
+    --bs-navbar-brand-color: var(--freedombox-navbar-color);
+    --bs-navbar-brand-hover-color: var(--freedombox-navbar-color);
+}
+
 .main-header > .container > nav.navbar {
     padding: 0;
 }
@@ -511,6 +513,12 @@ footer {
     --bs-navbar-color: var(--freedombox-navbar-color);
     /* In mobile layout, during first setup, maintain the height of the navbar */
     margin: 0.6875rem 0;
+}
+
+.main-header .navbar-toggler svg {
+    display: block;
+    margin: 0.1em 0;
+    height: 0.8em;
 }
 
 @media screen and (max-width: 767px) {

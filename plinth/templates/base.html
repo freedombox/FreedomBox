@@ -92,10 +92,10 @@
 
         {% block mainmenu_left %}
           {% url 'index' as index_url %}
-          <a href="{{ index_url }}"  class="navbar-brand
+          <a href="{{ index_url }}" class="navbar-brand
                    {% if index_url == active_section_url %}active{% endif %}"
              title="{{ box_name }}">
-            <i class="fa fa-freedombox fa-2x fa-inverse" aria-hidden="true"></i>
+            {% icon 'freedombox' %}
           </a>
         {% endblock %}
 
@@ -109,7 +109,7 @@
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                   data-bs-target="#navbar-collapse" aria-controls="navbar-collapse"
                   aria-expanded="false" aria-label="Toggle navigation">
-            <span class="fa fa-bars"></span>
+            {% icon 'bars' %}
           </button>
         {% endblock %}
 
@@ -130,7 +130,7 @@
                   <a href="{{ apps_url }}" title='{% trans " Apps" %}'
                      class="nav-link {% if apps_url == active_section_url %}
                      active{% endif %}">
-                    <span class="fa fa-th nav-icon"></span>
+                    {% icon 'th' %}
                     {% trans "Apps" %}
                   </a>
                 </li>
@@ -139,7 +139,7 @@
                   <a href="{{ system_url }}" title='{% trans " System" %}'
                      class="nav-link {% if system_url == active_section_url %}
                      active{% endif %}">
-                    <span class="fa fa-cog nav-icon"></span>
+                    {% icon 'cog' %}
                     {% trans "System" %}
                   </a>
                 </li>
@@ -162,7 +162,7 @@
                      class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
                      role="button" aria-expanded="false" aria-haspopup="true"
                      id="id_user_menu_link">
-                    <i class="fa fa-user nav-icon"></i>
+                    {% icon 'user' %}
                     {{ request.user.username }}
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end dropdown-menu-xxl-start"
@@ -212,7 +212,7 @@
                   <a class="nav-link"
                      href="{% url 'language-selection' %}?next={{ request.path|iriencode }}"
                      title="{% trans "Select language" %}">
-                    <span class="fa fa-globe-w nav-icon"></span>
+                    {% icon 'globe-w' %}
                     <span class="nav-text d-inline-block d-md-none">
                       {% trans "Select language" %}
                     </span>
@@ -221,7 +221,7 @@
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'help:about' %}"
                      title="{% trans "About" %}">
-                    <span class="fa fa-question-circle nav-icon"></span>
+                    {% icon 'question-circle' %}
                     <span class="nav-text d-inline-block d-md-none">
                       {% trans "About" %}
                     </span>
@@ -230,7 +230,7 @@
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'users:login' %}"
                      title="{% trans "Log in" %}">
-                    <i class="fa fa-user nav-icon"></i>
+                    {% icon 'user' %}
                     {% trans "Log in" %}</a>
                 </li>
               {% endif %}
