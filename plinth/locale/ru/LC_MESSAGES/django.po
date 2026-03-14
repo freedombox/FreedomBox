@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-03 02:00+0000\n"
-"PO-Revision-Date: 2026-03-09 19:09+0000\n"
+"PO-Revision-Date: 2026-03-15 18:09+0000\n"
 "Last-Translator: OwlGale <owlgale@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/ru/>\n"
@@ -413,10 +413,8 @@ msgid "Passphrase"
 msgstr "Парольная фраза"
 
 #: plinth/modules/backups/forms.py:187
-#, fuzzy
-#| msgid "Passphrase; Only needed when using encryption."
 msgid "Only needed when using encryption."
-msgstr "Парольная фраза; нужна только если используется шифрование."
+msgstr "Требуется только при использовании шифрования."
 
 #: plinth/modules/backups/forms.py:190
 msgid "Confirm Passphrase"
@@ -455,22 +453,16 @@ msgstr ""
 "to/repo/</i>"
 
 #: plinth/modules/backups/forms.py:255
-#, fuzzy
-#| msgid "Authentication Mode"
 msgid "SSH Authentication Type"
-msgstr "Режим проверки подлинности"
+msgstr "Тип аутентификации SSH"
 
 #: plinth/modules/backups/forms.py:256
-#, fuzzy
-#| msgid "Authentication to remote server failed."
 msgid "Choose how to authenticate to the remote SSH server."
-msgstr "Аутентификация на удалённый сервер не прошла."
+msgstr "Выберите способ аутентификации к удаленному SSH-серверу."
 
 #: plinth/modules/backups/forms.py:258
-#, fuzzy
-#| msgid "needs authentication"
 msgid "Key-based Authentication"
-msgstr "требуется аутентификация"
+msgstr "Аутентификация по ключу"
 
 #: plinth/modules/backups/forms.py:259
 msgid "Password-based Authentication"
@@ -632,6 +624,9 @@ msgid ""
 "list on the remote machine for %(box_name)s to be able to connect to the "
 "remote machine:"
 msgstr ""
+"Приведенный ниже открытый ключ SSH-клиента необходимо добавить в список "
+"авторизованных ключей на удаленном компьютере, чтобы %(box_name)s мог "
+"подключиться к нему:"
 
 #: plinth/modules/backups/templates/backups_add_remote_repository.html:86
 #, python-format
@@ -640,6 +635,10 @@ msgid ""
 "successful, then the public key will be automatically added to the "
 "authorized keys list, so that future connections do not need the password."
 msgstr ""
+"Служба %(box_name)s попытается установить соединение, используя указанный "
+"пароль. В случае успеха открытый ключ будет автоматически добавлен в список "
+"авторизованных ключей, благодаря чему для последующих подключений пароль не "
+"потребуется."
 
 #: plinth/modules/backups/templates/backups_add_remote_repository.html:131
 #: plinth/modules/backups/templates/backups_upload.html:28
@@ -818,10 +817,8 @@ msgid "Authentication to remote server failed."
 msgstr "Аутентификация на удалённый сервер не прошла."
 
 #: plinth/modules/backups/views.py:50
-#, fuzzy
-#| msgid "Error establishing connection to server: {}"
 msgid "Error establishing connection to server: {} {} {}"
-msgstr "Ошибка при установке соединения с сервером: {}"
+msgstr "Ошибка при установке соединения с сервером: {} {} {}"
 
 #: plinth/modules/backups/views.py:82
 msgid "Backup schedule updated."
