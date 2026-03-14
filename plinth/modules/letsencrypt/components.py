@@ -392,8 +392,12 @@ def on_certificate_event_sync(event, domains, lineage):
     assert event in ('obtained', 'renewed', 'revoked', 'deleted')
 
     for component in LetsEncrypt.list():
+        if component.app and component.app.needs_setup():
+            continue
+
         logger.info('Handling certificate event for %s: %s, %s, %s',
                     component.component_id, event, domains, lineage)
+
         try:
             getattr(component, 'on_certificate_' + event)(domains, lineage)
         except Exception as exception:
