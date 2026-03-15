@@ -10,7 +10,7 @@ import pytest
 
 from plinth import app, kvstore
 from plinth.diagnostic_check import DiagnosticCheck, Result
-from plinth.modules.apache.components import (Uwsgi, Webserver, WebserverRoot,
+from plinth.modules.apache.components import (Webserver, WebserverRoot,
                                               check_url, diagnose_url,
                                               diagnose_url_on_all)
 
@@ -326,81 +326,6 @@ def test_webserver_root_uninstall(component_app, enable, disable):
     assert kvstore.get_default('test-webserver_domain', 'x-value') == 'x-value'
 
 
-def test_uwsgi_init():
-    """Test that uWSGI component can be initialized."""
-    with pytest.raises(ValueError):
-        Uwsgi(None, None)
-
-    uwsgi = Uwsgi('test-uwsgi', 'test-config')
-    assert uwsgi.component_id == 'test-uwsgi'
-    assert uwsgi.uwsgi_name == 'test-config'
-
-
-@patch('plinth.action_utils.service_is_enabled')
-@patch('plinth.action_utils.uwsgi_is_enabled')
-def test_uwsgi_is_enabled(uwsgi_is_enabled, service_is_enabled):
-    """Test that checking uwsgi configuration enabled works."""
-    uwsgi = Uwsgi('test-uwsgi', 'test-config')
-
-    uwsgi_is_enabled.return_value = True
-    service_is_enabled.return_value = True
-    assert uwsgi.is_enabled()
-    uwsgi_is_enabled.assert_has_calls([call('test-config')])
-    service_is_enabled.assert_has_calls([call('uwsgi')])
-
-    service_is_enabled.return_value = False
-    assert not uwsgi.is_enabled()
-
-    uwsgi_is_enabled.return_value = False
-    assert not uwsgi.is_enabled()
-
-    service_is_enabled.return_value = False
-    assert not uwsgi.is_enabled()
-
-
-@patch('plinth.modules.apache.privileged.uwsgi_enable')
-def test_uwsgi_enable(enable):
-    """Test that enabling uwsgi configuration works."""
-    uwsgi = Uwsgi('test-uwsgi', 'test-config')
-
-    uwsgi.enable()
-    enable.assert_has_calls([call('test-config')])
-
-
-@patch('plinth.modules.apache.privileged.uwsgi_disable')
-def test_uwsgi_disable(disable):
-    """Test that disabling uwsgi configuration works."""
-    uwsgi = Uwsgi('test-uwsgi', 'test-config')
-
-    uwsgi.disable()
-    disable.assert_has_calls([call('test-config')])
-
-
-@patch('plinth.action_utils.service_is_running')
-@patch('plinth.action_utils.uwsgi_is_enabled')
-def test_uwsgi_is_running(uwsgi_is_enabled, service_is_running):
-    """Test checking whether uwsgi is running with a configuration."""
-    uwsgi = Uwsgi('test-uwsgi', 'test-config')
-
-    uwsgi_is_enabled.return_value = True
-    service_is_running.return_value = True
-    assert uwsgi.is_running()
-    uwsgi_is_enabled.assert_has_calls([call('test-config')])
-    service_is_running.assert_has_calls([call('uwsgi')])
-
-    uwsgi_is_enabled.return_value = False
-    service_is_running.return_value = True
-    assert not uwsgi.is_running()
-
-    uwsgi_is_enabled.return_value = True
-    service_is_running.return_value = False
-    assert not uwsgi.is_running()
-
-    uwsgi_is_enabled.return_value = False
-    service_is_running.return_value = False
-    assert not uwsgi.is_running()
-
-
 @patch('plinth.modules.apache.components.check_url')
 @patch('plinth.action_utils.get_addresses')
 def test_diagnose_url(get_addresses, check):
@@ -473,8 +398,10 @@ def test_diagnose_url(get_addresses, check):
 def test_check_url(run):
     """Test checking whether a URL is accessible."""
     url = 'http://localhost/test'
-    basic_command = ['curl', '--location', '--cookie', '', '--fail',
-                     '--write-out', '%{response_code}']
+    basic_command = [
+        'curl', '--location', '--cookie', '', '--fail', '--write-out',
+        '%{response_code}'
+    ]
     extra_args = {'env': None, 'check': True, 'stdout': -1, 'stderr': -1}
 
     # Basic

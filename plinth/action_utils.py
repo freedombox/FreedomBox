@@ -18,9 +18,6 @@ from . import actions
 
 logger = logging.getLogger(__name__)
 
-UWSGI_ENABLED_PATH = '/etc/uwsgi/apps-enabled/{config_name}.ini'
-UWSGI_AVAILABLE_PATH = '/etc/uwsgi/apps-available/{config_name}.ini'
-
 # Flag on disk to indicate if freedombox package was held by
 # plinth. This is a backup in case the process is interrupted and hold
 # is not released.
@@ -316,43 +313,6 @@ class WebserverChange:
         """
         action_required = webserver_disable(name, kind, apply_changes=False)
         self.actions_required.add(action_required)
-
-
-def uwsgi_is_enabled(config_name):
-    """Return whether a uwsgi config is enabled."""
-    enabled_path = UWSGI_ENABLED_PATH.format(config_name=config_name)
-    return os.path.exists(enabled_path)
-
-
-def uwsgi_enable(config_name):
-    """Enable a uwsgi configuration that runs under uwsgi."""
-    if uwsgi_is_enabled(config_name):
-        return
-
-    # uwsgi is started/stopped using init script. We don't know if it can
-    # handle some configuration already running against newly enabled
-    # configuration. So, stop first before enabling new configuration.
-    service_stop('uwsgi')
-
-    enabled_path = UWSGI_ENABLED_PATH.format(config_name=config_name)
-    available_path = UWSGI_AVAILABLE_PATH.format(config_name=config_name)
-    os.symlink(available_path, enabled_path)
-
-    service_enable('uwsgi')
-    service_start('uwsgi')
-
-
-def uwsgi_disable(config_name):
-    """Disable a uwsgi configuration that runs under uwsgi."""
-    if not uwsgi_is_enabled(config_name):
-        return
-
-    # If uwsgi is restarted later, it won't stop the just disabled
-    # configuration due to how init scripts are written for uwsgi.
-    service_stop('uwsgi')
-    enabled_path = UWSGI_ENABLED_PATH.format(config_name=config_name)
-    os.unlink(enabled_path)
-    service_start('uwsgi')
 
 
 def get_addresses() -> list[dict[str, str | bool]]:

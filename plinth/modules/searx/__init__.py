@@ -8,11 +8,13 @@ from django.utils.translation import gettext_lazy as _
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.config import DropinConfigs
-from plinth.modules.apache.components import Uwsgi, Webserver
+from plinth.daemon import Daemon
+from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users.components import UsersAndGroups
 from plinth.package import Packages
+from plinth.privileged import service as service_privileged
 
 from . import manifest, privileged
 
@@ -29,7 +31,7 @@ class SearxApp(app_module.App):
 
     app_id = 'searx'
 
-    _version = 6
+    _version = 7
 
     def __init__(self) -> None:
         """Create components for the app."""
@@ -78,8 +80,8 @@ class SearxApp(app_module.App):
                                        'searx-freedombox-auth')
         self.add(webserver)
 
-        uwsgi = Uwsgi('uwsgi-searx', 'searx')
-        self.add(uwsgi)
+        daemon = Daemon('daemon-searx', 'uwsgi-app@searx.socket')
+        self.add(daemon)
 
         users_and_groups = UsersAndGroups('users-and-groups-searx',
                                           groups=groups)
@@ -101,6 +103,16 @@ class SearxApp(app_module.App):
             privileged.disable_public_access()
             self.enable()
             self.set_shortcut_login_required(True)
+
+        if old_version and old_version <= 6:
+            webserver = self.get_component('webserver-searx')
+            daemon = self.get_component('daemon-searx')
+            if webserver.is_enabled():
+                daemon.enable()
+
+            # Vanquish the old uwsgi init.d script.
+            service_privileged.disable('uwsgi')
+            service_privileged.mask('uwsgi')
 
     def uninstall(self):
         """De-configure and uninstall the app."""

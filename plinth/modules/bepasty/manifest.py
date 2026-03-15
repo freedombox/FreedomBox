@@ -15,9 +15,9 @@ backup = {
         'files': ['/etc/bepasty-freedombox.conf']
     },
     'data': {
-        'directories': ['/var/lib/bepasty']
+        'directories': ['/var/lib/bepasty', '/var/lib/private/bepasty']
     },
-    'services': ['uwsgi'],
+    'services': ['uwsgi-app@bepasty-freedombox.socket'],
 }
 
 tags = [_('File sharing'), _('Pastebin')]

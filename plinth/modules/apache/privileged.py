@@ -363,18 +363,6 @@ def unlink_root(domain: str):
 
 
 @privileged
-def uwsgi_enable(name: str):
-    """Enable uWSGI configuration and reload."""
-    action_utils.uwsgi_enable(name)
-
-
-@privileged
-def uwsgi_disable(name: str):
-    """Disable uWSGI configuration and reload."""
-    action_utils.uwsgi_disable(name)
-
-
-@privileged
 def domain_setup(domain: str):
     """Add site specific configuration for a domain."""
     if '/' in domain:
