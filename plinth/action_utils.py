@@ -123,6 +123,14 @@ def service_disable(service_name: str, check: bool = False):
     except subprocess.CalledProcessError:
         pass
 
+    if service_name.endswith('.socket'):
+        # Instead, may need to query the unit for associated .service file.
+        base_name = service_name.rpartition('.')[0]
+        try:
+            service_stop(f'{base_name}.service', check=check)
+        except subprocess.CalledProcessError:
+            pass
+
 
 def service_mask(service_name: str, check: bool = False):
     """Mask a service"""
