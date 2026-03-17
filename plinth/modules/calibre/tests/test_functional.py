@@ -10,7 +10,7 @@ import pytest
 
 from plinth.tests import functional
 
-pytestmark = [pytest.mark.apps, pytest.mark.sso, pytest.mark.calibre]
+pytestmark = [pytest.mark.apps, pytest.mark.calibre]
 
 
 class TestCalibreApp(functional.BaseAppTests):

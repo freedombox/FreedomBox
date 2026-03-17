@@ -6,9 +6,10 @@ Functional, browser based tests for syncthing app.
 import time
 
 import pytest
+
 from plinth.tests import functional
 
-pytestmark = [pytest.mark.apps, pytest.mark.syncthing, pytest.mark.sso]
+pytestmark = [pytest.mark.apps, pytest.mark.syncthing]
 
 
 class TestSyncthingApp(functional.BaseAppTests):
