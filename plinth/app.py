@@ -574,10 +574,19 @@ class Info(FollowerComponent):
         except ImproperlyConfigured:
             # Hack to allow apps to be instantiated without Django
             # initialization as required by privileged process.
-            return [
-                tag._proxy____args[0] if isinstance(tag, Promise) else tag
-                for tag in self._tags
-            ]
+            def _make_str(tag):
+                """Return the string without casting."""
+                if not isinstance(tag, Promise):
+                    return tag
+
+                # Django 4.2
+                if hasattr(tag, '_proxy____args'):
+                    return tag._proxy____args[0]
+
+                # Django 5.x
+                return tag._args[0]
+
+            return [_make_str(tag) for tag in self._tags]
 
 
 class EnableState(LeaderComponent):
