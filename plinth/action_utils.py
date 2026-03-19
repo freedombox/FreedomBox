@@ -437,9 +437,31 @@ def is_disk_image():
     return os.path.exists('/var/lib/freedombox/is-freedombox-disk-image')
 
 
-def run_apt_command(arguments, enable_triggers: bool = False):
+def run_apt_command(arguments, enable_triggers: bool = False,
+                    allow_freedombox_restart=False):
     """Run apt-get with provided arguments."""
-    command = ['apt-get', '--assume-yes', '--quiet=2'] + arguments
+    command = []
+    if not allow_freedombox_restart:
+        # Don't restart the freedombox web service. This configuration is only
+        # used when apt command is invoked from freedombox web service itself
+        # (such as during an app's installation/uninstallation).
+        #
+        # If this is not done, a freedombox web service restart is attempted.
+        # needsrestart will wait until the restart is completed. apt command
+        # will wait until needsrestart is completed. The restart mechanism in
+        # service will wait until all currently running threads are completed.
+        # One thread that has invoked this apt command will not finish as it
+        # waits for apt command to finish. This results in a deadlock. Avoid
+        # this by not attempting to restart freedombox web service when apt
+        # command is invoked from freedombox web service.
+        mount_path = '/etc/needrestart/conf.d/freedombox-self.conf'
+        orig_path = f'/usr/share/freedombox{mount_path}'
+        command = [
+            'systemd-run', '--pipe',
+            f'--property=BindReadOnlyPaths={orig_path}:{mount_path}'
+        ]
+
+    command += ['apt-get', '--assume-yes', '--quiet=2'] + arguments
 
     env = os.environ.copy()
     env['DEBIAN_FRONTEND'] = 'noninteractive'
