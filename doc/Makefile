@@ -109,20 +109,25 @@ manual-pages-xml:=$(patsubst %.raw.wiki, %.xml, $(manual-pages-raw-wiki))
 manual-pages: $(manual-pages-part-html)
 
 $(manual-pdfs): %.pdf: %.xml
-	xmlto $(XMLTO_DEBUG_FLAGS) --with-dblatex pdf -o $(dir $@) $<
+	@echo "[PDF]       $<"
+	@xmlto $(XMLTO_DEBUG_FLAGS) --with-dblatex pdf -o $(dir $@) $< 2> /dev/null
 
 $(manual-pages-part-html): %.part.html: %.xml
-	xsltproc /usr/share/xml/docbook/stylesheet/docbook-xsl/xhtml5/docbook.xsl $< | \
+	@echo "[XSLT]      $<"
+	@xsltproc /usr/share/xml/docbook/stylesheet/docbook-xsl/xhtml5/docbook.xsl $< 2> /dev/null | \
 	perl -pe 'BEGIN {undef $$/} s/.*<body[^>]*>(.*)<\/body\s*>.*/$$1/si' > $@
-	@rm -f $(dir $@)docbook.css
+	@rm -f docbook.css
 
 $(manual-xmls) $(manual-pages-xml): %.xml: %.raw.wiki $(SCRIPTS_DIR)/wikiparser.py
-	$(SCRIPTS_DIR)/wikiparser.py $< | xmllint --format - > $@
+	@echo "[WIKIPARSE] $<"
+	@$(SCRIPTS_DIR)/wikiparser.py $< | xmllint --format - > $@
 
 %.1: %.xml
-	xmlto man $<
+	@echo "[MAN]       $<"
+	@xmlto man $< 2> /dev/null
 
 .PHONY: clean
 clean:
-	rm -f $(manual-pages-part-html) $(manual-pages-xml) $(manual-xmls)
-	rm -f $(OUTPUTS)
+	@echo "[RM]        {part-htmls} {xmls} {manuals} {outputs}"
+	@rm -f $(manual-pages-part-html) $(manual-pages-xml) $(manual-xmls)
+	@rm -f $(OUTPUTS)
