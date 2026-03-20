@@ -484,6 +484,9 @@ def parse_arguments() -> argparse.Namespace:
                            help='Disk image size to resize to after download')
     subparser.add_argument('--hkp-client', choices=('gpg', 'wget'),
                            default='gpg', help='Client for key retrieval')
+    subparser.add_argument(
+        '--skip-install', action='store_true',
+        help='Skip running make provision-dev in the container')
 
     # Print IP address
     subparser = subparsers.add_parser(
@@ -946,7 +949,7 @@ def _setup_ssh(image_file: pathlib.Path):
     _runc(image_file, ['chown', 'fbx:fbx', '/home/fbx/.ssh/authorized_keys'])
 
 
-def _setup_image(image_file: pathlib.Path):
+def _setup_image(image_file: pathlib.Path, skip_install: bool = False):
     """Prepare the image for execution."""
     setup_file = image_file.with_suffix(image_file.suffix + '.setup')
     if setup_file.exists():
@@ -958,9 +961,10 @@ def _setup_image(image_file: pathlib.Path):
     _runc(image_file, ['tee', '/etc/apt/apt.conf.d/20auto-upgrades'],
           input=contents.encode())
 
-    logger.info('In image: Disabling FreedomBox service')
-    _runc(image_file, ['systemctl', 'disable', 'plinth'],
-          stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    if not skip_install:
+        logger.info('In image: Disabling FreedomBox service')
+        _runc(image_file, ['systemctl', 'disable', 'plinth'],
+              stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
     logger.info('In image: Creating virtiofs mount at /freedombox')
     mount = '''[Unit]
@@ -1018,15 +1022,19 @@ def _is_provisioned(distribution: str) -> bool:
     return provision_file.exists()
 
 
-def _provision(image_file: pathlib.Path, machine_type: str, distribution: str):
+def _provision(image_file: pathlib.Path, machine_type: str, distribution: str,
+               skip_install: bool = False):
     """Run app setup inside the container."""
     if _is_provisioned(distribution):
         return
 
-    machine = Machine.get_instance(machine_type, distribution)
-    ssh_command = machine.get_ssh_command()
-    subprocess.run(ssh_command + ['bash'], check=True,
-                   input=PROVISION_SCRIPT.encode())
+    if skip_install:
+        logger.info('Skipping provision step (--skip-install)')
+    else:
+        machine = Machine.get_instance(machine_type, distribution)
+        ssh_command = machine.get_ssh_command()
+        subprocess.run(ssh_command + ['bash'], check=True,
+                       input=PROVISION_SCRIPT.encode())
 
     provision_file = image_file.with_suffix(image_file.suffix + '.provisioned')
     provision_file.touch()
@@ -1476,10 +1484,11 @@ def subcommand_start(arguments: argparse.Namespace):
                                       arguments.hkp_client)
     _resize_disk_image(image_file, arguments.image_size,
                        arguments.distribution)
-    _setup_image(image_file)
+    _setup_image(image_file, arguments.skip_install)
     machine.setup()
     machine.launch()
-    _provision(image_file, arguments.machine_type, arguments.distribution)
+    _provision(image_file, arguments.machine_type, arguments.distribution,
+               arguments.skip_install)
     _print_banner(arguments.machine_type, arguments.distribution)
 
 
