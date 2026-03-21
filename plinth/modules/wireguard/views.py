@@ -82,6 +82,73 @@ class AddClientView(SuccessMessageMixin, FormView):
         return super().form_valid(form)
 
 
+class AutoAddClientView(SuccessMessageMixin, FormView):
+    """View to add a client with keypair generation."""
+    form_class = forms.AutoAddClientForm
+    template_name = 'wireguard_auto_add_client.html'
+    success_url = reverse_lazy('wireguard:index')
+    success_message = _('Added new client.')
+
+    def get_context_data(self, **kwargs):
+        """Return additional context for rendering the template."""
+        context = super().get_context_data(**kwargs)
+        context['title'] = _('Add Allowed Client')
+
+        context['domains'] = []
+        info = utils.get_info()
+        server_info = info['my_server']
+
+        if server_info:
+            domains = DomainName.list_names(filter_for_service='wireguard')
+            filtered_domains = [
+                domain for domain in domains if not domain.endswith('.local')
+            ]
+            port = server_info.get('listen_port', 51820)
+            endpoint = f"{filtered_domains[0]}:{port}"
+
+        try:
+            client_privkey, client_pubkey = utils.generate_client_keypair()
+
+            # Get next IP
+            connection = utils._server_connection()
+            setting_name = utils.nm.SETTING_WIREGUARD_SETTING_NAME
+            settings = connection.get_setting_by_name(setting_name)
+            next_ip = utils._get_next_available_ip_address(settings)
+
+            # Add properties to template context
+            context.update({
+                'domains': filtered_domains,
+                'next_ip': next_ip,
+                'client_privkey': client_privkey,
+                'client_pubkey': client_pubkey,
+                'endpoint': endpoint
+                })
+
+            # Store pubkey on instance for form_valid()
+            self.request.session['client_pubkey'] = client_pubkey
+
+        except Exception as e:
+            messages.warning(f"Client key generation failed: {e}")
+        pass
+
+        return context
+
+    def form_valid(self, form):
+        """Add client using generated public key."""
+        try:
+            client_pubkey = self.request.session.pop('client_pubkey')
+            utils.add_client(client_pubkey)
+        except KeyError:
+            messages.warning(self.request,
+                             _('Session expired. Please try again.'))
+            return redirect('wireguard:auto-add-client')
+        except ValueError:
+            messages.warning(self.request, _('Client already exists'))
+            return redirect('wireguard:index')
+
+        return super().form_valid(form)
+
+
 class ShowClientView(SuccessMessageMixin, TemplateView):
     """View to show a client's details."""
     template_name = 'wireguard_show_client.html'
