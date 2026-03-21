@@ -74,6 +74,11 @@ class AddClientForm(forms.Form):
         validators=[validate_key])
 
 
+class AutoAddClientForm(forms.Form):
+    """Empty form for auto-client addition UX."""
+    pass
+
+
 class AddServerForm(forms.Form):
     """Form to add server."""
     peer_endpoint = forms.CharField(
