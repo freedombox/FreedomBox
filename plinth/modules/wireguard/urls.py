@@ -13,6 +13,8 @@ urlpatterns = [
             views.EnableServerView.as_view(), name='enable-server'),
     re_path(r'^apps/wireguard/client/add/$', views.AddClientView.as_view(),
             name='add-client'),
+    re_path(r'^apps/wireguard/client/auto-add/$',
+            views.AutoAddClientView.as_view(), name='auto-add-client'),
     re_path(r'^apps/wireguard/client/(?P<public_key>[^/]+)/show/$',
             views.ShowClientView.as_view(), name='show-client'),
     re_path(r'^apps/wireguard/client/(?P<public_key>[^/]+)/edit/$',
