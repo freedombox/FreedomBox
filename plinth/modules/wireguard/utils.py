@@ -310,3 +310,25 @@ def remove_client(public_key):
     settings.remove_peer(peer_index)
     connection.commit_changes(True)
     network.reactivate_connection(connection.get_uuid())
+
+
+def build_client_config(client_ip: str, client_privkey: str,
+                        client_pubkey: str, endpoint: str) -> str:
+    """Generate WireGuard client config."""
+    info = get_info()
+    server_info = info['my_server']
+    if not server_info:
+        raise RuntimeError("WireGuard server not configured")
+
+    server_pubkey = server_info['public_key']
+
+    return f"""[Interface]
+PrivateKey = {client_privkey}
+Address = {client_ip}/32
+DNS = 10.84.0.1
+
+[Peer]
+PublicKey = {server_pubkey}
+AllowedIPs = 0.0.0.0/0
+Endpoint = {endpoint}
+PersistentKeepalive = 25"""
