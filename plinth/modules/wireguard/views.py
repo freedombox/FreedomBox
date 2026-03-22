@@ -82,6 +82,36 @@ class AddClientView(SuccessMessageMixin, FormView):
         return super().form_valid(form)
 
 
+class SessionClientDataMixin:
+    """Shared session data loading for auto-client views."""
+
+    def get_session_client_data(self, request):
+        """Extract client data from session."""
+        next_ip = request.session.get('next_ip')
+        pubkey = request.session.get('client_pubkey')
+        privkey = request.session.get('client_privkey')
+        endpoint = request.session.get('endpoint')
+
+        if not all([next_ip, privkey, pubkey, endpoint]):
+            raise Http404("Session expired")
+
+        return {
+                'next_ip': next_ip,
+                'privkey': privkey,
+                'pubkey': pubkey,
+                'endpoint': endpoint
+                }
+
+    def get_client_config(self, request):
+        """Rebuild client config from session."""
+        data = self.get_session_client_data(request)
+
+        return utils.build_client_config(
+                data['next_ip'], data['privkey'],
+                data['pubkey'], data['endpoint']
+                )
+
+
 class AutoAddClientView(SuccessMessageMixin, FormView):
     """View to add a client with keypair generation."""
     form_class = forms.AutoAddClientForm
@@ -115,17 +145,19 @@ class AutoAddClientView(SuccessMessageMixin, FormView):
             settings = connection.get_setting_by_name(setting_name)
             next_ip = utils._get_next_available_ip_address(settings)
 
-            # Add properties to template context
-            context.update({
-                'domains': filtered_domains,
+            data = {
                 'next_ip': next_ip,
                 'client_privkey': client_privkey,
                 'client_pubkey': client_pubkey,
                 'endpoint': endpoint
-                })
+                    }
 
-            # Store pubkey on instance for form_valid()
-            self.request.session['client_pubkey'] = client_pubkey
+            # Add properties to template context
+            context['domains'] = filtered_domains
+            context.update(data)
+
+            # Store info on instance for reuse
+            self.request.session.update(data)
 
         except Exception as e:
             messages.warning(f"Client key generation failed: {e}")
