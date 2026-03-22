@@ -5,6 +5,7 @@
 
 {% load bootstrap %}
 {% load i18n %}
+{% load extras %}
 
 {% block content %}
 
@@ -34,6 +35,16 @@
       {% trans "Save the private key now. This page shows it only once!" %}
     </div>
     {% endif %}
+
+    <h4>{% trans "Client configuration file" %}</h4>
+    <div class="form-group">
+      <div class="btn-toolbar">
+        <a href="{% url 'wireguard:auto-add-client-download' %}"
+           class="btn btn-default">
+          {% icon 'download' %}
+          {% trans "Download config file" %}
+        </a>
+      </div>
 
     <div class="form-actions">
       <input type="submit" class="btn btn-primary"
