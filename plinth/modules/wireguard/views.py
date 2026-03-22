@@ -7,7 +7,7 @@ import urllib.parse
 
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
@@ -110,6 +110,20 @@ class SessionClientDataMixin:
                 data['next_ip'], data['privkey'],
                 data['pubkey'], data['endpoint']
                 )
+
+
+class ClientActionsView(SessionClientDataMixin, View):
+    action = None
+
+    def get(self, request):
+        if self.action == 'download':
+            config = self.get_client_config(request)
+            response = HttpResponse(config, content_type='text/plain')
+            response['Content-Disposition'] = \
+                'attachment; filename="wg-client.conf"'
+            return response
+
+        raise Http404("Invalid action")
 
 
 class AutoAddClientView(SuccessMessageMixin, FormView):
