@@ -3,6 +3,7 @@
 Views for WireGuard application.
 """
 
+import segno
 import urllib.parse
 
 from django.contrib import messages
@@ -12,6 +13,8 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 from django.views.generic import FormView, TemplateView, View
+
+from io import BytesIO
 
 from plinth import network
 from plinth.modules.names.components import DomainName
@@ -122,6 +125,13 @@ class ClientActionsView(SessionClientDataMixin, View):
             response['Content-Disposition'] = \
                 'attachment; filename="wg-client.conf"'
             return response
+        elif self.action == 'qr':
+            qrcode = segno.make(config)
+            buffer = BytesIO()
+            qrcode.save(buffer, kind='svg', scale=5)
+
+            return HttpResponse(buffer.getvalue(),
+                                content_type='image/svg+xml')
 
         raise Http404("Invalid action")
 
