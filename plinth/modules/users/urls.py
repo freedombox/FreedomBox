@@ -29,6 +29,11 @@ urlpatterns = [
         r'^sys/users/(?P<username>[\w.@+-]+)/passkeys/'
         r'(?P<passkey_id>[\d]+)/edit/$',
         non_admin_view(views.PasskeyEdit.as_view()), name='passkey_edit'),
+    re_path(r'^accounts/login/passkey-begin/$',
+            public(views.passkey_login_begin), name='passkey_login_begin'),
+    re_path(r'^accounts/login/passkey-complete/$',
+            public(views.passkey_login_complete),
+            name='passkey_login_complete'),
     re_path(
         r'^sys/users/(?P<username>[\w.@+-]+)/passkeys/'
         r'(?P<passkey_id>[\d]+)/delete/$',

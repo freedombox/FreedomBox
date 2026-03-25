@@ -12,8 +12,10 @@ import axes.utils
 import django.views.generic
 import fido2.cbor
 import fido2.features
+import fido2.utils
 from django import shortcuts
 from django.contrib import messages
+from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.models import User
@@ -31,6 +33,7 @@ from django.views.generic.edit import (CreateView, DeleteView, FormView,
                                        UpdateView)
 from fido2 import webauthn
 from fido2.server import Fido2Server
+from fido2.webauthn import AttestedCredentialData, AuthenticationResponse
 
 import plinth.modules.ssh.privileged as ssh_privileged
 from plinth import translation
@@ -446,3 +449,126 @@ class PasskeyDelete(DeleteView):
     def get_success_url(self):
         """Return the URL to visit if form edit succeeds."""
         return reverse('users:passkeys', args=[self.kwargs['username']])
+
+
+@json_exception
+@require_POST
+def passkey_login_begin(request):
+    """Begin the process of logging-in with passwords."""
+    # Domain
+    domain = request.get_host().partition(':')[0]
+
+    # Begin Authentication
+    server = get_fido2_server(domain)
+    request_options, state = server.authenticate_begin(
+        credentials=None,
+        user_verification=fido2.webauthn.UserVerificationRequirement.REQUIRED,
+        challenge=None)
+
+    logger.info('Passkey login begins')
+
+    request.session['fido2_server_state'] = state
+    return JsonResponse(dict(request_options))
+
+
+@json_exception
+@require_POST
+def passkey_login_complete(request):
+    """Complete the process of logging-in with passwords."""
+
+    def _response(result: bool, error_string: str):
+        """Return a JsonResponse object."""
+        status = 200
+        if not result:
+            status = 400
+            logger.error('Error completing passkey login: %s', error_string)
+
+        return JsonResponse({
+            'result': result,
+            'error_string': error_string
+        }, status=status)
+
+    try:
+        response = json.loads(request.body)
+    except json.decoder.JSONDecodeError as exception:
+        return _response(False, str(exception))
+
+    # Domain
+    domain = request.get_host().partition(':')[0]
+
+    # State
+    state = request.session.get('fido2_server_state')
+
+    # Complete Authentication
+    server = get_fido2_server(domain)
+    try:
+        authentication_repsonse = AuthenticationResponse.from_dict(response)
+
+        if hasattr(authentication_repsonse, 'raw_id'):
+            # Library python3-fido2 >= 2.0.0
+            credential_id = authentication_repsonse.raw_id
+        else:
+            # Library python3-fido2 < 2.0.0
+            credential_id = authentication_repsonse.id
+
+        selected_passkeys = UserPasskey.objects.filter(
+            credential_id=credential_id)
+
+        if not len(selected_passkeys):
+            return _response(False, _('Passkey used is not known.'))
+
+        selected_passkey = selected_passkeys[0]
+
+        credentials = [
+            AttestedCredentialData.create(
+                aaguid=selected_passkey.aaguid.bytes,
+                credential_id=selected_passkey.credential_id,
+                public_key=fido2.cbor.decode(selected_passkey.public_key))
+        ]
+        credential_data = server.authenticate_complete(
+            state=state, credentials=credentials,
+            response=authentication_repsonse)
+    except Exception as exception:
+        return _response(False, str(exception))
+
+    try:
+        passkeys = UserPasskey.objects.filter(
+            credential_id=credential_data.credential_id,
+            public_key=fido2.cbor.encode(credential_data.public_key))
+    except Exception as exception:
+        return _response(False, str(exception))
+
+    if not len(passkeys):
+        return _response(False, _('Passkey used is not known.'))
+
+    assert len(passkeys) == 1  # credential_id is a unique field.
+
+    passkey = passkeys[0]
+
+    # Detect cloned passkeys using signature counter.
+    # See: https://www.w3.org/TR/webauthn/#signature-counter
+    authenticator_data = authentication_repsonse.response.authenticator_data
+    signature_counter = authenticator_data.counter
+    if (passkey.signature_counter and signature_counter
+            and signature_counter <= passkey.signature_counter):
+        # TODO: Notify user of a cloned passkey
+        logger.warning(
+            'Potentially cloned passkey detected. Passkey ID in DB - %s, '
+            'credential ID - %s, signature counters - %s <= %s', passkey.id,
+            fido2.utils.websafe_encode(passkey.credential_id),
+            signature_counter, passkey.signature_counter)
+
+    passkey.signature_counter = signature_counter
+    passkey.save()  # Update the last used time
+
+    # Needed by login(), stored in session, and used for permission checks.
+    passkey.user.backend = 'django.contrib.auth.backends.ModelBackend'
+
+    # Perform user login into Django
+    auth_login(request, passkey.user)
+    response = _response(True, None)
+    if request.user.is_authenticated:
+        translation.set_language(request, response,
+                                 request.user.userprofile.language)
+
+    return response

@@ -205,3 +205,120 @@ document.addEventListener('DOMContentLoaded', () => {
         '#passkey-delete-confirm-dialog .confirm');
     confirmDeleteButton.addEventListener('click', onPasskeyDeleteConfirmed);
 });
+
+
+let passkeyLoginAbortController = null;
+
+/*
+ * Login with a passkey. First send a request to the server to begin logging in
+ * with passkey and get challenge and login operation options. Then request the
+ * browser to talk to the authenticator to sign the challenge with a passkey.
+ * Finally, pass the challenge signed with a known passkey along with other
+ * results to the server.
+ */
+async function loginWithPasskey(conditionalMediation, csrfToken, next) {
+    console.log('Signing in with a passkey. Conditional mediation: ',
+                conditionalMediation);
+
+    if (!window.PublicKeyCredential) {
+        if (!conditionalMediation) {
+            const message = document.getElementById(
+                'browser-does-not-support-passkeys').innerText.trim();
+            handleError('Browser does not support passkeys', message);
+        }
+        return;
+    }
+
+    //
+    // Request challenge and options from server.
+    //
+    const options = await jsonFetch('passkey-begin/', {
+            'method': 'POST',
+            body: new URLSearchParams({'csrfmiddlewaretoken': csrfToken})
+    }, 'initiate passkey login');
+    if (!options) {
+        return;
+    }
+
+    options['publicKey']['challenge'] = base64WebDecode(
+        options['publicKey']['challenge']);
+
+    // Abort a previous login operation (such as conditional mediation operation
+    // if it is running). Firefox automatically does this but Chrome does not.
+    if (passkeyLoginAbortController) {
+        console.log('Explicitly aborting previous passkey login operation.');
+        passkeyLoginAbortController.abort();
+    }
+
+    passkeyLoginAbortController = new AbortController();
+
+    //
+    // Sign the server challenge with passkey stored in authenticator (via the
+    // browser).
+    //
+    let credential;
+    try {
+        const getOptions = {
+            'publicKey': options['publicKey'],
+            'signal': passkeyLoginAbortController.signal
+        };
+        if (conditionalMediation) {
+            getOptions['mediation'] = 'conditional';
+        }
+        credential = await navigator.credentials.get(getOptions);
+    } catch (error) {
+        if (conditionalMediation && error.name == 'AbortError') {
+            // When user clicks on 'Log in with passkey', the process initiated
+            // with conditional mediation will be aborted.
+            console.log('Log in initiated with button, ' +
+                        'conditional mediation aborted.');
+            return;
+        }
+        if (!conditionalMediation) {
+            // Don't show error message or retry.
+            handleError('Login with passkey failed.', error);
+        }
+        return;
+    }
+
+    // Send the signature and the authenticator response to the server to
+    // complete the login process.
+    let completeResponse = await jsonFetch('passkey-complete/', {
+            'method': 'POST',
+            'headers': {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken
+            },
+            'body': JSON.stringify(credential),
+    }, 'login with passkey');
+    if (!completeResponse) {
+        return;
+    }
+
+    console.log('Login with passkey succeeded.');
+    window.location.href = next;
+}
+
+/*
+ * Attach an click event listener to 'Log in with passkey' button.
+ */
+document.addEventListener('DOMContentLoaded', async () => {
+    const loginWithPasskeyButton = document.getElementById('login-with-passkey');
+    if (!loginWithPasskeyButton) {
+        // Not part of login page.
+        return;
+    }
+
+    const csrfToken = document.getElementsByName('csrfmiddlewaretoken')[0].value;
+    const next = document.getElementsByName('next')[0].value;
+    loginWithPasskeyButton.addEventListener('click', async (event) => {
+        event.preventDefault();
+        await loginWithPasskey(false, csrfToken, next);
+    });
+
+    // Login with conditional mediation. This means that user will see a
+    // 'passkey' option with autofill in the username field. The login method
+    // will be wait in the navigator.credentials.get() call until user selects
+    // that option. Don't await.
+    loginWithPasskey(true, csrfToken, next);
+});

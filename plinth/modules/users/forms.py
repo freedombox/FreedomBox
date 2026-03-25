@@ -36,7 +36,7 @@ class AuthenticationForm(DjangoAuthenticationForm):
         self.fields['username'].widget.attrs.update({
             'autofocus': 'autofocus',
             'autocapitalize': 'none',
-            'autocomplete': 'username'
+            'autocomplete': 'username webauthn'
         })
 
 
