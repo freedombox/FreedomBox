@@ -210,4 +210,4 @@ def resolve_static_path(url: str) -> pathlib.Path:
 
         return static_dir / '/'.join(url_parts[1:])
 
-    return pathlib.Path(__file__).parent.parent / 'static' / url
+    return pathlib.Path(cfg.file_root) / 'static' / url
