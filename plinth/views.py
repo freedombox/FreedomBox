@@ -3,10 +3,13 @@
 Main FreedomBox views.
 """
 
+import functools
+import logging
 import random
 import time
 import traceback
 import urllib.parse
+from collections.abc import Callable
 
 from django.contrib import messages
 from django.core.exceptions import ImproperlyConfigured
@@ -32,6 +35,8 @@ from plinth.package import Packages
 from plinth.translation import get_language_from_request, set_language
 
 from . import forms, frontpage, operation, setup
+
+logger = logging.getLogger(__name__)
 
 REDIRECT_FIELD_NAME = 'next'
 
@@ -683,6 +688,7 @@ class AppLogsView(TemplateView):
 def notification_dismiss(request, id):
     """Dismiss a notification."""
     from django.http import HttpResponse
+
     from .notification import Notification
     notes = Notification.list(key=id, user=request.user)
     if notes:
@@ -697,3 +703,24 @@ def notification_dismiss(request, id):
         return response
 
     return HttpResponseRedirect(_get_redirect_url_from_param(request))
+
+
+def json_exception(view_func: Callable):
+    """View decorator to return an view exception in JSON format."""
+
+    @functools.wraps(view_func)
+    def wrapper(*args, **kwargs):
+        """Wrapper over view function to handle exceptions."""
+        try:
+            return view_func(*args, **kwargs)
+        except Exception as exception:
+            logger.exception('Error running view %s - %s', view_func.__name__,
+                             exception)
+            return JsonResponse(
+                {
+                    'result': False,
+                    'error_name': type(exception).__name__,
+                    'error_string': str(exception)
+                }, status=500)  # Internal server error
+
+    return wrapper
