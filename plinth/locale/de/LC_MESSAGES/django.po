@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-24 00:03+0000\n"
-"PO-Revision-Date: 2026-03-22 23:09+0000\n"
-"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
+"PO-Revision-Date: 2026-03-29 11:09+0000\n"
+"Last-Translator: Dietmar <sagen@permondes.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/de/>\n"
 "Language: de\n"
@@ -172,7 +172,7 @@ msgstr "{box_name} Weboberfläche (Plinth)"
 
 #: plinth/modules/apache/__init__.py:129
 msgid "Web app protected by FreedomBox"
-msgstr ""
+msgstr "Web-App geschützt durch FreedomBox"
 
 #: plinth/modules/apache/components.py:234
 #, python-brace-format
@@ -415,10 +415,8 @@ msgid "Passphrase"
 msgstr "Passwort"
 
 #: plinth/modules/backups/forms.py:187
-#, fuzzy
-#| msgid "Passphrase; Only needed when using encryption."
 msgid "Only needed when using encryption."
-msgstr "Passphrase; Nur notwendig, wenn Verschlüsselung genutzt wird."
+msgstr "Nur notwendig, wenn Verschlüsselung genutzt wird."
 
 #: plinth/modules/backups/forms.py:190
 msgid "Confirm Passphrase"
@@ -461,38 +459,31 @@ msgid "SSH Authentication Type"
 msgstr "SSH-Authentifizierungstyp"
 
 #: plinth/modules/backups/forms.py:256
-#, fuzzy
-#| msgid "Authentication to remote server failed."
 msgid "Choose how to authenticate to the remote SSH server."
-msgstr "Authentifizierung am Server fehlgeschlagen."
+msgstr ""
+"Wählen Sie aus, wie Sie sich beim entfernten SSH-Server authentifizieren "
+"möchten."
 
 #: plinth/modules/backups/forms.py:258
-#, fuzzy
-#| msgid "needs authentication"
 msgid "Key-based Authentication"
-msgstr "benötigt Authentifizierung"
+msgstr "Schlüsselbasierte Authentifizierung"
 
 #: plinth/modules/backups/forms.py:259
-#, fuzzy
-#| msgid "Disable password authentication"
 msgid "Password-based Authentication"
-msgstr "Passwortauthentifizierung deaktivieren"
+msgstr "Passwortbasierte Authentifizierung"
 
 #: plinth/modules/backups/forms.py:261
 msgid "SSH server password"
 msgstr "SSH-Server-Passwort"
 
 #: plinth/modules/backups/forms.py:262
-#, fuzzy
-#| msgid "Disable password authentication"
 msgid "Required for password-based authentication."
-msgstr "Passwortauthentifizierung deaktivieren"
+msgstr "Erforderlich für die passwortbasierte Authentifizierung."
 
 #: plinth/modules/backups/forms.py:275
-#, fuzzy
-#| msgid "Disable password authentication"
 msgid "SSH password is needed for password-based authentication."
-msgstr "Passwortauthentifizierung deaktivieren"
+msgstr ""
+"Für die passwortbasierte Authentifizierung ist ein SSH-Passwort erforderlich."
 
 #: plinth/modules/backups/forms.py:292
 msgid "Remote backup repository already exists."
@@ -641,6 +632,9 @@ msgid ""
 "list on the remote machine for %(box_name)s to be able to connect to the "
 "remote machine:"
 msgstr ""
+"Der folgende öffentliche Schlüssel des SSH-Clients muss zur Liste der "
+"autorisierten Schlüssel auf dem Remote-Rechner hinzugefügt werden, damit %"
+"(box_name)s eine Verbindung zum Remote-Rechner herstellen kann:"
 
 #: plinth/modules/backups/templates/backups_add_remote_repository.html:87
 #, python-format
@@ -649,6 +643,10 @@ msgid ""
 "successful, then the public key will be automatically added to the "
 "authorized keys list, so that future connections do not need the password."
 msgstr ""
+"Der Dienst von %(box_name)s versucht, sich mit dem angegebenen Passwort "
+"anzumelden. Gelingt dies, wird der öffentliche Schlüssel automatisch zur "
+"Liste der autorisierten Schlüssel hinzugefügt, sodass für zukünftige "
+"Verbindungen kein Passwort mehr erforderlich ist."
 
 #: plinth/modules/backups/templates/backups_add_remote_repository.html:132
 #: plinth/modules/backups/templates/backups_upload.html:29
@@ -832,10 +830,8 @@ msgid "Authentication to remote server failed."
 msgstr "Authentifizierung am Server fehlgeschlagen."
 
 #: plinth/modules/backups/views.py:50
-#, fuzzy
-#| msgid "Error establishing connection to server: {}"
 msgid "Error establishing connection to server: {} {} {}"
-msgstr "Fehler beim Verbinden mit Server: {}"
+msgstr "Fehler beim Verbinden mit Server: {} {} {}"
 
 #: plinth/modules/backups/views.py:82
 msgid "Backup schedule updated."
@@ -1485,14 +1481,7 @@ msgid "Webserver Home Page"
 msgstr "Webserver-Startseite"
 
 #: plinth/modules/config/forms.py:37
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Choose the default page that must be served when someone visits your "
-#| "{box_name} on the web. A typical use case is to set your blog or wiki as "
-#| "the home page when someone visits the domain name. Note that once the "
-#| "home page is set to something other than {box_name} Service (Plinth), "
-#| "your users must explicitly type /plinth or /freedombox to reach "
-#| "{box_name} Service (Plinth)."
+#, python-brace-format
 msgid ""
 "Choose the default page that must be served when someone visits your "
 "{box_name} on the web. A typical use case is to set your blog or wiki as the "
@@ -1504,8 +1493,8 @@ msgstr ""
 "{box_name} im Web aufruft. Ein typischer Anwendungsfall ist ihren Blog oder "
 "Wiki als die Einstiegsseite einzustellen wenn jemand die Domain besucht. "
 "Beachten Sie, dass, wenn die Startseite auf etwas anderes als {box_name}-"
-"Dienst (Plinth) eingestellt ist, die Benutzer explizit /plinth oder /"
-"freedombox eingeben müssen um den {box_name}-Dienst (Plinth) zu erreichen."
+"Dienst (Plinth) eingestellt ist, die Benutzer explizit /freedombox eingeben "
+"müssen um den {box_name}-Dienst (Plinth) zu erreichen."
 
 #: plinth/modules/config/forms.py:48
 msgid "Show advanced apps and features"
@@ -2471,15 +2460,11 @@ msgstr ""
 "werden automatisch erstellt und verweisen auf den ersten Admin-Benutzer."
 
 #: plinth/modules/email/__init__.py:41
-#, fuzzy
-#| msgid ""
-#| "<a href=\"/plinth/apps/roundcube/\">Roundcube app</a> provides web "
-#| "interface for users to access email."
 msgid ""
 "<a href=\"/freedombox/apps/roundcube/\">Roundcube app</a> provides web "
 "interface for users to access email."
 msgstr ""
-"<a href=\"/plinth/apps/roundcube/\">Roundcube App</a> bietet eine "
+"<a href=\"/freedombox/apps/roundcube/\">Roundcube App</a> bietet eine "
 "Weboberfläche für den Zugriff auf E-Mails."
 
 #: plinth/modules/email/__init__.py:43
@@ -6308,12 +6293,6 @@ msgstr ""
 "weiterleitet, damit %(box_name)s die Dienste bereitstellt."
 
 #: plinth/modules/networks/templates/router_configuration_content.html:32
-#, fuzzy
-#| msgid ""
-#| "If you don't have control over your router, choose not to configure it. "
-#| "To see options to overcome this limitation, choose 'I dont have a public "
-#| "IP address' option in <a href=\"/plinth/sys/networks/internet-connection-"
-#| "type/\">Internet connection type selection</a>."
 msgid ""
 "If you don't have control over your router, choose not to configure it. To "
 "see options to overcome this limitation, choose 'I dont have a public IP "
@@ -6323,7 +6302,7 @@ msgstr ""
 "Wenn Sie keine Kontrolle über Ihren Router haben, können Sie ihn nicht "
 "konfigurieren. Um Optionen zur Überwindung dieser Einschränkung zu sehen, "
 "wählen Sie die Option 'Ich habe keine öffentliche IP-Adresse' in <a href=\"/"
-"plinth/sys/networks/internet-connection-type/\">Auswahl des "
+"freedombox/sys/networks/internet-connection-type/\">Auswahl des "
 "Internetverbindungstyps</a>."
 
 #: plinth/modules/networks/templates/router_configuration_content.html:39
@@ -6737,16 +6716,12 @@ msgid "OpenID Connect Provider"
 msgstr ""
 
 #: plinth/modules/oidc/templates/oauth2_provider/authorize.html:14
-#, fuzzy
-#| msgid "Applications"
 msgid "Application"
-msgstr "Anwendungen"
+msgstr "Anwendung"
 
 #: plinth/modules/oidc/templates/oauth2_provider/authorize.html:22
-#, fuzzy
-#| msgid "Authorized SSH Keys"
 msgid "Authorize App"
-msgstr "Autorisierte SSH-Schlüssel"
+msgstr "App autorisieren"
 
 #: plinth/modules/oidc/templates/oauth2_provider/authorize.html:37
 #, python-format
@@ -6754,17 +6729,18 @@ msgid ""
 "<strong>%(app)s</strong> wants to access your account <strong> %(username)s</"
 "strong>"
 msgstr ""
+"<strong> %(app)s</strong> möchte auf Ihr Konto zugreifen <strong> %(username)"
+"s</strong>"
 
 #: plinth/modules/oidc/templates/oauth2_provider/authorize.html:52
-#, fuzzy, python-format
-#| msgid "Authorized SSH Keys"
+#, python-format
 msgid "Authorize %(app)s"
-msgstr "Autorisierte SSH-Schlüssel"
+msgstr "%(app)s autorisieren"
 
 #: plinth/modules/oidc/templates/oauth2_provider/authorize.html:59
 #, python-format
 msgid "Authorizing will redirect to %(url)s"
-msgstr ""
+msgstr "Die Autorisierung führt zu einer Weiterleitung zu %(url)s"
 
 #: plinth/modules/openvpn/__init__.py:20
 #, python-brace-format
@@ -8207,12 +8183,6 @@ msgstr ""
 "automatisch bereinigt."
 
 #: plinth/modules/snapshot/__init__.py:25
-#, fuzzy
-#| msgid ""
-#| "Snapshots currently work on btrfs file systems only and on the root "
-#| "partition only. Snapshots are not a replacement for <a href=\"/plinth/sys/"
-#| "backups\">backups</a> since they can only be stored on the same "
-#| "partition. "
 msgid ""
 "Snapshots currently work on btrfs file systems only and on the root "
 "partition only. Snapshots are not a replacement for <a href=\"/freedombox/"
@@ -8221,8 +8191,8 @@ msgid ""
 msgstr ""
 "Schnappschüsse funktionieren derzeit ausschließlich auf Btrfs-Dateisystemen "
 "und nur auf der Root-Partition. Schnappschüsse sind kein Ersatz für <a "
-"href=\"/plinth/sys/backups\">Datensicherungen</a>, da sie nur auf derselben "
-"Partition gespeichert werden können. "
+"href=\"/freedombox/sys/backups\">Datensicherungen</a>, da sie nur auf "
+"derselben Partition gespeichert werden können. "
 
 #: plinth/modules/snapshot/__init__.py:50
 msgid "Storage Snapshots"
@@ -10123,14 +10093,12 @@ msgid "Invalid key."
 msgstr "Ungültiger Schlüssel."
 
 #: plinth/modules/wireguard/forms.py:63
-#, fuzzy
-#| msgid "Enter a valid username."
 msgid "Enter a valid IPv4 address."
-msgstr "Einen gültigen Benutzernamen eingeben."
+msgstr "Eine gültige IPv4-Adresse eingeben."
 
 #: plinth/modules/wireguard/forms.py:65
 msgid "Enter a valid network prefix or net mask."
-msgstr ""
+msgstr "Geben Sie ein gültiges Netzwerkpräfix oder eine gültige Netzmaske ein."
 
 #: plinth/modules/wireguard/forms.py:71
 #: plinth/modules/wireguard/templates/wireguard.html:29
@@ -10177,11 +10145,6 @@ msgid "Client IP address provided by server"
 msgstr "Vom Server bereitgestellte Client-IP-Adresse"
 
 #: plinth/modules/wireguard/forms.py:94
-#, fuzzy
-#| msgid ""
-#| "IP address assigned to this machine on the VPN after connecting to the "
-#| "endpoint. This value is usually provided by the server operator. Example: "
-#| "192.168.0.10."
 msgid ""
 "IP address assigned to this machine on the VPN after connecting to the "
 "endpoint. This value is usually provided by the server operator. Example: "
@@ -10191,7 +10154,9 @@ msgid ""
 msgstr ""
 "IP-Adresse, die diesem Computer auf dem VPN zugewiesen ist, nachdem eine "
 "Verbindung mit dem Endpunkt hergestellt wurde. Dieser Wert wird in der Regel "
-"vom Serverbetreiber bereitgestellt. Beispiel: 192.168.0.10."
+"vom Serverbetreiber bereitgestellt. Beispiel: 192.168.0.10. Sie können auch "
+"das Netzwerk angeben. Dadurch können Sie auf Rechner im Netzwerk zugreifen. "
+"Beispiele: 10.68.12.43/24 oder 10.68.12.43/255.255.255.0."
 
 #: plinth/modules/wireguard/forms.py:102
 msgid "Private key of this machine"
@@ -10245,10 +10210,9 @@ msgid "As a Server"
 msgstr "Als Server"
 
 #: plinth/modules/wireguard/templates/wireguard.html:17
-#, fuzzy, python-format
-#| msgid "Endpoints for this %(box_name)s:"
+#, python-format
 msgid "Information for this %(box_name)s:"
-msgstr "Endpunkte für diese %(box_name)s:"
+msgstr "Informationen zu dieser %(box_name)s:"
 
 #: plinth/modules/wireguard/templates/wireguard.html:25
 msgid "Property"
@@ -10265,10 +10229,9 @@ msgid "Endpoint(s)"
 msgstr "Endpunkt"
 
 #: plinth/modules/wireguard/templates/wireguard.html:41
-#, fuzzy, python-format
-#| msgid "To %(box_name)s Ports"
+#, python-format
 msgid "%(box_name)s VPN IP for services"
-msgstr "Zu %(box_name)s Ports"
+msgstr "VPN-IP von %(box_name)s für Dienste"
 
 #: plinth/modules/wireguard/templates/wireguard.html:50
 msgid "Peers"
@@ -10304,10 +10267,8 @@ msgid "Add Allowed Client"
 msgstr "Zulässige Clients hinzufügen"
 
 #: plinth/modules/wireguard/templates/wireguard.html:97
-#, fuzzy
-#| msgid "WireGuard server started successfully."
 msgid "WireGuard server not started yet."
-msgstr "Der WireGuard-Server wurde erfolgreich gestartet."
+msgstr "WireGuard-Server wurde noch nicht gestartet."
 
 #: plinth/modules/wireguard/templates/wireguard.html:101
 #: plinth/modules/wireguard/templates/wireguard.html:103
@@ -10398,7 +10359,7 @@ msgstr "Öffentlicher Schlüssel des Servers:"
 
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:46
 msgid "Server VPN IP address for services:"
-msgstr ""
+msgstr "VPN-IP-Adresse des Servers für Dienste:"
 
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:58
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:64
@@ -10442,6 +10403,7 @@ msgstr "IP-Adresse dieses Rechners:"
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:46
 msgid "All outgoing traffic is sent using this connection:"
 msgstr ""
+"Der gesamte ausgehende Datenverkehr wird über diese Verbindung gesendet:"
 
 #: plinth/modules/wireguard/views.py:54
 msgid "Added new client."
@@ -10708,20 +10670,20 @@ msgstr "Zeitüberschreitung beim Warten auf den Paket-Manager"
 #: plinth/settings.py:181
 msgid "Uniquely identify your user account with username"
 msgstr ""
+"Identifizieren Sie Ihr Benutzerkonto eindeutig anhand des Benutzernamens"
 
 #: plinth/settings.py:183
-#, fuzzy
-#| msgid "requesting address"
 msgid "View email address"
-msgstr "Adresse anfordern"
+msgstr "E-Mail-Adresse anzeigen"
 
 #: plinth/settings.py:185
 msgid "View basic profile information (such as name and email)"
 msgstr ""
+"Grundlegende Profilinformationen anzeigen (z. B. Name und E-Mail-Adresse)"
 
 #: plinth/settings.py:187
 msgid "View permissions that account has"
-msgstr ""
+msgstr "Die Berechtigungen dieses Kontos anzeigen"
 
 #: plinth/setup.py:44
 msgid "Installing app"
@@ -11129,11 +11091,11 @@ msgstr "Alle Schlagwörter löschen"
 
 #: plinth/templates/theme-menu.html:9
 msgid "Toggle theme (auto)"
-msgstr ""
+msgstr "Thema umschalten (automatisch)"
 
 #: plinth/templates/theme-menu.html:17
 msgid "Toggle theme"
-msgstr ""
+msgstr "Thema umschalten"
 
 #: plinth/templates/theme-menu.html:25
 msgid "Light"
