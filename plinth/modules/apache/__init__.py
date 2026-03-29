@@ -86,7 +86,7 @@ class ApacheApp(app_module.App):
 
     app_id = 'apache'
 
-    _version = 16
+    _version = 17
 
     def __init__(self) -> None:
         """Create components for the app."""
@@ -97,8 +97,8 @@ class ApacheApp(app_module.App):
         self.add(info)
 
         packages = Packages('packages-apache', [
-            'apache2', 'php-fpm', 'ssl-cert', 'uwsgi', 'uwsgi-plugin-python3',
-            'libapache2-mod-auth-openidc'
+            'apache2', 'php-fpm', 'ssl-cert', 'uwsgi-core',
+            'uwsgi-plugin-python3', 'libapache2-mod-auth-openidc'
         ])
         self.add(packages)
 
@@ -134,6 +134,7 @@ class ApacheApp(app_module.App):
         daemon = Daemon('daemon-apache', 'apache2')
         self.add(daemon)
 
+        # To be able to disable the old uwsgi init.d script.
         related_daemon = RelatedDaemon('related-daemon-apache', 'uwsgi')
         self.add(related_daemon)
 

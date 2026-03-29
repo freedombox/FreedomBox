@@ -6,10 +6,10 @@
 {% load bootstrap %}
 {% load i18n %}
 {% load static %}
+{% load extras %}
 
 {% block page_js %}
-  <script type="text/javascript" src="{% static 'snapshot/snapshot.js' %}"
-          defer></script>
+  <script src="{% static 'snapshot/snapshot.js' %}" defer></script>
 {% endblock %}
 
 {% block configuration %}
@@ -59,8 +59,7 @@
                      title="{% blocktrans trimmed with number=snapshot.number %}
                            Rollback to snapshot #{{ number }}
                      {% endblocktrans %}">
-                    <span class="fa fa-repeat"
-                          aria-hidden="true"></span>
+                    {% icon 'repeat' %}
                   </a>
                 </td>
                 <td class="centered-column">

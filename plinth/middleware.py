@@ -230,7 +230,7 @@ CONTENT_SECURITY_POLICY = CSPDict({
     # scripts).
     'script-src': "'self'",
     # Allow inline CSS and CSS files from Freedombox itself.
-    'style-src': "'self'",
+    'style-src': "'self' 'unsafe-inline'",
     # Web worker sources are allowed only from FreedomBox itself (for
     # JSXC).
     'worker-src': "'self'",

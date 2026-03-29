@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-03 02:00+0000\n"
-"PO-Revision-Date: 2026-03-08 18:48+0000\n"
+"POT-Creation-Date: 2026-03-24 00:03+0000\n"
+"PO-Revision-Date: 2026-03-15 18:09+0000\n"
 "Last-Translator: OwlGale <owlgale@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/ru/>\n"
@@ -105,15 +105,15 @@ msgstr "Язык, используемый для представления д�
 msgid "Use the language preference set in the browser"
 msgstr "Использовать языковые настройки браузера"
 
-#: plinth/menu.py:116 plinth/templates/base.html:125
+#: plinth/menu.py:116 plinth/templates/base.html:124
 msgid "Home"
 msgstr "Главная"
 
-#: plinth/menu.py:117 plinth/templates/base.html:134
+#: plinth/menu.py:117 plinth/templates/base.html:133
 msgid "Apps"
 msgstr "Приложения"
 
-#: plinth/menu.py:119 plinth/menu.py:126 plinth/templates/base.html:143
+#: plinth/menu.py:119 plinth/menu.py:126 plinth/templates/base.html:142
 msgid "System"
 msgstr "Система"
 
@@ -126,7 +126,7 @@ msgid "Data"
 msgstr "Данные"
 
 #: plinth/menu.py:128
-#: plinth/modules/networks/templates/connection_show.html:274
+#: plinth/modules/networks/templates/connection_show.html:275
 #: plinth/modules/security/__init__.py:35
 #: plinth/modules/upgrades/manifest.py:10
 msgid "Security"
@@ -172,12 +172,12 @@ msgstr "{box_name} Веб-интерфейс (Plinth)"
 msgid "Web app protected by FreedomBox"
 msgstr ""
 
-#: plinth/modules/apache/components.py:270
+#: plinth/modules/apache/components.py:234
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind}"
 msgstr "Доступ к URL {url} по tcp {kind}"
 
-#: plinth/modules/apache/components.py:273
+#: plinth/modules/apache/components.py:237
 #, python-brace-format
 msgid "Access URL {url}"
 msgstr "Доступ к URL {url}"
@@ -348,9 +348,9 @@ msgstr "Репозиторий"
 #: plinth/modules/backups/forms.py:103
 #: plinth/modules/backups/templates/backups_delete.html:17
 #: plinth/modules/ikiwiki/forms.py:15
-#: plinth/modules/networks/templates/connection_show.html:75
+#: plinth/modules/networks/templates/connection_show.html:76
 #: plinth/modules/samba/templates/samba.html:66
-#: plinth/modules/sharing/templates/sharing.html:32
+#: plinth/modules/sharing/templates/sharing.html:33
 msgid "Name"
 msgstr "Имя"
 
@@ -413,10 +413,8 @@ msgid "Passphrase"
 msgstr "Парольная фраза"
 
 #: plinth/modules/backups/forms.py:187
-#, fuzzy
-#| msgid "Passphrase; Only needed when using encryption."
 msgid "Only needed when using encryption."
-msgstr "Парольная фраза; нужна только если используется шифрование."
+msgstr "Требуется только при использовании шифрования."
 
 #: plinth/modules/backups/forms.py:190
 msgid "Confirm Passphrase"
@@ -455,44 +453,32 @@ msgstr ""
 "to/repo/</i>"
 
 #: plinth/modules/backups/forms.py:255
-#, fuzzy
-#| msgid "Authentication Mode"
 msgid "SSH Authentication Type"
-msgstr "Режим проверки подлинности"
+msgstr "Тип аутентификации SSH"
 
 #: plinth/modules/backups/forms.py:256
-#, fuzzy
-#| msgid "Authentication to remote server failed."
 msgid "Choose how to authenticate to the remote SSH server."
-msgstr "Аутентификация на удалённый сервер не прошла."
+msgstr "Выберите способ аутентификации к удаленному SSH-серверу."
 
 #: plinth/modules/backups/forms.py:258
-#, fuzzy
-#| msgid "needs authentication"
 msgid "Key-based Authentication"
-msgstr "требуется аутентификация"
+msgstr "Аутентификация по ключу"
 
 #: plinth/modules/backups/forms.py:259
-#, fuzzy
-#| msgid "Disable password authentication"
 msgid "Password-based Authentication"
-msgstr "Отключить аутентификацию по паролю"
+msgstr "Аутентификация по паролю"
 
 #: plinth/modules/backups/forms.py:261
 msgid "SSH server password"
 msgstr "Пароль SSH-сервера"
 
 #: plinth/modules/backups/forms.py:262
-#, fuzzy
-#| msgid "Disable password authentication"
 msgid "Required for password-based authentication."
-msgstr "Отключить аутентификацию по паролю"
+msgstr "Требуется для аутентификации по паролю."
 
 #: plinth/modules/backups/forms.py:275
-#, fuzzy
-#| msgid "Disable password authentication"
 msgid "SSH password is needed for password-based authentication."
-msgstr "Отключить аутентификацию по паролю"
+msgstr "Пароль SSH требуется для аутентификации по паролю."
 
 #: plinth/modules/backups/forms.py:292
 msgid "Remote backup repository already exists."
@@ -506,7 +492,7 @@ msgstr "Выберите проверенный открытый ключ SSH"
 #: plinth/modules/backups/templates/backups_repository.html:92
 #: plinth/modules/backups/templates/backups_restore.html:27
 #: plinth/modules/backups/views.py:252 plinth/modules/snapshot/manifest.py:14
-#: plinth/templates/toolbar.html:51 plinth/templates/toolbar.html:52
+#: plinth/templates/toolbar.html:52 plinth/templates/toolbar.html:53
 msgid "Restore"
 msgstr "Восстановить"
 
@@ -528,8 +514,8 @@ msgstr "Данные приложения"
 
 #: plinth/modules/backups/manifest.py:20
 #: plinth/modules/homeassistant/templates/homeassistant.html:11
-#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
-#: plinth/modules/miniflux/templates/miniflux.html:12
+#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:16
+#: plinth/modules/miniflux/templates/miniflux.html:13
 #: plinth/modules/snapshot/templates/snapshot.html:13
 #: plinth/templates/app.html:52
 msgid "Configuration"
@@ -594,85 +580,92 @@ msgstr "Имеющийся репозиторий не зашифрован."
 msgid "{box_name} storage"
 msgstr "Сохранение данных {box_name}"
 
-#: plinth/modules/backups/templates/backups.html:17
+#: plinth/modules/backups/templates/backups.html:18
 #: plinth/modules/backups/views.py:138
 msgid "Create a new backup"
 msgstr "Создать новую резервную копию"
 
-#: plinth/modules/backups/templates/backups.html:21
+#: plinth/modules/backups/templates/backups.html:22
 msgid "Create Backup"
 msgstr "Создать резервную копию"
 
-#: plinth/modules/backups/templates/backups.html:24
+#: plinth/modules/backups/templates/backups.html:25
 msgid "Upload and restore a backup archive"
 msgstr "Загрузить и восстановить архив резервной копии"
 
-#: plinth/modules/backups/templates/backups.html:28
+#: plinth/modules/backups/templates/backups.html:29
 msgid "Upload and Restore"
 msgstr "Загрузить и восстановить"
 
-#: plinth/modules/backups/templates/backups.html:31
+#: plinth/modules/backups/templates/backups.html:32
 msgid "Add a backup location"
 msgstr "Добавить местоположение для резервного копирования"
 
-#: plinth/modules/backups/templates/backups.html:35
+#: plinth/modules/backups/templates/backups.html:36
 msgid "Add Backup Location"
 msgstr "Добавить местоположение для резервного копирования"
 
-#: plinth/modules/backups/templates/backups.html:38
+#: plinth/modules/backups/templates/backups.html:39
 msgid "Add a remote backup location"
 msgstr "Создать удаленный репозиторий резервного сохранения"
 
-#: plinth/modules/backups/templates/backups.html:42
+#: plinth/modules/backups/templates/backups.html:43
 msgid "Add Remote Backup Location"
 msgstr "Добавить удаленное хранилище резервных копий"
 
-#: plinth/modules/backups/templates/backups.html:46
+#: plinth/modules/backups/templates/backups.html:47
 msgid "Existing Backups"
 msgstr "Существующие резервные копии"
 
-#: plinth/modules/backups/templates/backups_add_remote_repository.html:69
+#: plinth/modules/backups/templates/backups_add_remote_repository.html:70
 #, python-format
 msgid ""
 "The following SSH client public key must be added to the authorized keys "
 "list on the remote machine for %(box_name)s to be able to connect to the "
 "remote machine:"
 msgstr ""
+"Приведенный ниже открытый ключ SSH-клиента необходимо добавить в список "
+"авторизованных ключей на удаленном компьютере, чтобы %(box_name)s мог "
+"подключиться к нему:"
 
-#: plinth/modules/backups/templates/backups_add_remote_repository.html:86
+#: plinth/modules/backups/templates/backups_add_remote_repository.html:87
 #, python-format
 msgid ""
 "%(box_name)s service will attempt to connect using the provided password. If "
 "successful, then the public key will be automatically added to the "
 "authorized keys list, so that future connections do not need the password."
 msgstr ""
+"Служба %(box_name)s попытается установить соединение, используя указанный "
+"пароль. В случае успеха открытый ключ будет автоматически добавлен в список "
+"авторизованных ключей, благодаря чему для последующих подключений пароль не "
+"потребуется."
 
-#: plinth/modules/backups/templates/backups_add_remote_repository.html:131
-#: plinth/modules/backups/templates/backups_upload.html:28
-#: plinth/modules/backups/templates/verify_ssh_hostkey.html:27
-#: plinth/modules/diagnostics/templates/diagnostics_full.html:102
-#: plinth/modules/help/templates/help_about.html:22
+#: plinth/modules/backups/templates/backups_add_remote_repository.html:132
+#: plinth/modules/backups/templates/backups_upload.html:29
+#: plinth/modules/backups/templates/verify_ssh_hostkey.html:28
+#: plinth/modules/diagnostics/templates/diagnostics_full.html:103
+#: plinth/modules/help/templates/help_about.html:23
 #: plinth/modules/homeassistant/__init__.py:48
-#: plinth/modules/kiwix/templates/kiwix-add-package.html:26
-#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:28
+#: plinth/modules/kiwix/templates/kiwix-add-package.html:27
+#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:29
 #: plinth/modules/matrixsynapse/templates/matrix-synapse.html:95
-#: plinth/modules/names/templates/names.html:159
-#: plinth/modules/networks/templates/connection_show.html:24
-#: plinth/modules/pagekite/templates/pagekite_custom_services.html:16
-#: plinth/modules/power/templates/power_busy_warning.html:11
-#: plinth/modules/snapshot/templates/snapshot_not_supported.html:13
-#: plinth/modules/upgrades/templates/backports-firstboot.html:35
-#: plinth/modules/upgrades/templates/upgrades-dist-upgrade-confirm.html:17
-#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:45
-#: plinth/modules/upgrades/templates/upgrades_configure.html:84
-#: plinth/modules/users/templates/users_firstboot.html:34
-#: plinth/templates/app-logs.html:23 plinth/templates/app.html:31
-#: plinth/templates/messages.html:17 plinth/templates/setup.html:40
-#: plinth/templates/setup.html:69
+#: plinth/modules/names/templates/names.html:160
+#: plinth/modules/networks/templates/connection_show.html:25
+#: plinth/modules/pagekite/templates/pagekite_custom_services.html:17
+#: plinth/modules/power/templates/power_busy_warning.html:12
+#: plinth/modules/snapshot/templates/snapshot_not_supported.html:14
+#: plinth/modules/upgrades/templates/backports-firstboot.html:36
+#: plinth/modules/upgrades/templates/upgrades-dist-upgrade-confirm.html:18
+#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:46
+#: plinth/modules/upgrades/templates/upgrades_configure.html:85
+#: plinth/modules/users/templates/users_firstboot.html:35
+#: plinth/templates/app-logs.html:24 plinth/templates/app.html:31
+#: plinth/templates/messages.html:18 plinth/templates/setup.html:41
+#: plinth/templates/setup.html:70
 msgid "Caution:"
 msgstr "Предупреждение:"
 
-#: plinth/modules/backups/templates/backups_add_remote_repository.html:134
+#: plinth/modules/backups/templates/backups_add_remote_repository.html:135
 #, python-format
 msgid ""
 "The credentials for this repository are stored on your %(box_name)s. <br /> "
@@ -683,7 +676,7 @@ msgstr ""
 "Чтобы провести резервное сохранение на %(box_name)s, вы должны ввести данные "
 "для входа SSH и, если выбрано, парольную фразу шифрования."
 
-#: plinth/modules/backups/templates/backups_add_remote_repository.html:144
+#: plinth/modules/backups/templates/backups_add_remote_repository.html:145
 msgid "Create Location"
 msgstr "Создание расположения"
 
@@ -705,7 +698,7 @@ msgstr "Время"
 msgid "Delete Archive %(name)s"
 msgstr "Удалить архив %(name)s"
 
-#: plinth/modules/backups/templates/backups_repository.html:22
+#: plinth/modules/backups/templates/backups_repository.html:21
 msgid "This repository is encrypted"
 msgstr "Репозиторий зашифрован"
 
@@ -730,7 +723,7 @@ msgstr ""
 msgid "Download"
 msgstr "Загрузка"
 
-#: plinth/modules/backups/templates/backups_repository.html:114
+#: plinth/modules/backups/templates/backups_repository.html:113
 msgid "No archives currently exist."
 msgstr "В настоящее время архивов нет."
 
@@ -755,7 +748,7 @@ msgstr "Удаление местоположения"
 msgid "Restore data from"
 msgstr "Восстановить данные из"
 
-#: plinth/modules/backups/templates/backups_upload.html:17
+#: plinth/modules/backups/templates/backups_upload.html:18
 #, python-format
 msgid ""
 "Upload a backup file downloaded from another %(box_name)s to restore its "
@@ -766,7 +759,7 @@ msgstr ""
 "восстановления его содержимого. Вы можете выбрать приложения для "
 "восстановления после загрузки файла резервной копии."
 
-#: plinth/modules/backups/templates/backups_upload.html:31
+#: plinth/modules/backups/templates/backups_upload.html:32
 #, python-format
 msgid ""
 "You have %(max_filesize)s available to restore a backup. Exceeding this "
@@ -775,11 +768,11 @@ msgstr ""
 "Вы имеете %(max_filesize)s для резервного сохранения. Превышение этого "
 "лимита может сделать ваш %(box_name)s неработоспособным."
 
-#: plinth/modules/backups/templates/backups_upload.html:45
+#: plinth/modules/backups/templates/backups_upload.html:46
 msgid "Upload file"
 msgstr "Загрузить файл"
 
-#: plinth/modules/backups/templates/verify_ssh_hostkey.html:18
+#: plinth/modules/backups/templates/verify_ssh_hostkey.html:19
 #, python-format
 msgid ""
 "Could not reach SSH host %(hostname)s. Please verify that the host is up and "
@@ -788,7 +781,7 @@ msgstr ""
 "Невозможно соединиться с SSH-хостом %(hostname)s. Пожалуйста, убедитесь, что "
 "хост включён и принимает соединения."
 
-#: plinth/modules/backups/templates/verify_ssh_hostkey.html:34
+#: plinth/modules/backups/templates/verify_ssh_hostkey.html:35
 #, python-format
 msgid ""
 "The authenticity of SSH host %(hostname)s could not be established. The host "
@@ -797,11 +790,11 @@ msgstr ""
 "Невозможно подтвердить аутентичность SSH-хоста %(hostname)s. Хост предлагает "
 "следующие SSH-публичные ключи. Пожалуйста, подтвердите один из них."
 
-#: plinth/modules/backups/templates/verify_ssh_hostkey.html:46
+#: plinth/modules/backups/templates/verify_ssh_hostkey.html:47
 msgid "How to verify?"
 msgstr "Как проверить?"
 
-#: plinth/modules/backups/templates/verify_ssh_hostkey.html:51
+#: plinth/modules/backups/templates/verify_ssh_hostkey.html:52
 msgid ""
 "Run the following command on the SSH host machine. The output should match "
 "one of the provided options. You can also use DSA, ECDSA, Ed25519 etc. "
@@ -811,7 +804,7 @@ msgstr ""
 "одному из предложенных вариантов. Вы также можете использовать DSA, ECDSA, "
 "Ed25519 и т.д. вместо RSA, выбрав соответствующий файл."
 
-#: plinth/modules/backups/templates/verify_ssh_hostkey.html:66
+#: plinth/modules/backups/templates/verify_ssh_hostkey.html:67
 msgid "Verify Host"
 msgstr "Проверить хост"
 
@@ -824,10 +817,8 @@ msgid "Authentication to remote server failed."
 msgstr "Аутентификация на удалённый сервер не прошла."
 
 #: plinth/modules/backups/views.py:50
-#, fuzzy
-#| msgid "Error establishing connection to server: {}"
 msgid "Error establishing connection to server: {} {} {}"
-msgstr "Ошибка при установке соединения с сервером: {}"
+msgstr "Ошибка при установке соединения с сервером: {} {} {}"
 
 #: plinth/modules/backups/views.py:82
 msgid "Backup schedule updated."
@@ -921,7 +912,7 @@ msgstr "Размонтирование не удалось!"
 msgid "Mounting failed"
 msgstr "Монтирование не удалась"
 
-#: plinth/modules/bepasty/__init__.py:17
+#: plinth/modules/bepasty/__init__.py:19
 msgid ""
 "bepasty is a web application that allows large files to be uploaded and "
 "shared. Text and code snippets can also be pasted and shared. Text, image, "
@@ -934,7 +925,7 @@ msgstr ""
 "просмотреть в браузере. Для общих файлов можно установить срок годности по "
 "истечении определенного периода времени."
 
-#: plinth/modules/bepasty/__init__.py:21
+#: plinth/modules/bepasty/__init__.py:23
 msgid ""
 "bepasty does not use usernames for login. It only uses passwords. For each "
 "password, a set of permissions can be selected. Once you have created a "
@@ -946,7 +937,7 @@ msgstr ""
 "пароль, вы можете поделиться им с пользователями, у которых должны быть "
 "соответствующие разрешения."
 
-#: plinth/modules/bepasty/__init__.py:25
+#: plinth/modules/bepasty/__init__.py:27
 msgid ""
 "You can also create multiple passwords with the same set of privileges, and "
 "distribute them to different people or groups. This will allow you to later "
@@ -957,35 +948,35 @@ msgstr ""
 "раздать их разным людям или группам. Это позволит вам позже отозвать доступ "
 "для отдельного человека или группы, удалив их пароль из списка."
 
-#: plinth/modules/bepasty/__init__.py:32 plinth/modules/bepasty/__init__.py:41
+#: plinth/modules/bepasty/__init__.py:34 plinth/modules/bepasty/__init__.py:43
 msgid "Read a file, if a web link to the file is available"
 msgstr "Прочитать файл, если имеется веб-ссылка на файл"
 
-#: plinth/modules/bepasty/__init__.py:33
+#: plinth/modules/bepasty/__init__.py:35
 msgid "Create or upload files"
 msgstr "Создавать или загружать файлы"
 
-#: plinth/modules/bepasty/__init__.py:34
+#: plinth/modules/bepasty/__init__.py:36
 msgid "List all files and their web links"
 msgstr "Список всех файлов и их веб-ссылок"
 
-#: plinth/modules/bepasty/__init__.py:35
+#: plinth/modules/bepasty/__init__.py:37
 msgid "Delete files"
 msgstr "Удалить файлы"
 
-#: plinth/modules/bepasty/__init__.py:36
+#: plinth/modules/bepasty/__init__.py:38
 msgid "Administer files: lock/unlock files"
 msgstr "Администрирование файлов: блокировка/разблокировка файлов"
 
-#: plinth/modules/bepasty/__init__.py:40
+#: plinth/modules/bepasty/__init__.py:42
 msgid "None, password is always required"
 msgstr "Нет, пароль требуется всегда"
 
-#: plinth/modules/bepasty/__init__.py:42
+#: plinth/modules/bepasty/__init__.py:44
 msgid "List and read all files"
 msgstr "Список и чтение всех файлов"
 
-#: plinth/modules/bepasty/__init__.py:57 plinth/modules/bepasty/manifest.py:6
+#: plinth/modules/bepasty/__init__.py:59 plinth/modules/bepasty/manifest.py:6
 msgid "bepasty"
 msgstr "bepasty"
 
@@ -998,7 +989,7 @@ msgid "Permissions for anonymous users, who have not provided a password."
 msgstr "Разрешения для анонимных пользователей, не предоставивших пароль."
 
 #: plinth/modules/bepasty/forms.py:27
-#: plinth/modules/bepasty/templates/bepasty.html:30
+#: plinth/modules/bepasty/templates/bepasty.html:31
 #: plinth/modules/users/forms.py:125
 msgid "Permissions"
 msgstr "Разрешения"
@@ -1011,7 +1002,7 @@ msgstr ""
 "разрешения."
 
 #: plinth/modules/bepasty/forms.py:33
-#: plinth/modules/bepasty/templates/bepasty.html:31
+#: plinth/modules/bepasty/templates/bepasty.html:32
 msgid "Comment"
 msgstr "Комментарий"
 
@@ -1031,20 +1022,20 @@ msgstr "Обмен файлами"
 msgid "Pastebin"
 msgstr "Pastebin"
 
-#: plinth/modules/bepasty/templates/bepasty.html:12
+#: plinth/modules/bepasty/templates/bepasty.html:13
 msgid "Manage Passwords"
 msgstr "Управление паролями"
 
-#: plinth/modules/bepasty/templates/bepasty.html:16
-#: plinth/modules/bepasty/templates/bepasty.html:18
+#: plinth/modules/bepasty/templates/bepasty.html:17
+#: plinth/modules/bepasty/templates/bepasty.html:19
 msgid "Add password"
 msgstr "Добавить пароль"
 
-#: plinth/modules/bepasty/templates/bepasty.html:23
+#: plinth/modules/bepasty/templates/bepasty.html:24
 msgid "No passwords currently configured."
 msgstr "В настоящее время пароли не настроены."
 
-#: plinth/modules/bepasty/templates/bepasty.html:29
+#: plinth/modules/bepasty/templates/bepasty.html:30
 #: plinth/modules/dynamicdns/forms.py:85 plinth/modules/miniflux/forms.py:14
 #: plinth/modules/networks/forms.py:282 plinth/modules/shadowsocks/forms.py:32
 #: plinth/modules/shadowsocksserver/forms.py:37
@@ -1081,14 +1072,14 @@ msgstr "Список"
 #: plinth/modules/featherwiki/templates/featherwiki_delete.html:34
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:86
 #: plinth/modules/names/templates/names-domain-delete.html:22
-#: plinth/modules/names/templates/names.html:48
-#: plinth/modules/networks/templates/connection_show.html:60
+#: plinth/modules/names/templates/names.html:49
+#: plinth/modules/networks/templates/connection_show.html:61
 #: plinth/modules/samba/templates/samba.html:154
 #: plinth/modules/tiddlywiki/templates/tiddlywiki_delete.html:34
 #: plinth/modules/wireguard/templates/wireguard_delete_client.html:24
 #: plinth/modules/wireguard/templates/wireguard_delete_server.html:35
-#: plinth/modules/wireguard/templates/wireguard_show_client.html:81
-#: plinth/modules/wireguard/templates/wireguard_show_server.html:89
+#: plinth/modules/wireguard/templates/wireguard_show_client.html:82
+#: plinth/modules/wireguard/templates/wireguard_show_server.html:90
 msgid "Delete"
 msgstr "Удалить"
 
@@ -1164,7 +1155,7 @@ msgstr "DNS"
 #: plinth/modules/bind/manifest.py:17 plinth/modules/mumble/manifest.py:67
 #: plinth/modules/radicale/manifest.py:91
 #: plinth/modules/shadowsocks/forms.py:24
-#: plinth/modules/wireguard/templates/wireguard.html:13
+#: plinth/modules/wireguard/templates/wireguard.html:14
 msgid "Server"
 msgstr "Сервер"
 
@@ -1180,10 +1171,10 @@ msgstr "Обслуживание доменов"
 #: plinth/modules/email/templates/email-dns.html:25
 #: plinth/modules/email/templates/email-dns.html:78
 #: plinth/modules/ikiwiki/forms.py:12
-#: plinth/modules/names/templates/names.html:18
-#: plinth/modules/networks/templates/connection_show.html:95
+#: plinth/modules/names/templates/names.html:19
+#: plinth/modules/networks/templates/connection_show.html:96
 #: plinth/modules/samba/templates/samba.html:65
-#: plinth/modules/storage/templates/storage.html:26
+#: plinth/modules/storage/templates/storage.html:27
 msgid "Type"
 msgstr "Тип"
 
@@ -1314,25 +1305,25 @@ msgstr ""
 msgid "Delete %(name)s"
 msgstr "Удаление %(name)s"
 
-#: plinth/modules/calibre/templates/calibre.html:11
+#: plinth/modules/calibre/templates/calibre.html:12
 msgid "Manage Libraries"
 msgstr "Управление библиотеками"
 
-#: plinth/modules/calibre/templates/calibre.html:15
-#: plinth/modules/calibre/templates/calibre.html:17
+#: plinth/modules/calibre/templates/calibre.html:16
+#: plinth/modules/calibre/templates/calibre.html:18
 msgid "Create Library"
 msgstr "Создать библиотеку"
 
-#: plinth/modules/calibre/templates/calibre.html:24
+#: plinth/modules/calibre/templates/calibre.html:25
 msgid "No libraries available."
 msgstr "Нет доступных библиотек."
 
-#: plinth/modules/calibre/templates/calibre.html:31
+#: plinth/modules/calibre/templates/calibre.html:32
 #, python-format
 msgid "Go to library %(library)s"
 msgstr "Перейти в библиотеку %(library)s"
 
-#: plinth/modules/calibre/templates/calibre.html:37
+#: plinth/modules/calibre/templates/calibre.html:38
 #, python-format
 msgid "Delete library %(library)s"
 msgstr "Удалить библиотеку %(library)s"
@@ -1417,11 +1408,11 @@ msgid "Networking"
 msgstr "Сеть"
 
 #: plinth/modules/cockpit/manifest.py:27
-#: plinth/modules/names/templates/names.html:20
+#: plinth/modules/names/templates/names.html:21
 msgid "Services"
 msgstr "Службы"
 
-#: plinth/modules/cockpit/manifest.py:28 plinth/templates/app-logs.html:9
+#: plinth/modules/cockpit/manifest.py:28 plinth/templates/app-logs.html:10
 msgid "Logs"
 msgstr "Журналы"
 
@@ -1444,8 +1435,8 @@ msgid "General Configuration"
 msgstr "Общие настройки"
 
 #: plinth/modules/config/__init__.py:47
-#: plinth/modules/names/templates/names.html:35
-#: plinth/modules/names/templates/names.html:71
+#: plinth/modules/names/templates/names.html:36
+#: plinth/modules/names/templates/names.html:72
 #: plinth/modules/snapshot/views.py:32 plinth/templates/index.html:38
 msgid "Configure"
 msgstr "Настроить"
@@ -1524,7 +1515,7 @@ msgstr ""
 "отлададочной информацию от различных служб"
 
 #: plinth/modules/config/manifest.py:8
-#: plinth/modules/help/templates/help_about.html:100
+#: plinth/modules/help/templates/help_about.html:101
 msgid "Homepage"
 msgstr "Домашняя страница"
 
@@ -1851,7 +1842,7 @@ msgid "App: %(app_name)s"
 msgstr "Приложение: %(app_name)s"
 
 #: plinth/modules/diagnostics/templates/diagnostics_app.html:21
-#: plinth/modules/diagnostics/templates/diagnostics_full.html:85
+#: plinth/modules/diagnostics/templates/diagnostics_full.html:86
 msgid "Try to repair"
 msgstr "Попробуйте отремонтировать"
 
@@ -1863,44 +1854,44 @@ msgstr "Это приложение не поддерживает диагнос
 msgid "Run Diagnostics"
 msgstr "Запустить диагностику"
 
-#: plinth/modules/diagnostics/templates/diagnostics_full.html:17
+#: plinth/modules/diagnostics/templates/diagnostics_full.html:18
 msgid "Re-run Diagnostics"
 msgstr "Повторный запуск диагностики"
 
-#: plinth/modules/diagnostics/templates/diagnostics_full.html:21
+#: plinth/modules/diagnostics/templates/diagnostics_full.html:22
 msgid "Diagnostics test is currently running"
 msgstr "В настоящее время запущен диагностический тест"
 
-#: plinth/modules/diagnostics/templates/diagnostics_full.html:34
+#: plinth/modules/diagnostics/templates/diagnostics_full.html:35
 msgid "Results"
 msgstr "Результаты"
 
-#: plinth/modules/diagnostics/templates/diagnostics_full.html:53
+#: plinth/modules/diagnostics/templates/diagnostics_full.html:54
 #, python-format
 msgid "%(number)s passed"
 msgstr "%(number)s удачно"
 
-#: plinth/modules/diagnostics/templates/diagnostics_full.html:57
+#: plinth/modules/diagnostics/templates/diagnostics_full.html:58
 #, python-format
 msgid "%(number)s failed"
 msgstr "%(number)s не удачно"
 
-#: plinth/modules/diagnostics/templates/diagnostics_full.html:61
+#: plinth/modules/diagnostics/templates/diagnostics_full.html:62
 #, python-format
 msgid "%(number)s warnings"
 msgstr "%(number)s предупреждение"
 
-#: plinth/modules/diagnostics/templates/diagnostics_full.html:65
+#: plinth/modules/diagnostics/templates/diagnostics_full.html:66
 #, python-format
 msgid "%(number)s errors"
 msgstr "%(number)s ошибка"
 
-#: plinth/modules/diagnostics/templates/diagnostics_full.html:69
+#: plinth/modules/diagnostics/templates/diagnostics_full.html:70
 #, python-format
 msgid "%(number)s skipped"
 msgstr "%(number)s пропущено"
 
-#: plinth/modules/diagnostics/templates/diagnostics_full.html:111
+#: plinth/modules/diagnostics/templates/diagnostics_full.html:112
 msgid "Running..."
 msgstr "Запущен..."
 
@@ -1909,7 +1900,7 @@ msgid "Test"
 msgstr "Тест"
 
 #: plinth/modules/diagnostics/templates/diagnostics_results.html:12
-#: plinth/modules/dynamicdns/templates/dynamicdns.html:27
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:28
 msgid "Result"
 msgstr "Результат"
 
@@ -2079,7 +2070,7 @@ msgid "Use HTTP basic authentication"
 msgstr "Использовать базовую аутентификацию HTTP"
 
 #: plinth/modules/dynamicdns/forms.py:76 plinth/modules/names/forms.py:107
-#: plinth/modules/names/templates/names.html:19
+#: plinth/modules/names/templates/names.html:20
 msgid "Domain Name"
 msgstr "Доменное имя"
 
@@ -2110,7 +2101,7 @@ msgid "Domain already exists."
 msgstr "Домен уже существует."
 
 #: plinth/modules/dynamicdns/manifest.py:17
-#: plinth/modules/dynamicdns/templates/dynamicdns.html:25
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:26
 #: plinth/modules/email/templates/email-dns.html:22
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:24
 #: plinth/modules/mediawiki/forms.py:64 plinth/modules/sogo/forms.py:18
@@ -2130,56 +2121,56 @@ msgstr "Нужен публичный IP"
 msgid "App configurations will be updated."
 msgstr "Конфигурации приложения будут обновлены."
 
-#: plinth/modules/dynamicdns/templates/dynamicdns.html:10
-#: plinth/modules/email/templates/email.html:20
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:11
+#: plinth/modules/email/templates/email.html:21
 #: plinth/modules/names/manifest.py:11
-#: plinth/modules/names/templates/names.html:12
+#: plinth/modules/names/templates/names.html:13
 msgid "Domains"
 msgstr "Домены"
 
-#: plinth/modules/dynamicdns/templates/dynamicdns.html:14
-#: plinth/modules/dynamicdns/templates/dynamicdns.html:16
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:15
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:17
 msgid "Add Domain"
 msgstr "Добавить домен"
 
-#: plinth/modules/dynamicdns/templates/dynamicdns.html:26
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:27
 msgid "Last update"
 msgstr "Последнее обновление"
 
-#: plinth/modules/dynamicdns/templates/dynamicdns.html:28
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:29
 msgid "IP Address"
 msgstr "IP-адреса"
 
-#: plinth/modules/dynamicdns/templates/dynamicdns.html:29
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:30
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:27
-#: plinth/modules/storage/templates/storage.html:28
+#: plinth/modules/storage/templates/storage.html:29
 msgid "Actions"
 msgstr "Действия"
 
-#: plinth/modules/dynamicdns/templates/dynamicdns.html:37
-#: plinth/modules/dynamicdns/templates/dynamicdns.html:72
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:38
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:73
 #, python-format
 msgid "Edit domain %(domain)s"
 msgstr "Редактировать домен %(domain)s"
 
-#: plinth/modules/dynamicdns/templates/dynamicdns.html:47
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:48
 msgid "Not yet"
 msgstr "Ещё нет"
 
-#: plinth/modules/dynamicdns/templates/dynamicdns.html:53
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:54
 msgid "Success"
 msgstr "Успешно"
 
-#: plinth/modules/dynamicdns/templates/dynamicdns.html:59
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:60
 msgid "Failed"
 msgstr "Неудачно"
 
-#: plinth/modules/dynamicdns/templates/dynamicdns.html:79
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:80
 #, python-format
 msgid "Delete domain %(domain)s"
 msgstr "Удалить домен %(domain)s"
 
-#: plinth/modules/dynamicdns/templates/dynamicdns.html:91
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:92
 msgid "No domains configured."
 msgstr "Домены не настроены."
 
@@ -2367,22 +2358,22 @@ msgstr "Видео чат"
 msgid "XMPP"
 msgstr "XMPP"
 
-#: plinth/modules/ejabberd/templates/ejabberd.html:18
+#: plinth/modules/ejabberd/templates/ejabberd.html:17
 #: plinth/modules/firewall/manifest.py:10
 #: plinth/modules/firewall/templates/firewall.html:16
 #: plinth/modules/firewall/templates/firewall.html:22
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:17
 #: plinth/modules/matrixsynapse/templates/matrix-synapse.html:17
-#: plinth/modules/networks/templates/connection_show.html:258
+#: plinth/modules/networks/templates/connection_show.html:259
 #: plinth/modules/samba/templates/samba.html:67
-#: plinth/modules/tor/templates/tor.html:24
-#: plinth/modules/upgrades/templates/upgrades_configure.html:19
-#: plinth/modules/wireguard/templates/wireguard_show_client.html:52
-#: plinth/modules/wireguard/templates/wireguard_show_server.html:58
+#: plinth/modules/tor/templates/tor.html:23
+#: plinth/modules/upgrades/templates/upgrades_configure.html:20
+#: plinth/modules/wireguard/templates/wireguard_show_client.html:53
+#: plinth/modules/wireguard/templates/wireguard_show_server.html:59
 msgid "Status"
 msgstr "Статус"
 
-#: plinth/modules/ejabberd/templates/ejabberd.html:23
+#: plinth/modules/ejabberd/templates/ejabberd.html:22
 #, python-format
 msgid ""
 "Your XMPP server domain is set to <b>%(domain_name)s</b>. User IDs will look "
@@ -2394,7 +2385,7 @@ msgstr ""
 "пользователя@%(domain_name)s</i>. Вы можете настроить свой домен на странице "
 "системы <a href=\"%(names_url)s\">Name Services</a>."
 
-#: plinth/modules/ejabberd/templates/ejabberd.html:30
+#: plinth/modules/ejabberd/templates/ejabberd.html:29
 #, python-format
 msgid ""
 "Your XMPP server domain is not set. You can setup your domain on the system "
@@ -2540,7 +2531,7 @@ msgid "Spam control"
 msgstr "Защита от спама"
 
 #: plinth/modules/email/templates/email-aliases.html:13
-#: plinth/modules/email/templates/email.html:15
+#: plinth/modules/email/templates/email.html:16
 msgid "Manage Aliases"
 msgstr "Управление псевдонимами"
 
@@ -2553,7 +2544,7 @@ msgid "Create a new email alias"
 msgstr "Создать новый псевдоним электронной почты"
 
 #: plinth/modules/email/templates/email-aliases.html:34
-#: plinth/modules/names/templates/names.html:78
+#: plinth/modules/names/templates/names.html:79
 msgid "Add"
 msgstr "Добавить"
 
@@ -2633,11 +2624,11 @@ msgstr ""
 msgid "Host"
 msgstr "Хост"
 
-#: plinth/modules/email/templates/email.html:10
+#: plinth/modules/email/templates/email.html:11
 msgid "Manage Spam"
 msgstr "Управление спамом"
 
-#: plinth/modules/email/templates/email.html:23
+#: plinth/modules/email/templates/email.html:24
 msgid ""
 "The following domains are configured. View details to see the list of DNS "
 "entries to be made for the domain."
@@ -2645,7 +2636,7 @@ msgstr ""
 "Настраиваются следующие домены. Посмотрите подробности, чтобы увидеть список "
 "записей DNS домена."
 
-#: plinth/modules/email/templates/email.html:35
+#: plinth/modules/email/templates/email.html:36
 #, python-format
 msgid "View domain: %(domain)s"
 msgstr "Просмотр домена: %(domain)s"
@@ -2743,7 +2734,7 @@ msgid "Upload an existing Feather Wiki file from this computer."
 msgstr "Загрузите существующий файл Feather Wiki с этого компьютера."
 
 #: plinth/modules/featherwiki/manifest.py:18
-#: plinth/modules/help/templates/help_about.html:108
+#: plinth/modules/help/templates/help_about.html:109
 #: plinth/modules/ikiwiki/manifest.py:15
 #: plinth/modules/mediawiki/manifest.py:25
 #: plinth/modules/tiddlywiki/manifest.py:19
@@ -2775,46 +2766,46 @@ msgstr "Куайн"
 msgid "Non-Debian"
 msgstr "Не Debian"
 
-#: plinth/modules/featherwiki/templates/featherwiki_configure.html:12
-#: plinth/modules/tiddlywiki/templates/tiddlywiki_configure.html:12
+#: plinth/modules/featherwiki/templates/featherwiki_configure.html:13
+#: plinth/modules/tiddlywiki/templates/tiddlywiki_configure.html:13
 msgid "Manage Wikis"
 msgstr "Управление википроектами"
 
-#: plinth/modules/featherwiki/templates/featherwiki_configure.html:16
-#: plinth/modules/featherwiki/templates/featherwiki_configure.html:18
+#: plinth/modules/featherwiki/templates/featherwiki_configure.html:17
+#: plinth/modules/featherwiki/templates/featherwiki_configure.html:19
 #: plinth/modules/featherwiki/views.py:47
-#: plinth/modules/tiddlywiki/templates/tiddlywiki_configure.html:16
-#: plinth/modules/tiddlywiki/templates/tiddlywiki_configure.html:18
+#: plinth/modules/tiddlywiki/templates/tiddlywiki_configure.html:17
+#: plinth/modules/tiddlywiki/templates/tiddlywiki_configure.html:19
 #: plinth/modules/tiddlywiki/views.py:47
 msgid "Create Wiki"
 msgstr "Создать вики"
 
-#: plinth/modules/featherwiki/templates/featherwiki_configure.html:21
-#: plinth/modules/featherwiki/templates/featherwiki_configure.html:23
-#: plinth/modules/tiddlywiki/templates/tiddlywiki_configure.html:21
-#: plinth/modules/tiddlywiki/templates/tiddlywiki_configure.html:23
+#: plinth/modules/featherwiki/templates/featherwiki_configure.html:22
+#: plinth/modules/featherwiki/templates/featherwiki_configure.html:24
+#: plinth/modules/tiddlywiki/templates/tiddlywiki_configure.html:22
+#: plinth/modules/tiddlywiki/templates/tiddlywiki_configure.html:24
 msgid "Upload Wiki"
 msgstr "Загрузить Вики"
 
-#: plinth/modules/featherwiki/templates/featherwiki_configure.html:30
-#: plinth/modules/tiddlywiki/templates/tiddlywiki_configure.html:30
+#: plinth/modules/featherwiki/templates/featherwiki_configure.html:31
+#: plinth/modules/tiddlywiki/templates/tiddlywiki_configure.html:31
 msgid "No wikis available."
 msgstr "Вики-сайты отсутствуют."
 
-#: plinth/modules/featherwiki/templates/featherwiki_configure.html:36
-#: plinth/modules/tiddlywiki/templates/tiddlywiki_configure.html:36
+#: plinth/modules/featherwiki/templates/featherwiki_configure.html:37
+#: plinth/modules/tiddlywiki/templates/tiddlywiki_configure.html:37
 #, python-format
 msgid "Go to wiki %(wiki)s"
 msgstr "Перейти к вики %(wiki)s"
 
-#: plinth/modules/featherwiki/templates/featherwiki_configure.html:43
-#: plinth/modules/tiddlywiki/templates/tiddlywiki_configure.html:43
+#: plinth/modules/featherwiki/templates/featherwiki_configure.html:44
+#: plinth/modules/tiddlywiki/templates/tiddlywiki_configure.html:44
 #, python-format
 msgid "Rename wiki %(wiki)s"
 msgstr "Переименовать вики %(wiki)s"
 
-#: plinth/modules/featherwiki/templates/featherwiki_configure.html:50
-#: plinth/modules/tiddlywiki/templates/tiddlywiki_configure.html:50
+#: plinth/modules/featherwiki/templates/featherwiki_configure.html:51
+#: plinth/modules/tiddlywiki/templates/tiddlywiki_configure.html:51
 #, python-format
 msgid "Delete wiki %(wiki)s"
 msgstr "Удалить вики %(wiki)s"
@@ -2932,7 +2923,7 @@ msgid "Port {name} ({details}) unavailable for external networks"
 msgstr "Порт {name} ({details}) недоступен для внешних сетей"
 
 #: plinth/modules/firewall/manifest.py:10
-#: plinth/modules/tor/templates/tor.html:25
+#: plinth/modules/tor/templates/tor.html:24
 msgid "Ports"
 msgstr "Порты"
 
@@ -2990,7 +2981,7 @@ msgstr ""
 
 #: plinth/modules/firewall/templates/firewall.html:88
 #: plinth/modules/networks/templates/networks_configuration.html:22
-#: plinth/modules/storage/templates/storage.html:93
+#: plinth/modules/storage/templates/storage.html:94
 msgid "Advanced"
 msgstr "Дополнительные"
 
@@ -3039,11 +3030,11 @@ msgstr ""
 msgid "Firstboot Wizard Secret"
 msgstr "Ассистент при первой загрузке"
 
-#: plinth/modules/first_boot/templates/firstboot_complete.html:14
+#: plinth/modules/first_boot/templates/firstboot_complete.html:15
 msgid "Setup Complete! Next Steps:"
 msgstr "Настройка завершена! Следующие шаги:"
 
-#: plinth/modules/first_boot/templates/firstboot_complete.html:21
+#: plinth/modules/first_boot/templates/firstboot_complete.html:22
 #, python-format
 msgid ""
 "Automatic <a href=\"%(upgrades_url)s\" target=\"_blank\">software update</a> "
@@ -3053,12 +3044,12 @@ msgstr ""
 "программного обеспечения</a> запускается ежедневно по умолчанию. В первый "
 "раз запустите его вручную сейчас."
 
-#: plinth/modules/first_boot/templates/firstboot_complete.html:30
-#: plinth/modules/upgrades/templates/upgrades_configure.html:119
+#: plinth/modules/first_boot/templates/firstboot_complete.html:31
+#: plinth/modules/upgrades/templates/upgrades_configure.html:120
 msgid "Update now"
 msgstr "Обновить сейчас"
 
-#: plinth/modules/first_boot/templates/firstboot_complete.html:39
+#: plinth/modules/first_boot/templates/firstboot_complete.html:40
 #, python-format
 msgid ""
 "Review <a href=\"%(privacy_url)s\" target=\"_blank\">privacy options</a>."
@@ -3066,7 +3057,7 @@ msgstr ""
 "Просмотрите <a href=\"%(privacy_url)s\" target=\"_blank\">опции "
 "конфиденциальности</a>."
 
-#: plinth/modules/first_boot/templates/firstboot_complete.html:49
+#: plinth/modules/first_boot/templates/firstboot_complete.html:50
 #, python-format
 msgid ""
 "Review and setup <a href=\"%(networks_url)s\" target=\"_blank\">network "
@@ -3076,13 +3067,13 @@ msgstr ""
 "target=\"_blank\">сетевые подключения</a>. Измените пароль Wi-Fi по "
 "умолчанию, если это необходимо."
 
-#: plinth/modules/first_boot/templates/firstboot_complete.html:60
+#: plinth/modules/first_boot/templates/firstboot_complete.html:61
 #, python-format
 msgid ""
 "Configure a <a href=\"%(names_url)s\" target=\"_blank\">domain name</a>."
 msgstr "Настройте <a href=\"%(names_url)s\" target=\"_blank\">имя домена</a>."
 
-#: plinth/modules/first_boot/templates/firstboot_complete.html:70
+#: plinth/modules/first_boot/templates/firstboot_complete.html:71
 #, python-format
 msgid ""
 "Configure and schedule remote <a href=\"%(backups_url)s\" "
@@ -3091,7 +3082,7 @@ msgstr ""
 "Настройка и планирование удаленных <a href=\"%(backups_url)s\" "
 "target=\"_blank\">резервных копий</a>."
 
-#: plinth/modules/first_boot/templates/firstboot_complete.html:81
+#: plinth/modules/first_boot/templates/firstboot_complete.html:82
 #, python-format
 msgid ""
 "Put %(box_name)s to use by installing <a href=\"%(apps_url)s\" "
@@ -3213,25 +3204,25 @@ msgstr "Контроль версий"
 msgid "Developer tool"
 msgstr "Инструмент разработчика"
 
-#: plinth/modules/gitweb/templates/gitweb_configure.html:13
+#: plinth/modules/gitweb/templates/gitweb_configure.html:14
 msgid "Manage Repositories"
 msgstr "Управление репозиториями"
 
-#: plinth/modules/gitweb/templates/gitweb_configure.html:17
-#: plinth/modules/gitweb/templates/gitweb_configure.html:19
+#: plinth/modules/gitweb/templates/gitweb_configure.html:18
+#: plinth/modules/gitweb/templates/gitweb_configure.html:20
 msgid "Create repository"
 msgstr "Создать репозиторий"
 
-#: plinth/modules/gitweb/templates/gitweb_configure.html:26
+#: plinth/modules/gitweb/templates/gitweb_configure.html:27
 msgid "No repositories available."
 msgstr "Нет доступных репозиториев."
 
-#: plinth/modules/gitweb/templates/gitweb_configure.html:35
+#: plinth/modules/gitweb/templates/gitweb_configure.html:36
 #, python-format
 msgid "Go to repository %(repo.name)s"
 msgstr "Перейти в репозиторий %(repo.name)s"
 
-#: plinth/modules/gitweb/templates/gitweb_configure.html:42
+#: plinth/modules/gitweb/templates/gitweb_configure.html:43
 msgid "Cloning…"
 msgstr "Клонирование…"
 
@@ -3336,70 +3327,70 @@ msgstr "Графические приложения"
 
 #: plinth/modules/help/__init__.py:33
 #: plinth/modules/help/templates/help_index.html:14
-#: plinth/templates/help-menu.html:8 plinth/templates/help-menu.html:14
+#: plinth/templates/help-menu.html:9 plinth/templates/help-menu.html:15
 msgid "Help"
 msgstr "Справка"
 
 #: plinth/modules/help/__init__.py:37
-#: plinth/modules/help/templates/help_about.html:104
-#: plinth/templates/help-menu.html:20 plinth/templates/help-menu.html:21
+#: plinth/modules/help/templates/help_about.html:105
+#: plinth/templates/help-menu.html:21 plinth/templates/help-menu.html:22
 msgctxt "User guide"
 msgid "Manual"
 msgstr "Руководство"
 
 #: plinth/modules/help/__init__.py:41
 #: plinth/modules/help/templates/help_support.html:9
-#: plinth/modules/help/views.py:91 plinth/templates/help-menu.html:27
-#: plinth/templates/help-menu.html:28
+#: plinth/modules/help/views.py:91 plinth/templates/help-menu.html:28
+#: plinth/templates/help-menu.html:29
 msgid "Get Support"
 msgstr "Получить помощь"
 
 #: plinth/modules/help/__init__.py:45
 #: plinth/modules/help/templates/help_feedback.html:9
-#: plinth/modules/help/views.py:85 plinth/templates/help-menu.html:33
-#: plinth/templates/help-menu.html:34
+#: plinth/modules/help/views.py:85 plinth/templates/help-menu.html:34
+#: plinth/templates/help-menu.html:35
 msgid "Submit Feedback"
 msgstr "Отправить отзыв"
 
 #: plinth/modules/help/__init__.py:49
-#: plinth/modules/help/templates/help_about.html:113
-#: plinth/modules/help/templates/help_contribute.html:9
-#: plinth/modules/help/views.py:74 plinth/templates/help-menu.html:39
-#: plinth/templates/help-menu.html:40
+#: plinth/modules/help/templates/help_about.html:114
+#: plinth/modules/help/templates/help_contribute.html:10
+#: plinth/modules/help/views.py:74 plinth/templates/help-menu.html:40
+#: plinth/templates/help-menu.html:41
 msgid "Contribute"
 msgstr "Помочь проекту"
 
-#: plinth/modules/help/__init__.py:53 plinth/templates/base.html:223
-#: plinth/templates/base.html:226 plinth/templates/help-menu.html:46
-#: plinth/templates/help-menu.html:47 plinth/templates/index.html:96
+#: plinth/modules/help/__init__.py:53 plinth/templates/base.html:222
+#: plinth/templates/base.html:225 plinth/templates/help-menu.html:47
+#: plinth/templates/help-menu.html:48 plinth/templates/index.html:96
 msgid "About"
 msgstr "О проекте"
 
-#: plinth/modules/help/templates/help_about.html:25
-#: plinth/templates/messages.html:23
+#: plinth/modules/help/templates/help_about.html:26
+#: plinth/templates/messages.html:24
 msgid "Success:"
 msgstr "Успех:"
 
-#: plinth/modules/help/templates/help_about.html:29
-#: plinth/modules/upgrades/templates/upgrades_configure.html:31
+#: plinth/modules/help/templates/help_about.html:30
+#: plinth/modules/upgrades/templates/upgrades_configure.html:32
 #, python-format
 msgid "You are running %(os_release)s and %(box_name)s version %(version)s."
 msgstr "Вы используете %(os_release)s и %(box_name)s версии %(version)s."
 
-#: plinth/modules/help/templates/help_about.html:35
+#: plinth/modules/help/templates/help_about.html:36
 #, python-format
 msgid ""
 "There is a new %(box_name)s version <a href=\"%(upgrades_url)s\">available</"
 "a>."
 msgstr "Доступна <a href=\"%(upgrades_url)s\">новая версия</a> %(box_name)s."
 
-#: plinth/modules/help/templates/help_about.html:40
-#: plinth/modules/upgrades/templates/upgrades_configure.html:42
+#: plinth/modules/help/templates/help_about.html:41
+#: plinth/modules/upgrades/templates/upgrades_configure.html:43
 #, python-format
 msgid "%(box_name)s is up to date."
 msgstr "Установлены все последние обновления %(box_name)s."
 
-#: plinth/modules/help/templates/help_about.html:49
+#: plinth/modules/help/templates/help_about.html:50
 #, python-format
 msgid ""
 "%(box_name)s is a community project to develop, design and promote personal "
@@ -3419,7 +3410,7 @@ msgstr ""
 "электронную почту, веб-прокси и узел сети Tor, на устройстве, которое может "
 "заменить ваш Wi-Fi роутер, чтобы ваши данные оставались с вами."
 
-#: plinth/modules/help/templates/help_about.html:62
+#: plinth/modules/help/templates/help_about.html:63
 msgid ""
 "We live in a world where our use of the network is mediated by those who "
 "often do not have our best interests at heart.  By building software that "
@@ -3436,7 +3427,7 @@ msgstr ""
 "устройствами, мы возвращаем Интернет к его одноранговой архитектуре, каким "
 "он был задуман."
 
-#: plinth/modules/help/templates/help_about.html:75
+#: plinth/modules/help/templates/help_about.html:76
 #, python-format
 msgid ""
 "There are a number of projects working to realize a future of distributed "
@@ -3446,7 +3437,7 @@ msgstr ""
 "Существует ряд проектов, которые работают в сторону реализации будущего "
 "распределенных сервисов, %(box_name)s стремится объединить их."
 
-#: plinth/modules/help/templates/help_about.html:83
+#: plinth/modules/help/templates/help_about.html:84
 #, python-format
 msgid ""
 "%(box_name)s is free software, licensed under the GNU Affero General Public "
@@ -3465,36 +3456,36 @@ msgstr ""
 "Sources</a> или выполнив команду \"apt source <i>название_пакета</i>\" в "
 "терминале (с помощью Cockpit или SSH)."
 
-#: plinth/modules/help/templates/help_about.html:97
+#: plinth/modules/help/templates/help_about.html:98
 msgid "Learn"
 msgstr "Освоить"
 
-#: plinth/modules/help/templates/help_about.html:116
-#: plinth/templates/toolbar.html:19
+#: plinth/modules/help/templates/help_about.html:117
+#: plinth/templates/toolbar.html:20
 msgid "Donate"
 msgstr "Пожертвовать"
 
-#: plinth/modules/help/templates/help_about.html:119
+#: plinth/modules/help/templates/help_about.html:120
 msgid "Join project"
 msgstr "Присоединиться к проекту"
 
-#: plinth/modules/help/templates/help_about.html:123
+#: plinth/modules/help/templates/help_about.html:124
 msgid "Translate"
 msgstr "Перевести"
 
-#: plinth/modules/help/templates/help_about.html:129
+#: plinth/modules/help/templates/help_about.html:130
 msgid "Support"
 msgstr "Поддержка"
 
-#: plinth/modules/help/templates/help_about.html:133
+#: plinth/modules/help/templates/help_about.html:134
 msgid "Forum"
 msgstr "Форум"
 
-#: plinth/modules/help/templates/help_about.html:138
+#: plinth/modules/help/templates/help_about.html:139
 msgid "IRC Chatroom"
 msgstr "Чат IRC"
 
-#: plinth/modules/help/templates/help_about.html:143
+#: plinth/modules/help/templates/help_about.html:144
 msgid "Mailing list"
 msgstr "Список рассылки"
 
@@ -3504,11 +3495,11 @@ msgstr "Список рассылки"
 msgid "%(box_name)s Setup"
 msgstr "Установка %(box_name)s"
 
-#: plinth/modules/help/templates/help_contribute.html:12
+#: plinth/modules/help/templates/help_contribute.html:13
 msgid "The FreedomBox project welcomes contributions of all kinds."
 msgstr "Проект FreedomBox приветствует вклад любого рода."
 
-#: plinth/modules/help/templates/help_contribute.html:18
+#: plinth/modules/help/templates/help_contribute.html:19
 msgid ""
 "You can contribute by writing code, testing and reporting bugs, discussing "
 "new use cases and applications, designing logos and artwork, providing "
@@ -3522,7 +3513,7 @@ msgstr ""
 "его приложения на свой язык, проводя хакатоны или фестивали, а также "
 "распространяя информацию."
 
-#: plinth/modules/help/templates/help_contribute.html:28
+#: plinth/modules/help/templates/help_contribute.html:29
 msgid ""
 "You can also help the project financially by <a href=\"https://"
 "freedomboxfoundation.org/donate/\">donating</a> to the non-profit FreedomBox "
@@ -3542,18 +3533,18 @@ msgstr ""
 "отношения и защищает FreedomBox по всему миру. Фонд FreedomBox не "
 "существовал бы без своих сторонников."
 
-#: plinth/modules/help/templates/help_contribute.html:42
+#: plinth/modules/help/templates/help_contribute.html:43
 #: plinth/modules/power/templates/power_restart.html:27
 #: plinth/modules/power/templates/power_shutdown.html:26
-#: plinth/templates/app-header.html:66
+#: plinth/templates/app-header.html:67
 msgid "Learn more..."
 msgstr "Подробнее..."
 
-#: plinth/modules/help/templates/help_contribute.html:46
+#: plinth/modules/help/templates/help_contribute.html:47
 msgid "How can I help?"
 msgstr "Как я могу помочь?"
 
-#: plinth/modules/help/templates/help_contribute.html:48
+#: plinth/modules/help/templates/help_contribute.html:49
 msgid ""
 "Below is a list of opportunities for contributing to Debian. It has been "
 "filtered to only show packages that are installed on this system."
@@ -3561,28 +3552,28 @@ msgstr ""
 "Ниже приведен список возможностей для внесения вклада в Debian. Он был "
 "отфильтрован только для показа пакетов, которые установлены на этой системе."
 
-#: plinth/modules/help/templates/help_contribute.html:59
+#: plinth/modules/help/templates/help_contribute.html:60
 msgid "Show issues"
 msgstr "Показать проблемы"
 
-#: plinth/modules/help/templates/help_contribute.html:63
+#: plinth/modules/help/templates/help_contribute.html:64
 msgid "Packages that will be removed from Debian testing"
 msgstr "Пакеты которые будут удалены из Debian testing"
 
-#: plinth/modules/help/templates/help_contribute.html:69
-#: plinth/modules/help/templates/help_contribute.html:85
+#: plinth/modules/help/templates/help_contribute.html:70
+#: plinth/modules/help/templates/help_contribute.html:86
 msgid "source package:"
 msgstr "исходный пакет:"
 
-#: plinth/modules/help/templates/help_contribute.html:80
+#: plinth/modules/help/templates/help_contribute.html:81
 msgid "Packages that are not in Debian testing"
 msgstr "Пакеты которые не находятся в Debian testing"
 
-#: plinth/modules/help/templates/help_contribute.html:92
+#: plinth/modules/help/templates/help_contribute.html:93
 msgid "Good first issues for beginners"
 msgstr "Хорошие первые задачи для начинающих"
 
-#: plinth/modules/help/templates/help_contribute.html:104
+#: plinth/modules/help/templates/help_contribute.html:105
 msgid "Issues for which the package maintainer has requested help"
 msgstr "Проблемы для которых сопровождающий пакета запросил помощь"
 
@@ -3663,7 +3654,7 @@ msgstr ""
 "randomnick=1&amp;channels=freedombox&amp;prompt=1\"> #freedombox</a> с "
 "помощью веб-интерфейса."
 
-#: plinth/modules/help/templates/help_manual.html:18
+#: plinth/modules/help/templates/help_manual.html:19
 msgid "Download as PDF"
 msgstr "Скачать как PDF"
 
@@ -3825,7 +3816,7 @@ msgstr ""
 
 #: plinth/modules/homeassistant/templates/homeassistant.html:40
 #: plinth/modules/ikiwiki/templates/ikiwiki_create.html:18
-#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:54
+#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:55
 #: plinth/modules/snapshot/templates/snapshot.html:16
 #: plinth/templates/app.html:60
 msgid "Update setup"
@@ -3872,26 +3863,26 @@ msgstr "Пароль учетной записи администратора"
 msgid "Blog"
 msgstr "Блог"
 
-#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:12
+#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:13
 msgid "Manage Wikis and Blogs"
 msgstr "Управление Блогами и Вики"
 
-#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:16
-#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:18
+#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:17
+#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:19
 #: plinth/modules/ikiwiki/templates/ikiwiki_create.html:10
 msgid "Create Wiki or Blog"
 msgstr "Создать Блог или Вики"
 
-#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:25
+#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:26
 msgid "No wikis or blogs available."
 msgstr "Нет доступных вики или блогов."
 
-#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:31
+#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:32
 #, python-format
 msgid "Go to site %(site)s"
 msgstr "Перейти к %(site)s"
 
-#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:38
+#: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:39
 #, python-format
 msgid "Delete site %(site)s"
 msgstr "Удаление узла %(site)s"
@@ -4022,9 +4013,9 @@ msgstr "WebRTC"
 msgid "Web conference"
 msgstr "Веб-конференция"
 
-#: plinth/modules/janus/templates/janus_video_room.html:204
+#: plinth/modules/janus/templates/janus_video_room.html:192
 #: plinth/modules/jsxc/templates/jsxc_launch.html:117
-#: plinth/templates/base.html:283
+#: plinth/templates/base.html:282
 msgid "JavaScript license information"
 msgstr "Информация о лицензии JavaScript"
 
@@ -4081,7 +4072,7 @@ msgstr ""
 "</ul>"
 
 #: plinth/modules/kiwix/__init__.py:33
-#: plinth/modules/kiwix/templates/kiwix-add-package.html:14
+#: plinth/modules/kiwix/templates/kiwix-add-package.html:15
 msgid ""
 "You can <a href=\"https://library.kiwix.org\" target=\"_blank\" "
 "rel=\"noopener noreferrer\">download</a> content packages from the Kiwix "
@@ -4135,12 +4126,12 @@ msgstr "Сопротивление цензуре"
 msgid "Wikipedia"
 msgstr "Википедия"
 
-#: plinth/modules/kiwix/templates/kiwix-add-package.html:29
+#: plinth/modules/kiwix/templates/kiwix-add-package.html:30
 #, python-format
 msgid "You have %(max_filesize)s of free disk space available."
 msgstr "У вас %(max_filesize)s свободного дискового пространства."
 
-#: plinth/modules/kiwix/templates/kiwix-add-package.html:42
+#: plinth/modules/kiwix/templates/kiwix-add-package.html:43
 msgid "Upload ZIM file"
 msgstr "Загрузите файл ZIM"
 
@@ -4157,23 +4148,23 @@ msgstr ""
 "Удалить этот пакет навсегда? Вы можете добавить его позже, если у вас есть "
 "копия файла ZIM."
 
-#: plinth/modules/kiwix/templates/kiwix.html:11
+#: plinth/modules/kiwix/templates/kiwix.html:12
 msgid "Manage Content Packages"
 msgstr "Управление пакетами контента"
 
-#: plinth/modules/kiwix/templates/kiwix.html:15
+#: plinth/modules/kiwix/templates/kiwix.html:16
 msgid "Add a content package"
 msgstr "Добавьте пакет контента"
 
-#: plinth/modules/kiwix/templates/kiwix.html:17
+#: plinth/modules/kiwix/templates/kiwix.html:18
 msgid "Add Package"
 msgstr "Добавить пакет"
 
-#: plinth/modules/kiwix/templates/kiwix.html:24
+#: plinth/modules/kiwix/templates/kiwix.html:25
 msgid "No content packages available."
 msgstr "Пакеты контента не предлагаются."
 
-#: plinth/modules/kiwix/templates/kiwix.html:37
+#: plinth/modules/kiwix/templates/kiwix.html:38
 #, python-format
 msgid "Delete package %(title)s"
 msgstr "Удалить пакет %(title)s"
@@ -4427,7 +4418,7 @@ msgstr "Чат"
 msgid "Matrix server"
 msgstr "Matrix сервер"
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:18
+#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:19
 msgid ""
 "Matrix service needs to be configured for a domain. Users on other Matrix "
 "servers will be able to reach users on this server using this domain name. "
@@ -4438,7 +4429,7 @@ msgstr ""
 "доменное имя. Идентификаторы пользователя будет выглядеть как "
 "<em>@username:domainname</em>."
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:31
+#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:32
 msgid ""
 "<strong>Warning!</strong> Changing the domain name after this step will "
 "require uninstalling and reinstalling the app which will wipe app's data."
@@ -4447,7 +4438,7 @@ msgstr ""
 "потребует удаления и переустановки приложения, что приведет к стиранию "
 "данных приложения."
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:42
+#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:43
 #, python-format
 msgid ""
 "No domain(s) are available. <a href=\"%(config_url)s\">Configure</a> at "
@@ -4958,7 +4949,7 @@ msgstr "RSS"
 msgid "ATOM"
 msgstr "ATOM"
 
-#: plinth/modules/miniflux/templates/miniflux.html:14
+#: plinth/modules/miniflux/templates/miniflux.html:15
 msgid ""
 "Create an admin user to get started. Other users can be created from within "
 "Miniflux."
@@ -4966,13 +4957,13 @@ msgstr ""
 "Для начала работы создайте пользователя admin. Другие пользователи могут "
 "быть созданы из Miniflux."
 
-#: plinth/modules/miniflux/templates/miniflux.html:22
-#: plinth/modules/miniflux/templates/miniflux.html:24
+#: plinth/modules/miniflux/templates/miniflux.html:23
+#: plinth/modules/miniflux/templates/miniflux.html:25
 msgid "Create admin user"
 msgstr "Создайте пользователя-администратора"
 
-#: plinth/modules/miniflux/templates/miniflux.html:27
-#: plinth/modules/miniflux/templates/miniflux.html:29
+#: plinth/modules/miniflux/templates/miniflux.html:28
+#: plinth/modules/miniflux/templates/miniflux.html:30
 msgid "Reset user password"
 msgstr "Сброс пароля пользователя"
 
@@ -5184,9 +5175,9 @@ msgstr "Разрешение DNS"
 
 #: plinth/modules/names/resolved.py:91 plinth/modules/names/resolved.py:101
 #: plinth/modules/networks/forms.py:28
-#: plinth/modules/networks/templates/connection_show.html:70
-#: plinth/modules/networks/templates/connection_show.html:212
-#: plinth/modules/networks/templates/connection_show.html:253
+#: plinth/modules/networks/templates/connection_show.html:71
+#: plinth/modules/networks/templates/connection_show.html:213
+#: plinth/modules/networks/templates/connection_show.html:254
 #: plinth/modules/networks/views.py:125
 msgid "yes"
 msgstr "Да"
@@ -5237,52 +5228,52 @@ msgstr ""
 "указывать на %(box_name)s. Поддомены полезны для размещения нескольких "
 "приложений, каждое из которых требует отдельного домена."
 
-#: plinth/modules/names/templates/names.html:41
-#: plinth/modules/networks/templates/connection_show.html:40
-#: plinth/modules/wireguard/templates/wireguard_show_client.html:76
-#: plinth/modules/wireguard/templates/wireguard_show_server.html:84
-#: plinth/templates/base.html:173 plinth/templates/base.html:174
+#: plinth/modules/names/templates/names.html:42
+#: plinth/modules/networks/templates/connection_show.html:41
+#: plinth/modules/wireguard/templates/wireguard_show_client.html:77
+#: plinth/modules/wireguard/templates/wireguard_show_server.html:85
+#: plinth/templates/base.html:172 plinth/templates/base.html:173
 msgid "Edit"
 msgstr "Редактировать"
 
-#: plinth/modules/names/templates/names.html:59
+#: plinth/modules/names/templates/names.html:60
 msgid "Add Domains"
 msgstr "Добавить домен"
 
-#: plinth/modules/names/templates/names.html:87
+#: plinth/modules/names/templates/names.html:88
 msgid "Resolver Status"
 msgstr "Состояние резольвера"
 
-#: plinth/modules/names/templates/names.html:97
+#: plinth/modules/names/templates/names.html:98
 msgid "Global"
 msgstr "Глобальный"
 
-#: plinth/modules/names/templates/names.html:99
+#: plinth/modules/names/templates/names.html:100
 msgid "Link"
 msgstr "Ссылка"
 
-#: plinth/modules/names/templates/names.html:104
-#: plinth/modules/networks/templates/connection_show.html:268
+#: plinth/modules/names/templates/names.html:105
+#: plinth/modules/networks/templates/connection_show.html:269
 msgid "DNS-over-TLS"
 msgstr "DNS-over-TLS"
 
-#: plinth/modules/names/templates/names.html:108
+#: plinth/modules/names/templates/names.html:109
 msgid "DNSSEC"
 msgstr "DNSSEC"
 
-#: plinth/modules/names/templates/names.html:113
+#: plinth/modules/names/templates/names.html:114
 msgid "Current DNS Server"
 msgstr "Текущий сервер DNS"
 
-#: plinth/modules/names/templates/names.html:119
+#: plinth/modules/names/templates/names.html:120
 msgid "DNS Servers"
 msgstr "DNS Сервер"
 
-#: plinth/modules/names/templates/names.html:129
+#: plinth/modules/names/templates/names.html:130
 msgid "Fallback DNS Servers"
 msgstr "Резервные серверы DNS"
 
-#: plinth/modules/names/templates/names.html:143
+#: plinth/modules/names/templates/names.html:144
 msgid ""
 "systemd-resolved package is not installed. Install it for additional "
 "functionality."
@@ -5290,11 +5281,11 @@ msgstr ""
 "Пакет systemd-resolved не установлен. Установите его для получения "
 "дополнительной функциональности."
 
-#: plinth/modules/names/templates/names.html:152 plinth/templates/setup.html:87
+#: plinth/modules/names/templates/names.html:153 plinth/templates/setup.html:88
 msgid "Install"
 msgstr "Установить"
 
-#: plinth/modules/names/templates/names.html:162
+#: plinth/modules/names/templates/names.html:163
 msgid "Error retrieving status:"
 msgstr "Ошибка при получении статуса:"
 
@@ -5414,8 +5405,8 @@ msgstr ""
 "подсети по умолчанию, основанная на адресе."
 
 #: plinth/modules/networks/forms.py:113 plinth/modules/networks/forms.py:152
-#: plinth/modules/networks/templates/connection_show.html:197
-#: plinth/modules/networks/templates/connection_show.html:238
+#: plinth/modules/networks/templates/connection_show.html:198
+#: plinth/modules/networks/templates/connection_show.html:239
 msgid "Gateway"
 msgstr "Шлюз"
 
@@ -5513,7 +5504,7 @@ msgid "-- select --"
 msgstr "-- Выберите --"
 
 #: plinth/modules/networks/forms.py:312
-#: plinth/modules/networks/templates/connection_show.html:139
+#: plinth/modules/networks/templates/connection_show.html:140
 msgid "SSID"
 msgstr "SSID"
 
@@ -5522,7 +5513,7 @@ msgid "The visible name of the network."
 msgstr "Отображаемое имя сети."
 
 #: plinth/modules/networks/forms.py:315
-#: plinth/modules/networks/templates/connection_show.html:152
+#: plinth/modules/networks/templates/connection_show.html:153
 msgid "Mode"
 msgstr "Режим"
 
@@ -5551,7 +5542,7 @@ msgid "B/G (2.4 GHz)"
 msgstr "B/G (2,4 ГГц)"
 
 #: plinth/modules/networks/forms.py:323
-#: plinth/modules/networks/templates/connection_show.html:166
+#: plinth/modules/networks/templates/connection_show.html:167
 msgid "Channel"
 msgstr "Канал"
 
@@ -5774,7 +5765,7 @@ msgstr "Локальная сеть"
 msgid "Topology"
 msgstr "Топология"
 
-#: plinth/modules/networks/templates/connection_show.html:27
+#: plinth/modules/networks/templates/connection_show.html:28
 #, python-format
 msgid ""
 "This is the primary connection that %(box_name)s relies on for Internet "
@@ -5787,25 +5778,25 @@ msgstr ""
 "Убедитесь, что у вас есть другие средства доступа к %(box_name)s, прежде чем "
 "изменять это соединение."
 
-#: plinth/modules/networks/templates/connection_show.html:40
+#: plinth/modules/networks/templates/connection_show.html:41
 msgid "Edit connection"
 msgstr "Редактирование подключения"
 
-#: plinth/modules/networks/templates/connection_show.html:47
-#: plinth/modules/networks/templates/connections_list.html:61
+#: plinth/modules/networks/templates/connection_show.html:48
+#: plinth/modules/networks/templates/connections_list.html:62
 msgid "Deactivate"
 msgstr "Отключить"
 
-#: plinth/modules/networks/templates/connection_show.html:54
-#: plinth/modules/networks/templates/connections_list.html:69
+#: plinth/modules/networks/templates/connection_show.html:55
+#: plinth/modules/networks/templates/connections_list.html:70
 msgid "Activate"
 msgstr "Включить"
 
-#: plinth/modules/networks/templates/connection_show.html:60
+#: plinth/modules/networks/templates/connection_show.html:61
 msgid "Delete connection"
 msgstr "Удаление подключения"
 
-#: plinth/modules/networks/templates/connection_show.html:63
+#: plinth/modules/networks/templates/connection_show.html:64
 #: plinth/modules/networks/templates/connections_diagram.html:19
 #: plinth/modules/networks/templates/connections_diagram.html:22
 #: plinth/modules/networks/templates/connections_diagram.html:51
@@ -5814,132 +5805,132 @@ msgstr "Удаление подключения"
 msgid "Connection"
 msgstr "Подключение"
 
-#: plinth/modules/networks/templates/connection_show.html:68
+#: plinth/modules/networks/templates/connection_show.html:69
 msgid "Primary connection"
 msgstr "Основное соединение"
 
-#: plinth/modules/networks/templates/connection_show.html:81
-#: plinth/modules/storage/templates/storage.html:23
+#: plinth/modules/networks/templates/connection_show.html:82
+#: plinth/modules/storage/templates/storage.html:24
 msgid "Device"
 msgstr "Устройство"
 
-#: plinth/modules/networks/templates/connection_show.html:85
+#: plinth/modules/networks/templates/connection_show.html:86
 msgid "State"
 msgstr "Состояние"
 
-#: plinth/modules/networks/templates/connection_show.html:90
+#: plinth/modules/networks/templates/connection_show.html:91
 msgid "State reason"
 msgstr "Определение состояния"
 
-#: plinth/modules/networks/templates/connection_show.html:99
+#: plinth/modules/networks/templates/connection_show.html:100
 msgid "MAC address"
 msgstr "MAC-адрес"
 
-#: plinth/modules/networks/templates/connection_show.html:103
+#: plinth/modules/networks/templates/connection_show.html:104
 msgid "Interface"
 msgstr "Интерфейс"
 
-#: plinth/modules/networks/templates/connection_show.html:107
+#: plinth/modules/networks/templates/connection_show.html:108
 #: plinth/modules/snapshot/templates/snapshot_delete_selected.html:19
 #: plinth/modules/snapshot/templates/snapshot_manage.html:34
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:27
 msgid "Description"
 msgstr "Описание"
 
-#: plinth/modules/networks/templates/connection_show.html:113
+#: plinth/modules/networks/templates/connection_show.html:114
 msgid "Physical Link"
 msgstr "Физическая связь"
 
-#: plinth/modules/networks/templates/connection_show.html:118
+#: plinth/modules/networks/templates/connection_show.html:119
 msgid "Link state"
 msgstr "Состояния связи"
 
-#: plinth/modules/networks/templates/connection_show.html:121
+#: plinth/modules/networks/templates/connection_show.html:122
 msgid "cable is connected"
 msgstr "кабель подключен"
 
-#: plinth/modules/networks/templates/connection_show.html:124
+#: plinth/modules/networks/templates/connection_show.html:125
 msgid "please check cable"
 msgstr "Проверьте кабель"
 
-#: plinth/modules/networks/templates/connection_show.html:128
-#: plinth/modules/networks/templates/connection_show.html:144
+#: plinth/modules/networks/templates/connection_show.html:129
+#: plinth/modules/networks/templates/connection_show.html:145
 msgid "Speed"
 msgstr "Скорость"
 
-#: plinth/modules/networks/templates/connection_show.html:130
+#: plinth/modules/networks/templates/connection_show.html:131
 #, python-format
 msgid "%(ethernet_speed)s Mbit/s"
 msgstr "%(ethernet_speed)s Мбит/сек"
 
-#: plinth/modules/networks/templates/connection_show.html:146
+#: plinth/modules/networks/templates/connection_show.html:147
 #, python-format
 msgid "%(wireless_bitrate)s Mbit/s"
 msgstr "%(wireless_bitrate)s Мбит/сек"
 
-#: plinth/modules/networks/templates/connection_show.html:158
+#: plinth/modules/networks/templates/connection_show.html:159
 msgid "Signal strength"
 msgstr "Сила сигнала"
 
-#: plinth/modules/networks/templates/connection_show.html:174
-#: plinth/modules/networks/templates/connections_fields.html:67
+#: plinth/modules/networks/templates/connection_show.html:175
+#: plinth/modules/networks/templates/connections_fields.html:68
 msgid "IPv4"
 msgstr "IРv4"
 
-#: plinth/modules/networks/templates/connection_show.html:179
-#: plinth/modules/networks/templates/connection_show.html:222
+#: plinth/modules/networks/templates/connection_show.html:180
+#: plinth/modules/networks/templates/connection_show.html:223
 #: plinth/modules/shadowsocks/forms.py:36
 #: plinth/modules/shadowsocksserver/forms.py:42
 msgid "Method"
 msgstr "Метод"
 
-#: plinth/modules/networks/templates/connection_show.html:188
-#: plinth/modules/networks/templates/connection_show.html:229
+#: plinth/modules/networks/templates/connection_show.html:189
+#: plinth/modules/networks/templates/connection_show.html:230
 msgid "IP address"
 msgstr "IP-адрес"
 
-#: plinth/modules/networks/templates/connection_show.html:204
-#: plinth/modules/networks/templates/connection_show.html:245
+#: plinth/modules/networks/templates/connection_show.html:205
+#: plinth/modules/networks/templates/connection_show.html:246
 msgid "DNS server"
 msgstr "DNS-сервер"
 
-#: plinth/modules/networks/templates/connection_show.html:211
-#: plinth/modules/networks/templates/connection_show.html:252
+#: plinth/modules/networks/templates/connection_show.html:212
+#: plinth/modules/networks/templates/connection_show.html:253
 #: plinth/modules/storage/forms.py:132
 msgid "Default"
 msgstr "По умолчанию"
 
-#: plinth/modules/networks/templates/connection_show.html:217
-#: plinth/modules/networks/templates/connections_fields.html:94
+#: plinth/modules/networks/templates/connection_show.html:218
+#: plinth/modules/networks/templates/connections_fields.html:95
 msgid "IPv6"
 msgstr "IРv6"
 
-#: plinth/modules/networks/templates/connection_show.html:260
+#: plinth/modules/networks/templates/connection_show.html:261
 msgid "This connection is not active."
 msgstr "Это подключение не активно."
 
-#: plinth/modules/networks/templates/connection_show.html:264
+#: plinth/modules/networks/templates/connection_show.html:265
 #: plinth/modules/networks/templates/connections_fields_privacy.html:15
 #: plinth/modules/openvpn/manifest.py:60 plinth/modules/privacy/__init__.py:38
 #: plinth/modules/privacy/__init__.py:77
-#: plinth/modules/wireguard/manifest.py:45
+#: plinth/modules/wireguard/manifest.py:54
 msgid "Privacy"
 msgstr "Конфиденциальность"
 
-#: plinth/modules/networks/templates/connection_show.html:279
-#: plinth/modules/networks/templates/connection_show.html:304
-#: plinth/modules/networks/templates/connection_show.html:328
+#: plinth/modules/networks/templates/connection_show.html:280
+#: plinth/modules/networks/templates/connection_show.html:305
+#: plinth/modules/networks/templates/connection_show.html:329
 msgid "Firewall zone"
 msgstr "Зона Брандмауэра"
 
-#: plinth/modules/networks/templates/connection_show.html:289
-#: plinth/modules/networks/templates/connection_show.html:314
-#: plinth/modules/networks/templates/connection_show.html:338
-#: plinth/templates/internal-zone.html:13 plinth/templates/messages.html:20
+#: plinth/modules/networks/templates/connection_show.html:290
+#: plinth/modules/networks/templates/connection_show.html:315
+#: plinth/modules/networks/templates/connection_show.html:339
+#: plinth/templates/internal-zone.html:14 plinth/templates/messages.html:21
 msgid "Info:"
 msgstr "Информация:"
 
-#: plinth/modules/networks/templates/connection_show.html:292
+#: plinth/modules/networks/templates/connection_show.html:293
 msgid ""
 "This interface should be connected to a local network/machine.  If you "
 "connect this interface to a public network, services meant to be available "
@@ -5949,8 +5940,8 @@ msgstr ""
 "интерфейс подключен к публичной сети, внутренние службы будут доступны "
 "извне. Это представляет риск для безопасности."
 
-#: plinth/modules/networks/templates/connection_show.html:317
-#: plinth/modules/networks/templates/connection_show.html:345
+#: plinth/modules/networks/templates/connection_show.html:318
+#: plinth/modules/networks/templates/connection_show.html:346
 msgid ""
 "This interface should receive your Internet connection. If you connect it to "
 "a local network/machine, many services meant to available only internally "
@@ -5959,13 +5950,13 @@ msgstr ""
 "Этот интерфейс должен получить подключение к Интернету. Если вы подключите "
 "его к локальной сети/машине, многие внутренние службы будут не доступны."
 
-#: plinth/modules/networks/templates/connection_show.html:330
+#: plinth/modules/networks/templates/connection_show.html:331
 #: plinth/modules/networks/templates/connections_diagram.html:24
 #: plinth/network.py:25
 msgid "External"
 msgstr "Внешний"
 
-#: plinth/modules/networks/templates/connection_show.html:341
+#: plinth/modules/networks/templates/connection_show.html:342
 #, python-format
 msgid ""
 "This interface is not maintained by %(box_name)s.  For security, it is "
@@ -6001,7 +5992,7 @@ msgstr "Ethernet"
 
 #: plinth/modules/networks/templates/connections_diagram.html:35
 #: plinth/modules/networks/templates/connections_diagram.html:65
-#: plinth/modules/networks/templates/connections_list.html:43
+#: plinth/modules/networks/templates/connections_list.html:44
 #, python-format
 msgid "Show connection %(name)s"
 msgstr "Показать подключение %(name)s"
@@ -6015,24 +6006,24 @@ msgstr "Внутренний"
 msgid "Computer"
 msgstr "Компьютер"
 
-#: plinth/modules/networks/templates/connections_edit.html:24
+#: plinth/modules/networks/templates/connections_edit.html:23
 #: plinth/modules/networks/views.py:253 plinth/modules/networks/views.py:341
 msgid "Edit Connection"
 msgstr "Редактирование подключения"
 
-#: plinth/modules/networks/templates/connections_fields.html:13
+#: plinth/modules/networks/templates/connections_fields.html:14
 #: plinth/modules/oidc/templates/oauth2_provider/authorize.html:64
-#: plinth/templates/messages.html:14
+#: plinth/templates/messages.html:15
 msgid "Error:"
 msgstr "Ошибка:"
 
-#: plinth/modules/networks/templates/connections_fields.html:20
-#: plinth/modules/users/templates/users_update.html:51
-#: plinth/templates/messages.html:30
+#: plinth/modules/networks/templates/connections_fields.html:21
+#: plinth/modules/users/templates/users_update.html:50
+#: plinth/templates/messages.html:31
 msgid "Close"
 msgstr "Закрыть"
 
-#: plinth/modules/networks/templates/connections_fields.html:32
+#: plinth/modules/networks/templates/connections_fields.html:33
 msgid "General"
 msgstr "Общий"
 
@@ -6041,32 +6032,32 @@ msgstr "Общий"
 msgid "PPPoE"
 msgstr "PPPоE"
 
-#: plinth/modules/networks/templates/connections_list.html:8
+#: plinth/modules/networks/templates/connections_list.html:9
 msgid "Connections"
 msgstr "Подключения"
 
-#: plinth/modules/networks/templates/connections_list.html:12
-#: plinth/modules/networks/templates/connections_list.html:14
+#: plinth/modules/networks/templates/connections_list.html:13
+#: plinth/modules/networks/templates/connections_list.html:15
 #: plinth/modules/networks/views.py:395
 msgid "Nearby Wi-Fi Networks"
 msgstr "Соседние сети Wi-Fi"
 
-#: plinth/modules/networks/templates/connections_list.html:17
-#: plinth/modules/networks/templates/connections_list.html:19
+#: plinth/modules/networks/templates/connections_list.html:18
+#: plinth/modules/networks/templates/connections_list.html:20
 #: plinth/modules/networks/views.py:420
 #: plinth/modules/wireguard/templates/wireguard_add_server.html:19
 msgid "Add Connection"
 msgstr "Добавить подключение"
 
-#: plinth/modules/networks/templates/connections_list.html:31
+#: plinth/modules/networks/templates/connections_list.html:32
 msgid "Active"
 msgstr "Активные"
 
-#: plinth/modules/networks/templates/connections_list.html:35
+#: plinth/modules/networks/templates/connections_list.html:36
 msgid "Inactive"
 msgstr "Неактивен"
 
-#: plinth/modules/networks/templates/connections_list.html:77
+#: plinth/modules/networks/templates/connections_list.html:78
 #, python-format
 msgid "Delete connection %(name)s"
 msgstr "Удалить подключение %(name)s"
@@ -6129,8 +6120,8 @@ msgstr "Обновление…"
 #: plinth/modules/networks/templates/internet_connectivity_type.html:18
 #: plinth/modules/networks/templates/network_topology_update.html:18
 #: plinth/modules/networks/templates/router_configuration_update.html:19
-#: plinth/modules/pagekite/templates/pagekite_custom_services.html:33
-#: plinth/modules/sharing/templates/sharing_add_edit.html:25
+#: plinth/modules/pagekite/templates/pagekite_custom_services.html:34
+#: plinth/modules/sharing/templates/sharing_add_edit.html:24
 #: plinth/templates/form.html:22
 msgid "Submit"
 msgstr "Отправить"
@@ -6277,24 +6268,24 @@ msgstr ""
 "маршрутизатору. Это предоставит полные инструкции о том, как выполнить эту "
 "задачу."
 
-#: plinth/modules/networks/templates/wifi_scan.html:14
+#: plinth/modules/networks/templates/wifi_scan.html:15
 msgid "No Wi-Fi device detected."
 msgstr "Устройство Wi-Fi не обнаружено."
 
-#: plinth/modules/networks/templates/wifi_scan.html:21
+#: plinth/modules/networks/templates/wifi_scan.html:22
 #, python-format
 msgid "Device: %(interface_name)s"
 msgstr "Устройство: %(interface_name)s"
 
-#: plinth/modules/networks/templates/wifi_scan.html:27
+#: plinth/modules/networks/templates/wifi_scan.html:28
 msgid "Last scanned: "
 msgstr "Последнее сканирование: "
 
-#: plinth/modules/networks/templates/wifi_scan.html:31
+#: plinth/modules/networks/templates/wifi_scan.html:32
 msgid "never"
 msgstr "никогда"
 
-#: plinth/modules/networks/templates/wifi_scan.html:52
+#: plinth/modules/networks/templates/wifi_scan.html:53
 msgid "No Wi-Fi networks found."
 msgstr "Не найдено ни одной сети Wi-Fi."
 
@@ -6659,10 +6650,8 @@ msgid "Application"
 msgstr "Приложения"
 
 #: plinth/modules/oidc/templates/oauth2_provider/authorize.html:22
-#, fuzzy
-#| msgid "Authorized SSH Keys"
 msgid "Authorize App"
-msgstr "Авторизованные SSH ключи"
+msgstr "Авторизовать приложение"
 
 #: plinth/modules/oidc/templates/oauth2_provider/authorize.html:37
 #, python-format
@@ -6719,12 +6708,12 @@ msgid "Tunnelblick"
 msgstr "Tunnelblick"
 
 #: plinth/modules/openvpn/manifest.py:60
-#: plinth/modules/wireguard/manifest.py:45
+#: plinth/modules/wireguard/manifest.py:54
 msgid "VPN server"
 msgstr "VPN сервер"
 
 #: plinth/modules/openvpn/manifest.py:60 plinth/modules/pagekite/manifest.py:17
-#: plinth/modules/wireguard/manifest.py:45
+#: plinth/modules/wireguard/manifest.py:54
 msgid "Remote access"
 msgstr "Удаленный доступ"
 
@@ -6906,30 +6895,30 @@ msgstr "Достигаемость"
 msgid "Tunneling"
 msgstr "Туннели"
 
-#: plinth/modules/pagekite/templates/pagekite_configure.html:13
+#: plinth/modules/pagekite/templates/pagekite_configure.html:14
 msgid "Custom Services"
 msgstr "Пользовательские службы"
 
-#: plinth/modules/pagekite/templates/pagekite_configure.html:17
-#: plinth/modules/pagekite/templates/pagekite_configure.html:19
+#: plinth/modules/pagekite/templates/pagekite_configure.html:18
+#: plinth/modules/pagekite/templates/pagekite_configure.html:20
 msgid "Add Custom Service"
 msgstr "Добавить пользовательскую службу"
 
-#: plinth/modules/pagekite/templates/pagekite_configure.html:35
+#: plinth/modules/pagekite/templates/pagekite_configure.html:36
 #, python-format
 msgid "connected to %(backend_host)s:%(backend_port)s"
 msgstr "Подключен к %(backend_host)s:%(backend_port)s"
 
-#: plinth/modules/pagekite/templates/pagekite_configure.html:47
+#: plinth/modules/pagekite/templates/pagekite_configure.html:48
 msgid "Delete this service"
 msgstr "Удалить эту службу"
 
-#: plinth/modules/pagekite/templates/pagekite_custom_services.html:11
+#: plinth/modules/pagekite/templates/pagekite_custom_services.html:12
 #: plinth/modules/pagekite/views.py:34
 msgid "Add custom PageKite service"
 msgstr "Добавить собственный сервис PageKite"
 
-#: plinth/modules/pagekite/templates/pagekite_custom_services.html:19
+#: plinth/modules/pagekite/templates/pagekite_custom_services.html:20
 msgid ""
 "Your PageKite frontend server may not support all the protocol/port "
 "combinations that you are able to define here. For example, HTTPS on ports "
@@ -7012,8 +7001,8 @@ msgstr "Перезагрузка"
 msgid "Shutdown"
 msgstr "Выключить"
 
-#: plinth/modules/power/templates/power.html:15 plinth/templates/base.html:188
-#: plinth/templates/base.html:189
+#: plinth/modules/power/templates/power.html:15 plinth/templates/base.html:187
+#: plinth/templates/base.html:188
 msgid "Restart"
 msgstr "Перезапустить"
 
@@ -7021,7 +7010,7 @@ msgstr "Перезапустить"
 msgid "Shut Down"
 msgstr "Завершить работу"
 
-#: plinth/modules/power/templates/power_busy_warning.html:14
+#: plinth/modules/power/templates/power_busy_warning.html:15
 msgid ""
 "Currently an installation or upgrade is running. Consider waiting until it's "
 "finished before shutting down or restarting."
@@ -7226,7 +7215,7 @@ msgstr "Quasseldroid"
 msgid "IRC"
 msgstr "IRC"
 
-#: plinth/modules/radicale/__init__.py:25
+#: plinth/modules/radicale/__init__.py:27
 #, python-brace-format
 msgid ""
 "Radicale is a CalDAV and CardDAV server. It allows synchronization and "
@@ -7240,7 +7229,7 @@ msgstr ""
 "clients\">поддерживаемое клиентское приложение</a>. Доступ к Radicale может "
 "получить любой пользователь с логином {box_name}."
 
-#: plinth/modules/radicale/__init__.py:31
+#: plinth/modules/radicale/__init__.py:33
 msgid ""
 "Radicale provides a basic web interface, which only supports creating new "
 "calendars and addressbooks. It does not support adding events or contacts, "
@@ -7250,7 +7239,7 @@ msgstr ""
 "создание новых календарей и адресных книг. Он не поддерживает добавление "
 "событий или контактов, для этого требуется отдельный клиент."
 
-#: plinth/modules/radicale/__init__.py:53
+#: plinth/modules/radicale/__init__.py:55
 #: plinth/modules/radicale/manifest.py:74
 msgid "Radicale"
 msgstr "Radicale"
@@ -7642,7 +7631,7 @@ msgstr "Общий доступ отключён."
 msgid "Error disabling share: {error_message}"
 msgstr "Ошибка отключения общего доступа: {error_message}"
 
-#: plinth/modules/searx/__init__.py:20
+#: plinth/modules/searx/__init__.py:22
 msgid ""
 "Searx is a privacy-respecting Internet metasearch engine. It aggregrates and "
 "displays results from multiple search engines."
@@ -7650,7 +7639,7 @@ msgstr ""
 "Searx - это конфиденциальная метапоисковая система. Она агрегирует и "
 "показывает результаты с разных поисковых систем."
 
-#: plinth/modules/searx/__init__.py:22
+#: plinth/modules/searx/__init__.py:24
 msgid ""
 "Searx can be used to avoid tracking and profiling by search engines. It "
 "stores no cookies by default."
@@ -7658,11 +7647,11 @@ msgstr ""
 "Searx может быть использован, чтобы избежать отслеживания и профилирования "
 "поисковыми системами. Она не хранит никаких файлов cookie по умолчанию."
 
-#: plinth/modules/searx/__init__.py:38
+#: plinth/modules/searx/__init__.py:40
 msgid "Search the web"
 msgstr "Поиск в интернете"
 
-#: plinth/modules/searx/__init__.py:41 plinth/modules/searx/manifest.py:6
+#: plinth/modules/searx/__init__.py:43 plinth/modules/searx/manifest.py:6
 msgid "Searx"
 msgstr "Searx"
 
@@ -7713,23 +7702,23 @@ msgstr "Автоматические запреты"
 msgid "Reports"
 msgstr "Отчёты"
 
-#: plinth/modules/security/templates/security.html:12
-#: plinth/modules/security/templates/security.html:14
+#: plinth/modules/security/templates/security.html:13
+#: plinth/modules/security/templates/security.html:15
 msgid "Show security report"
 msgstr "Показать отчёт о безопасности"
 
-#: plinth/modules/security/templates/security.html:19
-#: plinth/modules/upgrades/templates/backports-firstboot.html:11
-#: plinth/modules/upgrades/templates/upgrades_configure.html:49
+#: plinth/modules/security/templates/security.html:20
+#: plinth/modules/upgrades/templates/backports-firstboot.html:12
+#: plinth/modules/upgrades/templates/upgrades_configure.html:50
 msgid "Frequent Feature Updates"
 msgstr "Частые обновления функций"
 
-#: plinth/modules/security/templates/security.html:21
-#: plinth/modules/upgrades/templates/upgrades_configure.html:57
+#: plinth/modules/security/templates/security.html:22
+#: plinth/modules/upgrades/templates/upgrades_configure.html:58
 msgid "Frequent feature updates are activated."
 msgstr "Активированы частые обновления функций."
 
-#: plinth/modules/security/templates/security.html:26
+#: plinth/modules/security/templates/security.html:27
 #, python-format
 msgid ""
 "Frequent feature updates allow the %(box_name)s Service, plus a very limited "
@@ -7816,12 +7805,12 @@ msgid "N/A"
 msgstr "Н/Д"
 
 #: plinth/modules/security/templates/security_report.html:60
-#: plinth/modules/wireguard/templates/wireguard_show_server.html:48
+#: plinth/modules/wireguard/templates/wireguard_show_server.html:49
 msgid "Yes"
 msgstr "Да"
 
 #: plinth/modules/security/templates/security_report.html:62
-#: plinth/modules/wireguard/templates/wireguard_show_server.html:50
+#: plinth/modules/wireguard/templates/wireguard_show_server.html:51
 msgid "No"
 msgstr "Нет"
 
@@ -8036,28 +8025,28 @@ msgstr ""
 msgid "Web sharing"
 msgstr "Обмен в Интернете"
 
-#: plinth/modules/sharing/templates/sharing.html:18
-#: plinth/modules/sharing/templates/sharing.html:21
+#: plinth/modules/sharing/templates/sharing.html:19
+#: plinth/modules/sharing/templates/sharing.html:22
 msgid "Add share"
 msgstr "Добавить общий ресурс"
 
-#: plinth/modules/sharing/templates/sharing.html:26
+#: plinth/modules/sharing/templates/sharing.html:27
 msgid "No shares currently configured."
 msgstr "Нет настроенных общих ресурсов."
 
-#: plinth/modules/sharing/templates/sharing.html:33
+#: plinth/modules/sharing/templates/sharing.html:34
 msgid "Disk Path"
 msgstr "Путь на диске"
 
-#: plinth/modules/sharing/templates/sharing.html:34
+#: plinth/modules/sharing/templates/sharing.html:35
 msgid "Shared Over"
 msgstr "Общий ресурс через"
 
-#: plinth/modules/sharing/templates/sharing.html:35
+#: plinth/modules/sharing/templates/sharing.html:36
 msgid "With Groups"
 msgstr "С группами"
 
-#: plinth/modules/sharing/templates/sharing.html:52
+#: plinth/modules/sharing/templates/sharing.html:53
 msgid "public access"
 msgstr "публичный доступ"
 
@@ -8260,7 +8249,7 @@ msgstr "в использовании"
 msgid "Rollback to snapshot #%(number)s"
 msgstr "Откат к снимку #%(number)s"
 
-#: plinth/modules/snapshot/templates/snapshot_not_supported.html:16
+#: plinth/modules/snapshot/templates/snapshot_not_supported.html:17
 #, python-format
 msgid ""
 "You have a filesystem of type <strong>%(fs_type)s</strong>. Snapshots are "
@@ -8654,27 +8643,27 @@ msgstr "Автоматическое монтирование"
 msgid "Expand partition"
 msgstr "Расширение раздела"
 
-#: plinth/modules/storage/templates/storage.html:17
+#: plinth/modules/storage/templates/storage.html:18
 msgid "The following storage devices are in use:"
 msgstr "Используются следующие устройства хранения:"
 
-#: plinth/modules/storage/templates/storage.html:24
+#: plinth/modules/storage/templates/storage.html:25
 msgid "Label"
 msgstr "Метка"
 
-#: plinth/modules/storage/templates/storage.html:25
+#: plinth/modules/storage/templates/storage.html:26
 msgid "Mount Point"
 msgstr "Точка монтирования"
 
-#: plinth/modules/storage/templates/storage.html:27
+#: plinth/modules/storage/templates/storage.html:28
 msgid "Used"
 msgstr "Используется"
 
-#: plinth/modules/storage/templates/storage.html:77
+#: plinth/modules/storage/templates/storage.html:78
 msgid "Partition Expansion"
 msgstr "Расширение Раздела"
 
-#: plinth/modules/storage/templates/storage.html:79
+#: plinth/modules/storage/templates/storage.html:80
 #, python-format
 msgid ""
 "There is %(expandable_root_size)s of unallocated space available after your "
@@ -8686,13 +8675,13 @@ msgstr ""
 "пространства. Это даст вам дополнительное свободное место для хранения ваших "
 "файлов."
 
-#: plinth/modules/storage/templates/storage.html:89
+#: plinth/modules/storage/templates/storage.html:90
 #: plinth/modules/storage/templates/storage_expand.html:24
 #: plinth/modules/storage/views.py:55
 msgid "Expand Root Partition"
 msgstr "Расширить корневой раздел"
 
-#: plinth/modules/storage/templates/storage.html:95
+#: plinth/modules/storage/templates/storage.html:96
 msgid ""
 "Advanced storage operations such as disk partitioning and RAID management "
 "are provided by the <a href=\"/_cockpit/storage\">Cockpit</a> app."
@@ -9023,7 +9012,7 @@ msgstr "Сетевой узел"
 msgid "Anonymity network"
 msgstr "Анонимная сеть"
 
-#: plinth/modules/tor/templates/tor.html:23
+#: plinth/modules/tor/templates/tor.html:22
 msgid "Onion Service"
 msgstr "Onion сервис"
 
@@ -9198,8 +9187,8 @@ msgstr ""
 
 #: plinth/modules/upgrades/__init__.py:319
 #: plinth/modules/upgrades/templates/upgrades-dist-upgrade-notification.html:9
-#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:11
-#: plinth/modules/upgrades/templates/upgrades_configure.html:16
+#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:12
+#: plinth/modules/upgrades/templates/upgrades_configure.html:17
 msgid "Distribution Update"
 msgstr "Обновление дистрибутива"
 
@@ -9229,7 +9218,7 @@ msgstr ""
 "стабильного выпуска дистрибутива, когда он будет доступен."
 
 #: plinth/modules/upgrades/forms.py:34
-#: plinth/modules/upgrades/templates/upgrades_configure.html:100
+#: plinth/modules/upgrades/templates/upgrades_configure.html:101
 msgid "Activate frequent feature updates (recommended)"
 msgstr "Активировать частые обновления функций (рекомендуется)"
 
@@ -9241,8 +9230,8 @@ msgstr "Перезагрузка"
 msgid "New features"
 msgstr "Новые функции"
 
-#: plinth/modules/upgrades/templates/backports-firstboot.html:14
-#: plinth/modules/upgrades/templates/upgrades_configure.html:69
+#: plinth/modules/upgrades/templates/backports-firstboot.html:15
+#: plinth/modules/upgrades/templates/upgrades_configure.html:70
 #, python-format
 msgid ""
 "Frequent feature updates allow the %(box_name)s Service, plus a very limited "
@@ -9261,7 +9250,7 @@ msgstr ""
 "функций не поддерживается командой безопасности Debian. Вместо этого они "
 "поддерживаются участниками Debian и сообществом %(box_name)s."
 
-#: plinth/modules/upgrades/templates/backports-firstboot.html:26
+#: plinth/modules/upgrades/templates/backports-firstboot.html:27
 msgid ""
 "It is strongly recommended to activate frequent feature updates. If not "
 "activated now, they can be activated later."
@@ -9269,7 +9258,7 @@ msgstr ""
 "Настоятельно рекомендуется активировать частые обновления функций. Если они "
 "не активированы сейчас, их можно будет активировать позже."
 
-#: plinth/modules/upgrades/templates/backports-firstboot.html:38
+#: plinth/modules/upgrades/templates/backports-firstboot.html:39
 msgid ""
 "<strong>Note:</strong> Once frequent feature updates are activated, they "
 "cannot be deactivated."
@@ -9277,15 +9266,15 @@ msgstr ""
 "<strong>Примечание:</strong> После активации частых обновлений функций их "
 "нельзя деактивировать."
 
-#: plinth/modules/upgrades/templates/backports-firstboot.html:51
+#: plinth/modules/upgrades/templates/backports-firstboot.html:52
 msgid "Next"
 msgstr "Следующий"
 
-#: plinth/modules/upgrades/templates/upgrades-dist-upgrade-confirm.html:11
+#: plinth/modules/upgrades/templates/upgrades-dist-upgrade-confirm.html:12
 msgid "Confirm Distribution Update?"
 msgstr "Подтверждаете обновление дистрибутива?"
 
-#: plinth/modules/upgrades/templates/upgrades-dist-upgrade-confirm.html:21
+#: plinth/modules/upgrades/templates/upgrades-dist-upgrade-confirm.html:22
 #, python-format
 msgid ""
 "You are about to update to the next distribution version before it has been "
@@ -9296,7 +9285,7 @@ msgstr ""
 "будет выпущена. Действуйте только в том случае, если вы хотите помочь с бета-"
 "тестированием функциональности %(box_name)s."
 
-#: plinth/modules/upgrades/templates/upgrades-dist-upgrade-confirm.html:32
+#: plinth/modules/upgrades/templates/upgrades-dist-upgrade-confirm.html:33
 msgid ""
 "Take a full backup of all apps and data before performing a distribution "
 "update."
@@ -9304,7 +9293,7 @@ msgstr ""
 "Перед обновлением дистрибутива создайте полную резервную копию всех "
 "приложений и данных."
 
-#: plinth/modules/upgrades/templates/upgrades-dist-upgrade-confirm.html:38
+#: plinth/modules/upgrades/templates/upgrades-dist-upgrade-confirm.html:39
 msgid ""
 "The process will take several hours. Most apps will be unavailable during "
 "this time."
@@ -9312,17 +9301,17 @@ msgstr ""
 "Процесс займет несколько часов. В течение этого времени большинство "
 "приложений будут недоступны."
 
-#: plinth/modules/upgrades/templates/upgrades-dist-upgrade-confirm.html:44
+#: plinth/modules/upgrades/templates/upgrades-dist-upgrade-confirm.html:45
 msgid ""
 "Don't interrupt the process by shutting down or interrupting power to the "
 "machine."
 msgstr "Не прерывайте процесс, выключая или прерывая подачу питания."
 
-#: plinth/modules/upgrades/templates/upgrades-dist-upgrade-confirm.html:50
+#: plinth/modules/upgrades/templates/upgrades-dist-upgrade-confirm.html:51
 msgid "If the process is interrupted, you should be able to continue it."
 msgstr "Если процесс будет прерван, вы сможете продолжить его."
 
-#: plinth/modules/upgrades/templates/upgrades-dist-upgrade-confirm.html:66
+#: plinth/modules/upgrades/templates/upgrades-dist-upgrade-confirm.html:67
 msgid "Confirm & Start Distribution Update"
 msgstr "Подтвердить и запустить обновление дистрибутива"
 
@@ -9370,7 +9359,7 @@ msgstr ""
 msgid "Go to Distribution Update"
 msgstr "Перейти к обновлению дистрибутива"
 
-#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:15
+#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:16
 #, python-format
 msgid ""
 "Your %(box_name)s will receive security updates, important fixes and some "
@@ -9395,7 +9384,7 @@ msgstr ""
 "дистрибутив как минимум на <a href=\"https://wiki.debian.org/LTS\">5 лет</a> "
 "перед обновлением."
 
-#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:34
+#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:35
 msgid ""
 "Distribution update is currently running. This operation may take several "
 "hours. Most apps will be unavailable during this period."
@@ -9404,15 +9393,15 @@ msgstr ""
 "занять несколько часов. В течение этого периода большинство приложений будут "
 "недоступны."
 
-#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:50
+#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:51
 msgid "Automatic updates are disabled."
 msgstr "Автоматическое обновление отключено."
 
-#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:54
+#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:55
 msgid "Distribution upgrades are disabled."
 msgstr "Обновления дистрибутива отключены."
 
-#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:58
+#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:59
 msgid ""
 "You need to have at least 5 GB of free space available on primary disk to "
 "perform a distribution update."
@@ -9420,45 +9409,45 @@ msgstr ""
 "Для выполнения обновления дистрибутива на основном диске должно быть не "
 "менее 5 ГБ свободного места."
 
-#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:65
+#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:66
 msgid "Your current distribution is mixed or not understood."
 msgstr "Ваш текущий дистрибутив не определен."
 
-#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:72
+#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:73
 msgid "Current Distribution:"
 msgstr "Текущий дистрибутив:"
 
-#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:74
+#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:75
 msgid "Unknown or mixed"
 msgstr "Неизвестная ошибка"
 
-#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:77
+#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:78
 msgid "Rolling release distribution"
 msgstr "Rolling release дистрибутив"
 
-#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:84
+#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:85
 #, python-format
 msgid "Released: %(date)s."
 msgstr "Дата релиза: %(date)s."
 
-#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:91
+#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:92
 msgid "Next Stable Distribution:"
 msgstr "Следующий стабильный дистрибутив:"
 
-#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:93
+#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:94
 msgid "Unknown"
 msgstr "Неизвестно"
 
-#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:99
+#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:100
 #, python-format
 msgid "Likely release: %(date)s."
 msgstr "Ориентировочная дата выхода: %(date)s."
 
-#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:107
+#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:108
 msgid "Next stable distribution is not available yet."
 msgstr "Следующая версия стабильного дистрибутива пока недоступна."
 
-#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:113
+#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:114
 #, python-format
 msgid ""
 "You are on a rolling release distribution. No distribution update is "
@@ -9469,7 +9458,7 @@ msgstr ""
 "Благодарим вас за помощь в тестировании %(box_name)s проекта. Пожалуйста, "
 "сообщайте о любых проблемах, которые вы заметили."
 
-#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:121
+#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:122
 msgid ""
 "A previous run of distribution update may have been interrupted. Please re-"
 "run the distribution update."
@@ -9477,7 +9466,7 @@ msgstr ""
 "Возможно, предыдущий запуск обновления для дистрибутива был прерван. "
 "Пожалуйста, повторно запустите обновление для дистрибутива."
 
-#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:128
+#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:129
 #, python-format
 msgid ""
 "A new stable distribution is available. Your %(box_name)s will be updated "
@@ -9488,7 +9477,7 @@ msgstr ""
 "автоматически обновлен через %(period)s. Вы можете обновить его вручную "
 "прямо сейчас."
 
-#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:136
+#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:137
 #, python-format
 msgid ""
 "A new stable distribution is available. Your %(box_name)s will be updated "
@@ -9497,7 +9486,7 @@ msgstr ""
 "Доступен новый стабильный выпуск дистрибутива. Ваш %(box_name)s будет "
 "автоматически обновлен. Вы можете обновить его вручную прямо сейчас."
 
-#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:144
+#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:145
 #, python-format
 msgid ""
 "You are on the latest stable distribution. This is recommended. However, if "
@@ -9511,16 +9500,16 @@ msgstr ""
 "возникать случайные сбои в работе приложения до следующего стабильного "
 "выпуска."
 
-#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:157
-#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:172
+#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:158
+#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:173
 msgid "Start Distribution Update"
 msgstr "Начать обновление дистрибутива"
 
-#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:162
+#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:163
 msgid "Continue Distribution Update"
 msgstr "Продолжить обновление дистрибутива"
 
-#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:167
+#: plinth/modules/upgrades/templates/upgrades-dist-upgrade.html:168
 msgid "Start Distribution Update (for testing)"
 msgstr "Запустить обновление дистрибутива (для тестирования)"
 
@@ -9538,27 +9527,27 @@ msgstr ""
 "%(box_name)s обновлен до версии %(version)s. Смотрите <a "
 "href=\"%(url)s\">объявление о выпуске</a>."
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:35
-#: plinth/modules/upgrades/templates/upgrades_configure.html:111
+#: plinth/modules/upgrades/templates/upgrades_configure.html:36
+#: plinth/modules/upgrades/templates/upgrades_configure.html:112
 msgid "Updating..."
 msgstr "Обновляется..."
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:37
+#: plinth/modules/upgrades/templates/upgrades_configure.html:38
 #, python-format
 msgid "There is a new %(box_name)s version available."
 msgstr "Доступна новая версия %(box_name)s."
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:40
+#: plinth/modules/upgrades/templates/upgrades_configure.html:41
 msgid "Your Freedombox needs an update!"
 msgstr "Ваш Freedombox нуждается в обновлении!"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:52
+#: plinth/modules/upgrades/templates/upgrades_configure.html:53
 msgid ""
 "Frequent feature updates can be activated. Activating them is recommended."
 msgstr ""
 "Можно активировать частые обновления функций. Их рекомендуется активировать."
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:61
+#: plinth/modules/upgrades/templates/upgrades_configure.html:62
 msgid ""
 "Frequent feature updates cannot be activated. They may not be necessary on "
 "your distribution."
@@ -9566,7 +9555,7 @@ msgstr ""
 "Частые обновления функций не могут быть активированы. Они могут не "
 "понадобиться в вашем дистрибутиве."
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:88
+#: plinth/modules/upgrades/templates/upgrades_configure.html:89
 #, python-format
 msgid ""
 "<strong>Warning!</strong> Once frequent feature updates are activated, they "
@@ -9577,11 +9566,11 @@ msgstr ""
 "их нельзя деактивировать. Перед продолжением вы можете сделать снимок с "
 "помощью <a href=\"%(snapshot_url)s\">снимки хранилища</a>."
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:105
+#: plinth/modules/upgrades/templates/upgrades_configure.html:106
 msgid "Manual Update"
 msgstr "Ручное обновление"
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:125
+#: plinth/modules/upgrades/templates/upgrades_configure.html:126
 msgid ""
 "<strong>This may take a long time to complete.</strong> During an update, "
 "you cannot install apps. Also, this web interface may be temporarily "
@@ -9592,7 +9581,7 @@ msgstr ""
 "временно недоступен и показывать ошибку. В таком случае, чтобы продолжить, "
 "обновите страницу."
 
-#: plinth/modules/upgrades/templates/upgrades_configure.html:139
+#: plinth/modules/upgrades/templates/upgrades_configure.html:140
 msgid "Show recent update logs"
 msgstr "Показать журналы последних обновлений"
 
@@ -9820,17 +9809,17 @@ msgstr "Сохранить пароль"
 
 #: plinth/modules/users/templates/users_create.html:11
 #: plinth/modules/users/templates/users_create.html:19
-#: plinth/modules/users/templates/users_list.html:15
-#: plinth/modules/users/templates/users_list.html:17
+#: plinth/modules/users/templates/users_list.html:16
+#: plinth/modules/users/templates/users_list.html:18
 #: plinth/modules/users/views.py:109
 msgid "Create User"
 msgstr "Создать пользователя"
 
-#: plinth/modules/users/templates/users_firstboot.html:11
+#: plinth/modules/users/templates/users_firstboot.html:12
 msgid "Administrator Account"
 msgstr "Учетная запись администратора"
 
-#: plinth/modules/users/templates/users_firstboot.html:15
+#: plinth/modules/users/templates/users_firstboot.html:16
 msgid ""
 "Choose a username and password to access this web interface. The password "
 "can be changed later. This user will be granted administrative privileges. "
@@ -9840,19 +9829,19 @@ msgstr ""
 "можно изменить позднее. Этому пользователю будут предоставляться "
 "административные привилегии. Другие пользователи могут быть добавлены позже."
 
-#: plinth/modules/users/templates/users_firstboot.html:28
+#: plinth/modules/users/templates/users_firstboot.html:29
 msgid "Create Account"
 msgstr "Создать учетную запись"
 
-#: plinth/modules/users/templates/users_firstboot.html:37
+#: plinth/modules/users/templates/users_firstboot.html:38
 msgid "An administrator account already exists."
 msgstr "Учетная запись администратора уже существует."
 
-#: plinth/modules/users/templates/users_firstboot.html:44
+#: plinth/modules/users/templates/users_firstboot.html:45
 msgid "The following administrator accounts exist in the system."
 msgstr "В системе существуют следующие учетные записи администратора."
 
-#: plinth/modules/users/templates/users_firstboot.html:56
+#: plinth/modules/users/templates/users_firstboot.html:57
 #, python-format
 msgid ""
 "Delete these accounts from command line and refresh the page to create an "
@@ -9868,16 +9857,16 @@ msgstr ""
 "users remove_user\". Если учетная запись уже используется с помощью "
 "%(box_name)s, пропустите этот шаг."
 
-#: plinth/modules/users/templates/users_firstboot.html:69
+#: plinth/modules/users/templates/users_firstboot.html:70
 msgid "Skip this step"
 msgstr "Пропустить этот шаг"
 
-#: plinth/modules/users/templates/users_list.html:11
+#: plinth/modules/users/templates/users_list.html:12
 #: plinth/modules/users/views.py:127
 msgid "Users"
 msgstr "Пользователи"
 
-#: plinth/modules/users/templates/users_list.html:28
+#: plinth/modules/users/templates/users_list.html:29
 #, python-format
 msgid "Edit user %(username)s"
 msgstr "Редактирование пользователя %(username)s"
@@ -9886,12 +9875,12 @@ msgstr "Редактирование пользователя %(username)s"
 msgid "Login"
 msgstr "Войти"
 
-#: plinth/modules/users/templates/users_update.html:17
+#: plinth/modules/users/templates/users_update.html:16
 #, python-format
 msgid "Edit User <em>%(username)s</em>"
 msgstr "Редактировать пользователя <em>%(username)s</em>"
 
-#: plinth/modules/users/templates/users_update.html:25
+#: plinth/modules/users/templates/users_update.html:24
 #, python-format
 msgid ""
 "Use the <a href='%(change_password_url)s'>change password form </a> to "
@@ -9900,17 +9889,17 @@ msgstr ""
 "Для смены пароля используйте форму <a "
 "href=\"%(change_password_url)s\">Изменить пароль</a>."
 
-#: plinth/modules/users/templates/users_update.html:37
+#: plinth/modules/users/templates/users_update.html:36
 #: plinth/templates/language-selection.html:17
 msgid "Save Changes"
 msgstr "Сохранить изменения"
 
-#: plinth/modules/users/templates/users_update.html:46
+#: plinth/modules/users/templates/users_update.html:45
 #, python-format
 msgid "Delete user <em>%(username)s</em> and all the user's files?"
 msgstr "Удалить пользователя <em>%(username)s</em> и все его файлы?"
 
-#: plinth/modules/users/templates/users_update.html:56
+#: plinth/modules/users/templates/users_update.html:55
 msgid ""
 "Deleting a user account also removes all the files user's home directory. If "
 "you wish to keep these files, disable the user account instead."
@@ -9919,11 +9908,11 @@ msgstr ""
 "домашнего каталога. Если вы хотите сохранить эти файлы, отключите учетную "
 "запись пользователя."
 
-#: plinth/modules/users/templates/users_update.html:65
+#: plinth/modules/users/templates/users_update.html:64
 msgid "Delete user and files"
 msgstr "Удаление пользователя и файлов"
 
-#: plinth/modules/users/templates/users_update.html:68
+#: plinth/modules/users/templates/users_update.html:67
 msgid "Cancel"
 msgstr "Отмена"
 
@@ -9998,9 +9987,9 @@ msgid "Enter a valid network prefix or net mask."
 msgstr ""
 
 #: plinth/modules/wireguard/forms.py:71
-#: plinth/modules/wireguard/templates/wireguard.html:28
-#: plinth/modules/wireguard/templates/wireguard.html:56
-#: plinth/modules/wireguard/templates/wireguard.html:118
+#: plinth/modules/wireguard/templates/wireguard.html:29
+#: plinth/modules/wireguard/templates/wireguard.html:57
+#: plinth/modules/wireguard/templates/wireguard.html:119
 #: plinth/modules/wireguard/templates/wireguard_delete_server.html:24
 msgid "Public Key"
 msgstr "Открытый ключ"
@@ -10096,117 +10085,115 @@ msgstr ""
 "Обычно проверяется на наличие службы VPN, через которую отправляется весь "
 "трафик."
 
-#: plinth/modules/wireguard/manifest.py:45
+#: plinth/modules/wireguard/manifest.py:54
 msgid "VPN client"
 msgstr "VPN клиент"
 
-#: plinth/modules/wireguard/templates/wireguard.html:10
+#: plinth/modules/wireguard/templates/wireguard.html:11
 msgid "As a Server"
 msgstr "Как сервер"
 
-#: plinth/modules/wireguard/templates/wireguard.html:16
+#: plinth/modules/wireguard/templates/wireguard.html:17
 #, fuzzy, python-format
 #| msgid "Public key for this %(box_name)s:"
 msgid "Information for this %(box_name)s:"
 msgstr "Открытый ключ для этого %(box_name)s:"
 
-#: plinth/modules/wireguard/templates/wireguard.html:24
+#: plinth/modules/wireguard/templates/wireguard.html:25
 msgid "Property"
 msgstr ""
 
-#: plinth/modules/wireguard/templates/wireguard.html:25
+#: plinth/modules/wireguard/templates/wireguard.html:26
 msgid "Value"
 msgstr ""
 
-#: plinth/modules/wireguard/templates/wireguard.html:32
+#: plinth/modules/wireguard/templates/wireguard.html:33
 #, fuzzy
 #| msgid "Endpoint"
 msgid "Endpoint(s)"
 msgstr "Конечная точка"
 
-#: plinth/modules/wireguard/templates/wireguard.html:40
+#: plinth/modules/wireguard/templates/wireguard.html:41
 #, fuzzy, python-format
 #| msgid "To %(box_name)s Ports"
 msgid "%(box_name)s VPN IP for services"
 msgstr "В %(box_name)s Порты"
 
-#: plinth/modules/wireguard/templates/wireguard.html:49
+#: plinth/modules/wireguard/templates/wireguard.html:50
 msgid "Peers"
 msgstr ""
 
-#: plinth/modules/wireguard/templates/wireguard.html:51
+#: plinth/modules/wireguard/templates/wireguard.html:52
 msgid "Peers allowed to connect to this server:"
 msgstr "Пиры, которым разрешено подключаться к этому серверу:"
 
-#: plinth/modules/wireguard/templates/wireguard.html:57
+#: plinth/modules/wireguard/templates/wireguard.html:58
 msgid "Allowed IPs"
 msgstr "Разрешенные IP-адреса"
 
-#: plinth/modules/wireguard/templates/wireguard.html:58
-#: plinth/modules/wireguard/templates/wireguard.html:119
+#: plinth/modules/wireguard/templates/wireguard.html:59
+#: plinth/modules/wireguard/templates/wireguard.html:120
 msgid "Last Connected Time"
 msgstr "Время последнего подключения"
 
-#: plinth/modules/wireguard/templates/wireguard.html:77
+#: plinth/modules/wireguard/templates/wireguard.html:78
 #, python-format
 msgid "No peers configured to connect to this %(box_name)s yet."
 msgstr ""
 "Нет одноранговых узлов, настроенных для подключения к этому %(box_name)s."
 
-#: plinth/modules/wireguard/templates/wireguard.html:87
+#: plinth/modules/wireguard/templates/wireguard.html:88
 msgid "Add a new peer"
 msgstr "Добавление нового однорангового узла"
 
-#: plinth/modules/wireguard/templates/wireguard.html:91
+#: plinth/modules/wireguard/templates/wireguard.html:92
 #: plinth/modules/wireguard/views.py:59
 msgid "Add Allowed Client"
 msgstr "Добавить разрешенный клиент"
 
-#: plinth/modules/wireguard/templates/wireguard.html:96
+#: plinth/modules/wireguard/templates/wireguard.html:97
 #, fuzzy
 #| msgid "Password changed successfully."
 msgid "WireGuard server not started yet."
 msgstr "Пароль успешно изменён."
 
-#: plinth/modules/wireguard/templates/wireguard.html:100
-#: plinth/modules/wireguard/templates/wireguard.html:102
+#: plinth/modules/wireguard/templates/wireguard.html:101
+#: plinth/modules/wireguard/templates/wireguard.html:103
 #, fuzzy
 #| msgid "Standard Services"
 msgid "Start WireGuard Server"
 msgstr "Стандартные службы"
 
-#: plinth/modules/wireguard/templates/wireguard.html:108
+#: plinth/modules/wireguard/templates/wireguard.html:109
 msgid "As a Client"
 msgstr "Как клиент"
 
-#: plinth/modules/wireguard/templates/wireguard.html:110
+#: plinth/modules/wireguard/templates/wireguard.html:111
 #, python-format
 msgid "Servers that %(box_name)s will connect to:"
 msgstr "Серверы, к которым %(box_name)s будет подключаться:"
 
-#: plinth/modules/wireguard/templates/wireguard.html:117
+#: plinth/modules/wireguard/templates/wireguard.html:118
 #: plinth/modules/wireguard/templates/wireguard_delete_server.html:20
 msgid "Endpoint"
 msgstr "Конечная точка"
 
-#: plinth/modules/wireguard/templates/wireguard.html:141
+#: plinth/modules/wireguard/templates/wireguard.html:142
 msgid "No connections to remote servers are configured yet."
 msgstr "Подключения к удаленным серверам пока не настроены."
 
-#: plinth/modules/wireguard/templates/wireguard.html:151
+#: plinth/modules/wireguard/templates/wireguard.html:152
 msgid "Add a new server"
 msgstr "Добавить новый сервер"
 
-#: plinth/modules/wireguard/templates/wireguard.html:155
+#: plinth/modules/wireguard/templates/wireguard.html:156
 #: plinth/modules/wireguard/views.py:178
 msgid "Add Connection to Server"
 msgstr "Добавить подключение к серверу"
 
 #: plinth/modules/wireguard/templates/wireguard_add_client.html:21
-#, fuzzy
-#| msgid "IP address to use for client:"
 msgid "IP address that will be assigned to this client"
-msgstr "IP-адрес для использования клиентом:"
+msgstr "IP-адрес который будет присвоен этому клиенту"
 
 #: plinth/modules/wireguard/templates/wireguard_add_client.html:31
 msgid "Add Client"
@@ -10228,7 +10215,7 @@ msgstr "Обновить клиент"
 msgid "Update Connection"
 msgstr "Обновить соединение"
 
-#: plinth/modules/wireguard/templates/wireguard_show_client.html:12
+#: plinth/modules/wireguard/templates/wireguard_show_client.html:13
 #, python-format
 msgid ""
 "%(box_name)s will allow this client to connect to it. Ensure that the client "
@@ -10237,48 +10224,48 @@ msgstr ""
 "%(box_name)s позволит этому клиенту подключиться к нему. Убедитесь, что "
 "клиент настроен со следующей информацией."
 
-#: plinth/modules/wireguard/templates/wireguard_show_client.html:21
+#: plinth/modules/wireguard/templates/wireguard_show_client.html:22
 msgid "Client public key:"
 msgstr "Открытый ключ клиента:"
 
-#: plinth/modules/wireguard/templates/wireguard_show_client.html:25
+#: plinth/modules/wireguard/templates/wireguard_show_client.html:26
 msgid "IP address to use for client:"
 msgstr "IP-адрес для использования клиентом:"
 
-#: plinth/modules/wireguard/templates/wireguard_show_client.html:29
-#: plinth/modules/wireguard/templates/wireguard_show_server.html:32
+#: plinth/modules/wireguard/templates/wireguard_show_client.html:30
+#: plinth/modules/wireguard/templates/wireguard_show_server.html:33
 msgid "Pre-shared key:"
 msgstr "Общий ключ:"
 
-#: plinth/modules/wireguard/templates/wireguard_show_client.html:33
+#: plinth/modules/wireguard/templates/wireguard_show_client.html:34
 msgid "Server endpoints:"
 msgstr "Конечные точки сервера:"
 
-#: plinth/modules/wireguard/templates/wireguard_show_client.html:41
-#: plinth/modules/wireguard/templates/wireguard_show_server.html:28
+#: plinth/modules/wireguard/templates/wireguard_show_client.html:42
+#: plinth/modules/wireguard/templates/wireguard_show_server.html:29
 msgid "Server public key:"
 msgstr "Открытый ключ сервера:"
 
-#: plinth/modules/wireguard/templates/wireguard_show_client.html:45
+#: plinth/modules/wireguard/templates/wireguard_show_client.html:46
 msgid "Server VPN IP address for services:"
 msgstr ""
 
-#: plinth/modules/wireguard/templates/wireguard_show_client.html:57
-#: plinth/modules/wireguard/templates/wireguard_show_server.html:63
+#: plinth/modules/wireguard/templates/wireguard_show_client.html:58
+#: plinth/modules/wireguard/templates/wireguard_show_server.html:64
 msgid "Data transmitted:"
 msgstr "Передаваемые данные:"
 
-#: plinth/modules/wireguard/templates/wireguard_show_client.html:61
-#: plinth/modules/wireguard/templates/wireguard_show_server.html:67
+#: plinth/modules/wireguard/templates/wireguard_show_client.html:62
+#: plinth/modules/wireguard/templates/wireguard_show_server.html:68
 msgid "Data received:"
 msgstr "Полученные данные:"
 
-#: plinth/modules/wireguard/templates/wireguard_show_client.html:65
-#: plinth/modules/wireguard/templates/wireguard_show_server.html:71
+#: plinth/modules/wireguard/templates/wireguard_show_client.html:66
+#: plinth/modules/wireguard/templates/wireguard_show_server.html:72
 msgid "Latest handshake:"
 msgstr "Последнее рукопожатие:"
 
-#: plinth/modules/wireguard/templates/wireguard_show_server.html:14
+#: plinth/modules/wireguard/templates/wireguard_show_server.html:15
 #, python-format
 msgid ""
 "%(box_name)s will attempt to reach a WireGuard server with the following "
@@ -10289,19 +10276,19 @@ msgstr ""
 "информацией. Убедитесь, что сервер настроен на разрешение открытого ключа и "
 "IP-адреса %(box_name)s."
 
-#: plinth/modules/wireguard/templates/wireguard_show_server.html:24
+#: plinth/modules/wireguard/templates/wireguard_show_server.html:25
 msgid "Server endpoint:"
 msgstr "Конечная точка сервера:"
 
-#: plinth/modules/wireguard/templates/wireguard_show_server.html:36
+#: plinth/modules/wireguard/templates/wireguard_show_server.html:37
 msgid "Public key of this machine:"
 msgstr "Открытый ключ этой машины:"
 
-#: plinth/modules/wireguard/templates/wireguard_show_server.html:40
+#: plinth/modules/wireguard/templates/wireguard_show_server.html:41
 msgid "IP address of this machine:"
 msgstr "IP-адрес этой машины:"
 
-#: plinth/modules/wireguard/templates/wireguard_show_server.html:45
+#: plinth/modules/wireguard/templates/wireguard_show_server.html:46
 msgid "All outgoing traffic is sent using this connection:"
 msgstr ""
 
@@ -10712,11 +10699,11 @@ msgstr ""
 "исправить. Кроме того, пожалуйста, приложите <a href=\"%(logs_url)s\">файлы "
 "журналов</a> к сообщению об ошибке."
 
-#: plinth/templates/app-header.html:26
+#: plinth/templates/app-header.html:27
 msgid "Installation"
 msgstr "Установка"
 
-#: plinth/templates/app-logs.html:12
+#: plinth/templates/app-logs.html:13
 msgid ""
 "These are the last lines of the logs for services involved in this app. If "
 "you want to report a bug, please use the <a href=\"https://salsa.debian.org/"
@@ -10728,7 +10715,7 @@ msgstr ""
 "href=\"https://salsa.debian.org/freedombox-team/freedombox/"
 "issues\">отслеживаним ошибок</a> и приложите этот журнал к отчету об ошибке."
 
-#: plinth/templates/app-logs.html:26
+#: plinth/templates/app-logs.html:27
 msgid ""
 "Please remove any personal information from the log before submitting the "
 "bug report."
@@ -10751,35 +10738,35 @@ msgstr ""
 "обеспечение, позволяющее легко устанавливать серверные приложения и "
 "управлять ими."
 
-#: plinth/templates/base.html:122
+#: plinth/templates/base.html:121
 msgid " Home"
 msgstr " Главная"
 
-#: plinth/templates/base.html:130
+#: plinth/templates/base.html:129
 msgid " Apps"
 msgstr " Приложения"
 
-#: plinth/templates/base.html:139
+#: plinth/templates/base.html:138
 msgid " System"
 msgstr " Система"
 
-#: plinth/templates/base.html:180 plinth/templates/base.html:181
+#: plinth/templates/base.html:179 plinth/templates/base.html:180
 msgid "Change password"
 msgstr "Изменить пароль"
 
-#: plinth/templates/base.html:194 plinth/templates/base.html:195
+#: plinth/templates/base.html:193 plinth/templates/base.html:194
 msgid "Shut down"
 msgstr "Завершить работу"
 
-#: plinth/templates/base.html:205 plinth/templates/base.html:243
+#: plinth/templates/base.html:204 plinth/templates/base.html:242
 msgid "Log out"
 msgstr "Выход"
 
-#: plinth/templates/base.html:214 plinth/templates/base.html:217
+#: plinth/templates/base.html:213 plinth/templates/base.html:216
 msgid "Select language"
 msgstr "Выбрать язык"
 
-#: plinth/templates/base.html:232 plinth/templates/base.html:234
+#: plinth/templates/base.html:231 plinth/templates/base.html:233
 msgid "Log in"
 msgstr "Войти"
 
@@ -10815,33 +10802,25 @@ msgstr "macOS"
 msgid "Mobile"
 msgstr "Мобильные устройства"
 
-#: plinth/templates/clients.html:84
+#: plinth/templates/clients.html:82
+msgid "Android APK"
+msgstr ""
+
+#: plinth/templates/clients.html:91
 msgid "Play Store"
 msgstr "Play Store"
 
-#: plinth/templates/clients.html:86
+#: plinth/templates/clients.html:93
 msgid "F-Droid"
 msgstr "F-Droid"
 
-#: plinth/templates/clients.html:88
+#: plinth/templates/clients.html:95
 msgid "App Store"
 msgstr "App Store"
 
-#: plinth/templates/clients.html:104
+#: plinth/templates/clients.html:110
 msgid "Package"
 msgstr "Пакет"
-
-#: plinth/templates/clients.html:111
-msgid "Debian:"
-msgstr "Debian:"
-
-#: plinth/templates/clients.html:114
-msgid "Homebrew:"
-msgstr "Homebrew:"
-
-#: plinth/templates/clients.html:117
-msgid "RPM:"
-msgstr "RPM:"
 
 #: plinth/templates/error.html:10
 msgid "Error"
@@ -10856,7 +10835,7 @@ msgstr ""
 "Включите <a href=\"%(apps_url)s\">приложения</a> чтобы добавить ярлыки на "
 "эту страницу."
 
-#: plinth/templates/internal-zone.html:17
+#: plinth/templates/internal-zone.html:18
 #, python-format
 msgid ""
 "<em>%(service_name)s</em> is available only on internal networks or when the "
@@ -10865,12 +10844,12 @@ msgstr ""
 "<em>%(service_name)s</em> доступен только во внутренних сетях или когда "
 "клиент подключен к %(box_name)s через VPN."
 
-#: plinth/templates/internal-zone.html:25
+#: plinth/templates/internal-zone.html:26
 msgid "Currently there are no network interfaces configured as internal."
 msgstr ""
 "В настоящее время нет сетевых интерфейсов, сконфигурированных как внутренние."
 
-#: plinth/templates/internal-zone.html:30
+#: plinth/templates/internal-zone.html:31
 #, python-format
 msgid ""
 "Currently the following network interfaces are configured as internal: "
@@ -10883,20 +10862,20 @@ msgstr ""
 msgid "Dismiss"
 msgstr "Закрыть"
 
-#: plinth/templates/notifications-dropdown.html:11
+#: plinth/templates/notifications-dropdown.html:12
 msgid "Notifications"
 msgstr "Уведомления"
 
-#: plinth/templates/notifications.html:19
+#: plinth/templates/notifications.html:20
 #, python-format
 msgid "%(time_since)s ago"
 msgstr "%(time_since)s назад"
 
-#: plinth/templates/port-forwarding-info.html:8
+#: plinth/templates/port-forwarding-info.html:9
 msgid "Port Forwarding"
 msgstr "Перенаправление портов"
 
-#: plinth/templates/port-forwarding-info.html:13
+#: plinth/templates/port-forwarding-info.html:14
 #, python-format
 msgid ""
 "Your FreedomBox is <a href=\"%(networks_url)s\">not behind a router</a>. No "
@@ -10905,7 +10884,7 @@ msgstr ""
 "Ваш FreedomBox <a href=\"%(networks_url)s\">не находится за маршрутизатором</"
 "a>. Никаких действий не требуется."
 
-#: plinth/templates/port-forwarding-info.html:21
+#: plinth/templates/port-forwarding-info.html:22
 #, python-format
 msgid ""
 "Your FreedomBox is <a href=\"%(networks_url)s\"> behind a router</a> and you "
@@ -10916,7 +10895,7 @@ msgstr ""
 "a>, и вы используете функцию DMZ для перенаправления всех портов. Дальнейшая "
 "настройка маршрутизатора не требуется."
 
-#: plinth/templates/port-forwarding-info.html:30
+#: plinth/templates/port-forwarding-info.html:31
 #, python-format
 msgid ""
 "Your FreedomBox is <a href=\"%(networks_url)s\">behind a router</a> and you "
@@ -10928,48 +10907,48 @@ msgstr ""
 "портов на вашем маршрутизаторе. Вы должны перенаправить следующие порты для "
 "%(service_name)s:"
 
-#: plinth/templates/port-forwarding-info.html:42
+#: plinth/templates/port-forwarding-info.html:43
 msgid "Service Name"
 msgstr "Имя службы"
 
-#: plinth/templates/port-forwarding-info.html:43
+#: plinth/templates/port-forwarding-info.html:44
 msgid "Protocol"
 msgstr "Протокол"
 
-#: plinth/templates/port-forwarding-info.html:44
+#: plinth/templates/port-forwarding-info.html:45
 msgid "From Router/WAN Ports"
 msgstr "С Роутера/WAN портов"
 
-#: plinth/templates/port-forwarding-info.html:45
+#: plinth/templates/port-forwarding-info.html:46
 #, python-format
 msgid "To %(box_name)s Ports"
 msgstr "В %(box_name)s Порты"
 
-#: plinth/templates/setup.html:19
+#: plinth/templates/setup.html:20
 msgid "Application installed."
 msgstr "Приложение установлено."
 
-#: plinth/templates/setup.html:26
+#: plinth/templates/setup.html:27
 msgid "Install this application?"
 msgstr "Установить это приложение?"
 
-#: plinth/templates/setup.html:30
+#: plinth/templates/setup.html:31
 msgid "This application needs an update. Update now?"
 msgstr "Это приложение нуждается в обновлении. Обновить сейчас?"
 
-#: plinth/templates/setup.html:43
+#: plinth/templates/setup.html:44
 msgid "This application is currently not available in your distribution."
 msgstr "Это приложение в настоящее время недоступно для вашего дистрибутива."
 
-#: plinth/templates/setup.html:51
+#: plinth/templates/setup.html:52
 msgid "Checking app availability..."
 msgstr "Проверка доступности приложения..."
 
-#: plinth/templates/setup.html:57
+#: plinth/templates/setup.html:58
 msgid "Error checking app availability. Please refresh page."
 msgstr "Ошибка проверки доступности приложения. Пожалуйста, обновите страницу."
 
-#: plinth/templates/setup.html:72
+#: plinth/templates/setup.html:73
 msgid ""
 "<strong>Conflicting Packages:</strong> Some packages installed on the system "
 "conflict with the installation of this app. The following packages will be "
@@ -10979,31 +10958,31 @@ msgstr ""
 "системе, конфликтуют с установкой этого приложения. Следующие пакеты будут "
 "удалены, если вы продолжите установку:"
 
-#: plinth/templates/setup.html:89
+#: plinth/templates/setup.html:90
 msgid "Update"
 msgstr "Обновление"
 
-#: plinth/templates/tags.html:24
+#: plinth/templates/tags.html:25
 msgid "Search with tags"
 msgstr "Поиск по тегам"
 
-#: plinth/templates/tags.html:37
+#: plinth/templates/tags.html:38
 msgid "Clear all tags"
 msgstr "Очистить все теги"
 
-#: plinth/templates/theme-menu.html:8
+#: plinth/templates/theme-menu.html:9
 msgid "Toggle theme (auto)"
 msgstr "Переключить тему (Автоматическая)"
 
-#: plinth/templates/theme-menu.html:14
+#: plinth/templates/theme-menu.html:17
 msgid "Toggle theme"
 msgstr "Переключить тему"
 
-#: plinth/templates/theme-menu.html:23
+#: plinth/templates/theme-menu.html:25
 msgid "Light"
 msgstr "Светлая"
 
-#: plinth/templates/theme-menu.html:32
+#: plinth/templates/theme-menu.html:33
 msgid "Dark"
 msgstr "Тёмная"
 
@@ -11011,19 +10990,19 @@ msgstr "Тёмная"
 msgid "Auto"
 msgstr "Автоматическая"
 
-#: plinth/templates/toolbar.html:39 plinth/templates/toolbar.html:40
+#: plinth/templates/toolbar.html:40 plinth/templates/toolbar.html:41
 msgid "View Logs"
 msgstr "Просмотр журналов"
 
-#: plinth/templates/toolbar.html:46 plinth/templates/toolbar.html:47
+#: plinth/templates/toolbar.html:47 plinth/templates/toolbar.html:48
 msgid "Backup"
 msgstr "Резервное копирование"
 
-#: plinth/templates/toolbar.html:60
+#: plinth/templates/toolbar.html:61
 msgid "Re-run setup"
 msgstr "Повторное выполнение установки"
 
-#: plinth/templates/toolbar.html:66 plinth/templates/toolbar.html:67
+#: plinth/templates/toolbar.html:67 plinth/templates/toolbar.html:68
 #: plinth/templates/uninstall.html:30
 msgid "Uninstall"
 msgstr "Удалить"
@@ -11057,6 +11036,15 @@ msgstr "перед удалением {app_id}"
 #: plinth/web_framework.py:126
 msgid "Gujarati"
 msgstr "Гуджарати"
+
+#~ msgid "Debian:"
+#~ msgstr "Debian:"
+
+#~ msgid "Homebrew:"
+#~ msgstr "Homebrew:"
+
+#~ msgid "RPM:"
+#~ msgstr "RPM:"
 
 #~ msgid ""
 #~ "Password of the SSH Server.<br />SSH key-based authentication is not yet "

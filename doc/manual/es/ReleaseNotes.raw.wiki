@@ -8,7 +8,46 @@ For more technical details, see the [[https://salsa.debian.org/freedombox-team/f
 
 The following are the release notes for each !FreedomBox version.
 
-== FreedomBox 26.4.1 (2026-03-08) ==
+== FreedomBox 26.5 (2026-03-23) ==
+
+=== Highlights ===
+
+ * action_utils: Don't restart web interface when installing an app
+ * apache: Use a Uwsgi native socket systemd unit for each app
+ * ui: Use inline SVG icons for all apps
+ * wireguard: Fix freedombox VPN IP for services
+
+=== Other Changes ===
+
+ * action_utils: Stop associated service when stopping a socket unit
+ * apache: Increase OpenID Connect RP session timeout activity
+ * apache: Minor improvement to getting the request host
+ * app: Fix build issue with Django 5.x
+ * clients: Fix formatting of package row in table
+ * clients: Fix show empty clients in Desktop section
+ * clients: Use SVG icons when showing external links
+ * container: Add option to skip install
+ * container: Fix image extension to .raw for systemd v260
+ * doc: Reduce verbosity when building documentation
+ * html: Drop trailing slash from void elements
+ * html: Drop type attribute value of text/javascript
+ * janus: Drop unused reference to font-awesome
+ * letsencrypt: Don't perform operations on apps that are not installed
+ * locale: Update translations for German, Russian, Swedish
+ * pagekite: Fix issue with adding custom services
+ * tests: functional: Drop undefined 'sso' pytest mark
+ * ui: Add rest of the icons used from fork-awesome set
+ * ui: Better placement for dropdown indicator in dropdown button
+ * ui: Drop fonts-fork-awesome as dependency
+ * ui: Rename 'plinth_extras' template tags module to 'extras'
+ * ui: Simplify SVG app icons for using them inline in HTML
+ * ui: Use inline SVG icons for buttons, messages, spinners, etc.
+ * wireguard: Add button for direct APK download
+ * wireguard: Add entries for Homebrew and RPM packages
+ * wireguard: Remove client entry for F-Droid which is not available
+ * wireguard: Update windows client link
+
+== FreedomBox 26.4.2 (2026-03-08) ==
 
 === Highlights ===
 
@@ -18,7 +57,7 @@ The following are the release notes for each !FreedomBox version.
 
  * container: Hold freedombox packages during test setup
  * d/control: Trim deps for nocheck build profile
- * locale: Update translations for Albanian, Chinese (Simplified Han script), Czech, Turkish
+ * locale: Update translations for Albanian, Chinese (Simplified Han script), Czech, Russian, Turkish
  * Vagrantfile: Enable public network for bridged networking
 
 == FreedomBox 26.4 (2026-03-02) ==

@@ -15,7 +15,8 @@ clients = [{
     'platforms': [{
         'type': 'download',
         'os': 'windows',
-        'url': 'https://download.wireguard.com'
+        'url': ('https://download.wireguard.com/'
+                'windows-client/wireguard-installer.exe')
     }, {
         'type': 'download',
         'os': 'macos',
@@ -25,10 +26,18 @@ clients = [{
         'format': 'deb',
         'name': 'wireguard'
     }, {
-        'type': 'store',
+        'type': 'package',
+        'format': 'rpm',
+        'name': 'wireguard-tools'
+    }, {
+        'type': 'package',
+        'format': 'brew',
+        'name': 'wireguard-tools'
+    }, {
+        'type': 'download',
         'os': 'android',
-        'store_name': 'f-droid',
-        'url': store_url('f-droid', _wireguard_package_id)
+        'url': ('https://www.wireguard.com/'
+                'install/#android-play-store-direct-apk-file')
     }, {
         'type': 'store',
         'os': 'android',

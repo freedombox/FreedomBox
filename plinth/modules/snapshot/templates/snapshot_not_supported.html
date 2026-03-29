@@ -5,11 +5,12 @@
 
 {% load bootstrap %}
 {% load i18n %}
+{% load extras %}
 
 {% block configuration %}
   <div id="snapshot-not-supported" class="alert alert-danger d-flex align-items-center">
     <div class="me-2">
-      <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+      {% icon 'exclamation-triangle' %}
       <span class="visually-hidden">{% trans "Caution:" %}</span>
     </div>
     <div>

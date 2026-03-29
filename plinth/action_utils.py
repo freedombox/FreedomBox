@@ -18,9 +18,6 @@ from . import actions
 
 logger = logging.getLogger(__name__)
 
-UWSGI_ENABLED_PATH = '/etc/uwsgi/apps-enabled/{config_name}.ini'
-UWSGI_AVAILABLE_PATH = '/etc/uwsgi/apps-available/{config_name}.ini'
-
 # Flag on disk to indicate if freedombox package was held by
 # plinth. This is a backup in case the process is interrupted and hold
 # is not released.
@@ -122,6 +119,14 @@ def service_disable(service_name: str, check: bool = False):
         service_stop(service_name, check=check)
     except subprocess.CalledProcessError:
         pass
+
+    if service_name.endswith('.socket'):
+        # Instead, may need to query the unit for associated .service file.
+        base_name = service_name.rpartition('.')[0]
+        try:
+            service_stop(f'{base_name}.service', check=check)
+        except subprocess.CalledProcessError:
+            pass
 
 
 def service_mask(service_name: str, check: bool = False):
@@ -310,43 +315,6 @@ class WebserverChange:
         self.actions_required.add(action_required)
 
 
-def uwsgi_is_enabled(config_name):
-    """Return whether a uwsgi config is enabled."""
-    enabled_path = UWSGI_ENABLED_PATH.format(config_name=config_name)
-    return os.path.exists(enabled_path)
-
-
-def uwsgi_enable(config_name):
-    """Enable a uwsgi configuration that runs under uwsgi."""
-    if uwsgi_is_enabled(config_name):
-        return
-
-    # uwsgi is started/stopped using init script. We don't know if it can
-    # handle some configuration already running against newly enabled
-    # configuration. So, stop first before enabling new configuration.
-    service_stop('uwsgi')
-
-    enabled_path = UWSGI_ENABLED_PATH.format(config_name=config_name)
-    available_path = UWSGI_AVAILABLE_PATH.format(config_name=config_name)
-    os.symlink(available_path, enabled_path)
-
-    service_enable('uwsgi')
-    service_start('uwsgi')
-
-
-def uwsgi_disable(config_name):
-    """Disable a uwsgi configuration that runs under uwsgi."""
-    if not uwsgi_is_enabled(config_name):
-        return
-
-    # If uwsgi is restarted later, it won't stop the just disabled
-    # configuration due to how init scripts are written for uwsgi.
-    service_stop('uwsgi')
-    enabled_path = UWSGI_ENABLED_PATH.format(config_name=config_name)
-    os.unlink(enabled_path)
-    service_start('uwsgi')
-
-
 def get_addresses() -> list[dict[str, str | bool]]:
     """Return a list of IP addresses and hostnames."""
     addresses = get_ip_addresses()
@@ -469,9 +437,31 @@ def is_disk_image():
     return os.path.exists('/var/lib/freedombox/is-freedombox-disk-image')
 
 
-def run_apt_command(arguments, enable_triggers: bool = False):
+def run_apt_command(arguments, enable_triggers: bool = False,
+                    allow_freedombox_restart=False):
     """Run apt-get with provided arguments."""
-    command = ['apt-get', '--assume-yes', '--quiet=2'] + arguments
+    command = []
+    if not allow_freedombox_restart:
+        # Don't restart the freedombox web service. This configuration is only
+        # used when apt command is invoked from freedombox web service itself
+        # (such as during an app's installation/uninstallation).
+        #
+        # If this is not done, a freedombox web service restart is attempted.
+        # needsrestart will wait until the restart is completed. apt command
+        # will wait until needsrestart is completed. The restart mechanism in
+        # service will wait until all currently running threads are completed.
+        # One thread that has invoked this apt command will not finish as it
+        # waits for apt command to finish. This results in a deadlock. Avoid
+        # this by not attempting to restart freedombox web service when apt
+        # command is invoked from freedombox web service.
+        mount_path = '/etc/needrestart/conf.d/freedombox-self.conf'
+        orig_path = f'/usr/share/freedombox{mount_path}'
+        command = [
+            'systemd-run', '--pipe',
+            f'--property=BindReadOnlyPaths={orig_path}:{mount_path}'
+        ]
+
+    command += ['apt-get', '--assume-yes', '--quiet=2'] + arguments
 
     env = os.environ.copy()
     env['DEBIAN_FRONTEND'] = 'noninteractive'

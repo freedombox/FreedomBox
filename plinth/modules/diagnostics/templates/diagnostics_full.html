@@ -4,6 +4,7 @@
 {% endcomment %}
 
 {% load i18n %}
+{% load extras %}
 
 {% block content %}
 
@@ -72,9 +73,9 @@
                     {% endwith %}
                   {% endfor %}
                 {% elif app_data.exception %}
-                  <span class="fa fa-exclamation-triangle mx-1" aria-hidden="true"></span>
+                  {% icon 'exclamation-triangle' %}
                 {% else %}
-                  <span class="fa fa-hourglass-o mx-1"></span>
+                  {% icon 'hourglass-o' %}
                 {% endif %}
 
                 {% if app_data.show_repair %}
@@ -98,7 +99,7 @@
               {% elif app_data.exception %}
                 <div class="alert alert-danger d-flex align-items-center" role="alert">
                   <div class="me-2">
-                    <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+                    {% icon 'exclamation-triangle' %}
                     <span class="visually-hidden">{% trans "Caution:" %}</span>
                   </div>
                   <div>
@@ -107,7 +108,7 @@
                 </div>
               {% else %}
                 <p class="text-center">
-                  <span class="fa fa-hourglass-o me-2"></span>
+                  {% icon 'hourglass-o' %}
                   {% trans "Running..." %}
                 </p>
               {% endif %}

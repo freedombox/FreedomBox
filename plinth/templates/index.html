@@ -5,7 +5,7 @@
 
 {% load i18n %}
 {% load static %}
-
+{% load extras %}
 
 {% block body_class %}index-page{% endblock %}
 
@@ -63,12 +63,12 @@
                   {% endif %}
                         <div class="card-icon">
                           {% if shortcut.icon|first == "/" %}
-                            <img src="{{ shortcut.icon }}"/>
+                            <img src="{{ shortcut.icon }}">
                           {% else %}
                             {% if shortcut.app_id %}
-                              <img src="{% static shortcut.app_id %}/icons/{{ shortcut.icon }}.svg"/>
+                              {% icon shortcut.app_id|add:'/icons/'|add:shortcut.icon|add:'.svg' class='card-icon' %}
                             {% else %}
-                              <img src="{% static 'theme/icons/' %}{{ shortcut.icon }}.svg"/>
+                              {% icon shortcut.icon class='card-icon' %}
                             {% endif %}
                           {% endif %}
                         </div>
@@ -95,7 +95,7 @@
   <p>
     <a href="{% url 'help:about' %}" title="{% trans "About" %}">
       <img class="footer-logo" alt="{{ box_name }}"
-           src="{% static 'theme/img/freedombox-logo-powered.svg' %}"/>
+           src="{% static 'theme/img/freedombox-logo-powered.svg' %}">
     </a>
   </p>
 {% endblock %}

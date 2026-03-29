@@ -4,6 +4,7 @@
 {% endcomment %}
 
 {% load i18n %}
+{% load extras %}
 
 {% block content %}
 
@@ -80,12 +81,12 @@
   <div class="btn-toolbar">
     <a class="btn btn-default btn-edit-server"
        href="{% url 'wireguard:edit-server' interface %}">
-      <span class="fa fa-pencil-square-o" aria-hidden="true"></span>
+      {% icon 'pencil-square-o' %}
       {% trans "Edit" %}
     </a>
     <a class="btn btn-default btn-delete-server"
        href="{% url 'wireguard:delete-server' interface %}">
-      <span class="fa fa-trash-o" aria-hidden="true"></span>
+      {% icon 'trash-o' %}
       {% trans "Delete" %}
     </a>
   </div>

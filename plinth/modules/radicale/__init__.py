@@ -11,11 +11,13 @@ from django.utils.translation import gettext_lazy as _
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.config import DropinConfigs
-from plinth.modules.apache.components import Uwsgi, Webserver
+from plinth.daemon import Daemon
+from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users.components import UsersAndGroups
 from plinth.package import Packages, install
+from plinth.privileged import service as service_privileged
 from plinth.utils import Version, format_lazy
 
 from . import manifest, privileged
@@ -43,7 +45,7 @@ class RadicaleApp(app_module.App):
 
     app_id = 'radicale'
 
-    _version = 4
+    _version = 5
 
     def __init__(self) -> None:
         """Create components for the app."""
@@ -84,8 +86,8 @@ class RadicaleApp(app_module.App):
                               urls=['https://{host}/radicale'])
         self.add(webserver)
 
-        uwsgi = Uwsgi('uwsgi-radicale', 'radicale')
-        self.add(uwsgi)
+        daemon = Daemon('daemon-radicale', 'uwsgi-app@radicale.socket')
+        self.add(daemon)
 
         users_and_groups = UsersAndGroups('users-and-groups-radicale',
                                           reserved_usernames=['radicale'])
@@ -107,6 +109,16 @@ class RadicaleApp(app_module.App):
         if not old_version:
             self.enable()
 
+        if old_version and old_version <= 4:
+            webserver = self.get_component('webserver-radicale')
+            daemon = self.get_component('daemon-radicale')
+            if webserver.is_enabled():
+                daemon.enable()
+
+            # Vanquish the old uwsgi init.d script.
+            service_privileged.disable('uwsgi')
+            service_privileged.mask('uwsgi')
+
     def force_upgrade(self, packages):
         """Force upgrade radicale to resolve conffile prompt."""
         if 'radicale' not in packages:
@@ -123,6 +135,11 @@ class RadicaleApp(app_module.App):
         privileged.configure(rights)
 
         return True
+
+    def uninstall(self):
+        """De-configure and uninstall the app."""
+        super().uninstall()
+        privileged.uninstall()
 
 
 def load_augeas():

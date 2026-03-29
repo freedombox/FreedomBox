@@ -81,6 +81,8 @@ def _validate_local_domains_and_ips(redirect_uri, request,
     Scheme is not checked. Changing IP address during OpenID Connect flow is
     not allowed.
     """
+    # Requires 'ProxyPreserveHost On' in Apache2 configuration for proxying
+    # requests to FreedomBox service.
     request_host = request.headers.get('HTTP_HOST')
 
     parsed_redirect_uri = urllib.parse.urlparse(redirect_uri)

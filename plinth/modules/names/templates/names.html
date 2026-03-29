@@ -5,6 +5,7 @@
 
 {% load bootstrap %}
 {% load i18n %}
+{% load extras %}
 
 {% block status %}
   {{ block.super }}
@@ -31,7 +32,7 @@
               {% if domain.domain_type.configuration_url %}
                 <a href="{% url domain.domain_type.configuration_url %}"
                    role="button" class="btn btn-md btn-default">
-                  <span class="fa fa-wrench" aria-hidden="true"></span>
+                  {% icon 'wrench' %}
                   {% trans "Configure" %}
                 </a>
               {% endif %}
@@ -39,14 +40,14 @@
                 <a href="{% url domain.domain_type.edit_url domain.name %}"
                    role="button" class="btn btn-md btn-default"
                    title="{% trans 'Edit' %}">
-                  <span class="fa fa-pencil-square-o" aria-hidden="true"></span>
+                  {% icon 'pencil-square-o' %}
                 </a>
               {% endif %}
               {% if domain.domain_type.delete_url %}
                 <a href="{% url domain.domain_type.delete_url domain.name %}"
                    role="button" class="btn btn-md btn-default"
                    title="{% trans 'Delete' %}">
-                  <span class="fa fa-trash-o" aria-hidden="true"></span>
+                  {% icon 'trash-o' %}
                 </a>
               {% endif %}
             </td>
@@ -67,14 +68,14 @@
             {% if domain_type.configuration_url %}
               <a href="{% url domain_type.configuration_url %}"
                  role="button" class="btn btn-md btn-default">
-                <span class="fa fa-wrench" aria-hidden="true"></span>
+                {% icon 'wrench' %}
                 {% trans "Configure" %}
               </a>
             {% endif %}
             {% if domain_type.add_url %}
               <a href="{% url domain_type.add_url %}"
                  role="button" class="btn btn-md btn-default">
-                <span class="fa fa-plus" aria-hidden="true"></span>
+                {% icon 'plus' %}
                 {% trans "Add" %}
               </a>
             {% endif %}
@@ -155,7 +156,7 @@
   {% else %}
     <div class="alert alert-danger d-flex align-items-center">
       <div class="me-2">
-        <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+        {% icon 'exclamation-triangle' %}
         <span class="visually-hidden">{% trans "Caution:" %}</span>
       </div>
       <div>

@@ -5,10 +5,11 @@
 
 {% load i18n %}
 {% load static %}
+{% load extras %}
 
 {% block page_head %}
   <link type="text/css" rel="stylesheet"
-        href="{% static 'backups/backups.css' %}"/>
+        href="{% static 'backups/backups.css' %}">
 {% endblock %}
 
 {% block configuration %}
@@ -17,28 +18,28 @@
     <a title="{% trans 'Create a new backup' %}"
        role="button" class="btn btn-primary"
        href="{% url 'backups:create' %}">
-      <span class="fa fa-plus" aria-hidden="true"></span>
+      {% icon 'plus' %}
       {% trans 'Create Backup' %}
     </a>
 
     <a title="{% trans 'Upload and restore a backup archive' %}"
        role="button" class="btn btn-default"
        href="{% url 'backups:upload' %}">
-      <span class="fa fa-upload" aria-hidden="true"></span>
+      {% icon 'upload' %}
       {% trans 'Upload and Restore' %}
     </a>
 
     <a title="{% trans 'Add a backup location' %}"
        role="button" class="btn btn-default"
        href="{% url 'backups:add-repository' %}">
-      <span class="fa fa-plus" aria-hidden="true"></span>
+      {% icon 'plus' %}
       {% trans 'Add Backup Location' %}
     </a>
 
     <a title="{% trans 'Add a remote backup location' %}"
        role="button" class="btn btn-default"
        href="{% url 'backups:add-remote-repository' %}">
-      <span class="fa fa-plus" aria-hidden="true"></span>
+      {% icon 'plus' %}
       {% trans 'Add Remote Backup Location' %}
     </a>
   </div>

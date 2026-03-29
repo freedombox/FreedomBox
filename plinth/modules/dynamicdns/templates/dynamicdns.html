@@ -5,6 +5,7 @@
 
 {% load bootstrap %}
 {% load i18n %}
+{% load extras %}
 
 {% block extra_content %}
   <h3>{% trans "Domains" %}</h3>
@@ -12,7 +13,7 @@
   <div class="btn-toolbar">
     <a href="{% url 'dynamicdns:domain-add' %}" class="btn btn-primary"
        role="button" title="{% trans 'Add Domain' %}">
-      <span class="fa fa-plus" aria-hidden="true"></span>
+      {% icon 'plus' %}
       {% trans 'Add Domain' %}
     </a>
   </div>
@@ -72,14 +73,14 @@
                    title="{% blocktrans trimmed with domain=domain.domain %}
                             Edit domain {{ domain }}
                          {% endblocktrans %}">
-                  <span class="fa fa-pencil-square-o" aria-hidden="true"></span>
+                  {% icon 'pencil-square-o' %}
                 </a>
                 <a href="{% url 'dynamicdns:domain-delete' domain.domain %}"
                    class="btn btn-default btn-sm domain-delete" role="button"
                    title="{% blocktrans trimmed with domain=domain.main %}
                           Delete domain {{ domain }}
                           {% endblocktrans %}">
-                  <span class="fa fa-trash" aria-hidden="true"></span>
+                  {% icon 'trash' %}
                 </a>
               </td>
             </tr>

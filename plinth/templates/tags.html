@@ -3,6 +3,7 @@
 {% endcomment %}
 
 {% load i18n %}
+{% load extras %}
 
 {% if tags %}
   <div class="container">
@@ -14,7 +15,7 @@
                   data-tag="{{ tag }}">
               {% trans tag %}
               <button class="btn btn-sm btn-default remove-tag">
-                <i class="fa fa-times"></i>
+                {% icon 'times' %}
               </button>
             </span>
           {% endfor %}

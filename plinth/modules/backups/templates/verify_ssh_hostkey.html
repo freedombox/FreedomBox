@@ -5,6 +5,7 @@
 
 {% load bootstrap %}
 {% load i18n %}
+{% load extras %}
 
 {% block content %}
 
@@ -23,7 +24,7 @@
       {% if form.keyscan_error %}
         <div class="alert alert-danger d-flex align-items-center">
           <div class="me-2">
-            <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+            {% icon 'exclamation-triangle' %}
             <span class="visually-hidden">{% trans "Caution:" %}</span>
           </div>
           <pre class="mb-0">{{ form.keyscan_error }}</pre>
@@ -42,7 +43,7 @@
         <p>
           <a class="btn btn-default collapsed collapsible-button"
              data-bs-toggle="collapse" href="#help" aria-expanded="false">
-            <span class="fa fa-chevron-right fa-fw" aria-hidden="true"></span>
+            {% icon 'chevron-right' %}
             {% trans "How to verify?" %}
           </a>
         </p>

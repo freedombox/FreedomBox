@@ -5,12 +5,13 @@
 
 {% load i18n %}
 {% load static %}
+{% load extras %}
 
 {% block content %}
 
   <p class="text-center">
     <img src="{% static 'theme/img/freedombox-logo-250px.png' %}"
-         class="main-graphic" />
+         class="main-graphic">
   </p>
 
   {% if version %}
@@ -18,10 +19,10 @@
                 d-flex align-items-center">
       <div class="me-2">
         {% if new_version %}
-          <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+          {% icon 'exclamation-triangle' %}
           <span class="visually-hidden">{% trans "Caution:" %}</span>
         {% else %}
-          <span class="fa fa-check-circle" aria-hidden="true"></span>
+          {% icon 'check-circle' %}
           <span class="visually-hidden">{% trans "Success:" %}</span>
         {% endif %}
       </div>

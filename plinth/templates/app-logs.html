@@ -4,6 +4,7 @@
 {% endcomment %}
 
 {% load i18n %}
+{% load extras %}
 
 {% block content %}
   <h2>{% trans "Logs" %}: {{ app_info.name }}</h2>
@@ -19,7 +20,7 @@
 
   <div class="alert alert-warning d-flex align-items-center">
     <div class="me-2">
-      <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+      {% icon 'exclamation-triangle' %}
       <span class="visually-hidden">{% trans "Caution:" %}</span>
     </div>
     <div>

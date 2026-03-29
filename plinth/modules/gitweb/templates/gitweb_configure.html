@@ -6,6 +6,7 @@
 {% load bootstrap %}
 {% load i18n %}
 {% load static %}
+{% load extras %}
 
 {% block configuration %}
   {{ block.super }}
@@ -15,7 +16,7 @@
   <div class="btn-toolbar">
     <a href="{% url 'gitweb:create' %}" class="btn btn-default"
        role="button" title="{% trans 'Create repository' %}">
-      <span class="fa fa-plus" aria-hidden="true"></span>
+      {% icon 'plus' %}
       {% trans 'Create repository' %}
     </a>
   </div>
@@ -44,20 +45,19 @@
               {% endif %}
 
               {% if repo.access == 'private' %}
-                <span class="repo-private-icon fa fa-lock secondary"
-                      aria-label="private"></span>
+                {% icon 'lock' class='svg-icon repo-private-icon secondary' %}
               {% endif %}
 
               <a class="repo-edit btn btn-sm btn-default secondary {% if 'clone_progress' in repo %} disabled {% endif %}"
                 href="{% url 'gitweb:edit' repo.name %}">
-                <span class="fa fa-pencil-square-o" aria-hidden="true"></span>
+                {% icon 'pencil-square-o' %}
               </a>
 
               <a href="{% url 'gitweb:delete' repo.name %}"
                  class="btn btn-default btn-sm secondary {% if 'clone_progress' in repo %} disabled {% endif %}"
                  role="button"
                  title="{% blocktrans %}Delete repository {{ repo.name }}{% endblocktrans %}">
-                <span class="fa fa-trash-o" aria-hidden="true"></span>
+                {% icon 'trash-o' %}
               </a>
             </div>
           {% endfor %}

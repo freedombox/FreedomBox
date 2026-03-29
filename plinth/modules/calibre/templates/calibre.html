@@ -4,6 +4,7 @@
 {% endcomment %}
 
 {% load i18n %}
+{% load extras %}
 
 {% block configuration %}
   {{ block.super }}
@@ -13,7 +14,7 @@
   <div class="btn-toolbar">
     <a href="{% url 'calibre:create-library' %}" class="btn btn-default"
        role="button" title="{% trans 'Create Library' %}">
-      <span class="fa fa-plus" aria-hidden="true"></span>
+      {% icon 'plus' %}
       {% trans 'Create Library' %}
     </a>
   </div>
@@ -35,7 +36,7 @@
               <a href="{% url 'calibre:delete-library' library %}"
                  class="btn btn-default btn-sm secondary" role="button"
                  title="{% blocktrans %}Delete library {{ library }}{% endblocktrans %}">
-                <span class="fa fa-trash-o" aria-hidden="true"></span>
+                {% icon 'trash-o' %}
               </a>
             </div>
           {% endfor %}

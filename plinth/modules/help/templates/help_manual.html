@@ -5,16 +5,17 @@
 
 {% load i18n %}
 {% load static %}
+{% load extras %}
 
 {% block page_head %}
   <link type="text/css" rel="stylesheet"
-        href="{% static 'help/help.css' %}"/>
+        href="{% static 'help/help.css' %}">
 {% endblock %}
 
 {% block content %}
   <a href="{% url 'help:download-manual' %}" class="btn btn-default pdf"
      role="button">
-    <span class="fa fa-download fa-fw fa-lg"></span>
+    {% icon 'download' %}
     {% trans 'Download as PDF' %}
   </a>
   {{ content|safe }}

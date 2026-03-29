@@ -6,10 +6,12 @@ from django.utils.translation import gettext_lazy as _
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.config import DropinConfigs
-from plinth.modules.apache.components import Uwsgi, Webserver
+from plinth.daemon import Daemon
+from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.package import Packages
+from plinth.privileged import service as service_privileged
 
 from . import manifest, privileged
 
@@ -48,7 +50,7 @@ class BepastyApp(app_module.App):
 
     app_id = 'bepasty'
 
-    _version = 3
+    _version = 4
 
     def __init__(self) -> None:
         """Create components for the app."""
@@ -83,8 +85,9 @@ class BepastyApp(app_module.App):
                             ports=['http', 'https'], is_external=True)
         self.add(firewall)
 
-        uwsgi = Uwsgi('uwsgi-bepasty', 'bepasty-freedombox')
-        self.add(uwsgi)
+        daemon = Daemon('daemon-bepasty',
+                        'uwsgi-app@bepasty-freedombox.socket')
+        self.add(daemon)
 
         webserver = Webserver('webserver-bepasty', 'bepasty-freedombox',
                               urls=['https://{host}/bepasty/'])
@@ -106,6 +109,16 @@ class BepastyApp(app_module.App):
             # Upgrade to a better default only if user hasn't changed the
             # value.
             privileged.set_default(['read'])
+
+        if old_version and old_version <= 3:
+            webserver = self.get_component('webserver-bepasty')
+            daemon = self.get_component('daemon-bepasty')
+            if webserver.is_enabled():
+                daemon.enable()
+
+            # Vanquish the old uwsgi init.d script.
+            service_privileged.disable('uwsgi')
+            service_privileged.mask('uwsgi')
 
     def uninstall(self):
         """De-configure and uninstall the app."""

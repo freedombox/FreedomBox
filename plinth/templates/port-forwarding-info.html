@@ -3,6 +3,7 @@
 {% endcomment %}
 
 {% load i18n %}
+{% load extras %}
 
 {% if port_forwarding_info.ports %}
   <h3>{% trans "Port Forwarding" %}</h3>
@@ -14,7 +15,7 @@
         Your FreedomBox is <a href="{{ networks_url }}">not behind a router</a>.
         No action is necessary.
       {% endblocktrans %}
-      <span class="fa fa-check" aria-hidden="true"></span>
+      {% icon 'check' %}
     </p>
   {% elif port_forwarding_info.router_configuration_type == 'dmz' %}
     <p>
@@ -23,7 +24,7 @@
         you are using the DMZ feature to forward all ports. No further router
         configuration is necessary.
       {% endblocktrans %}
-      <span class="fa fa-check" aria-hidden="true"></span>
+      {% icon 'check' %}
     </p>
   {% else %}
     <p>

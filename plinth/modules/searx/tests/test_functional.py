@@ -4,9 +4,10 @@ Functional, browser based tests for searx app.
 """
 
 import pytest
+
 from plinth.tests import functional
 
-pytestmark = [pytest.mark.apps, pytest.mark.searx, pytest.mark.sso]
+pytestmark = [pytest.mark.apps, pytest.mark.searx]
 
 
 @pytest.fixture(scope='module', autouse=True)

@@ -5,6 +5,7 @@
 
 {% load bootstrap %}
 {% load i18n %}
+{% load extras %}
 
 {% block breadcrumbs %}
 {% endblock %}
@@ -15,7 +16,7 @@
 
   <ol class='next-steps'>
     <li>
-      <div class="app-icon fa fa-refresh"></div>
+      {% icon 'refresh' class='svg-icon app-icon' %}
       <div class="step-text">
         {% url 'upgrades:index' as upgrades_url %}
         {% blocktrans trimmed %}
@@ -33,7 +34,7 @@
     </li>
 
     <li>
-      <div class="app-icon fa fa-eye-slash"></div>
+      {% icon 'eye-slash' class='svg-icon app-icon' %}
       <div class="step-text">
         {% url 'privacy:index' as privacy_url %}
         {% blocktrans trimmed %}
@@ -43,7 +44,7 @@
     </li>
 
     <li>
-      <div class="app-icon fa fa-signal"></div>
+      {% icon 'signal' class='svg-icon app-icon' %}
       <div class="step-text">
         {% url 'networks:index' as networks_url %}
         {% blocktrans trimmed %}
@@ -54,7 +55,7 @@
     </li>
 
     <li>
-      <div class="app-icon fa fa-tags"></div>
+      {% icon 'tags' class='svg-icon app-icon' %}
       <div class="step-text">
         {% url 'names:index' as names_url %}
         {% blocktrans trimmed %}
@@ -64,7 +65,7 @@
     </li>
 
     <li>
-      <div class="app-icon fa fa-files-o"></div>
+      {% icon 'files-o' class='svg-icon app-icon' %}
       <div class="step-text">
         {% url 'backups:index' as backups_url %}
         {% blocktrans trimmed %}
@@ -75,7 +76,7 @@
     </li>
 
     <li>
-      <div class="app-icon fa fa-th"></div>
+      {% icon 'th' class='svg-icon app-icon' %}
       <div class="step-text">
         {% url 'apps' as apps_url %}
         {% blocktrans trimmed %}

@@ -3,13 +3,14 @@
 {% endcomment %}
 
 {% load i18n %}
+{% load extras %}
 
 {% block internal_zone_warning %}
   {% for component in firewall %}
     {% if not component.is_external %}
       <div class="alert alert-info d-flex align-items-center" role="alert">
         <div class="me-2">
-          <span class="fa fa-info-circle" aria-hidden="true"></span>
+          {% icon 'info-circle' %}
           <span class="visually-hidden">{% trans "Info:" %}</span>
         </div>
         <div>

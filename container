@@ -484,6 +484,9 @@ def parse_arguments() -> argparse.Namespace:
                            help='Disk image size to resize to after download')
     subparser.add_argument('--hkp-client', choices=('gpg', 'wget'),
                            default='gpg', help='Client for key retrieval')
+    subparser.add_argument(
+        '--skip-install', action='store_true',
+        help='Skip running make provision-dev in the container')
 
     # Print IP address
     subparser = subparsers.add_parser(
@@ -686,8 +689,25 @@ def _verify_signature(hkp_client: str, data_file: pathlib.Path,
 
 def _extract_image(compressed_file: pathlib.Path):
     """Extract the image file."""
-    decompressed_file = compressed_file.with_suffix('')
+    # Strip the .xz extension, then replace .img with .raw
+    decompressed_file = compressed_file.with_suffix('').with_suffix('.raw')
+    older_image = compressed_file.with_suffix('')
+
     if decompressed_file.exists():
+        return decompressed_file
+
+    # Rename older image and its corresponding state files.
+    if older_image.exists():
+        logger.info('Renaming .img file to .raw')
+        older_image.rename(decompressed_file)
+
+        for ext in ['.setup', '.provisioned']:
+            old_state = older_image.with_suffix(older_image.suffix + ext)
+            new_state = decompressed_file.with_suffix(
+                decompressed_file.suffix + ext)
+            if old_state.exists():
+                old_state.rename(new_state)
+
         return decompressed_file
 
     logger.info('Decompressing file %s', compressed_file)
@@ -712,7 +732,8 @@ def _get_compressed_image_path(distribution: str) -> pathlib.Path:
 def _get_image_file(distribution: str) -> pathlib.Path:
     """Return the path of the image file."""
     compressed_image = _get_compressed_image_path(distribution)
-    return compressed_image.with_suffix('')
+    # Strip the .xz extension, then replace .img with .raw
+    return compressed_image.with_suffix('').with_suffix('.raw')
 
 
 def _get_project_folder() -> pathlib.Path:
@@ -946,7 +967,7 @@ def _setup_ssh(image_file: pathlib.Path):
     _runc(image_file, ['chown', 'fbx:fbx', '/home/fbx/.ssh/authorized_keys'])
 
 
-def _setup_image(image_file: pathlib.Path):
+def _setup_image(image_file: pathlib.Path, skip_install: bool = False):
     """Prepare the image for execution."""
     setup_file = image_file.with_suffix(image_file.suffix + '.setup')
     if setup_file.exists():
@@ -958,9 +979,10 @@ def _setup_image(image_file: pathlib.Path):
     _runc(image_file, ['tee', '/etc/apt/apt.conf.d/20auto-upgrades'],
           input=contents.encode())
 
-    logger.info('In image: Disabling FreedomBox service')
-    _runc(image_file, ['systemctl', 'disable', 'plinth'],
-          stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    if not skip_install:
+        logger.info('In image: Disabling FreedomBox service')
+        _runc(image_file, ['systemctl', 'disable', 'plinth'],
+              stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
     logger.info('In image: Creating virtiofs mount at /freedombox')
     mount = '''[Unit]
@@ -1018,15 +1040,19 @@ def _is_provisioned(distribution: str) -> bool:
     return provision_file.exists()
 
 
-def _provision(image_file: pathlib.Path, machine_type: str, distribution: str):
+def _provision(image_file: pathlib.Path, machine_type: str, distribution: str,
+               skip_install: bool = False):
     """Run app setup inside the container."""
     if _is_provisioned(distribution):
         return
 
-    machine = Machine.get_instance(machine_type, distribution)
-    ssh_command = machine.get_ssh_command()
-    subprocess.run(ssh_command + ['bash'], check=True,
-                   input=PROVISION_SCRIPT.encode())
+    if skip_install:
+        logger.info('Skipping provision step (--skip-install)')
+    else:
+        machine = Machine.get_instance(machine_type, distribution)
+        ssh_command = machine.get_ssh_command()
+        subprocess.run(ssh_command + ['bash'], check=True,
+                       input=PROVISION_SCRIPT.encode())
 
     provision_file = image_file.with_suffix(image_file.suffix + '.provisioned')
     provision_file.touch()
@@ -1329,9 +1355,8 @@ VirtualEthernet=yes
             if result.returncode:
                 raise Exception(f'Image file {image_link} is not a symlink.')
 
-            subprocess.run(['sudo', 'rm', '--force',
-                            str(image_link)], check=False)
-
+        # May be linked to wrong place (such as old .img file)
+        subprocess.run(['sudo', 'rm', '--force', str(image_link)], check=False)
         subprocess.run([
             'sudo', 'ln', '--symbolic',
             str(image_file.resolve()),
@@ -1476,10 +1501,11 @@ def subcommand_start(arguments: argparse.Namespace):
                                       arguments.hkp_client)
     _resize_disk_image(image_file, arguments.image_size,
                        arguments.distribution)
-    _setup_image(image_file)
+    _setup_image(image_file, arguments.skip_install)
     machine.setup()
     machine.launch()
-    _provision(image_file, arguments.machine_type, arguments.distribution)
+    _provision(image_file, arguments.machine_type, arguments.distribution,
+               arguments.skip_install)
     _print_banner(arguments.machine_type, arguments.distribution)
 
 

@@ -2,11 +2,8 @@
 """Configuration helper for bepasty."""
 
 import collections
-import grp
 import json
-import os
 import pathlib
-import pwd
 import secrets
 import shutil
 import string
@@ -17,11 +14,10 @@ from plinth import action_utils
 from plinth.actions import privileged, secret_str
 from plinth.modules import bepasty
 
-DATA_DIR = '/var/lib/bepasty'
-
-PASSWORD_LENGTH = 20
-
 CONF_FILE = pathlib.Path('/etc/bepasty-freedombox.conf')
+DATA_DIR = '/var/lib/private/bepasty'
+PASSWORD_LENGTH = 20
+SERVICE_NAME = 'uwsgi-app@bepasty-freedombox.service'
 
 
 def _augeas_load():
@@ -66,26 +62,6 @@ def conf_file_write(conf):
 @privileged
 def setup(domain_name: str):
     """Post installation actions for bepasty."""
-    # Create bepasty group if needed.
-    try:
-        grp.getgrnam('bepasty')
-    except KeyError:
-        action_utils.run(['addgroup', '--system', 'bepasty'], check=True)
-
-    # Create bepasty user if needed.
-    try:
-        pwd.getpwnam('bepasty')
-    except KeyError:
-        action_utils.run([
-            'adduser', '--system', '--ingroup', 'bepasty', '--home',
-            '/var/lib/bepasty', '--gecos', 'bepasty file sharing', 'bepasty'
-        ], check=True)
-
-    # Create data directory if needed.
-    if not os.path.exists(DATA_DIR):
-        os.makedirs(DATA_DIR, mode=0o750)
-        shutil.chown(DATA_DIR, user='bepasty', group='bepasty')
-
     # Create configuration file if needed.
     if not CONF_FILE.is_file():
         passwords = [_generate_password() for _ in range(3)]
@@ -112,7 +88,11 @@ def setup(domain_name: str):
         }
         conf_file_write(conf)
         CONF_FILE.chmod(0o640)
-        shutil.chown(CONF_FILE, user='bepasty', group='bepasty')
+
+    # Migrate from old bepasty:bepasty ownership to root:root
+    shutil.chown(CONF_FILE, user='root', group='root')
+    action_utils.run(['deluser', 'bepasty'], check=False)
+    action_utils.run(['delgroup', 'bepasty'], check=False)
 
 
 @privileged
@@ -132,7 +112,8 @@ def add_password(permissions: list[str], comment: str | None = None):
         conf['PERMISSION_COMMENTS'][password] = comment
 
     conf_file_write(conf)
-    action_utils.service_try_restart('uwsgi')
+    # Service is started again by socket.
+    action_utils.service_stop(SERVICE_NAME)
 
 
 @privileged
@@ -145,7 +126,7 @@ def remove_password(password: secret_str):
     if password in conf['PERMISSION_COMMENTS']:
         del conf['PERMISSION_COMMENTS'][password]
     conf_file_write(conf)
-    action_utils.service_try_restart('uwsgi')
+    action_utils.service_stop(SERVICE_NAME)
 
 
 @privileged
@@ -153,7 +134,7 @@ def set_default(permissions: list[str]):
     """Set default permissions."""
     conf = {'DEFAULT_PERMISSIONS': _format_permissions(permissions)}
     conf_file_write(conf)
-    action_utils.service_try_restart('uwsgi')
+    action_utils.service_stop(SERVICE_NAME)
 
 
 def _format_permissions(permissions=None):
@@ -173,5 +154,3 @@ def uninstall():
     """Remove bepasty user, group and data."""
     shutil.rmtree(DATA_DIR, ignore_errors=True)
     CONF_FILE.unlink(missing_ok=True)
-    action_utils.run(['deluser', 'bepasty'], check=False)
-    action_utils.run(['delgroup', 'bepasty'], check=False)

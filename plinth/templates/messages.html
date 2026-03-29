@@ -3,6 +3,7 @@
 {% endcomment %}
 
 {% load i18n %}
+{% load extras %}
 
 {% for message in messages %}
   <div class="alert alert-{{ message.tags }} alert-dismissible
@@ -10,16 +11,16 @@
        role="alert">
     <div class="me-2">
       {% if message.tags == 'danger' %}
-        <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+        {% icon 'exclamation-triangle' %}
         <span class="visually-hidden">{% trans "Error:" %}</span>
       {% elif message.tags == 'warning' %}
-        <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+        {% icon 'exclamation-triangle' %}
         <span class="visually-hidden">{% trans "Caution:" %}</span>
       {% elif message.tags == 'info' %}
-        <span class="fa fa-info-circle" aria-hidden="true"></span>
+        {% icon 'info-circle' %}
         <span class="visually-hidden">{% trans "Info:" %}</span>
       {% elif message.tags == 'success' %}
-        <span class="fa fa-check-circle" aria-hidden="true"></span>
+        {% icon 'check-circle' %}
         <span class="visually-hidden">{% trans "Success:" %}</span>
       {% endif %}
     </div>

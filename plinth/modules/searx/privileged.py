@@ -139,7 +139,8 @@ def setup():
     _update_search_engines(settings)
     write_settings(settings)
 
-    action_utils.service_restart('uwsgi')
+    # Service is started again by socket.
+    action_utils.service_stop('uwsgi-app@searx.service')
 
 
 @privileged

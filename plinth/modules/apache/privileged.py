@@ -237,6 +237,30 @@ def _setup_oidc_config():
 
     Keep the metadata directory and configuration file unreadable by non-admin
     users since they contain module's crypto secret and OIDC client secret.
+
+    # Session management
+
+    When apps like Syncthing are protected with mod_auth_openidc, there a
+    session maintained using server-side session storage and a cookie on the
+    client side. This session is different from the session managed by the
+    OpenID Connect Provider (FreedomBox web interface). As long as this session
+    is valid, no further authentication mechanisms are triggered.
+
+    When the session expires, if the request is a GET request (due to page
+    reload), the browser is redirected to OP, a fresh token is created, and the
+    page is loaded. However, for POST requests, 401 error is returned and if
+    the application is unaware, it won't do much about it. So, this
+    necessitates keeping the session timeout value high.
+
+    When logout is performed on FreedomBox web interface, mod_auth_openidc
+    cookie is also removed and logout feels instantaneous. However, this won't
+    work for applications not using mod_auth_openidc and for applications
+    hosted on other domains. A better way to do this is to implement OpenID
+    Connect's Back-Channel Logout or using OpenID Connect Session Management.
+
+    For more about session management see:
+    https://github.com/OpenIDC/mod_auth_openidc/wiki/Sessions-and-Timeouts and
+    https://github.com/OpenIDC/mod_auth_openidc/wiki/Session-Management-Settings
     """
     metadata_dir_path.parent.mkdir(mode=0o700, parents=True, exist_ok=True)
     metadata_dir_path.mkdir(mode=0o700, exist_ok=True)
@@ -258,6 +282,13 @@ def _setup_oidc_config():
     OIDCDiscoverURL /freedombox/apache/discover-idp/
     OIDCSSLValidateServer Off
     OIDCProviderMetadataRefreshInterval 86400
+
+    # Expire the mod_auth_openidc session (not the OpenID Conneect Provider
+    # session) after 10 hours of idle with a maximum session duration equal to
+    # the expiry time of the ID token (10 hours). This allows applications such
+    # as FeatherWiki to have long editing sessions before save.
+    OIDCSessionInactivityTimeout 36000
+    OIDCSessionMaxDuration 0
 
     # Use relative URL to return to the original domain
     OIDCRedirectURI /apache/oidc/callback
@@ -329,18 +360,6 @@ def unlink_root(domain: str):
 
     config.unlink()
     action_utils.service_reload('apache2')
-
-
-@privileged
-def uwsgi_enable(name: str):
-    """Enable uWSGI configuration and reload."""
-    action_utils.uwsgi_enable(name)
-
-
-@privileged
-def uwsgi_disable(name: str):
-    """Disable uWSGI configuration and reload."""
-    action_utils.uwsgi_disable(name)
 
 
 @privileged

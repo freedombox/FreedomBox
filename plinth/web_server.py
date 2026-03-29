@@ -185,3 +185,29 @@ class StaticFiles(app_module.FollowerComponent):
             for web_path, file_path in self.directory_map.items():
                 web_path = '%s%s' % (cfg.server_dir, web_path)
                 _mount_static_directory(file_path, web_path)
+
+
+def resolve_static_path(url: str) -> pathlib.Path:
+    """Convert a URL for static file into a file path."""
+    url_parts = url.split('/')
+    for app in app_module.App.list():
+        if url_parts[0] != app.app_id:
+            continue
+
+        try:
+            module = sys.modules[app.__module__]
+        except KeyError:
+            raise ValueError('Module for app not loaded')
+
+        if not hasattr(module, '__file__') or not module.__file__:
+            raise ValueError('Module file for app could not be found')
+
+        module_path = pathlib.Path(module.__file__).parent
+        static_dir = module_path / 'static'
+        if not static_dir.is_dir():
+            raise ValueError(
+                f'No static directory available for app {app.app_id}')
+
+        return static_dir / '/'.join(url_parts[1:])
+
+    return pathlib.Path(cfg.file_root) / 'static' / url

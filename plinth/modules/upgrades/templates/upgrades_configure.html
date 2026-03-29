@@ -6,6 +6,7 @@
 {% load bootstrap %}
 {% load i18n %}
 {% load static %}
+{% load extras %}
 
 {% block status %}
   {{ block.super}}  {% comment %} To extend instead of overwrite {% endcomment %}
@@ -16,17 +17,17 @@
   </div>
 
   <h3>{% trans "Status" %}</h3>
-  <div class="upgrades-status-frame clearfix">
-    <div class="upgrade-status-icon pull-left">
+  <div class="upgrades-status-frame d-flex align-items-center">
+    <div class="upgrades-status-icon">
       {% if is_busy %}
-        <span class="fa fa-refresh fa-spin fa-3x fa-pull-left text-info"></span>
+        {% icon 'refresh' class='svg-icon spin text-info' %}
       {% elif new_version %}
-        <span class="fa fa-frown-o fa-3x fa-pull-left text-warning"></span>
+        {% icon 'frown-o' class='svg-icon text-warning' %}
       {% else %}
-        <span class="fa fa-smile-o fa-3x fa-pull-left text-body-tertiary"></span>
+        {% icon 'smile-o' class='svg-icon text-body-tertiary' %}
       {% endif %}
     </div>
-    <p>
+    <div>
       {% blocktrans trimmed %}
         You are running {{ os_release }} and {{ box_name }} version {{ version }}.
       {% endblocktrans %}
@@ -40,7 +41,7 @@
       {% else %}
         {% blocktrans %}{{ box_name }} is up to date.{% endblocktrans %}
       {% endif %}
-    </p>
+    </div>
   </div>
 {% endblock %}
 
@@ -79,7 +80,7 @@
   {% if can_activate_backports and not is_backports_requested %}
     <div class="alert alert-warning d-flex align-items-center" role="alert">
       <div class="me-2">
-        <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+        {% icon 'exclamation-triangle' %}
         <span class="visually-hidden">{% trans "Caution:" %}</span>
       </div>
       <div>
@@ -134,7 +135,7 @@
       <a class="btn btn-default collapsed collapsible-button" role="button"
          data-bs-toggle="collapse" href="#collapse-log" aria-expanded="false"
          aria-controls="collapse-log">
-        <span class="fa fa-chevron-right fa-fw" aria-hidden="true"></span>
+        {% icon 'chevron-right' %}
         {% trans "Show recent update logs" %}
       </a>
 

@@ -1,6 +1,6 @@
 {% load i18n %}
 {% load static %}
-{% load plinth_extras %}
+{% load extras %}
 
 {% comment %}
 # SPDX-License-Identifier: AGPL-3.0-or-later
@@ -9,30 +9,30 @@
 <html class="no-js" lang="en">
 <!-- the "no-js" class will be removed if Javascript is turned on -->
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8">
 
   <!-- Always force latest IE rendering engine and Chrome Frame -->
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
   <!--  Mobile Viewport Fix http://j.mp/mobileviewport & http://davidbcalhoun.com/2010/viewport-metatag
   device-width : Occupy full width of the screen in its current orientation
   initial-scale = 1.0 retains dimensions instead of zooming out if page height > device height
   maximum-scale = 1.0 retains dimensions instead of zooming in if page width < device width
   -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- R2D2, you know better than to trust a strange computer! -->
-  <meta name="robots" content="noindex, nofollow, noarchive" />
-  <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noodp, noimageindex, notranslate" />
-  <meta name="msnbot" content="noindex, nofollow, noarchive, noodp" />
-  <meta name="slurp" content="noindex, nofollow, noarchive, noodp, noydir" />
-  <meta name="application-name" content="{{ box_name }}" />
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noodp, noimageindex, notranslate">
+  <meta name="msnbot" content="noindex, nofollow, noarchive, noodp">
+  <meta name="slurp" content="noindex, nofollow, noarchive, noodp, noydir">
+  <meta name="application-name" content="{{ box_name }}">
   <meta name="description"
         content="{% blocktrans trimmed %}
                    FreedomBox is a personal server designed for privacy and
                    data ownership. It is free software that lets you install
                    and manage server apps with ease.
-                 {% endblocktrans %}" />
+                 {% endblocktrans %}">
   {% block title %}
     <title>
       {% if title %} {{ title }} {% else %} {{ box_name }} {% endif %}
@@ -41,32 +41,31 @@
 
   <!-- Favicon. Works with IE >= 11 and other GUI browsers -->
   <link rel="icon" type="image/png"
-        href="{% static 'theme/img/freedombox-logo-32px.png' %}"/>
+        href="{% static 'theme/img/freedombox-logo-32px.png' %}">
 
   <!-- The is the icon for iOS's Web Clip. Size: 57x57 for older iPhones, 72x72 for iPads, 114x114 for iPhone4
   - To prevent iOS from applying its styles to the icon name it thusly: apple-touch-icon-precomposed.png
   - Transparency is not recommended (iOS will put a black BG behind the icon) -->
-  <link rel="apple-touch-icon" sizes="57x57" href="{% static 'theme/img/apple-touch-icon-57px-precomposed.png' %}"/>
-  <link rel="apple-touch-icon" sizes="72x72" href="{% static 'theme/img/apple-touch-icon-72px-precomposed.png' %}"/>
-  <link rel="apple-touch-icon" sizes="114x114" href="{% static 'theme/img/apple-touch-icon-114px-precomposed.png' %}"/>
+  <link rel="apple-touch-icon" sizes="57x57" href="{% static 'theme/img/apple-touch-icon-57px-precomposed.png' %}">
+  <link rel="apple-touch-icon" sizes="72x72" href="{% static 'theme/img/apple-touch-icon-72px-precomposed.png' %}">
+  <link rel="apple-touch-icon" sizes="114x114" href="{% static 'theme/img/apple-touch-icon-114px-precomposed.png' %}">
 
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="{% static '/javascript/bootstrap5/css/bootstrap.min.css' %}"/>
-  <link rel="stylesheet" href="{% static '/javascript/fork-awesome/css/fork-awesome.css' %}"/>
-  <link rel="stylesheet" href="{% static 'theme/css/main.css' %}"/>
+  <link rel="stylesheet" href="{% static '/javascript/bootstrap5/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'theme/css/main.css' %}">
   {% if user_css %}
-    <link rel="stylesheet" href="{% static user_css %}"/>
+    <link rel="stylesheet" href="{% static user_css %}">
   {% endif %}
 
   <!-- This script is not loaded in defer mode because it needs to run before
        page is rendered -->
-  <script type="text/javascript" src="{% static 'theme/js/color-modes.js' %}"></script>
+  <script src="{% static 'theme/js/color-modes.js' %}"></script>
   <!-- Local link to system Bootstrap JS -->
-  <script type="text/javascript" src="{% static '/javascript/popperjs2/popper.min.js' %}" defer></script>
-  <script type="text/javascript" src="{% static '/javascript/bootstrap5/js/bootstrap.bundle.min.js' %}" defer></script>
-  <script type="text/javascript" src="{% static '/javascript/htmx/htmx.min.js' %}" defer></script>
+  <script src="{% static '/javascript/popperjs2/popper.min.js' %}" defer></script>
+  <script src="{% static '/javascript/bootstrap5/js/bootstrap.bundle.min.js' %}" defer></script>
+  <script src="{% static '/javascript/htmx/htmx.min.js' %}" defer></script>
 
-  <script type="text/javascript" src="{% static 'theme/js/main.js' %}" defer></script>
+  <script src="{% static 'theme/js/main.js' %}" defer></script>
   {% block app_js %}<!-- placeholder for app-specific js files -->{% endblock %}
   {% block page_js %}<!-- placeholder for page-specific js files -->{% endblock %}
 
@@ -92,10 +91,10 @@
 
         {% block mainmenu_left %}
           {% url 'index' as index_url %}
-          <a href="{{ index_url }}"  class="navbar-brand
+          <a href="{{ index_url }}" class="navbar-brand
                    {% if index_url == active_section_url %}active{% endif %}"
              title="{{ box_name }}">
-            <i class="fa fa-freedombox fa-2x fa-inverse" aria-hidden="true"></i>
+            {% icon 'freedombox' %}
           </a>
         {% endblock %}
 
@@ -109,7 +108,7 @@
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                   data-bs-target="#navbar-collapse" aria-controls="navbar-collapse"
                   aria-expanded="false" aria-label="Toggle navigation">
-            <span class="fa fa-bars"></span>
+            {% icon 'bars' %}
           </button>
         {% endblock %}
 
@@ -130,7 +129,7 @@
                   <a href="{{ apps_url }}" title='{% trans " Apps" %}'
                      class="nav-link {% if apps_url == active_section_url %}
                      active{% endif %}">
-                    <span class="fa fa-th nav-icon"></span>
+                    {% icon 'th' %}
                     {% trans "Apps" %}
                   </a>
                 </li>
@@ -139,7 +138,7 @@
                   <a href="{{ system_url }}" title='{% trans " System" %}'
                      class="nav-link {% if system_url == active_section_url %}
                      active{% endif %}">
-                    <span class="fa fa-cog nav-icon"></span>
+                    {% icon 'cog' %}
                     {% trans "System" %}
                   </a>
                 </li>
@@ -162,7 +161,7 @@
                      class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
                      role="button" aria-expanded="false" aria-haspopup="true"
                      id="id_user_menu_link">
-                    <i class="fa fa-user nav-icon"></i>
+                    {% icon 'user' %}
                     {{ request.user.username }}
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end dropdown-menu-xxl-start"
@@ -202,7 +201,7 @@
                             action="{% url 'users:logout' %}">
                         {% csrf_token %}
                         <input type="submit" class="dropdown-item no-running-status"
-                               value="{% trans "Log out" %}"/>
+                               value="{% trans "Log out" %}">
                       </form>
                     </li>
                   </ul>
@@ -212,7 +211,7 @@
                   <a class="nav-link"
                      href="{% url 'language-selection' %}?next={{ request.path|iriencode }}"
                      title="{% trans "Select language" %}">
-                    <span class="fa fa-globe-w nav-icon"></span>
+                    {% icon 'globe-w' %}
                     <span class="nav-text d-inline-block d-md-none">
                       {% trans "Select language" %}
                     </span>
@@ -221,7 +220,7 @@
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'help:about' %}"
                      title="{% trans "About" %}">
-                    <span class="fa fa-question-circle nav-icon"></span>
+                    {% icon 'question-circle' %}
                     <span class="nav-text d-inline-block d-md-none">
                       {% trans "About" %}
                     </span>
@@ -230,7 +229,7 @@
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'users:login' %}"
                      title="{% trans "Log in" %}">
-                    <i class="fa fa-user nav-icon"></i>
+                    {% icon 'user' %}
                     {% trans "Log in" %}</a>
                 </li>
               {% endif %}
@@ -240,7 +239,7 @@
                       method="post" action="{% url 'users:logout' %}">
                   {% csrf_token %}
                   <input type="submit" class="nav-link no-running-status btn btn-link"
-                         value="{% trans "Log out" %}"/>
+                         value="{% trans "Log out" %}">
                 </form>
               {% endif %}
             {% endblock %}

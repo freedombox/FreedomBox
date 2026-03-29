@@ -4,6 +4,7 @@
 {% endcomment %}
 
 {% load i18n %}
+{% load extras %}
 
 {% block configuration %}
   {{ block.super }}
@@ -13,7 +14,7 @@
   <div class="btn-toolbar">
     <a href="{% url 'kiwix:add-package' %}" class="btn btn-default"
        role="button" title="{% trans 'Add a content package' %}">
-      <span class="fa fa-plus" aria-hidden="true"></span>
+      {% icon 'plus' %}
       {% trans 'Add Package' %}
     </a>
   </div>
@@ -35,7 +36,7 @@
               <a href="{% url 'kiwix:delete-package' id %}"
                  class="btn btn-default btn-sm secondary" role="button"
                  title="{% blocktrans with title=package.title %}Delete package {{ title }}{% endblocktrans %}">
-                <span class="fa fa-trash-o" aria-hidden="true"></span>
+                {% icon 'trash-o' %}
               </a>
             </div>
           {% endfor %}

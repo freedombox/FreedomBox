@@ -3,7 +3,7 @@
 {% endcomment %}
 
 {% load i18n %}
-{% load plinth_extras %}
+{% load extras %}
 
 {% if clients %}
   {% with client_platforms=clients|clients_get_platforms %}
@@ -14,14 +14,14 @@
          {% else %} href="{{ client_platforms.web.0.url }}"
          {% endif %}>
         {% trans "Launch web client" %}
-        <span class="fa fa-external-link"></span>
+        {% icon 'external-link' %}
       </a>
     {% endif %}
 
     {% if client_platforms.web|length > 1 or client_platforms.other %}
       <button type="button" data-bs-toggle="collapse" data-bs-target="#clients"
               class="btn btn-default collapsed collapsible-button">
-        <span class="fa fa-chevron-right fa-fw" aria-hidden="true"></span>
+        {% icon 'chevron-right' %}
         {% trans "Client Apps" %}
       </button>
     {% endif %}

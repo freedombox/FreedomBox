@@ -12,7 +12,7 @@ from plinth.tests import functional
 
 from .test_privileged import ZIM_ID
 
-pytestmark = [pytest.mark.apps, pytest.mark.sso, pytest.mark.kiwix]
+pytestmark = [pytest.mark.apps, pytest.mark.kiwix]
 
 _default_url = functional.config['DEFAULT']['url']
 

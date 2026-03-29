@@ -5,6 +5,7 @@
 
 {% load bootstrap %}
 {% load i18n %}
+{% load extras %}
 
 {% block configuration %}
   {{ block.super }}
@@ -14,7 +15,7 @@
   <div class="btn-toolbar">
     <a href="{% url 'ikiwiki:create' %}" class="btn btn-default"
        role="button" title="{% trans 'Create Wiki or Blog' %}">
-      <span class="fa fa-plus" aria-hidden="true"></span>
+      {% icon 'plus' %}
       {% trans 'Create Wiki or Blog' %}
     </a>
   </div>
@@ -36,8 +37,7 @@
                  class="btn btn-default btn-sm secondary"
                  role="button"
                  title="{% blocktrans with site=site.1 %}Delete site {{ site }}{% endblocktrans %}">
-                <span class="fa fa-trash-o"
-                      aria-hidden="true"></span>
+                {% icon 'trash-o' %}
               </a>
             </div>
           {% endfor %}

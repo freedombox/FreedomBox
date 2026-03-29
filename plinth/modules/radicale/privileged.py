@@ -2,6 +2,7 @@
 """Configure Radicale."""
 
 import os
+import shutil
 
 import augeas
 
@@ -10,6 +11,7 @@ from plinth.actions import privileged
 
 CONFIG_FILE = '/etc/radicale/config'
 LOG_PATH = '/var/log/radicale'
+SERVICE_NAME = 'uwsgi-app@radicale.service'
 
 
 @privileged
@@ -23,7 +25,8 @@ def setup():
     aug = load_augeas()
     aug.set('auth/type', 'remote_user')
     aug.save()
-    action_utils.service_try_restart('uwsgi')
+    # Service is started again by socket.
+    action_utils.service_stop(SERVICE_NAME)
 
 
 @privileged
@@ -36,8 +39,7 @@ def configure(rights_type: str):
     aug = load_augeas()
     aug.set('rights/type', rights_type)
     aug.save()
-
-    action_utils.service_try_restart('uwsgi')
+    action_utils.service_stop(SERVICE_NAME)
 
 
 @privileged
@@ -57,3 +59,9 @@ def load_augeas():
     aug.set('/augeas/context', '/files' + CONFIG_FILE)
     aug.load()
     return aug
+
+
+@privileged
+def uninstall():
+    """Remove all radicale collections."""
+    shutil.rmtree('/var/lib/private/radicale/', ignore_errors=True)

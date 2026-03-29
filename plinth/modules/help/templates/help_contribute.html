@@ -4,6 +4,7 @@
 {% endcomment %}
 
 {% load i18n %}
+{% load extras %}
 
 {% block content %}
   <h2>{% trans "Contribute" %}</h2>
@@ -55,7 +56,7 @@
     <a class="btn btn-default collapsed collapsible-button" role="button"
        data-bs-toggle="collapse" href="#collapse-issues" aria-expanded="false"
        aria-controls="collapse-issues">
-      <span class="fa fa-chevron-right fa-fw" aria-hidden="true"></span>
+      {% icon 'chevron-right' %}
       {% trans "Show issues" %}
     </a>
 

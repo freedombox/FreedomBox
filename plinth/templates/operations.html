@@ -2,9 +2,11 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 {% endcomment %}
 
+{% load extras %}
+
 {% for operation in operations %}
   <div class="app-operation">
-    <span class="fa fa-refresh fa-spin processing"></span>
+    {% icon 'refresh' class='svg-icon spin' %}
     {{ operation.translated_message }}
   </div>
 {% endfor %}

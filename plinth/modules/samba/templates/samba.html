@@ -5,12 +5,12 @@
 
 {% load bootstrap %}
 {% load i18n %}
-{% load plinth_extras %}
+{% load extras %}
 {% load static %}
 
 {% block page_head %}
   <link type="text/css" rel="stylesheet"
-        href="{% static 'samba/samba.css' %}"/>
+        href="{% static 'samba/samba.css' %}">
 {% endblock %}
 
 {% block configuration %}
@@ -29,7 +29,7 @@
       <div class="samba-disk-shares">
         <div class="samba-disk-header">
           <div class="samba-disk-name">
-            <span class="fa fa-hdd-o"></span>
+            {% icon 'hdd-o' %}
             {{ disk.name }}
           </div>
           <div class="samba-disk-free">

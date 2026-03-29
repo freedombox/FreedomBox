@@ -4,17 +4,18 @@
 
 {% load i18n %}
 {% load static %}
+{% load extras %}
 
 <div class="card">
   <a href="{{ item.url }}">
     <div class="card-icon">
       {% if 'fa-' in item.icon %}
-        <span class="fa {{ item.icon }}"></span>
+        {% icon item.icon|slice:"3:" class='card-icon' %}
       {% else %}
         {% if item.app_id %}
-          <img src="{% static item.app_id %}/icons/{{ item.icon }}.svg"/>
+          {% icon item.app_id|add:'/icons/'|add:item.icon|add:'.svg' class='card-icon' %}
         {% else %}
-          <img src="{% static 'theme/icons/' %}{{ item.icon }}.svg"/>
+          {% icon item.icon class='card-icon' %}
         {% endif %}
       {% endif %}
     </div>

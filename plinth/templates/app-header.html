@@ -5,15 +5,16 @@
 {% load bootstrap %}
 {% load i18n %}
 {% load static %}
+{% load extras %}
 
 <header class="app-header {% if not app_info.icon_filename %} app-header-single-column {% endif %}">
 
   {% if app_info.icon_filename %}
 
     {% if app_info.app_id %}
-      <img src="{% static app_info.app_id %}/icons/{{ app_info.icon_filename }}.svg" alt="{{ app_info.name  }}"/>
+      {% icon app_info.app_id|add:'/icons/'|add:app_info.icon_filename|add:'.svg' %}
     {% else %}
-      <img src="{% static 'theme/icons/' %}{{ app_info.icon_filename }}.svg" alt="{{ app_info.name  }}"/>
+      {% icon app_info.icon_filename %}
     {% endif %}
 
   {% endif %}

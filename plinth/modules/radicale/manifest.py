@@ -83,9 +83,9 @@ backup = {
         'directories': ['/etc/radicale/']
     },
     'data': {
-        'directories': ['/var/lib/radicale/']
+        'directories': ['/var/lib/private/radicale/', '/var/lib/radicale/']
     },
-    'services': ['uwsgi']
+    'services': ['uwsgi-app@radicale.socket']
 }
 
 tags = [_('Calendar'), _('Contacts'), _('Server'), _('CalDAV'), _('CardDAV')]

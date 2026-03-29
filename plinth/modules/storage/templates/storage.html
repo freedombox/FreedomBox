@@ -6,10 +6,11 @@
 {% load bootstrap %}
 {% load i18n %}
 {% load static %}
+{% load extras %}
 
 {% block page_head %}
   <link type="text/css" rel="stylesheet"
-        href="{% static 'storage/storage.css' %}"/>
+        href="{% static 'storage/storage.css' %}">
 {% endblock %}
 
 {% block configuration %}
@@ -61,8 +62,8 @@
                       action="{% url 'storage:eject' disk.device|urlencode:'' %}">
                   {% csrf_token %}
 
-                  <button type="submit"
-                          class="btn btn-sm btn-default fa fa-eject">
+                  <button type="submit" class="btn btn-sm btn-default">
+                    {% icon 'eject' %}
                   </button>
                 </form>
               {% endif %}
