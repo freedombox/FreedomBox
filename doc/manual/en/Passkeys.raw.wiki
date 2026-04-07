@@ -1,0 +1,117 @@
+#language en
+
+##TAG:TRANSLATION-HEADER-START
+~- [[FreedomBox/Guide/Passkeys|English]] - [[DebianWiki/EditorGuide#translation|(+)]] -~
+##TAG:TRANSLATION-HEADER-END
+
+<<TableOfContents>>
+
+## BEGIN_INCLUDE
+
+== Use Passkeys to Improve Login Security ==
+
+{{{#!wiki tip
+Passkeys are strongly recommended over passwords.
+}}}
+
+'''Available since''': !FreedomBox 26.6
+
+!FreedomBox allows users to login to their account with passkeys. Passkeys are way to verify user's identity using digital signatures. They are a more secure alternative to passwords. Secret information is kept with the user on their phone, laptop, or a hardware token and unlocked using a PIN, fingerprint, or face ID. No secrets are stored on the server. The server knows only the public information that can be used to verify user's signatures.
+
+=== How do passkeys work? ===
+
+After the user logs into their account, one or more passkeys can be added to the account from the 'Manage Passkeys' page. At the time of adding passkeys, the passkey hardware (or authenticator), will generate a public and private key pair that is tied to the domain and user account. The private key is kept in the hardware and public key is provided to the server. The server stores the public key along with user account. Later when a user is trying to log in to their account, the server sends a long randomly generated string to the authenticator called the challenge. The hardware digitally signs the challenge using the private key and sends it to the server. The server is able to verify that the signature is made by the holder of private key by just using the public key that it has (this is a feature of public/private key pairs). Once verified, the server logs into the user account associated with that public key.
+
+During this process, the browser acts as a trusted intermediary between the passkey hardware and the server. It ensures that the user is verified by providing PIN, fingerprint, face ID, etc. It also ensures that a passkey is only used with the domain it is meant for.
+
+=== Better security ===
+
+Passkeys provide better security than passwords:
+
+ * '''Multi-factor authentication''': During registration of a passkey and during login, !FreedomBox requests that the browser verify the user. This means the user will need to unlock the authenticator device by providing a PIN, fingerprint, face ID, etc. This acts as one of the authentication factors: "something you know" or "something your are". Another authentication factor is "something that you have": the hardware that stores your passkey (such as Solokey, Nitrokey, or Yubikey) or a phone. Together, this is similar to using a password along with a second factor authentication. So, passkeys can replace two-factor authentication while being much more convenient and easier to use.
+
+ * '''No reuse''': Passkeys are never reused. For each domain a separate passkey is generated and used. Browsers ensure that passkey for a domain is never used with another domain. Unlike reused passwords, when a website or a service is compromised, adversaries can't use that to gain access to your account in different website or service. This also prevents phishing attacks were adversarial websites pretend to be legitimate ones.
+
+ * '''No secrets on the server''': The website allowing use of passkeys for login does not store any secret information. It only stores the public key part of the passkey. If this information is obtained by an adversary, they will not be able to login to the website. Only the private key stored on the authenticator device can be used to login to the website (since only a private key can create signatures needed for login process).
+
+ * '''No guessing''': The secret part of a passkey is much more impractical to guess compared to a password. There is no risk that someone will be able to guess your password and access your account. There is no risk that you might accidentally set a predictable password.
+
+ * '''Convenience''': Users don't need to remember username, email, or a secret to login to a website. They don't need to receive OTP via text or email, use TOTP app, or confirm login using a mobile app. After clicking on the 'Login with passkey' button, they unlock their authenticator using a PIN, fingerprint, or face ID. Then they physically tap on the authenticator (if necessary). The user is then logged in. There are fewer things to remember. Even the PIN for a hardware authenticator is typically easier to remember than a password. This convenience encourages users to use this mechanism, ultimately leading to better security.
+
+=== Hardware Needed for Passkeys ===
+
+{{{#!wiki tip
+'''[[https://solokeys.com/|Solokeys]]''' are recommend for passkey storage by the !FreedomBox project.
+
+ * The [[https://github.com/solokeys/solo2|firmware]] (the OS for the hardware) is free software.
+ * The [[https://github.com/solokeys/solo2-hw|hardware]] designs are free too.
+ * The Solokeys team and the !FreedomBox team collaborate.
+}}}
+
+There are many ways to get started with passkeys:
+
+ * '''Separate passkey hardware''': The recommended way to store passkeys is on a specific hardware key. In this setup, the private key part of the passkey never leaves the hardware device. They are also typically built such that it is hard for an adversary with physical access the device to extract passkey from it. Another advantage of these devices is that the hardware can be used with all your existing devices such as phones, laptops, and desktops. These devices interact with phones and desktops using USB, Bluetooth, or NFC tap. In case of NFC, the device works with proximity from the phone without additional power. When using a separate hardware, however, you must have a backup way of logging into your account in the event that you loose the hardware device. This could be an additional passkey hardware or a password. See the section on backup below.
+
+ * '''Builtin passkey hardware''': When a separate hardware device is not available, specialized hardware, such as a TPM, built into the computer is preferable. This setup will still ensure that passkeys do not leave the hardware. One disadvantage of this approach is that the passkey only works with that device and you will need register each device you use separately.
+
+ * '''Password managers''': As a last resort, one could use password managers that support passkeys and work with your browser or OS. Android, iOS, and Windows offer such password managers. Passkeys stored in password managers are typically synchronized to the cloud and a breach of that service/account could result in compromise of all your accounts. However, they work across multiple devices and you typically don't have to worry about loosing a single hardware device. 
+
+=== Naming Your Passkey ===
+
+In !FreedomBox, when a passkey is added to your account, it by default named as 'Key 1'. The next one will be named 'Key 2' and so on. However, it is good practice to name them such that you know which device they are stored on. For example, you can name them 'Key on Primary Solokey', 'Key on Android Phone', etc. If a device is lost, you can login to your account and remove that key from the list of passkeys associated with your account.
+
+=== Multiple Domains ===
+
+Each passkey is strictly tied to a domain and never used for another domain. This necessary to ensure that a malicious domain does not impersonate a legitimate domain. Hence, if your !FreedomBox is configured with multiple domains, then the browser and hardware authenticator device will treat them as separate accounts for the purpose of authentication with passkeys. This means you need to register separate passkeys for each of your domains.
+
+For example, assume your !FreedomBox has two domains configured mydomain1.fbx.one and mydomain2.example. Visit mydomain1.fbx.one, log in to your account, and add a passkey. This passkey will be tied to this domain. When you are trying to log in, the passkey will work if you are accessing mydomain1.fbx.one but it won't work when accessing mydomain2.example. To make the second domain work, you need to add a second passkey while accessing your !FreedomBox with the domain name mydomain2.example. Two passkeys are then stored in your hardware token. First one will be tied to mydomain1.fbx.one and will only be used when accessing that domain. Second one will be tied to mydomain2.example and will only be used when accessing that domain.
+
+=== Multiple User Accounts ===
+
+When you use a passkey hardware for multiple user accounts on the same !FreedomBox, separate passkeys will be created for each of the accounts. Each passkey will be assigned the username of the account it is tied to. This information is stored in the passkey as well as the server. During login, the browser will prompt to select the user account you want to log into. If only a single passkey exists for a given domain name, then the selection dialog is not shown and user will login to the account corresponding to the passkey.
+
+=== Backup for Passkey ===
+
+In case the device storing your passkey is lost, you need alternate ways to login to you account:
+
+ 1. You can register and maintain two passkeys on two separate devices. For example, your primary passkey could be on a Solokey hardware token and the second passkey could be on an Android phone or another Solokey hardware token. If one is lost, you can login with the other. This is the recommended approach.
+
+ 1. !FreedomBox continues to support passwords even after passkeys are registered.  So, if a passkey device is lost, you can login with a password.
+
+ 1. If you forget your password and if your user account is not the only administrator account on the !FreedomBox, you can ask an administrator to reset your password. After that you can register a new passkey stored on a new device.
+
+=== Supported Platforms ===
+
+Passkeys are based on WebAuthn, a standard published by World Wide Web Consortium. So, !FreedomBox's implementation is expected to work wherever passkeys work. It has been tested as follows:
+
+|| '''OS/Device''' || '''Browser''' || '''Authenticator''' || '''Result''' ||
+|| GNU/Linux || Firefox || Solokeys || Pass ||
+|| GNU/Linux || Firefox || Yubikey || Pass ||
+|| GNU/Linux || Chromium || Solokeys || Pass ||
+|| GNU/Linux || GNOME Web || - || Fail (Browser does not support Webauthn) ||
+|| Windows || Firefox || Windows Hello || Pass ||
+|| Windows || Firefox || Solokeys || Pass ||
+|| Windows || Firefox || Android Phone || Pass ||
+|| Windows || Chrome || Windows Hello || Pass ||
+|| Windows || Chrome || Solokeys || Pass ||
+|| Windows || Chrome || Android Phone || Pass ||
+|| Windows || Edge || Windows Hello || Pass ||
+|| Windows || Edge || Solokeys || Pass ||
+|| Windows || Edge || Android Phone || Pass ||
+|| Android || Firefox || Google Password Manager || Pass ||
+|| Android || Firefox || Solokeys USB || Fail (Touch is not detected after PIN entry) ||
+|| Android || Firefox || Solokeys NFC || Fail (Need to understand NFC setup) ||
+|| Android || Firefox || Another device || Untested ||
+|| Android || Chrome || Google Password Manager || Pass ||
+|| Android || Chrome || Solokeys USB || Fail (Touch is not detected after PIN entry) ||
+|| Android || Chrome || Solokeys NFC || Fail (Need to understand NFC setup) ||
+|| Android || Chrome || Another device || Untested ||
+
+## END_INCLUDE
+
+Back to [[FreedomBox/Features|Features introduction]] or [[FreedomBox/Manual|manual]] pages.
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox
