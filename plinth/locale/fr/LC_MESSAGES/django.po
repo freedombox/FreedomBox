@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-24 00:03+0000\n"
+"POT-Creation-Date: 2026-04-07 00:12+0000\n"
 "PO-Revision-Date: 2026-03-29 11:09+0000\n"
 "Last-Translator: Coucouf <coucouf@coucouf.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/freedombox/"
@@ -29,7 +29,7 @@ msgstr "La configuration statique {etc_path} est correctement configurée"
 msgid "Container {container_name} is running"
 msgstr "Le conteneur {container_name} est actif"
 
-#: plinth/context_processors.py:21 plinth/views.py:175
+#: plinth/context_processors.py:21 plinth/views.py:180
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
@@ -350,6 +350,7 @@ msgstr "Dépôt"
 #: plinth/modules/networks/templates/connection_show.html:76
 #: plinth/modules/samba/templates/samba.html:66
 #: plinth/modules/sharing/templates/sharing.html:33
+#: plinth/modules/users/templates/users_passkeys.html:92
 msgid "Name"
 msgstr "Nom"
 
@@ -1488,9 +1489,10 @@ msgstr ""
 "Sélectionnez la page affichée par défaut lorsque quelqu’un visite votre "
 "{box_name} sur le Web. Vous pouvez typiquement utiliser cette option pour "
 "mettre votre blogue ou votre wiki en page d’accueil lorsqu’on se rend sur "
-"votre nom de domaine. Veuillez noter qu’avec une page d’accueil autre que « "
-"Gestion de la {box_name} (Plinth) », vos utilisateurs devront explicitement "
-"ajouter le chemin /freedombox pour accéder à l’interface {box_name} (Plinth)."
+"votre nom de domaine. Veuillez noter qu’avec une page d’accueil autre que "
+"« Gestion de la {box_name} (Plinth) », vos utilisateurs devront "
+"explicitement ajouter le chemin /freedombox pour accéder à l’interface "
+"{box_name} (Plinth)."
 
 #: plinth/modules/config/forms.py:48
 msgid "Show advanced apps and features"
@@ -2168,6 +2170,7 @@ msgstr "Adresse IP"
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:30
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:27
 #: plinth/modules/storage/templates/storage.html:29
+#: plinth/modules/users/templates/users_passkeys.html:96
 msgid "Actions"
 msgstr "Actions"
 
@@ -3390,8 +3393,8 @@ msgstr "Partager vos impressions"
 msgid "Contribute"
 msgstr "Participer"
 
-#: plinth/modules/help/__init__.py:53 plinth/templates/base.html:222
-#: plinth/templates/base.html:225 plinth/templates/help-menu.html:47
+#: plinth/modules/help/__init__.py:53 plinth/templates/base.html:229
+#: plinth/templates/base.html:232 plinth/templates/help-menu.html:47
 #: plinth/templates/help-menu.html:48 plinth/templates/index.html:96
 msgid "About"
 msgstr "À propos"
@@ -3575,6 +3578,7 @@ msgstr ""
 #: plinth/modules/help/templates/help_contribute.html:43
 #: plinth/modules/power/templates/power_restart.html:27
 #: plinth/modules/power/templates/power_shutdown.html:26
+#: plinth/modules/users/templates/users_passkeys.html:77
 #: plinth/templates/app-header.html:67
 msgid "Learn more..."
 msgstr "En savoir plus…"
@@ -4065,7 +4069,7 @@ msgstr "Conférence Web"
 
 #: plinth/modules/janus/templates/janus_video_room.html:192
 #: plinth/modules/jsxc/templates/jsxc_launch.html:117
-#: plinth/templates/base.html:282
+#: plinth/templates/base.html:289
 msgid "JavaScript license information"
 msgstr "Information de licence JavaScript"
 
@@ -6100,12 +6104,18 @@ msgstr "Modifier la connexion"
 
 #: plinth/modules/networks/templates/connections_fields.html:14
 #: plinth/modules/oidc/templates/oauth2_provider/authorize.html:64
+#: plinth/modules/users/templates/users_login.html:26
+#: plinth/modules/users/templates/users_passkeys.html:26
+#: plinth/modules/users/templates/users_passkeys.html:54
 #: plinth/templates/messages.html:15
 msgid "Error:"
 msgstr "Erreur :"
 
 #: plinth/modules/networks/templates/connections_fields.html:21
-#: plinth/modules/users/templates/users_update.html:50
+#: plinth/modules/users/templates/users_login.html:33
+#: plinth/modules/users/templates/users_passkeys.html:33
+#: plinth/modules/users/templates/users_passkeys.html:140
+#: plinth/modules/users/templates/users_update.html:55
 #: plinth/templates/messages.html:31
 msgid "Close"
 msgstr "Fermer"
@@ -7099,8 +7109,8 @@ msgstr "Redémarrer"
 msgid "Shutdown"
 msgstr "Éteindre"
 
-#: plinth/modules/power/templates/power.html:15 plinth/templates/base.html:187
-#: plinth/templates/base.html:188
+#: plinth/modules/power/templates/power.html:15 plinth/templates/base.html:194
+#: plinth/templates/base.html:195
 msgid "Restart"
 msgstr "Redémarrer"
 
@@ -8230,8 +8240,9 @@ msgid ""
 msgstr ""
 "Les instantanés ne fonctionnent actuellement que sur des systèmes de "
 "fichiers btrfs et uniquement pour la partition racine. Les instantanés ne "
-"peuvent pas remplacer une vraie <a href=\"/freedombox/sys/backups\">"
-"sauvegarde</a> car ils sont forcément conservés sur la même partition. "
+"peuvent pas remplacer une vraie <a href=\"/freedombox/sys/"
+"backups\">sauvegarde</a> car ils sont forcément conservés sur la même "
+"partition. "
 
 #: plinth/modules/snapshot/__init__.py:50
 msgid "Storage Snapshots"
@@ -9974,7 +9985,7 @@ msgstr "Sauvegarder le mot de passe"
 #: plinth/modules/users/templates/users_create.html:19
 #: plinth/modules/users/templates/users_list.html:16
 #: plinth/modules/users/templates/users_list.html:18
-#: plinth/modules/users/views.py:109
+#: plinth/modules/users/views.py:134
 msgid "Create User"
 msgstr "Créer un utilisateur"
 
@@ -10027,7 +10038,7 @@ msgid "Skip this step"
 msgstr "Passer cette étape"
 
 #: plinth/modules/users/templates/users_list.html:12
-#: plinth/modules/users/views.py:127
+#: plinth/modules/users/views.py:152
 msgid "Users"
 msgstr "Utilisateurs"
 
@@ -10036,16 +10047,114 @@ msgstr "Utilisateurs"
 msgid "Edit user %(username)s"
 msgstr "Paramètres du compte %(username)s"
 
-#: plinth/modules/users/templates/users_login.html:23
+#: plinth/modules/users/templates/users_login.html:30
+msgid "Logging in with passkey failed: "
+msgstr ""
+
+#: plinth/modules/users/templates/users_login.html:41
+#: plinth/modules/users/templates/users_passkeys.html:41
+#, fuzzy
+#| msgid "This app does not support diagnostics"
+msgid "Browser does not support passkeys."
+msgstr "Cette application n’est pas compatible avec les tests de diagnostic"
+
+#: plinth/modules/users/templates/users_login.html:57
 msgid "Login"
 msgstr "S’identifier"
+
+#: plinth/modules/users/templates/users_login.html:70
+#: plinth/modules/users/templates/users_login.html:72
+msgid "Log in with passkey"
+msgstr ""
+
+#: plinth/modules/users/templates/users_passkey_edit.html:19
+#, fuzzy
+#| msgid "Update setup"
+msgid "Update Passkey"
+msgstr "Appliquer les changements"
+
+#: plinth/modules/users/templates/users_passkeys.html:30
+msgid "Adding passkey failed: "
+msgstr ""
+
+#: plinth/modules/users/templates/users_passkeys.html:48
+#: plinth/modules/users/views.py:314
+msgid "Passkeys"
+msgstr ""
+
+#: plinth/modules/users/templates/users_passkeys.html:57
+msgid ""
+"Working with passkeys requires using browser's Javascript API. Please enable "
+"Javascript support in your browser to continue."
+msgstr ""
+
+#: plinth/modules/users/templates/users_passkeys.html:66
+msgid ""
+"Passkeys are way to verify user's identity using digital signatures. They "
+"are a more secure alternative to passwords. Secret information is kept with "
+"the user on their phone, laptop, or a hardware token and unlocked using a "
+"PIN, fingerprint, or face ID. No secrets are stored on the server. The "
+"server knows only the public information that can used to verify user's "
+"signatures."
+msgstr ""
+
+#: plinth/modules/users/templates/users_passkeys.html:83
+#: plinth/modules/users/templates/users_passkeys.html:85
+#, fuzzy
+#| msgid "Add password"
+msgid "Add passkey"
+msgstr "Ajouter un mot de passe"
+
+#: plinth/modules/users/templates/users_passkeys.html:93
+#, fuzzy
+#| msgid "Domain"
+msgid "For Domain"
+msgstr "Domaine"
+
+#: plinth/modules/users/templates/users_passkeys.html:94
+msgid "Added"
+msgstr ""
+
+#: plinth/modules/users/templates/users_passkeys.html:95
+#, fuzzy
+#| msgid "Last scanned: "
+msgid "Last Used"
+msgstr "Dernière analyse : "
+
+#: plinth/modules/users/templates/users_passkeys.html:126
+msgid "No passkeys added to user account."
+msgstr ""
+
+#: plinth/modules/users/templates/users_passkeys.html:135
+msgid "Delete passkey <em class=\"passkey-name\"></em>?"
+msgstr ""
+
+#: plinth/modules/users/templates/users_passkeys.html:145
+msgid "You will need this passkey's device to add it back again."
+msgstr ""
+
+#: plinth/modules/users/templates/users_passkeys.html:152
+#, fuzzy
+#| msgid "Delete user"
+msgid "Delete passkey"
+msgstr "Supprimer l'utilisateur"
+
+#: plinth/modules/users/templates/users_passkeys.html:155
+#: plinth/modules/users/templates/users_update.html:72
+msgid "Cancel"
+msgstr "Annuler"
 
 #: plinth/modules/users/templates/users_update.html:16
 #, python-format
 msgid "Edit User <em>%(username)s</em>"
 msgstr "Modifier l’utilisateur <em>%(username)s</em>"
 
-#: plinth/modules/users/templates/users_update.html:24
+#: plinth/modules/users/templates/users_update.html:23
+#, python-format
+msgid "Use <a href=\"%(passkeys_url)s\">passkeys</a> for better security."
+msgstr ""
+
+#: plinth/modules/users/templates/users_update.html:29
 #, python-format
 msgid ""
 "Use the <a href='%(change_password_url)s'>change password form </a> to "
@@ -10054,19 +10163,19 @@ msgstr ""
 "Utiliser le <a href=\"%(change_password_url)s\">formulaire de changement de "
 "mot de passe</a> pour changer votre mot de passe."
 
-#: plinth/modules/users/templates/users_update.html:36
+#: plinth/modules/users/templates/users_update.html:41
 #: plinth/templates/language-selection.html:17
 msgid "Save Changes"
 msgstr "Appliquer les changements"
 
-#: plinth/modules/users/templates/users_update.html:45
+#: plinth/modules/users/templates/users_update.html:50
 #, python-format
 msgid "Delete user <em>%(username)s</em> and all the user's files?"
 msgstr ""
 "Supprimer l’utilisateur <em>%(username)s</em> et tous les fichiers de "
 "l'utilisateur ?"
 
-#: plinth/modules/users/templates/users_update.html:55
+#: plinth/modules/users/templates/users_update.html:60
 msgid ""
 "Deleting a user account also removes all the files user's home directory. If "
 "you wish to keep these files, disable the user account instead."
@@ -10075,44 +10184,56 @@ msgstr ""
 "répertoire personnel de l'utilisateur. Si vous voulez conserver ces "
 "fichiers, désactivez plutôt le compte de l'utilisateur."
 
-#: plinth/modules/users/templates/users_update.html:64
+#: plinth/modules/users/templates/users_update.html:69
 msgid "Delete user and files"
 msgstr "Supprimer l'utilisateur et les fichiers"
 
-#: plinth/modules/users/templates/users_update.html:67
-msgid "Cancel"
-msgstr "Annuler"
-
-#: plinth/modules/users/views.py:87
+#: plinth/modules/users/views.py:112
 msgid "Logged out successfully."
 msgstr "Déconnecté avec succès."
 
-#: plinth/modules/users/views.py:107
+#: plinth/modules/users/views.py:132
 #, python-format
 msgid "User %(username)s created."
 msgstr "Utilisateur %(username)s créé."
 
-#: plinth/modules/users/views.py:138
+#: plinth/modules/users/views.py:163
 #, python-format
 msgid "User %(username)s updated."
 msgstr "Utilisateur %(username)s mis à jour."
 
-#: plinth/modules/users/views.py:139
+#: plinth/modules/users/views.py:164
 msgid "Edit User"
 msgstr "Modification de l’utilisateur"
 
-#: plinth/modules/users/views.py:177
+#: plinth/modules/users/views.py:202
 #, python-format
 msgid "User %(username)s deleted."
 msgstr "L'utilisateur %(username)s supprimé."
 
-#: plinth/modules/users/views.py:196
+#: plinth/modules/users/views.py:221
 msgid "Change Password"
 msgstr "Changer Mot de Passe"
 
-#: plinth/modules/users/views.py:197
+#: plinth/modules/users/views.py:222
 msgid "Password changed successfully."
 msgstr "Le mot de passe a été changé."
+
+#: plinth/modules/users/views.py:420
+#, fuzzy
+#| msgid "A share with this name already exists."
+msgid "Passkey with that identifier already exists."
+msgstr "Un partage existe déjà avec ce nom."
+
+#: plinth/modules/users/views.py:431
+#, fuzzy
+#| msgid "Edit User"
+msgid "Edit Passkey"
+msgstr "Modification de l’utilisateur"
+
+#: plinth/modules/users/views.py:518 plinth/modules/users/views.py:542
+msgid "Passkey used is not known."
+msgstr ""
 
 #: plinth/modules/wireguard/__init__.py:20
 msgid "WireGuard is a fast, modern, secure VPN tunnel."
@@ -10915,22 +11036,28 @@ msgid " System"
 msgstr " Système"
 
 #: plinth/templates/base.html:179 plinth/templates/base.html:180
+#, fuzzy
+#| msgid "Manage Aliases"
+msgid "Manage passkeys"
+msgstr "Configurer des alias"
+
+#: plinth/templates/base.html:186 plinth/templates/base.html:187
 msgid "Change password"
 msgstr "Changer le mot de passe"
 
-#: plinth/templates/base.html:193 plinth/templates/base.html:194
+#: plinth/templates/base.html:200 plinth/templates/base.html:201
 msgid "Shut down"
 msgstr "Éteindre"
 
-#: plinth/templates/base.html:204 plinth/templates/base.html:242
+#: plinth/templates/base.html:211 plinth/templates/base.html:249
 msgid "Log out"
 msgstr "Se déconnecter"
 
-#: plinth/templates/base.html:213 plinth/templates/base.html:216
+#: plinth/templates/base.html:220 plinth/templates/base.html:223
 msgid "Select language"
 msgstr "Choisir la langue"
 
-#: plinth/templates/base.html:231 plinth/templates/base.html:233
+#: plinth/templates/base.html:238 plinth/templates/base.html:240
 msgid "Log in"
 msgstr "S’identifier"
 
@@ -11189,15 +11316,15 @@ msgstr ""
 "L’ensemble données de l’appli et sa configuration seront définitivement "
 "perdus. Un appli peut toujours être réinstallée de zéro."
 
-#: plinth/views.py:89
+#: plinth/views.py:94
 msgid "Here"
 msgstr "Ici"
 
-#: plinth/views.py:431
+#: plinth/views.py:436
 msgid "Setting unchanged"
 msgstr "Paramètre inchangé"
 
-#: plinth/views.py:654
+#: plinth/views.py:659
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr "avant la désinstallation de {app_id}"

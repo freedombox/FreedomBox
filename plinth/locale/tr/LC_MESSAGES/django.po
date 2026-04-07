@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-24 00:03+0000\n"
+"POT-Creation-Date: 2026-04-07 00:12+0000\n"
 "PO-Revision-Date: 2026-03-25 07:09+0000\n"
 "Last-Translator: Burak Yavuz <hitowerdigit@hotmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/freedombox/"
@@ -28,7 +28,7 @@ msgstr "Sabit yapılandırma {etc_path} düzgün bir şekilde ayarlanmış"
 msgid "Container {container_name} is running"
 msgstr "{container_name} kapsayıcısı çalışıyor"
 
-#: plinth/context_processors.py:21 plinth/views.py:175
+#: plinth/context_processors.py:21 plinth/views.py:180
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
@@ -343,6 +343,7 @@ msgstr "Depo"
 #: plinth/modules/networks/templates/connection_show.html:76
 #: plinth/modules/samba/templates/samba.html:66
 #: plinth/modules/sharing/templates/sharing.html:33
+#: plinth/modules/users/templates/users_passkeys.html:92
 msgid "Name"
 msgstr "Ad"
 
@@ -2120,6 +2121,7 @@ msgstr "IP Adresi"
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:30
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:27
 #: plinth/modules/storage/templates/storage.html:29
+#: plinth/modules/users/templates/users_passkeys.html:96
 msgid "Actions"
 msgstr "Eylemler"
 
@@ -3336,8 +3338,8 @@ msgstr "Geri Bildirim Gönder"
 msgid "Contribute"
 msgstr "Katkıda Bulun"
 
-#: plinth/modules/help/__init__.py:53 plinth/templates/base.html:222
-#: plinth/templates/base.html:225 plinth/templates/help-menu.html:47
+#: plinth/modules/help/__init__.py:53 plinth/templates/base.html:229
+#: plinth/templates/base.html:232 plinth/templates/help-menu.html:47
 #: plinth/templates/help-menu.html:48 plinth/templates/index.html:96
 msgid "About"
 msgstr "Hakkında"
@@ -3511,6 +3513,7 @@ msgstr ""
 #: plinth/modules/help/templates/help_contribute.html:43
 #: plinth/modules/power/templates/power_restart.html:27
 #: plinth/modules/power/templates/power_shutdown.html:26
+#: plinth/modules/users/templates/users_passkeys.html:77
 #: plinth/templates/app-header.html:67
 msgid "Learn more..."
 msgstr "Daha fazla bilgi edinin..."
@@ -3990,7 +3993,7 @@ msgstr "Web görüşme"
 
 #: plinth/modules/janus/templates/janus_video_room.html:192
 #: plinth/modules/jsxc/templates/jsxc_launch.html:117
-#: plinth/templates/base.html:282
+#: plinth/templates/base.html:289
 msgid "JavaScript license information"
 msgstr "JavaScript lisans bilgileri"
 
@@ -5991,12 +5994,18 @@ msgstr "Bağlantıyı Düzenle"
 
 #: plinth/modules/networks/templates/connections_fields.html:14
 #: plinth/modules/oidc/templates/oauth2_provider/authorize.html:64
+#: plinth/modules/users/templates/users_login.html:26
+#: plinth/modules/users/templates/users_passkeys.html:26
+#: plinth/modules/users/templates/users_passkeys.html:54
 #: plinth/templates/messages.html:15
 msgid "Error:"
 msgstr "Hata:"
 
 #: plinth/modules/networks/templates/connections_fields.html:21
-#: plinth/modules/users/templates/users_update.html:50
+#: plinth/modules/users/templates/users_login.html:33
+#: plinth/modules/users/templates/users_passkeys.html:33
+#: plinth/modules/users/templates/users_passkeys.html:140
+#: plinth/modules/users/templates/users_update.html:55
 #: plinth/templates/messages.html:31
 msgid "Close"
 msgstr "Kapat"
@@ -6968,8 +6977,8 @@ msgstr "Baştan başlat"
 msgid "Shutdown"
 msgstr "Kapat"
 
-#: plinth/modules/power/templates/power.html:15 plinth/templates/base.html:187
-#: plinth/templates/base.html:188
+#: plinth/modules/power/templates/power.html:15 plinth/templates/base.html:194
+#: plinth/templates/base.html:195
 msgid "Restart"
 msgstr "Yeniden başlat"
 
@@ -9765,7 +9774,7 @@ msgstr "Parolayı Kaydet"
 #: plinth/modules/users/templates/users_create.html:19
 #: plinth/modules/users/templates/users_list.html:16
 #: plinth/modules/users/templates/users_list.html:18
-#: plinth/modules/users/views.py:109
+#: plinth/modules/users/views.py:134
 msgid "Create User"
 msgstr "Kullanıcı Oluştur"
 
@@ -9815,7 +9824,7 @@ msgid "Skip this step"
 msgstr "Bu adımı atla"
 
 #: plinth/modules/users/templates/users_list.html:12
-#: plinth/modules/users/views.py:127
+#: plinth/modules/users/views.py:152
 msgid "Users"
 msgstr "Kullanıcılar"
 
@@ -9824,16 +9833,114 @@ msgstr "Kullanıcılar"
 msgid "Edit user %(username)s"
 msgstr "%(username)s kullanıcısını düzenle"
 
-#: plinth/modules/users/templates/users_login.html:23
+#: plinth/modules/users/templates/users_login.html:30
+msgid "Logging in with passkey failed: "
+msgstr ""
+
+#: plinth/modules/users/templates/users_login.html:41
+#: plinth/modules/users/templates/users_passkeys.html:41
+#, fuzzy
+#| msgid "This app does not support diagnostics"
+msgid "Browser does not support passkeys."
+msgstr "Bu uygulama tanılamayı desteklemiyor"
+
+#: plinth/modules/users/templates/users_login.html:57
 msgid "Login"
 msgstr "Oturum aç"
+
+#: plinth/modules/users/templates/users_login.html:70
+#: plinth/modules/users/templates/users_login.html:72
+msgid "Log in with passkey"
+msgstr ""
+
+#: plinth/modules/users/templates/users_passkey_edit.html:19
+#, fuzzy
+#| msgid "Update setup"
+msgid "Update Passkey"
+msgstr "Ayarlamayı güncelle"
+
+#: plinth/modules/users/templates/users_passkeys.html:30
+msgid "Adding passkey failed: "
+msgstr ""
+
+#: plinth/modules/users/templates/users_passkeys.html:48
+#: plinth/modules/users/views.py:314
+msgid "Passkeys"
+msgstr ""
+
+#: plinth/modules/users/templates/users_passkeys.html:57
+msgid ""
+"Working with passkeys requires using browser's Javascript API. Please enable "
+"Javascript support in your browser to continue."
+msgstr ""
+
+#: plinth/modules/users/templates/users_passkeys.html:66
+msgid ""
+"Passkeys are way to verify user's identity using digital signatures. They "
+"are a more secure alternative to passwords. Secret information is kept with "
+"the user on their phone, laptop, or a hardware token and unlocked using a "
+"PIN, fingerprint, or face ID. No secrets are stored on the server. The "
+"server knows only the public information that can used to verify user's "
+"signatures."
+msgstr ""
+
+#: plinth/modules/users/templates/users_passkeys.html:83
+#: plinth/modules/users/templates/users_passkeys.html:85
+#, fuzzy
+#| msgid "Add password"
+msgid "Add passkey"
+msgstr "Parola ekle"
+
+#: plinth/modules/users/templates/users_passkeys.html:93
+#, fuzzy
+#| msgid "Domain"
+msgid "For Domain"
+msgstr "Etki alanı"
+
+#: plinth/modules/users/templates/users_passkeys.html:94
+msgid "Added"
+msgstr ""
+
+#: plinth/modules/users/templates/users_passkeys.html:95
+#, fuzzy
+#| msgid "Last scanned: "
+msgid "Last Used"
+msgstr "Son taranan: "
+
+#: plinth/modules/users/templates/users_passkeys.html:126
+msgid "No passkeys added to user account."
+msgstr ""
+
+#: plinth/modules/users/templates/users_passkeys.html:135
+msgid "Delete passkey <em class=\"passkey-name\"></em>?"
+msgstr ""
+
+#: plinth/modules/users/templates/users_passkeys.html:145
+msgid "You will need this passkey's device to add it back again."
+msgstr ""
+
+#: plinth/modules/users/templates/users_passkeys.html:152
+#, fuzzy
+#| msgid "Delete user"
+msgid "Delete passkey"
+msgstr "Kullanıcıyı sil"
+
+#: plinth/modules/users/templates/users_passkeys.html:155
+#: plinth/modules/users/templates/users_update.html:72
+msgid "Cancel"
+msgstr "İptal"
 
 #: plinth/modules/users/templates/users_update.html:16
 #, python-format
 msgid "Edit User <em>%(username)s</em>"
 msgstr "<em>%(username)s</em> Kullanıcısını Düzenleyin"
 
-#: plinth/modules/users/templates/users_update.html:24
+#: plinth/modules/users/templates/users_update.html:23
+#, python-format
+msgid "Use <a href=\"%(passkeys_url)s\">passkeys</a> for better security."
+msgstr ""
+
+#: plinth/modules/users/templates/users_update.html:29
 #, python-format
 msgid ""
 "Use the <a href='%(change_password_url)s'>change password form </a> to "
@@ -9842,18 +9949,18 @@ msgstr ""
 "Parolayı değiştirmek için <a href='%(change_password_url)s'>parola "
 "değiştirme formunu</a> kullanın."
 
-#: plinth/modules/users/templates/users_update.html:36
+#: plinth/modules/users/templates/users_update.html:41
 #: plinth/templates/language-selection.html:17
 msgid "Save Changes"
 msgstr "Değişiklikleri Kaydet"
 
-#: plinth/modules/users/templates/users_update.html:45
+#: plinth/modules/users/templates/users_update.html:50
 #, python-format
 msgid "Delete user <em>%(username)s</em> and all the user's files?"
 msgstr ""
 "<em>%(username)s</em> kullanıcısı ve kullanıcının tüm dosyaları silinsin mi?"
 
-#: plinth/modules/users/templates/users_update.html:55
+#: plinth/modules/users/templates/users_update.html:60
 msgid ""
 "Deleting a user account also removes all the files user's home directory. If "
 "you wish to keep these files, disable the user account instead."
@@ -9862,44 +9969,56 @@ msgstr ""
 "tüm dosyaları da kaldırır. Eğer bu dosyaları saklamak istiyorsanız, bunun "
 "yerine kullanıcı hesabını etkisizleştirin."
 
-#: plinth/modules/users/templates/users_update.html:64
+#: plinth/modules/users/templates/users_update.html:69
 msgid "Delete user and files"
 msgstr "Kullanıcı ve dosyaları sil"
 
-#: plinth/modules/users/templates/users_update.html:67
-msgid "Cancel"
-msgstr "İptal"
-
-#: plinth/modules/users/views.py:87
+#: plinth/modules/users/views.py:112
 msgid "Logged out successfully."
 msgstr "Başarılı olarak oturumu kapatıldı."
 
-#: plinth/modules/users/views.py:107
+#: plinth/modules/users/views.py:132
 #, python-format
 msgid "User %(username)s created."
 msgstr "%(username)s kullanıcısı oluşturuldu."
 
-#: plinth/modules/users/views.py:138
+#: plinth/modules/users/views.py:163
 #, python-format
 msgid "User %(username)s updated."
 msgstr "%(username)s kullanıcısı güncellendi."
 
-#: plinth/modules/users/views.py:139
+#: plinth/modules/users/views.py:164
 msgid "Edit User"
 msgstr "Kullanıcıyı Düzenle"
 
-#: plinth/modules/users/views.py:177
+#: plinth/modules/users/views.py:202
 #, python-format
 msgid "User %(username)s deleted."
 msgstr "%(username)s kullanıcısı silindi."
 
-#: plinth/modules/users/views.py:196
+#: plinth/modules/users/views.py:221
 msgid "Change Password"
 msgstr "Parolayı Değiştir"
 
-#: plinth/modules/users/views.py:197
+#: plinth/modules/users/views.py:222
 msgid "Password changed successfully."
 msgstr "Parola başarılı olarak değiştirildi."
+
+#: plinth/modules/users/views.py:420
+#, fuzzy
+#| msgid "A share with this name already exists."
+msgid "Passkey with that identifier already exists."
+msgstr "Bu ada sahip bir paylaşım zaten var."
+
+#: plinth/modules/users/views.py:431
+#, fuzzy
+#| msgid "Edit User"
+msgid "Edit Passkey"
+msgstr "Kullanıcıyı Düzenle"
+
+#: plinth/modules/users/views.py:518 plinth/modules/users/views.py:542
+msgid "Passkey used is not known."
+msgstr ""
 
 #: plinth/modules/wireguard/__init__.py:20
 msgid "WireGuard is a fast, modern, secure VPN tunnel."
@@ -10683,22 +10802,28 @@ msgid " System"
 msgstr " Sistem"
 
 #: plinth/templates/base.html:179 plinth/templates/base.html:180
+#, fuzzy
+#| msgid "Manage Aliases"
+msgid "Manage passkeys"
+msgstr "Kod Adlarını Yönet"
+
+#: plinth/templates/base.html:186 plinth/templates/base.html:187
 msgid "Change password"
 msgstr "Parolayı değiştir"
 
-#: plinth/templates/base.html:193 plinth/templates/base.html:194
+#: plinth/templates/base.html:200 plinth/templates/base.html:201
 msgid "Shut down"
 msgstr "Kapat"
 
-#: plinth/templates/base.html:204 plinth/templates/base.html:242
+#: plinth/templates/base.html:211 plinth/templates/base.html:249
 msgid "Log out"
 msgstr "Oturumu kapat"
 
-#: plinth/templates/base.html:213 plinth/templates/base.html:216
+#: plinth/templates/base.html:220 plinth/templates/base.html:223
 msgid "Select language"
 msgstr "Dil seçin"
 
-#: plinth/templates/base.html:231 plinth/templates/base.html:233
+#: plinth/templates/base.html:238 plinth/templates/base.html:240
 msgid "Log in"
 msgstr "Oturum aç"
 
@@ -10952,15 +11077,15 @@ msgstr ""
 "Tüm uygulama verileri ve yapılandırması kalıcı olarak kaybolacaktır. "
 "Uygulama tekrar yeni olarak yüklenebilir."
 
-#: plinth/views.py:89
+#: plinth/views.py:94
 msgid "Here"
 msgstr "Burada"
 
-#: plinth/views.py:431
+#: plinth/views.py:436
 msgid "Setting unchanged"
 msgstr "Ayar değişmedi"
 
-#: plinth/views.py:654
+#: plinth/views.py:659
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr "{app_id} kaldırılmadan önce"
