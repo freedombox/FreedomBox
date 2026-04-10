@@ -5,11 +5,45 @@
 
 {% load bootstrap %}
 {% load i18n %}
+{% load static %}
+{% load extras %}
 
 {% block breadcrumbs %}
 {% endblock %}
 
+{% block page_js %}
+  <script type="text/javascript" src="{% static 'users/passkeys.js' %}" defer></script>
+{% endblock %}
+
 {% block content %}
+
+  <div id="passkey-message-template" class="d-none">
+    <div class="alert alert-danger alert-dismissible
+                d-flex align-items-center fade show"
+         role="alert">
+      <div class="me-2">
+        {% icon 'exclamation-triangle' %}
+        <span class="visually-hidden">{% trans "Error:" %}</span>
+      </div>
+
+      <div>
+        {% trans "Logging in with passkey failed: " %}
+        <span class="message"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"
+                aria-label="{% trans "Close" %}">
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="localized-strings" class="d-none">
+    <div id="browser-does-not-support-passkeys">
+      {% trans "Browser does not support passkeys." %}
+    </div>
+  </div>
+
+  <div id="passkey-messages">
+  </div>
 
   <form class="form form-login" method="post">
 
@@ -27,5 +61,17 @@
 
     <input type="hidden" name="next" value="{{ next }}" />
   </form>
+
+  <div class="row text-center">
+    <div class="col col-md-4 offset-md-4">
+      <hr>
+
+      <a id="login-with-passkey" href="#" class="btn btn-default" role="button"
+         title="{% trans 'Log in with passkey' %}">
+        {% icon 'key' %}
+        {% trans 'Log in with passkey' %}
+      </a>
+    </div>
+  </div>
 
 {% endblock %}

@@ -3,10 +3,13 @@
 Tests for common FreedomBox views.
 """
 
+import json
+
 import pytest
+from django.http import JsonResponse
 from django.urls import resolve
 
-from plinth.views import get_breadcrumbs, is_safe_url
+from plinth.views import get_breadcrumbs, is_safe_url, json_exception
 
 
 def test_get_breadcrumbs(rf, test_menu):
@@ -82,3 +85,31 @@ def test_is_safe_url_valid_url(url):
 def test_is_safe_url_invalid_url(url):
     """Test invalid URLs for safe URL checks."""
     assert not is_safe_url(url)
+
+
+def test_json_exception(rf):
+    """Test handling exceptions in JSON views."""
+
+    @json_exception
+    def error_view(request):
+        raise Exception('exception-message')
+
+    assert error_view.__name__ == 'error_view'
+
+    request = rf.get('')
+    response = error_view(request)
+    assert response.status_code == 500
+    json_content = json.loads(response.content)
+    assert not json_content['result']
+    assert json_content['error_name'] == 'Exception'
+    assert json_content['error_string'] == 'exception-message'
+
+    def success_view(request):
+        return JsonResponse({'result': True, 'error_string': None})
+
+    request = rf.get('')
+    response = success_view(request)
+    assert response.status_code == 200
+    json_content = json.loads(response.content)
+    assert json_content['result']
+    assert json_content['error_string'] is None

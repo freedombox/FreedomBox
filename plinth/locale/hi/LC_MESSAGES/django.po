@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-24 00:03+0000\n"
-"PO-Revision-Date: 2025-12-16 01:15+0000\n"
+"POT-Creation-Date: 2026-04-07 00:12+0000\n"
+"PO-Revision-Date: 2026-03-31 06:09+0000\n"
 "Last-Translator: bsurajpatra <ankitsuraj1111@gmail.com>\n"
 "Language-Team: Hindi <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/hi/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.15.1-dev\n"
+"X-Generator: Weblate 5.17-dev\n"
 
 #: plinth/config.py:103
 #, python-brace-format
@@ -30,7 +30,7 @@ msgstr "स्थैतिक कॉन्फ़िगरेशन {etc_path} �
 msgid "Container {container_name} is running"
 msgstr "सेवा {service_name} चल रहा है"
 
-#: plinth/context_processors.py:21 plinth/views.py:175
+#: plinth/context_processors.py:21 plinth/views.py:180
 msgid "FreedomBox"
 msgstr "स्वतंत्रता बॉक्स"
 
@@ -345,6 +345,7 @@ msgstr "यूसर बनाये"
 #: plinth/modules/networks/templates/connection_show.html:76
 #: plinth/modules/samba/templates/samba.html:66
 #: plinth/modules/sharing/templates/sharing.html:33
+#: plinth/modules/users/templates/users_passkeys.html:92
 msgid "Name"
 msgstr "नाम"
 
@@ -2256,6 +2257,7 @@ msgstr "आइपी एेड्रैस"
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:30
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:27
 #: plinth/modules/storage/templates/storage.html:29
+#: plinth/modules/users/templates/users_passkeys.html:96
 msgid "Actions"
 msgstr "एक्सआयन"
 
@@ -3536,8 +3538,8 @@ msgstr ""
 msgid "Contribute"
 msgstr ""
 
-#: plinth/modules/help/__init__.py:53 plinth/templates/base.html:222
-#: plinth/templates/base.html:225 plinth/templates/help-menu.html:47
+#: plinth/modules/help/__init__.py:53 plinth/templates/base.html:229
+#: plinth/templates/base.html:232 plinth/templates/help-menu.html:47
 #: plinth/templates/help-menu.html:48 plinth/templates/index.html:96
 #, fuzzy
 msgid "About"
@@ -3692,6 +3694,7 @@ msgstr ""
 #: plinth/modules/help/templates/help_contribute.html:43
 #: plinth/modules/power/templates/power_restart.html:27
 #: plinth/modules/power/templates/power_shutdown.html:26
+#: plinth/modules/users/templates/users_passkeys.html:77
 #: plinth/templates/app-header.html:67
 msgid "Learn more..."
 msgstr "और सीखिये..."
@@ -4134,7 +4137,7 @@ msgstr ""
 
 #: plinth/modules/janus/templates/janus_video_room.html:192
 #: plinth/modules/jsxc/templates/jsxc_launch.html:117
-#: plinth/templates/base.html:282
+#: plinth/templates/base.html:289
 msgid "JavaScript license information"
 msgstr "जावास्क्रिप्ट लाइसेंस जानकारी"
 
@@ -6077,12 +6080,18 @@ msgstr "कनेक्शन संपादित करें"
 
 #: plinth/modules/networks/templates/connections_fields.html:14
 #: plinth/modules/oidc/templates/oauth2_provider/authorize.html:64
+#: plinth/modules/users/templates/users_login.html:26
+#: plinth/modules/users/templates/users_passkeys.html:26
+#: plinth/modules/users/templates/users_passkeys.html:54
 #: plinth/templates/messages.html:15
 msgid "Error:"
 msgstr ""
 
 #: plinth/modules/networks/templates/connections_fields.html:21
-#: plinth/modules/users/templates/users_update.html:50
+#: plinth/modules/users/templates/users_login.html:33
+#: plinth/modules/users/templates/users_passkeys.html:33
+#: plinth/modules/users/templates/users_passkeys.html:140
+#: plinth/modules/users/templates/users_update.html:55
 #: plinth/templates/messages.html:31
 msgid "Close"
 msgstr ""
@@ -7112,8 +7121,8 @@ msgstr ""
 msgid "Shutdown"
 msgstr "शट डाउन"
 
-#: plinth/modules/power/templates/power.html:15 plinth/templates/base.html:187
-#: plinth/templates/base.html:188
+#: plinth/modules/power/templates/power.html:15 plinth/templates/base.html:194
+#: plinth/templates/base.html:195
 msgid "Restart"
 msgstr "रीस्टार्ट"
 
@@ -9935,7 +9944,7 @@ msgstr "पासवर्ड सहेजें"
 #: plinth/modules/users/templates/users_create.html:19
 #: plinth/modules/users/templates/users_list.html:16
 #: plinth/modules/users/templates/users_list.html:18
-#: plinth/modules/users/views.py:109
+#: plinth/modules/users/views.py:134
 msgid "Create User"
 msgstr "यूसर बनाये"
 
@@ -9984,7 +9993,7 @@ msgid "Skip this step"
 msgstr ""
 
 #: plinth/modules/users/templates/users_list.html:12
-#: plinth/modules/users/views.py:127
+#: plinth/modules/users/views.py:152
 msgid "Users"
 msgstr "यूसरस"
 
@@ -9993,9 +10002,102 @@ msgstr "यूसरस"
 msgid "Edit user %(username)s"
 msgstr "यूसर संपादित करें %(username)s"
 
-#: plinth/modules/users/templates/users_login.html:23
+#: plinth/modules/users/templates/users_login.html:30
+msgid "Logging in with passkey failed: "
+msgstr ""
+
+#: plinth/modules/users/templates/users_login.html:41
+#: plinth/modules/users/templates/users_passkeys.html:41
+#, fuzzy
+#| msgid "This module does not support diagnostics"
+msgid "Browser does not support passkeys."
+msgstr "यह मॉड्यूल निदानिकी कि नहीं समर्थन करता है"
+
+#: plinth/modules/users/templates/users_login.html:57
 msgid "Login"
 msgstr "लॉगिन"
+
+#: plinth/modules/users/templates/users_login.html:70
+#: plinth/modules/users/templates/users_login.html:72
+msgid "Log in with passkey"
+msgstr ""
+
+#: plinth/modules/users/templates/users_passkey_edit.html:19
+#, fuzzy
+#| msgid "Update setup"
+msgid "Update Passkey"
+msgstr "सेटअप अपडेट"
+
+#: plinth/modules/users/templates/users_passkeys.html:30
+msgid "Adding passkey failed: "
+msgstr ""
+
+#: plinth/modules/users/templates/users_passkeys.html:48
+#: plinth/modules/users/views.py:314
+msgid "Passkeys"
+msgstr ""
+
+#: plinth/modules/users/templates/users_passkeys.html:57
+msgid ""
+"Working with passkeys requires using browser's Javascript API. Please enable "
+"Javascript support in your browser to continue."
+msgstr ""
+
+#: plinth/modules/users/templates/users_passkeys.html:66
+msgid ""
+"Passkeys are way to verify user's identity using digital signatures. They "
+"are a more secure alternative to passwords. Secret information is kept with "
+"the user on their phone, laptop, or a hardware token and unlocked using a "
+"PIN, fingerprint, or face ID. No secrets are stored on the server. The "
+"server knows only the public information that can used to verify user's "
+"signatures."
+msgstr ""
+
+#: plinth/modules/users/templates/users_passkeys.html:83
+#: plinth/modules/users/templates/users_passkeys.html:85
+#, fuzzy
+#| msgid "Add password"
+msgid "Add passkey"
+msgstr "पासवर्ड जोड़ें"
+
+#: plinth/modules/users/templates/users_passkeys.html:93
+#, fuzzy
+#| msgid "Domain"
+msgid "For Domain"
+msgstr "डोमेन"
+
+#: plinth/modules/users/templates/users_passkeys.html:94
+msgid "Added"
+msgstr ""
+
+#: plinth/modules/users/templates/users_passkeys.html:95
+#, fuzzy
+#| msgid "Last scanned: "
+msgid "Last Used"
+msgstr "कनेक्शन बनाएँ: "
+
+#: plinth/modules/users/templates/users_passkeys.html:126
+msgid "No passkeys added to user account."
+msgstr ""
+
+#: plinth/modules/users/templates/users_passkeys.html:135
+msgid "Delete passkey <em class=\"passkey-name\"></em>?"
+msgstr ""
+
+#: plinth/modules/users/templates/users_passkeys.html:145
+msgid "You will need this passkey's device to add it back again."
+msgstr ""
+
+#: plinth/modules/users/templates/users_passkeys.html:152
+#, fuzzy
+#| msgid "Delete User"
+msgid "Delete passkey"
+msgstr "यूसर हटाइये"
+
+#: plinth/modules/users/templates/users_passkeys.html:155
+#: plinth/modules/users/templates/users_update.html:72
+msgid "Cancel"
+msgstr "कैंसिल"
 
 #: plinth/modules/users/templates/users_update.html:16
 #, fuzzy, python-format
@@ -10003,7 +10105,12 @@ msgstr "लॉगिन"
 msgid "Edit User <em>%(username)s</em>"
 msgstr "यूसर संपादित करें %(username)s"
 
-#: plinth/modules/users/templates/users_update.html:24
+#: plinth/modules/users/templates/users_update.html:23
+#, python-format
+msgid "Use <a href=\"%(passkeys_url)s\">passkeys</a> for better security."
+msgstr ""
+
+#: plinth/modules/users/templates/users_update.html:29
 #, python-format
 msgid ""
 "Use the <a href='%(change_password_url)s'>change password form </a> to "
@@ -10012,66 +10119,78 @@ msgstr ""
 "पासवर्ड बदलने के लिये <a href='%(change_password_url)s'> यइ पासवर्ड बदलना फोम्र </"
 "a> का उपयोग करें."
 
-#: plinth/modules/users/templates/users_update.html:36
+#: plinth/modules/users/templates/users_update.html:41
 #: plinth/templates/language-selection.html:17
 msgid "Save Changes"
 msgstr "बदलाव संचयित कीजिये"
 
-#: plinth/modules/users/templates/users_update.html:45
+#: plinth/modules/users/templates/users_update.html:50
 #, fuzzy, python-format
 #| msgid "Delete user <strong>%(username)s</strong> permanently?"
 msgid "Delete user <em>%(username)s</em> and all the user's files?"
 msgstr "यूसर <strong>%(username)s</strong> स्थाई रूप से हटाइये?"
 
-#: plinth/modules/users/templates/users_update.html:55
+#: plinth/modules/users/templates/users_update.html:60
 msgid ""
 "Deleting a user account also removes all the files user's home directory. If "
 "you wish to keep these files, disable the user account instead."
 msgstr ""
 
-#: plinth/modules/users/templates/users_update.html:64
+#: plinth/modules/users/templates/users_update.html:69
 #, fuzzy
 #| msgid "Delete User"
 msgid "Delete user and files"
 msgstr "यूसर हटाइये"
 
-#: plinth/modules/users/templates/users_update.html:67
-msgid "Cancel"
-msgstr "कैंसिल"
-
-#: plinth/modules/users/views.py:87
+#: plinth/modules/users/views.py:112
 #, fuzzy
 #| msgid "Password changed successfully."
 msgid "Logged out successfully."
 msgstr "पासवर्ड सफलतापूर्वक बदल गया."
 
-#: plinth/modules/users/views.py:107
+#: plinth/modules/users/views.py:132
 #, python-format
 msgid "User %(username)s created."
 msgstr "युसर %(username)s  बनाया."
 
-#: plinth/modules/users/views.py:138
+#: plinth/modules/users/views.py:163
 #, python-format
 msgid "User %(username)s updated."
 msgstr "युसर %(username)s अपडेट किया."
 
-#: plinth/modules/users/views.py:139
+#: plinth/modules/users/views.py:164
 msgid "Edit User"
 msgstr "यूसर संपादित करें"
 
-#: plinth/modules/users/views.py:177
+#: plinth/modules/users/views.py:202
 #, fuzzy, python-format
 #| msgid "User %(username)s created."
 msgid "User %(username)s deleted."
 msgstr "युसर %(username)s  बनाया."
 
-#: plinth/modules/users/views.py:196
+#: plinth/modules/users/views.py:221
 msgid "Change Password"
 msgstr "पासवर्ड बदलिये"
 
-#: plinth/modules/users/views.py:197
+#: plinth/modules/users/views.py:222
 msgid "Password changed successfully."
 msgstr "पासवर्ड सफलतापूर्वक बदल गया."
+
+#: plinth/modules/users/views.py:420
+#, fuzzy
+#| msgid "A share with this name already exists."
+msgid "Passkey with that identifier already exists."
+msgstr "इस नाम का एक शयर पहले से मौजूद है."
+
+#: plinth/modules/users/views.py:431
+#, fuzzy
+#| msgid "Edit User"
+msgid "Edit Passkey"
+msgstr "यूसर संपादित करें"
+
+#: plinth/modules/users/views.py:518 plinth/modules/users/views.py:542
+msgid "Passkey used is not known."
+msgstr ""
 
 #: plinth/modules/wireguard/__init__.py:20
 msgid "WireGuard is a fast, modern, secure VPN tunnel."
@@ -10917,22 +11036,28 @@ msgid " System"
 msgstr " सिस्टम"
 
 #: plinth/templates/base.html:179 plinth/templates/base.html:180
+#, fuzzy
+#| msgid "Create User"
+msgid "Manage passkeys"
+msgstr "यूसर बनाये"
+
+#: plinth/templates/base.html:186 plinth/templates/base.html:187
 msgid "Change password"
 msgstr "पासवर्ड बदलें"
 
-#: plinth/templates/base.html:193 plinth/templates/base.html:194
+#: plinth/templates/base.html:200 plinth/templates/base.html:201
 msgid "Shut down"
 msgstr "शट डाउन"
 
-#: plinth/templates/base.html:204 plinth/templates/base.html:242
+#: plinth/templates/base.html:211 plinth/templates/base.html:249
 msgid "Log out"
 msgstr "लॉग आउट"
 
-#: plinth/templates/base.html:213 plinth/templates/base.html:216
+#: plinth/templates/base.html:220 plinth/templates/base.html:223
 msgid "Select language"
 msgstr "भाषा चुनें"
 
-#: plinth/templates/base.html:231 plinth/templates/base.html:233
+#: plinth/templates/base.html:238 plinth/templates/base.html:240
 msgid "Log in"
 msgstr "लॉग इन"
 
@@ -10970,7 +11095,7 @@ msgstr "मोबाइल"
 
 #: plinth/templates/clients.html:82
 msgid "Android APK"
-msgstr ""
+msgstr "एंड्रॉइड एपीके"
 
 #: plinth/templates/clients.html:91
 msgid "Play Store"
@@ -11201,15 +11326,15 @@ msgstr ""
 "सभी ऐप डेटा और कॉन्फ़िगरेशन हमेशा के लिए खो जाएंगे। ऐप को फिर से नए सिरे से इंस्टॉल किया "
 "जा सकता है।"
 
-#: plinth/views.py:89
+#: plinth/views.py:94
 msgid "Here"
 msgstr "यहाँ"
 
-#: plinth/views.py:431
+#: plinth/views.py:436
 msgid "Setting unchanged"
 msgstr "सेटिंग स्थिर है"
 
-#: plinth/views.py:654
+#: plinth/views.py:659
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr "{app_id} को अनइंस्टॉल करने से पहले"

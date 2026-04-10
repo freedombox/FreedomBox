@@ -8,25 +8,25 @@
 
 == Users and Groups ==
 
-You can grant access to your !FreedomBox for other users. Provide the Username with a password and assign a group to it. Currently the groups
+This app can be used to create, edit, and remove user accounts on !FreedomBox. Many apps with web interface in !FreedomBox support single sign-on using OpenID Connect. This means that if you are logged into !FreedomBox web interface, there is no need to login to the app separately. Other apps support using the !FreedomBox user accounts via LDAP. Finally, there are some apps that manage their own user accounts separate from the accounts you have in !FreedomBox.
+
+Access to an app is allowed if the user accessing the app is part of the app's group. You can grant access to apps in !FreedomBox for specific users by adding them to the following groups:
  * admin
  * bit-torrent
  * calibre
- * ed2k
  * feed-reader
  * freedombox-share
+ * freedombox-ssh
  * git-access
- * minidlna
- * syncthing
+ * kiwix
+ * syncthing-access
+ * vpn
  * web-search
  * wiki
-are supported. 
 
-The user will be able to log in to services that support single sign-on through LDAP, if they are in the appropriate group.
+Users in the admin group will be able to log in to all services. They can also log in to the system through SSH and have administrative privileges (sudo). A user's groups can also be changed later.
 
-Users in the admin group will be able to log in to all services. They can also log in to the system through SSH and have administrative privileges (sudo).
-
-A user's groups can also be changed later.
+!FreedomBox supports logging in with passkeys. Passkeys are a secure alternative to passwords and are the recommended way of authenticating to !FreedomBox. Read more in the [[FreedomBox/Guide/Passkeys|FreedomBox's guide to passkeys]].
 
 It is also possible to set an SSH public key which will allow this user to securely log in to the system without using a password. You may enter multiple keys, one on each line. Blank lines and lines starting with # will be ignored.
 

@@ -5,6 +5,7 @@ Setup logging for the application.
 
 import logging
 import logging.config
+import sys
 import typing
 import warnings
 
@@ -158,5 +159,11 @@ def get_configuration():
             }
         }
     }
+    if not sys.stdin.isatty():
+        # If running on a console, say due to user manually starting it, then
+        # log everything to console. However, if we are running as a systemd
+        # unit then no need to log to console. This allows us to capture
+        # stdout/stderr in systemd unit without repeating the log messages.
+        configuration['root']['handlers'].remove('console')
 
     return configuration

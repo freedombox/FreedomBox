@@ -18,6 +18,26 @@ urlpatterns = [
     re_path(r'^sys/users/(?P<slug>[\w.@+-]+)/change_password/$',
             non_admin_view(views.UserChangePassword.as_view()),
             name='change_password'),
+    re_path(r'^sys/users/(?P<username>[\w.@+-]+)/passkeys/$',
+            non_admin_view(views.PasskeysList.as_view()), name='passkeys'),
+    re_path(r'^sys/users/(?P<username>[\w.@+-]+)/passkeys/add-begin/$',
+            non_admin_view(views.passkey_add_begin), name='passkey_add_begin'),
+    re_path(r'^sys/users/(?P<username>[\w.@+-]+)/passkeys/add-complete/$',
+            non_admin_view(views.passkey_add_complete),
+            name='passkey_add_complete'),
+    re_path(
+        r'^sys/users/(?P<username>[\w.@+-]+)/passkeys/'
+        r'(?P<passkey_id>[\d]+)/edit/$',
+        non_admin_view(views.PasskeyEdit.as_view()), name='passkey_edit'),
+    re_path(r'^accounts/login/passkey-begin/$',
+            public(views.passkey_login_begin), name='passkey_login_begin'),
+    re_path(r'^accounts/login/passkey-complete/$',
+            public(views.passkey_login_complete),
+            name='passkey_login_complete'),
+    re_path(
+        r'^sys/users/(?P<username>[\w.@+-]+)/passkeys/'
+        r'(?P<passkey_id>[\d]+)/delete/$',
+        non_admin_view(views.PasskeyDelete.as_view()), name='passkey_delete'),
     re_path(r'^accounts/login/$', public(views.LoginView.as_view()),
             name='login'),
     re_path(r'^accounts/logout/$', public(views.logout), name='logout'),
