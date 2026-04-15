@@ -24,6 +24,7 @@ def setup():
     """
     aug = load_augeas()
     aug.set('auth/type', 'remote_user')
+    aug.set('auth/lc_username', 'True')
     aug.save()
     # Service is started again by socket.
     action_utils.service_stop(SERVICE_NAME)
