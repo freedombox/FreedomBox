@@ -64,7 +64,8 @@ class WireguardApp(app_module.App):
             clients=info.clients)
         self.add(shortcut)
 
-        packages = Packages('packages-wireguard', ['wireguard'])
+        packages = Packages('packages-wireguard',
+                            ['wireguard', 'python3-segno'])
         self.add(packages)
 
         firewall = Firewall('firewall-wireguard', info.name,
