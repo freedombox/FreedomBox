@@ -37,7 +37,7 @@ class WireguardApp(app_module.App):
 
     app_id = 'wireguard'
 
-    _version = 1
+    _version = 2
 
     def __init__(self) -> None:
         """Create components for the app."""
