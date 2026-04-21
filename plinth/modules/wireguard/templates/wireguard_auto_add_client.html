@@ -21,13 +21,15 @@
     <table class="table table-sm">
       <tr><td>{% trans "IP Address" %}</td><td>{{ next_ip }}</td></tr>
       <tr><td>{% trans "Endpoint" %}</td><td>{{ endpoint }}</td></tr>
-      <tr><td>{% trans "Public Key" %}</td><td>{{ client_pubkey }}</td></tr>
+      <tr><td>{% trans "Public Key" %}</td>
+        <td class="pubkey-val">{{ client_pubkey }}</td></tr>
       <tr><td>{% trans "Private Key" %}</td>
         <td>
-          <details><summary>{% trans "Click to reveal" %}</summary>
+          <details class="privkey-val">
+            <summary>{% trans "Click to reveal" %}</summary>
             {{ client_privkey }}
-          </details>
-        </td></tr>
+	  </details>
+	</td></tr>
     </table>
 
     <div class="alert alert-warning">
@@ -65,7 +67,7 @@
       </div>
 
     <div class="form-actions">
-      <input type="submit" class="btn btn-primary"
+      <input type="submit" class="btn btn-primary btn-auto-add-connection"
              value="{% trans "Add Connection" %}"/>
       <a href="{% url 'wireguard:index' %}" class="btn btn-secondary">
         {% trans "Cancel" %}

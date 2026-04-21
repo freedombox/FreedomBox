@@ -113,6 +113,53 @@ class TestWireguardApp(functional.BaseAppTests):
         assert not self._client_exists(session_browser,
                                        self._client_public_key2)
 
+    def test_auto_add_client(self, session_browser):
+        """Test the automatic client generation and addition flow."""
+        functional.nav_to_module(session_browser, 'wireguard')
+
+        # Start server if needed (reuse existing logic)
+        # Extract to reusable method
+        start_server_button = session_browser.find_by_css('.btn-start-server')
+        if start_server_button:
+            with functional.wait_for_page_update(session_browser):
+                start_server_button.first.click()
+
+        session_browser.find_by_css('.btn-auto-add-client').first.click()
+
+        client_pubkey = session_browser.find_by_css(
+                '.pubkey-val').first.text.strip()
+
+        # Verify private key reveal
+        privkey_reveal = session_browser.find_by_css(
+                '.privkey-val')
+        assert privkey_reveal, "Private key reveal should be present"
+        privkey_reveal.click()
+        client_privkey = session_browser.find_by_css(
+                '.privkey-val').text.splitlines()[1]
+        assert len(client_privkey) == 44, (("Private key should be base64 "
+                                            "(44 chars)"))
+
+        # Verify config download and QR links
+        download_link = session_browser.links.find_by_href(
+                '/freedombox/apps/wireguard/client/auto-add/action/download/')
+        qr_link = session_browser.links.find_by_href(
+                '/freedombox/apps/wireguard/client/auto-add/action/qr/')
+        assert download_link, "Download config link should exist"
+        assert qr_link, "QR code link should exist"
+
+        # Submit to add the client
+        with functional.wait_for_page_update(session_browser):
+            session_browser.find_by_css(
+                    '.btn-auto-add-connection').first.click()
+
+        # Verify client was added successfully
+        assert self._client_exists(session_browser, client_pubkey), ((
+            "Auto-generated client should exist"))
+
+        # Clean up
+        self._delete_client(session_browser, client_pubkey)
+        assert not self._client_exists(session_browser, client_pubkey)
+
     @staticmethod
     def _get_server_href(browser, key):
         """Return the href for server show page."""
