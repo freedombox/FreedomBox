@@ -20,7 +20,8 @@ from plinth.action_utils import (get_addresses, get_hostname,
                                  service_try_reload_or_restart,
                                  service_try_restart, service_unmask, umask)
 
-UNKNOWN = 'unknowndeamon'
+UNKNOWN = 'unknowndeamon.service'
+UNKNOWN_SOCKET = 'unknowndeamon.socket'
 
 systemctl_path = pathlib.Path('/usr/bin/systemctl')
 systemd_installed = pytest.mark.skipif(not systemctl_path.exists(),
@@ -76,20 +77,101 @@ def test_service_enable_and_disable():
 
 @patch('plinth.action_utils.service_action')
 @systemd_installed
-def test_service_actions(mock):
-    """Trivial white box test for trivial implementations."""
+def test_service_start(mock):
+    """Test staring a service."""
     service_start(UNKNOWN)
-    mock.assert_called_with(UNKNOWN, 'start', check=False)
+    mock.mock_calls = [call(UNKNOWN, 'start', check=False)]
+
+    mock.reset_mock()
+    service_start(UNKNOWN, check=True)
+    mock.mock_calls = [call(UNKNOWN, 'start', check=True)]
+
+
+@patch('plinth.action_utils.service_action')
+@systemd_installed
+def test_service_stop(mock):
+    """Test stopping a service."""
     service_stop(UNKNOWN)
-    mock.assert_called_with(UNKNOWN, 'stop', check=False)
+    assert mock.mock_calls == [call(UNKNOWN, 'stop', check=False)]
+
+    mock.reset_mock()
+    service_stop(UNKNOWN, check=True)
+    mock.mock_calls = [call(UNKNOWN, 'stop', check=True)]
+
+    mock.reset_mock()
+    service_stop(UNKNOWN_SOCKET)
+    assert mock.mock_calls == [
+        call(UNKNOWN_SOCKET, 'stop', check=False),
+        call(UNKNOWN, 'stop', check=False)
+    ]
+
+
+@patch('plinth.action_utils.service_action')
+@systemd_installed
+def test_service_restart(mock):
+    """Test restaring a service."""
     service_restart(UNKNOWN)
-    mock.assert_called_with(UNKNOWN, 'restart', check=False)
+    assert mock.mock_calls == [call(UNKNOWN, 'restart', check=False)]
+
+    mock.reset_mock()
+    service_restart(UNKNOWN, check=True)
+    mock.mock_calls = [call(UNKNOWN, 'restart', check=True)]
+
+    mock.reset_mock()
+    service_restart(UNKNOWN_SOCKET)
+    assert mock.mock_calls == [call(UNKNOWN, 'stop', check=False)]
+
+
+@patch('plinth.action_utils.service_action')
+@systemd_installed
+def test_service_try_restart(mock):
+    """Test try-restaring a service."""
     service_try_restart(UNKNOWN)
-    mock.assert_called_with(UNKNOWN, 'try-restart', check=False)
+    assert mock.mock_calls == [call(UNKNOWN, 'try-restart', check=False)]
+
+    mock.reset_mock()
+    service_try_restart(UNKNOWN, check=True)
+    mock.mock_calls = [call(UNKNOWN, 'try-restart', check=True)]
+
+    mock.reset_mock()
+    service_restart(UNKNOWN_SOCKET)
+    assert mock.mock_calls == [call(UNKNOWN, 'stop', check=False)]
+
+
+@patch('plinth.action_utils.service_action')
+@systemd_installed
+def test_service_reload(mock):
+    """Test reloading a service."""
     service_reload(UNKNOWN)
-    mock.assert_called_with(UNKNOWN, 'reload', check=False)
+    assert mock.mock_calls == [call(UNKNOWN, 'reload', check=False)]
+
+    mock.reset_mock()
+    service_reload(UNKNOWN, check=True)
+    mock.mock_calls = [call(UNKNOWN, 'reload', check=True)]
+
+    mock.reset_mock()
+    service_reload(UNKNOWN_SOCKET)
+    assert mock.mock_calls == [call(UNKNOWN, 'reload', check=False)]
+
+
+@patch('plinth.action_utils.service_action')
+@systemd_installed
+def test_service_try_reload_or_restart(mock):
+    """Test try-reload-or-restart on a service."""
     service_try_reload_or_restart(UNKNOWN)
-    mock.assert_called_with(UNKNOWN, 'try-reload-or-restart', check=False)
+    assert mock.mock_calls == [
+        call(UNKNOWN, 'try-reload-or-restart', check=False)
+    ]
+
+    mock.reset_mock()
+    service_try_reload_or_restart(UNKNOWN, check=True)
+    mock.mock_calls = [call(UNKNOWN, 'try-reload-or-restart', check=True)]
+
+    mock.reset_mock()
+    service_try_reload_or_restart(UNKNOWN_SOCKET)
+    assert mock.mock_calls == [
+        call(UNKNOWN, 'try-reload-or-restart', check=False)
+    ]
 
 
 @pytest.mark.usefixtures('needs_root')
