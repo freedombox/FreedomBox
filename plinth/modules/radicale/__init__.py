@@ -5,7 +5,6 @@ FreedomBox app for radicale.
 
 import logging
 
-import augeas
 from django.utils.translation import gettext_lazy as _
 
 from plinth import app as app_module
@@ -36,8 +35,6 @@ _description = [
 ]
 
 logger = logging.getLogger(__name__)
-
-CONFIG_FILE = '/etc/radicale/config'
 
 
 class RadicaleApp(app_module.App):
@@ -129,7 +126,7 @@ class RadicaleApp(app_module.App):
         if Version(package['new_version']) > Version('4~'):
             return False
 
-        rights = get_rights_value()
+        rights = privileged.get_rights_value()
         install(['radicale'], force_configuration='new')
         privileged.setup()
         privileged.configure(rights)
@@ -140,28 +137,3 @@ class RadicaleApp(app_module.App):
         """De-configure and uninstall the app."""
         super().uninstall()
         privileged.uninstall()
-
-
-def load_augeas():
-    """Prepares the augeas."""
-    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
-                        augeas.Augeas.NO_MODL_AUTOLOAD)
-
-    # INI file lens
-    aug.set('/augeas/load/Puppet/lens', 'Puppet.lns')
-    aug.set('/augeas/load/Puppet/incl[last() + 1]', CONFIG_FILE)
-
-    aug.load()
-    return aug
-
-
-def get_rights_value():
-    """Returns the current Rights value."""
-    aug = load_augeas()
-    value = aug.get('/files' + CONFIG_FILE + '/rights/type')
-
-    if value == 'from_file':
-        # Default rights file is equivalent to owner_only.
-        value = 'owner_only'
-
-    return value
