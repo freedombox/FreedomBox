@@ -19,6 +19,18 @@ IP_TEMPLATE = '10.84.0.{}'
 logger = logging.getLogger(__name__)
 
 
+def _get_nm_address_info(settings_ipv4, settings_ipv6) -> tuple[str, str]:
+    """Extract IP address info from NM IPv4/IPv6 settings."""
+    for settings in [settings_ipv4, settings_ipv6]:
+        if settings and settings.get_num_addresses():
+            nm_address = settings.get_address(0)
+            address = nm_address.get_address()
+            prefix = str(nm_address.get_prefix())
+            return address, address + '/' + prefix
+
+    return '', ''
+
+
 def get_nm_info():
     """Get information from network manager."""
     setting_name = nm.SETTING_WIREGUARD_SETTING_NAME
@@ -64,12 +76,14 @@ def get_nm_info():
                 info['default_route'] = True
 
         settings_ipv4 = connection.get_setting_ip4_config()
-        if settings_ipv4 and settings_ipv4.get_num_addresses():
-            nm_address = settings_ipv4.get_address(0)
-            address = nm_address.get_address()
-            prefix = str(nm_address.get_prefix())
-            info['ip_address'] = address
-            info['ip_address_and_network'] = address + '/' + prefix
+        settings_ipv6 = connection.get_setting_ip6_config()
+
+        ip_address, ip_address_and_network = _get_nm_address_info(
+                settings_ipv4, settings_ipv6
+        )
+
+        info['ip_address'] = ip_address
+        info['ip_address_and_network'] = ip_address_and_network
 
         connections[info['interface']] = info
 
