@@ -120,14 +120,6 @@ def service_disable(service_name: str, check: bool = False):
     except subprocess.CalledProcessError:
         pass
 
-    if service_name.endswith('.socket'):
-        # Instead, may need to query the unit for associated .service file.
-        base_name = service_name.rpartition('.')[0]
-        try:
-            service_stop(f'{base_name}.service', check=check)
-        except subprocess.CalledProcessError:
-            pass
-
 
 def service_mask(service_name: str, check: bool = False):
     """Mask a service"""
@@ -143,25 +135,62 @@ def service_start(service_name: str, check: bool = False):
     """Start a service with systemd."""
     service_action(service_name, 'start', check=check)
 
+    # When starting a .socket unit, there is not need to start the .service
+    # unit as it will be automatically started when a request is received on
+    # the socket.
+
+
+def _get_service_unit(socket_name: str) -> str:
+    """Return the .service unit name for a .socket unit."""
+    # Instead, may need to query the unit for associated .service file.
+    base_name = socket_name.rpartition('.')[0]
+    return f'{base_name}.service'
+
 
 def service_stop(service_name: str, check: bool = False):
     """Stop a service with systemd."""
     service_action(service_name, 'stop', check=check)
 
+    # When stopping a .socket unit, most of the time, we must also stop
+    # .service unit. This frees up resources when disabling the app. It also
+    # stops using resources that are being backed up.
+    if service_name.endswith('.socket'):
+        service_action(_get_service_unit(service_name), 'stop', check=check)
+
 
 def service_restart(service_name: str, check: bool = False):
     """Restart a service with systemd."""
-    service_action(service_name, 'restart', check=check)
+    if not service_name.endswith('.socket'):
+        service_action(service_name, 'restart', check=check)
+    else:
+        # When restarting a .socket unit, most of the time, we actually want to
+        # restart the corresponding .service unit. This reloads the
+        # configuration changes as needed. To restart, all we need to do stop
+        # the service. It will be automatically started again by .socket unit.
+        service_action(_get_service_unit(service_name), 'stop', check=check)
 
 
 def service_try_restart(service_name: str, check: bool = False):
     """Try to restart a service with systemd."""
-    service_action(service_name, 'try-restart', check=check)
+    if not service_name.endswith('.socket'):
+        service_action(service_name, 'try-restart', check=check)
+    else:
+        # When try-restarting a .socket unit, most of the time, we actually
+        # want to restart the corresponding .service unit. This reloads the
+        # configuration changes as needed. To restart, all we need to do stop
+        # the service. It will be automatically started again by .socket unit.
+        service_action(_get_service_unit(service_name), 'stop', check=check)
 
 
 def service_reload(service_name: str, check: bool = False):
     """Reload a service with systemd."""
-    service_action(service_name, 'reload', check=check)
+    if not service_name.endswith('.socket'):
+        service_action(service_name, 'reload', check=check)
+    else:
+        # When reloading a .socket unit, most of the time, we actually want to
+        # reload the corresponding .service unit. This reloads the
+        # configuration changes as needed.
+        service_action(_get_service_unit(service_name), 'reload', check=check)
 
 
 def service_try_reload_or_restart(service_name: str, check: bool = False):
@@ -169,7 +198,14 @@ def service_try_reload_or_restart(service_name: str, check: bool = False):
 
     Do nothing if service is not running.
     """
-    service_action(service_name, 'try-reload-or-restart', check=check)
+    if not service_name.endswith('.socket'):
+        service_action(service_name, 'try-reload-or-restart', check=check)
+    else:
+        # When reloading a .socket unit, most of the time, we actually want to
+        # reload the corresponding .service unit. This reloads the
+        # configuration changes as needed.
+        service_action(_get_service_unit(service_name),
+                       'try-reload-or-restart', check=check)
 
 
 def service_reset_failed(service_name: str, check: bool = False):

@@ -8,7 +8,7 @@ from django.utils.translation import gettext_lazy as _
 
 from plinth.views import AppView
 
-from . import get_rights_value, privileged
+from . import privileged
 from .forms import RadicaleForm
 
 
@@ -20,13 +20,13 @@ class RadicaleAppView(AppView):
     def get_initial(self):
         """Return the values to fill in the form."""
         initial = super().get_initial()
-        initial['access_rights'] = get_rights_value()
+        initial['access_rights'] = privileged.get_rights_value()
         return initial
 
     def form_valid(self, form):
         """Change the access control of Radicale service."""
         data = form.cleaned_data
-        if get_rights_value() != data['access_rights']:
+        if privileged.get_rights_value() != data['access_rights']:
             privileged.configure(data['access_rights'])
             messages.success(self.request,
                              _('Access rights configuration updated'))

@@ -1,0 +1,16 @@
+#!/bin/sh
+
+set -e
+
+# Wait for FreedomBox setup to complete.
+sleep 30
+
+journalctl --unit=plinth --unit=freedombox-privileged
+
+# Get FreedomBox status
+curl --location --cookie "" --fail --write-out "%{response_code}" --insecure \
+     --stderr - https://localhost/freedombox/status/
+
+# Access FreedomBox interface
+curl --location --cookie "" --fail --write-out "%{response_code}" --insecure \
+     --stderr - https://localhost/freedombox/

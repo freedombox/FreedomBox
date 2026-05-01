@@ -83,21 +83,21 @@ def _set_access_rights(browser, access_rights_type):
 
 def _calendar_is_available(browser):
     """Return whether calendar is available at well-known URL."""
-    conf = functional.config['DEFAULT']
-    url = functional.base_url + '/.well-known/caldav'
-    logging.captureWarnings(True)
-    request = requests.get(url, auth=(conf['username'], conf['password']),
-                           verify=False)
-    logging.captureWarnings(False)
-    return request.status_code != 404
+    return _well_known_available(browser, '/.well-known/caldav')
 
 
 def _addressbook_is_available(browser):
     """Return whether addressbook is available at well-known URL."""
+    return _well_known_available(browser, '/.well-known/carddav')
+
+
+def _well_known_available(browser, wellknown_url: str):
+    """Return whether a well-known URL redirects to radicale."""
     conf = functional.config['DEFAULT']
-    url = functional.base_url + '/.well-known/carddav'
+    url = functional.base_url + wellknown_url
     logging.captureWarnings(True)
     request = requests.get(url, auth=(conf['username'], conf['password']),
-                           verify=False)
+                           verify=False, allow_redirects=False)
     logging.captureWarnings(False)
-    return request.status_code != 404
+    return (request.status_code == 301
+            and request.headers['Location'].endswith('/radicale/'))

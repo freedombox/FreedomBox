@@ -24,6 +24,7 @@ def setup():
     """
     aug = load_augeas()
     aug.set('auth/type', 'remote_user')
+    aug.set('auth/lc_username', 'True')
     aug.save()
     # Service is started again by socket.
     action_utils.service_stop(SERVICE_NAME)
@@ -55,10 +56,22 @@ def load_augeas():
     aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
                         augeas.Augeas.NO_MODL_AUTOLOAD)
     # INI file lens
-    aug.transform('Puppet', CONFIG_FILE)
+    aug.transform('Radicale', CONFIG_FILE)
     aug.set('/augeas/context', '/files' + CONFIG_FILE)
     aug.load()
     return aug
+
+
+def get_rights_value():
+    """Returns the current Rights value."""
+    aug = load_augeas()
+    value = aug.get('rights/type')
+
+    if value == 'from_file':
+        # Default rights file is equivalent to owner_only.
+        value = 'owner_only'
+
+    return value
 
 
 @privileged

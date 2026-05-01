@@ -16,3 +16,13 @@ Restrictions: needs-root, breaks-testbed
 Test-Command: PYTHONPATH='/usr/lib/python3/dist-packages/' py.test-3 -p no:cacheprovider --cov=plinth --cov-report=html:debci/htmlcov --cov-report=term
 Depends: e2fsprogs, git, python3-pytest, python3-pytest-cov, python3-pytest-django, @
 Restrictions: breaks-testbed
+
+#
+# Try to access the FreedomBox web interface.
+#
+# iptables package installs alternatives files, with iptables-nft as default alternative.
+# Without it, firewalld has this error: INVALID_IPV: 'ipv4' is not a valid backend or is unavailable
+#
+Tests: access-web-interface
+Depends: iptables, @
+Restrictions: needs-root, isolation-machine, breaks-testbed
