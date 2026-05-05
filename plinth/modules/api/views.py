@@ -16,6 +16,8 @@ from plinth.modules import names
 
 def access_info(request: HttpRequest, **kwargs) -> HttpResponse:
     """API view to return a list of domains and types."""
+    if not request.user.is_authenticated:
+        return HttpResponse(status=401)
     domains = [{
         'domain': domain.name,
         'type': domain.domain_type.component_id
