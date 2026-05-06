@@ -7,22 +7,10 @@ import copy
 import json
 
 from django.core.serializers.json import DjangoJSONEncoder
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpResponse
 from django.templatetags.static import static
 
 from plinth import frontpage
-from plinth.modules import names
-
-
-def access_info(request: HttpRequest, **kwargs) -> HttpResponse:
-    """API view to return a list of domains and types."""
-    domains = [{
-        'domain': domain.name,
-        'type': domain.domain_type.component_id
-    } for domain in names.components.DomainName.list()]
-    response = {'domains': domains}
-
-    return HttpResponse(json.dumps(response), content_type='application/json')
 
 
 def shortcuts(request, **kwargs):
