@@ -1,9 +1,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """Configure Syncthing."""
 
-import grp
 import os
-import pwd
 import shutil
 import time
 
@@ -32,21 +30,8 @@ def augeas_load(conf_file):
 @privileged
 def setup():
     """Perform post-install actions for Syncthing."""
-    # Create syncthing group if needed.
-    try:
-        grp.getgrnam('syncthing')
-    except KeyError:
-        action_utils.run(['addgroup', '--system', 'syncthing'], check=True)
-
-    # Create syncthing user if needed.
-    try:
-        pwd.getpwnam('syncthing')
-    except KeyError:
-        action_utils.run([
-            'adduser', '--system', '--ingroup', 'syncthing', '--home',
-            DATA_DIR, '--gecos', 'Syncthing file synchronization server',
-            'syncthing'
-        ], check=True)
+    # Create a 'syncthing' system user and group, if needed.
+    action_utils.run(['systemd-sysusers', 'freedombox-syncthing.conf'])
 
     if not os.path.exists(DATA_DIR):
         os.makedirs(DATA_DIR, mode=0o750)
