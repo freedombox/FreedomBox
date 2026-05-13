@@ -91,8 +91,6 @@ def setup(domain_name: str):
 
     # Migrate from old bepasty:bepasty ownership to root:root
     shutil.chown(CONF_FILE, user='root', group='root')
-    action_utils.run(['deluser', 'bepasty'], check=False)
-    action_utils.run(['delgroup', 'bepasty'], check=False)
 
 
 @privileged
@@ -151,6 +149,6 @@ def _generate_password():
 
 @privileged
 def uninstall():
-    """Remove bepasty user, group and data."""
+    """Remove data and configuration file."""
     shutil.rmtree(DATA_DIR, ignore_errors=True)
     CONF_FILE.unlink(missing_ok=True)
