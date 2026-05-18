@@ -1,0 +1,174 @@
+#language es
+
+<<Include(FreedomBox/Guide/Passkeys, ,from="^##TAG:TRANSLATION-HEADER-START",to="^##TAG:TRANSLATION-HEADER-END")>>
+
+<<TableOfContents>>
+
+## BEGIN_INCLUDE
+
+== Usa claves de acceso (passkeys) para mejorar la seguridad de inicio de sesión ==
+
+{{{#!wiki tip
+Se recomiendan encarecidamente las claves de acceso frente a las contraseñas.
+}}}
+
+'''Disponible desde''': !FreedomBox 26.6
+
+!FreedomBox permite a los usuarios iniciar sesión en su cuenta con claves de acceso.
+Las claves de acceso son una forma de verificar la identidad del usuario usando firmas digitales. Son una alternativa más segura que las contraseñas.
+La información secreta se conserva con el usuario en su teléfono, portátil o en un token hardware y se desbloquea mediante un PIN, huella dactilar o reconocimiento facial.
+No se almacenan secretos en el servidor. El servidor solo conoce la información pública que puede usarse para verificar las firmas del usuario.
+
+=== ¿Cómo funcionan las claves de acceso? ===
+
+Después de que el usuario inicie sesión en su cuenta, se puede añadir una o más claves de acceso a la cuenta desde la página "Administrar claves de acceso".
+Al añadir una clave de acceso, el hardware de la clave de acceso (o autenticador) generará un par de claves pública/privada vinculado al dominio y a la cuenta de usuario.
+La clave privada se mantiene en el hardware y la clave pública se proporciona al servidor. El servidor almacena la clave pública junto con la cuenta de usuario.
+Más tarde, cuando un usuario intenta iniciar sesión en su cuenta, el servidor envía una larga cadena aleatoria al autenticador llamada santo (santo y seña).
+El hardware firma digitalmente el santo con la clave privada y la envía (la seña) al servidor.
+El servidor puede verificar que la firma la ha hecho el poseedor de la clave privada usando solo la clave pública que tiene (esto es una propiedad de los pares de claves pública/privada).
+Una vez verificada, el servidor inicia sesión en la cuenta de usuario asociada a esa clave pública.
+
+Durante este proceso, el navegador actúa como intermediario de confianza entre el hardware de la clave de acceso y el servidor.
+Garantiza que el usuario se verifique proporcionando PIN, huella, reconocimiento facial, etc.
+También garantiza que una clave de acceso solo se use con el dominio para el que está destinada.
+
+=== Mejor seguridad ===
+
+Las claves de acceso ofrecen mayor seguridad que las contraseñas:
+
+ * '''Autenticación multifactor''': Durante el registro de una clave de acceso y durante el inicio de sesión,
+   !FreedomBox solicita que el navegador verifique al usuario.
+   Esto significa que el usuario necesitará desbloquear el dispositivo autenticador proporcionando un PIN, huella o reconocimiento facial.
+   Esto actúa como uno de los factores de autenticación: "algo que sabes" o "algo que eres".
+   Otro factor de autenticación es "algo que tienes": el hardware que almacena tu clave de acceso (como Solokey, Nitrokey o Yubikey) o un teléfono.
+   Juntos, esto es similar a usar una contraseña con un segundo factor de autenticación.
+   Por tanto, las claves de acceso pueden reemplazar la autenticación en dos pasos siendo mucho más cómodas y fáciles de usar.
+
+ * '''Sin reutilización''': Las claves de acceso nunca se reutilizan. Para cada dominio se genera y usa una clave de acceso separada.
+   Los navegadores aseguran que la clave de acceso de un dominio nunca se use con otro dominio.
+   A diferencia de las contraseñas reutilizadas, cuando un sitio web o servicio se ve comprometido, los maleantes no pueden usar eso para acceder a tu cuenta en otro sitio o servicio.
+   Esto también previene ataques de phishing donde sitios impotores se hacen pasar por sitios legítimos.
+
+ * '''No hay secretos en el servidor''': El sitio que permite el uso de claves de acceso para el inicio de sesión no almacena información secreta.
+   Solo guarda la parte pública de la clave de acceso. Si esta información es obtenida por un adversario, no podrá iniciar sesión en el sitio.
+   Solo la clave privada almacenada en el dispositivo autenticador puede usarse para iniciar sesión
+   (ya que solo una clave privada puede crear las firmas necesarias para el proceso de inicio de sesión).
+
+ * '''No adivinación''': La parte secreta de una clave de acceso es mucho más dificil de adivinar que una contraseña.
+   No existe el riesgo de que alguien adivine tu contraseña y acceda a tu cuenta.
+   No existe el riesgo de que configures accidentalmente una contraseña predecible.
+
+ * '''Comodidad''': Los usuarios no necesitan recordar nombre de usuario, correo electrónico o un secreto para iniciar sesión en un sitio.
+   No necesitan recibir OTP por SMS o correo, usar una app TOTP ni confirmar el inicio desde una app móvil.
+   Tras hacer clic en el botón "Login mediante clave de acceso", desbloquean su autenticador con un PIN, huella o reconocimiento facial.
+   Luego tocan físicamente el autenticador (si es necesario). El usuario queda entonces autenticado. Hay menos cosas que recordar.
+   Incluso el PIN de un autenticador hardware suele ser más fácil de recordar que una contraseña.
+   Esta comodidad anima a los usuarios a usar este mecanismo, lo que a la larga mejora la seguridad.
+
+=== Hardware necesario para claves de acceso  ===
+
+{{{#!wiki tip
+'''El proyecto !FreedomBox recomienda [[https://solokeys.com/|Solokeys]]''' para el almacenamiento de claves de acceso:
+
+ * El [[https://github.com/solokeys/solo2|firmware]] (el sistema operativo del hardware) es software libre.
+ * Los [[https://github.com/solokeys/solo2-hw|diseños del hardware]] también son libres.
+ * El equipo de Solokeys y el equipo de !FreedomBox colaboran entre sí.
+}}}
+
+Hay varias formas de empezar con claves de acceso:
+
+ * '''Hardware de claves de acceso separado''': La forma recomendada de almacenar claves de acceso es en una llave hardware específica.
+   En esta configuración, la clave privada de la clave de acceso nunca abandona el dispositivo hardware.
+   Además, suelen estar diseñadas para que sea difícil para un atacante con acceso físico extraer la clave de acceso.
+   Otra ventaja de estos dispositivos es que pueden utilizarse con todos tus dispositivos existentes, como teléfonos, portátiles y escritorios.
+   Estos dispositivos interactúan con teléfonos y equipos mediante USB, Bluetooth o NFC.
+   En caso de NFC, el dispositivo funciona por proximidad con el teléfono sin energía adicional.
+   Al usar un hardware separado, sin embargo, debes tener un método de respaldo para iniciar sesión si pierdes el dispositivo hardware.
+   Esto puede ser otra clave de acceso en otro hardware o una contraseña. Ver la sección de copia de seguridad más abajo.
+
+ * '''Hardware empotrado para claves de acceso''': Cuando no hay un dispositivo hardware separado, es preferible el hardware especializado, como un TPM, integrado en el equipo.
+   Esta configuración seguirá asegurando que las claves de acceso no abandonen el hardware.
+   Una desventaja es que la clave de acceso solo funciona con ese equipo y tendrás que registrar cada dispositivo que uses por separado.
+
+ * '''Administradores de contraseñas''': Como último recurso, se pueden usar gestores de contraseñas que soporten claves de acceso y funcionen con tu navegador o sistema operativo.
+   Android, iOS y Windows ofrecen administradores así.
+   Las claves de acceso guardadas en administradores suelen sincronizarse con la nube y una brecha en ese servicio/cuenta podría comprometer todas tus cuentas.
+   Sin embargo, funcionan en múltiples dispositivos y normalmente no tienes que preocuparte por perder un solo dispositivo hardware.
+
+=== Nombrar tu clave de acceso ===
+
+En !FreedomBox, cuando se añade una clave de acceso a tu cuenta, por defecto se nombra 'Key 1'. La siguiente se llamará 'Key 2' y así sucesivamente.
+Sin embargo, es buena práctica nombrarlas para saber en qué dispositivo están almacenadas. Por ejemplo, puedes llamarlas 'Clave del Solokey primario', 'Clave del tfn Android', etc.
+Si se pierde un dispositivo, puedes iniciar sesión y eliminar esa clave de la lista de claves de acceso asociadas a tu cuenta.
+
+=== Múltiples dominios ===
+
+Cada clave de acceso está estrictamente ligada a un dominio y nunca se usa para otro dominio. Esto es necesario para evitar que un dominio impostor pueda suplantar a uno legítimo.
+Por tanto, si tu !FreedomBox está configurada con múltiples dominios, el navegador y el dispositivo autenticador tratarán cada dominio como cuentas separadas a efectos de autenticación con claves de acceso.
+Esto significa que debes registrar claves de acceso separadas para cada uno de tus dominios.
+
+Por ejemplo, supón que tu !FreedomBox tiene configurados los dominios midominio1.fbx.one y midominio2.ejemplo.
+Visita midominio1.fbx.one, inicia sesión en tu cuenta y añade una clave de acceso. Esta clave de acceso quedará ligada a ese dominio.
+Cuando intentes iniciar sesión, la clave de acceso funcionará si accedes a midominio1.fbx.one pero no funcionará al acceder a midominio2.ejemplo.
+Para hacer que el segundo dominio funcione, necesitas añadir una segunda clave de acceso mientras accedes a tu !FreedomBox con el nombre de dominio midominio2.ejemplo.
+Entonces se almacenarán dos claves de acceso en tu token hardware. La primera estará ligada a midominio1.fbx.one y solo se usará cuando accedas a ese dominio.
+La segunda estará ligada a midominio2.ejemplo y solo se usará cuando accedas a ese dominio.
+
+=== Múltiples cuentas de usuario ===
+
+Cuando usas un hardware de claves de acceso para varias cuentas de usuario en el mismo !FreedomBox, se crearán claves de acceso separadas para cada cuenta.
+A cada clave de acceso se le asignará el nombre de usuario de la cuenta a la que esté ligada. Esta información se almacena en la clave de acceso así como en el servidor.
+Durante el inicio de sesión, el navegador te pedirá que selecciones la cuenta de usuario a la que quieres acceder.
+Si solo existe una clave de acceso para un dominio dado, no se mostrará el diálogo de selección y el usuario iniciará sesión en la cuenta correspondiente a esa clave de acceso.
+
+=== Copia de seguridad de la clave de acceso ===
+
+En caso de pérdida del dispositivo que almacena tu clave de acceso, necesitas métodos alternativos para iniciar sesión en tu cuenta:
+
+ 1. Puedes registrar y mantener dos claves de acceso en dos dispositivos separados. Por ejemplo, tu clave de acceso primaria podría estar en un token Solokey y
+    la segunda en un teléfono Android o en otro token Solokey. Si uno se pierde, puedes iniciar sesión con el otro. Este es el método recomendado.
+
+ 1. !FreedomBox sigue soportando contraseñas incluso después de registrar claves de acceso.
+    Así que, si se pierde un dispositivo con clave de acceso, puedes iniciar sesión con una contraseña.
+
+ 1. Si olvidas tu contraseña y tu cuenta no es la única cuenta administradora en el !FreedomBox, puedes pedir a un administrador que restablezca tu contraseña.
+    Después de eso podrás registrar una nueva clave de acceso almacenada en un nuevo dispositivo.
+
+=== Plataformas compatibles ===
+
+Las passkeys se basan en WebAuthn, un estándar publicado por el World Wide Web Consortium.
+Por tanto, la implementación de !FreedomBox debería funcionar allí donde funcionen las clave de acceso. Se ha probado de la siguiente manera:
+
+|| '''SO/Dispositivo''' || '''Navegador''' || '''Autenticador''' || '''Resultado''' ||
+|| GNU/Linux || Firefox || Solokeys || Ok ||
+|| GNU/Linux || Firefox || Yubikey || Ok ||
+|| GNU/Linux || Chromium || Solokeys || Ok ||
+|| GNU/Linux || GNOME Web || - || KO (El navegador no soporta WebAuthn) ||
+|| Windows || Firefox || Windows Hello || Ok ||
+|| Windows || Firefox || Solokeys || Ok ||
+|| Windows || Firefox || Android Phone || Ok ||
+|| Windows || Chrome || Windows Hello || Ok ||
+|| Windows || Chrome || Solokeys || Ok ||
+|| Windows || Chrome || Android Phone || Ok ||
+|| Windows || Edge || Windows Hello || Ok ||
+|| Windows || Edge || Solokeys || Ok ||
+|| Windows || Edge || Android Phone || Ok ||
+|| Android || Firefox || Google Password Manager || Ok ||
+|| Android || Firefox || Solokeys USB || KO (No se detecta el toque tras introducir el PIN) ||
+|| Android || Firefox || Solokeys NFC || KO (Es necesario entender la configuración NFC) ||
+|| Android || Firefox || Otro dispositivo || Sin probar ||
+|| Android || Chrome || Google Password Manager || Ok ||
+|| Android || Chrome || Solokeys USB || KO (No se detecta el toque tras introducir el PIN) ||
+|| Android || Chrome || Solokeys NFC || KO (Es necesario entender la configuración NFC) ||
+|| Android || Chrome || Otro dispositivo || Sin probar ||
+
+## END_INCLUDE
+
+Volver a la [[es/FreedomBox/Features|descripción de Funcionalidades]] o a las páginas del [[es/FreedomBox/Manual|manual]].
+
+
+<<Include(es/FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

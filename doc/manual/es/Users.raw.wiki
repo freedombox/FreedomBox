@@ -1,6 +1,6 @@
 #language es
 
-~- [[DebianWiki/EditorGuide#translation|Translation(s)]]: [[FreedomBox/Manual/Users|English]] - Español -~
+<<Include(FreedomBox/Manual/Users, ,from="^##TAG:TRANSLATION-HEADER-START",to="^##TAG:TRANSLATION-HEADER-END")>>
 
 <<TableOfContents()>>
 
@@ -9,25 +9,36 @@
 == Usuarios y Grupos ==
 
 Puedes otorgar acceso a tu !FreedomBox a otros usuarios. Proporciona el nombre del usuario y su contraseña y asignale un grupo. Actualmente se soportan los grupos
+Esta app puede usarse para crear, editar y eliminar cuentas de usuario en !FreedomBox. Muchas apps con interfaz web en !FreedomBox admiten inicio de sesión único mediante OpenID Connect.
+Esto significa que si has iniciado sesión en la interfaz web de !FreedomBox, no es necesario iniciar sesión de forma separada en la app.
+Otras apps permiten usar las cuentas de !FreedomBox mediante LDAP.
+Finalmente, hay algunas apps que gestionan sus propias cuentas de usuario de forma independiente a las cuentas que tengas en !FreedomBox.
+
+
+
+Puedes otorgar acceso a tu FreedomBox a otros usuarios. Proporciona el nombre del usuario y su contraseña y asignale un grupo. Actualmente se soportan los grupos:
  * admin
  * bit-torrent
  * calibre
- * ed2k
  * feed-reader
  * freedombox-share
+ * freedombox-ssh
  * git-access
- * minidlna
- * syncthing
+ * kiwix
+ * syncthing-access
+ * vpn
  * web-search
- * wiki 
+ * wiki
 
-El usuario podrá ingresar a los servicios que soporten ingreso único (single-sign-on) mediante LDAP si figuran en el grupo apropriado.
+Los usuarios del grupo admin podrán ingresar en todos los servicios.
+También podrán acceder al sistema vía SSH y tendrán privilegios administrativos (sudo).
+Los grupos de un usuario pueden modificarse más adelante.
 
-Los usuarios del grupo `admin` podrán ingresar en todos los servicios. También pueden ingresar al sistema por SSH y escalar a privilegios administrativos (sudo).
+!FreedomBox admite el inicio de sesión con claves de acceso.
+Las claves de acceso son una alternativa más segura que las contraseñas y son la forma recomendada de autenticarse en !FreedomBox.
+Lee más en la [[FreedomBox/Guide/Passkeys|guía de claves de acceso de FreedomBox]].
 
-Estas características se pueden cambiar más tarde. 
-
-Asimismo es posible establecer una clave pública SSH que permitirá al usuario ingresar al sistema de modo seguro sin emplear su contraseña. Pueder dar de alta varias claves, una en cada línea. Las líneas en blanco o que comiencen por # se ignoran.
+Asimismo es posible establecer una clave pública SSH que permitirá al usuario ingresar al sistema de modo seguro sin emplear su contraseña. Puedes dar de alta varias claves, una en cada línea. Las líneas en blanco o que comiencen por # se ignoran.
 
 El idioma de la interfaz se puede establecer individualmente para cada usuario. Por omisión se emplea el del navegador.
 

@@ -10,6 +10,4 @@ from plinth.modules.api import views
 
 urlpatterns = [
     re_path(r'^api/(?P<version>[0-9]+)/shortcuts/?$', public(views.shortcuts)),
-    re_path(r'^api/(?P<version>[0-9]+)/access-info/?$',
-            public(views.access_info)),
 ]
