@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-28 22:01+0000\n"
+"POT-Creation-Date: 2026-06-02 00:51+0000\n"
 "PO-Revision-Date: 2026-04-09 10:09+0000\n"
 "Last-Translator: Burak Yavuz <hitowerdigit@hotmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/freedombox/"
@@ -2115,6 +2115,7 @@ msgid "Last update"
 msgstr "Son güncelleme"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:29
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:22
 msgid "IP Address"
 msgstr "IP Adresi"
 
@@ -6033,6 +6034,7 @@ msgstr "Yakındaki Kablosuz (Wi-Fi) Ağları"
 #: plinth/modules/networks/templates/connections_list.html:20
 #: plinth/modules/networks/views.py:420
 #: plinth/modules/wireguard/templates/wireguard_add_server.html:19
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:71
 msgid "Add Connection"
 msgstr "Bağlantı Ekle"
 
@@ -9925,6 +9927,7 @@ msgstr "Geçiş anahtarını sil"
 
 #: plinth/modules/users/templates/users_passkeys.html:155
 #: plinth/modules/users/templates/users_update.html:72
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:73
 msgid "Cancel"
 msgstr "İptal"
 
@@ -10046,33 +10049,32 @@ msgid "Invalid key."
 msgstr "Geçersiz anahtar."
 
 #: plinth/modules/wireguard/forms.py:63
-msgid "Enter a valid IPv4 address."
+#, fuzzy
+#| msgid "Enter a valid IPv4 address."
+msgid "Not a valid IP address."
 msgstr "Geçerli bir IPv4 adresi girin."
 
-#: plinth/modules/wireguard/forms.py:65
-msgid "Enter a valid network prefix or net mask."
-msgstr "Geçerli bir ağ öneki veya ağ maskesi girin."
-
-#: plinth/modules/wireguard/forms.py:71
+#: plinth/modules/wireguard/forms.py:69
 #: plinth/modules/wireguard/templates/wireguard.html:29
 #: plinth/modules/wireguard/templates/wireguard.html:57
-#: plinth/modules/wireguard/templates/wireguard.html:119
+#: plinth/modules/wireguard/templates/wireguard.html:125
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:24
 #: plinth/modules/wireguard/templates/wireguard_delete_server.html:24
 msgid "Public Key"
 msgstr "Ortak Anahtar"
 
-#: plinth/modules/wireguard/forms.py:72
+#: plinth/modules/wireguard/forms.py:70
 msgid ""
 "Public key of the peer. Example: "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 msgstr ""
 "Kişinin ortak anahtarı. Örnek: MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 
-#: plinth/modules/wireguard/forms.py:80
+#: plinth/modules/wireguard/forms.py:83
 msgid "Endpoint of the server"
 msgstr "Sunucunun uç noktası"
 
-#: plinth/modules/wireguard/forms.py:81
+#: plinth/modules/wireguard/forms.py:84
 msgid ""
 "Domain name and port in the form \"ip:port\". Example: "
 "demo.wireguard.com:12912 ."
@@ -10080,11 +10082,11 @@ msgstr ""
 "\"ip:b.noktası\" biçiminde etki alanı adı ve bağlantı noktası. Örnek: "
 "demo.wireguard.com:12912."
 
-#: plinth/modules/wireguard/forms.py:86
+#: plinth/modules/wireguard/forms.py:89
 msgid "Public key of the server"
 msgstr "Sunucunun ortak anahtarı"
 
-#: plinth/modules/wireguard/forms.py:87
+#: plinth/modules/wireguard/forms.py:90
 msgid ""
 "Provided by the server operator, a long string of characters. Example: "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
@@ -10092,28 +10094,35 @@ msgstr ""
 "Sunucu işleticisi tarafından sağlanan uzun bir karakter dizgisi. Örnek: "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 
-#: plinth/modules/wireguard/forms.py:92
+#: plinth/modules/wireguard/forms.py:95
 msgid "Client IP address provided by server"
 msgstr "Sunucu tarafından sağlanan istemci IP adresi"
 
-#: plinth/modules/wireguard/forms.py:94
+#: plinth/modules/wireguard/forms.py:97
+#, fuzzy
+#| msgid ""
+#| "IP address assigned to this machine on the VPN after connecting to the "
+#| "endpoint. This value is usually provided by the server operator. Example: "
+#| "192.168.0.10. You can also specify the network. This will allow reaching "
+#| "machines in the network. Examples: 10.68.12.43/24 or "
+#| "10.68.12.43/255.255.255.0."
 msgid ""
 "IP address assigned to this machine on the VPN after connecting to the "
 "endpoint. This value is usually provided by the server operator. Example: "
-"192.168.0.10. You can also specify the network. This will allow reaching "
-"machines in the network. Examples: 10.68.12.43/24 or "
-"10.68.12.43/255.255.255.0."
+"192.168.0.10 or 2a03:7c80:4b2c:91a2:5d41:ffee:9b82:7c17. You can also "
+"specify the network. This will allow reaching machines in the network. "
+"Examples: 10.68.12.43/24 or 10.68.12.43/255.255.255.0."
 msgstr ""
 "Uç noktaya bağlandıktan sonra VPN'de bu makineye atanan IP adresi. Bu değer "
 "genellikle sunucu işleticisi tarafından verilir. Örnek: 192.168.0.10. Ayrıca "
 "ağı da belirtebilirsiniz. Bu, ağdaki makinelere ulaşmayı sağlayacaktır. "
 "Örnekler: 10.68.12.43/24 veya 10.68.12.43/255.255.255.0."
 
-#: plinth/modules/wireguard/forms.py:102
+#: plinth/modules/wireguard/forms.py:106
 msgid "Private key of this machine"
 msgstr "Bu makinenin özel anahtarı"
 
-#: plinth/modules/wireguard/forms.py:103
+#: plinth/modules/wireguard/forms.py:107
 msgid ""
 "Optional. New public/private keys are generated if left blank. Public key "
 "can then be provided to the server. This is the recommended way. However, "
@@ -10125,11 +10134,11 @@ msgstr ""
 "sunucu işleticileri bunu vermekte ısrar eder. Örnek: "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 
-#: plinth/modules/wireguard/forms.py:111
+#: plinth/modules/wireguard/forms.py:115
 msgid "Pre-shared key"
 msgstr "Ön paylaşımlı anahtar"
 
-#: plinth/modules/wireguard/forms.py:112
+#: plinth/modules/wireguard/forms.py:116
 msgid ""
 "Optional. A shared secret key provided by the server to add an additional "
 "layer of security. Fill in only if provided. Example: "
@@ -10139,11 +10148,11 @@ msgstr ""
 "sağlanan paylaşılan bir gizli anahtar. Sadece verildiyse doldurun. Örnek: "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs=."
 
-#: plinth/modules/wireguard/forms.py:118
+#: plinth/modules/wireguard/forms.py:122
 msgid "Use this connection to send all outgoing traffic"
 msgstr "Tüm giden trafiği göndermek için bu bağlantıyı kullan"
 
-#: plinth/modules/wireguard/forms.py:120
+#: plinth/modules/wireguard/forms.py:124
 msgid "Typically checked for a VPN service through which all traffic is sent."
 msgstr "Genellikle tüm trafiğin gönderildiği bir VPN hizmeti için denetlenir."
 
@@ -10190,7 +10199,7 @@ msgid "Allowed IPs"
 msgstr "İzin verilen IP'ler"
 
 #: plinth/modules/wireguard/templates/wireguard.html:59
-#: plinth/modules/wireguard/templates/wireguard.html:120
+#: plinth/modules/wireguard/templates/wireguard.html:126
 msgid "Last Connected Time"
 msgstr "Son Bağlanma Zamanı"
 
@@ -10201,47 +10210,58 @@ msgstr ""
 "Henüz bu %(box_name)s cihazına bağlanmak için yapılandırılmış kişiler yok."
 
 #: plinth/modules/wireguard/templates/wireguard.html:88
-msgid "Add a new peer"
+#, fuzzy
+#| msgid "Add a new peer"
+msgid "Auto add a new peer"
 msgstr "Yeni bir kişi ekle"
 
 #: plinth/modules/wireguard/templates/wireguard.html:92
-#: plinth/modules/wireguard/views.py:59
+msgid "Add Client Automatically"
+msgstr ""
+
+#: plinth/modules/wireguard/templates/wireguard.html:94
+msgid "Add a new peer"
+msgstr "Yeni bir kişi ekle"
+
+#: plinth/modules/wireguard/templates/wireguard.html:98
+#: plinth/modules/wireguard/views.py:62 plinth/modules/wireguard/views.py:149
 msgid "Add Allowed Client"
 msgstr "İzin Verilen İstemci Ekle"
 
-#: plinth/modules/wireguard/templates/wireguard.html:97
+#: plinth/modules/wireguard/templates/wireguard.html:103
 msgid "WireGuard server not started yet."
 msgstr "WireGuard sunucusu henüz başlatılmadı."
 
-#: plinth/modules/wireguard/templates/wireguard.html:101
-#: plinth/modules/wireguard/templates/wireguard.html:103
+#: plinth/modules/wireguard/templates/wireguard.html:107
+#: plinth/modules/wireguard/templates/wireguard.html:109
 msgid "Start WireGuard Server"
 msgstr "WireGuard Sunucusunu Başlat"
 
-#: plinth/modules/wireguard/templates/wireguard.html:109
+#: plinth/modules/wireguard/templates/wireguard.html:115
 msgid "As a Client"
 msgstr "Bir İstemci Olarak"
 
-#: plinth/modules/wireguard/templates/wireguard.html:111
+#: plinth/modules/wireguard/templates/wireguard.html:117
 #, python-format
 msgid "Servers that %(box_name)s will connect to:"
 msgstr "%(box_name)s cihazının bağlanacağı sunucular:"
 
-#: plinth/modules/wireguard/templates/wireguard.html:118
+#: plinth/modules/wireguard/templates/wireguard.html:124
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:23
 #: plinth/modules/wireguard/templates/wireguard_delete_server.html:20
 msgid "Endpoint"
 msgstr "Uç nokta"
 
-#: plinth/modules/wireguard/templates/wireguard.html:142
+#: plinth/modules/wireguard/templates/wireguard.html:148
 msgid "No connections to remote servers are configured yet."
 msgstr "Henüz uzak sunuculara yapılandırılan bağlantılar yok."
 
-#: plinth/modules/wireguard/templates/wireguard.html:152
+#: plinth/modules/wireguard/templates/wireguard.html:158
 msgid "Add a new server"
 msgstr "Yeni bir sunucu ekleyin"
 
-#: plinth/modules/wireguard/templates/wireguard.html:156
-#: plinth/modules/wireguard/views.py:178
+#: plinth/modules/wireguard/templates/wireguard.html:162
+#: plinth/modules/wireguard/views.py:301
 msgid "Add Connection to Server"
 msgstr "Sunucuya Bağlantı Ekle"
 
@@ -10252,6 +10272,62 @@ msgstr "Bu istemciye atanacak IP adresi"
 #: plinth/modules/wireguard/templates/wireguard_add_client.html:31
 msgid "Add Client"
 msgstr "İstemci Ekle"
+
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:26
+#, fuzzy
+#| msgid "Private key path"
+msgid "Private Key"
+msgstr "Özel anahtar yolu"
+
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:29
+msgid "Click to reveal"
+msgstr ""
+
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:36
+#, fuzzy
+#| msgid "Key Import Date"
+msgid "Important:"
+msgstr "Anahtar İçe Aktarma Tarihi"
+
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:37
+msgid "Save the private key now. This page shows it only once!"
+msgstr ""
+
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:41
+#, fuzzy
+#| msgid "configuration failed"
+msgid "Client configuration file"
+msgstr "yapılandırma başarısız oldu"
+
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:43
+msgid ""
+"Download the configuration file (.conf) for manual import, or use the QR "
+"code to import directly from your WireGuard mobile app."
+msgstr ""
+
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:49
+#, fuzzy
+#| msgid "warning"
+msgid "Warning:"
+msgstr "uyarı"
+
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:50
+msgid ""
+"Treat this QR code like a password. Anyone who scans it can gain VPN access "
+"if the connection is enabled."
+msgstr ""
+
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:60
+#, fuzzy
+#| msgid "Download my profile"
+msgid "Download config file"
+msgstr "Profilimi indir"
+
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:65
+#, fuzzy
+#| msgid "Source Code"
+msgid "Show QR Code"
+msgstr "Kaynak Kodu"
 
 #: plinth/modules/wireguard/templates/wireguard_delete_client.html:14
 msgid "Are you sure that you want to delete this client?"
@@ -10346,67 +10422,77 @@ msgstr "Bu makinenin IP adresi:"
 msgid "All outgoing traffic is sent using this connection:"
 msgstr "Tüm giden trafik bu bağlantı kullanılarak gönderilir:"
 
-#: plinth/modules/wireguard/views.py:54
+#: plinth/modules/wireguard/views.py:57 plinth/modules/wireguard/views.py:144
 msgid "Added new client."
 msgstr "Yeni istemci eklendi."
 
-#: plinth/modules/wireguard/views.py:79 plinth/modules/wireguard/views.py:138
+#: plinth/modules/wireguard/views.py:82 plinth/modules/wireguard/views.py:261
 msgid "Client with public key already exists"
 msgstr "Ortak anahtara sahip istemci zaten var"
 
-#: plinth/modules/wireguard/views.py:92
+#: plinth/modules/wireguard/views.py:199
+msgid "Session expired. Please try again."
+msgstr ""
+
+#: plinth/modules/wireguard/views.py:202
+#, fuzzy
+#| msgid "Domain already exists."
+msgid "Client already exists"
+msgstr "Etki alanı zaten var."
+
+#: plinth/modules/wireguard/views.py:215
 msgid "Allowed Client"
 msgstr "İzin Verilen İstemci"
 
-#: plinth/modules/wireguard/views.py:114
+#: plinth/modules/wireguard/views.py:237
 msgid "Updated client."
 msgstr "İstemci güncellendi."
 
-#: plinth/modules/wireguard/views.py:119
+#: plinth/modules/wireguard/views.py:242
 msgid "Modify Client"
 msgstr "İstemciyi Değiştir"
 
-#: plinth/modules/wireguard/views.py:152
+#: plinth/modules/wireguard/views.py:275
 msgid "Delete Allowed Client"
 msgstr "İzin Verilen İstemciyi Sil"
 
-#: plinth/modules/wireguard/views.py:161
+#: plinth/modules/wireguard/views.py:284
 msgid "Client deleted."
 msgstr "İstemci silindi."
 
-#: plinth/modules/wireguard/views.py:163
+#: plinth/modules/wireguard/views.py:286
 msgid "Client not found"
 msgstr "İstemci bulunamadı"
 
-#: plinth/modules/wireguard/views.py:173
+#: plinth/modules/wireguard/views.py:296
 msgid "Added new server."
 msgstr "Yeni sunucu eklendi."
 
-#: plinth/modules/wireguard/views.py:194
+#: plinth/modules/wireguard/views.py:317
 msgid "Connection to Server"
 msgstr "Sunucuya Bağlantı"
 
-#: plinth/modules/wireguard/views.py:212
+#: plinth/modules/wireguard/views.py:335
 msgid "Updated server."
 msgstr "Sunucu güncellendi."
 
-#: plinth/modules/wireguard/views.py:217
+#: plinth/modules/wireguard/views.py:340
 msgid "Modify Connection to Server"
 msgstr "Sunucuya Bağlantıyı Değiştir"
 
-#: plinth/modules/wireguard/views.py:255
+#: plinth/modules/wireguard/views.py:378
 msgid "Delete Connection to Server"
 msgstr "Sunucuya Bağlantıyı Sil"
 
-#: plinth/modules/wireguard/views.py:275
+#: plinth/modules/wireguard/views.py:398
 msgid "Server deleted."
 msgstr "Sunucu silindi."
 
-#: plinth/modules/wireguard/views.py:287
+#: plinth/modules/wireguard/views.py:410
 msgid "WireGuard server started successfully."
 msgstr "WireGuard sunucusu başarılı olarak başlatıldı."
 
-#: plinth/modules/wireguard/views.py:291
+#: plinth/modules/wireguard/views.py:414
 msgid "Failed to start WireGuard server: {}"
 msgstr "WireGuard sunucusunu başlatma başarısız oldu: {}"
 
@@ -11088,6 +11174,9 @@ msgstr "{app_id} kaldırılmadan önce"
 msgid "Gujarati"
 msgstr "Gujarati"
 
+#~ msgid "Enter a valid network prefix or net mask."
+#~ msgstr "Geçerli bir ağ öneki veya ağ maskesi girin."
+
 #~ msgid "Debian:"
 #~ msgstr "Debian:"
 
@@ -11485,9 +11574,6 @@ msgstr "Gujarati"
 #~ "Bu portal, %(box_name)s web arayüzünün bir parçasıdır. %(box_name)s, GNU "
 #~ "Affero Genel Kamu Lisansı, Sürüm 3 veya üzeri altında dağıtılan özgür bir "
 #~ "yazılımdır."
-
-#~ msgid "Source Code"
-#~ msgstr "Kaynak Kodu"
 
 #~ msgid "FreedomBox Foundation"
 #~ msgstr "FreedomBox Vakfı"
@@ -12099,9 +12185,6 @@ msgstr "Gujarati"
 #~ msgid "OpenPGP User IDs"
 #~ msgstr "OpenPGP Kullanıcı Kimlikleri"
 
-#~ msgid "Key Import Date"
-#~ msgstr "Anahtar İçe Aktarma Tarihi"
-
 #~ msgid "SSH Key Type"
 #~ msgstr "SSH Anahtar Türü"
 
@@ -12263,9 +12346,6 @@ msgstr "Gujarati"
 
 #~ msgid "Certificate path"
 #~ msgstr "Sertifika yolu"
-
-#~ msgid "Private key path"
-#~ msgstr "Özel anahtar yolu"
 
 #~ msgid "Use system default"
 #~ msgstr "Sistem varsayılanını kullan"

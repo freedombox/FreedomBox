@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-28 22:01+0000\n"
+"POT-Creation-Date: 2026-06-02 00:51+0000\n"
 "PO-Revision-Date: 2026-04-16 15:09+0000\n"
 "Last-Translator: Coucouf <coucouf@coucouf.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/freedombox/"
@@ -2164,6 +2164,7 @@ msgid "Last update"
 msgstr "Dernière mise à jour"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:29
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:22
 msgid "IP Address"
 msgstr "Adresse IP"
 
@@ -6143,6 +6144,7 @@ msgstr "Réseaux Wi-Fi à proximité"
 #: plinth/modules/networks/templates/connections_list.html:20
 #: plinth/modules/networks/views.py:420
 #: plinth/modules/wireguard/templates/wireguard_add_server.html:19
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:71
 msgid "Add Connection"
 msgstr "Ajouter une connexion"
 
@@ -10140,6 +10142,7 @@ msgstr "Supprimer la clé d’accès"
 
 #: plinth/modules/users/templates/users_passkeys.html:155
 #: plinth/modules/users/templates/users_update.html:72
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:73
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -10263,22 +10266,21 @@ msgid "Invalid key."
 msgstr "Clé invalide."
 
 #: plinth/modules/wireguard/forms.py:63
-msgid "Enter a valid IPv4 address."
+#, fuzzy
+#| msgid "Enter a valid IPv4 address."
+msgid "Not a valid IP address."
 msgstr "Veuillez saisir une adresse IPv4 valide."
 
-#: plinth/modules/wireguard/forms.py:65
-msgid "Enter a valid network prefix or net mask."
-msgstr "Veuillez saisir un préfixe réseau ou un masque de sous-réseau valide."
-
-#: plinth/modules/wireguard/forms.py:71
+#: plinth/modules/wireguard/forms.py:69
 #: plinth/modules/wireguard/templates/wireguard.html:29
 #: plinth/modules/wireguard/templates/wireguard.html:57
-#: plinth/modules/wireguard/templates/wireguard.html:119
+#: plinth/modules/wireguard/templates/wireguard.html:125
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:24
 #: plinth/modules/wireguard/templates/wireguard_delete_server.html:24
 msgid "Public Key"
 msgstr "Clé publique"
 
-#: plinth/modules/wireguard/forms.py:72
+#: plinth/modules/wireguard/forms.py:70
 msgid ""
 "Public key of the peer. Example: "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
@@ -10286,11 +10288,11 @@ msgstr ""
 "Clé publique du pair. Exemple : "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 
-#: plinth/modules/wireguard/forms.py:80
+#: plinth/modules/wireguard/forms.py:83
 msgid "Endpoint of the server"
 msgstr "Point de terminaison du serveur"
 
-#: plinth/modules/wireguard/forms.py:81
+#: plinth/modules/wireguard/forms.py:84
 msgid ""
 "Domain name and port in the form \"ip:port\". Example: "
 "demo.wireguard.com:12912 ."
@@ -10298,11 +10300,11 @@ msgstr ""
 "Nom de domaine et port sous la forme « ip:port ». Par exemple : "
 "demo.wireguard.com:12912 ."
 
-#: plinth/modules/wireguard/forms.py:86
+#: plinth/modules/wireguard/forms.py:89
 msgid "Public key of the server"
 msgstr "Clé publique du serveur"
 
-#: plinth/modules/wireguard/forms.py:87
+#: plinth/modules/wireguard/forms.py:90
 msgid ""
 "Provided by the server operator, a long string of characters. Example: "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
@@ -10310,17 +10312,24 @@ msgstr ""
 "Il s’agit d’une longue chaîne de caractères fournie par l’opérateur du "
 "serveur. Par exemple : MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 
-#: plinth/modules/wireguard/forms.py:92
+#: plinth/modules/wireguard/forms.py:95
 msgid "Client IP address provided by server"
 msgstr "Adresse IP du client fournie par le serveur"
 
-#: plinth/modules/wireguard/forms.py:94
+#: plinth/modules/wireguard/forms.py:97
+#, fuzzy
+#| msgid ""
+#| "IP address assigned to this machine on the VPN after connecting to the "
+#| "endpoint. This value is usually provided by the server operator. Example: "
+#| "192.168.0.10. You can also specify the network. This will allow reaching "
+#| "machines in the network. Examples: 10.68.12.43/24 or "
+#| "10.68.12.43/255.255.255.0."
 msgid ""
 "IP address assigned to this machine on the VPN after connecting to the "
 "endpoint. This value is usually provided by the server operator. Example: "
-"192.168.0.10. You can also specify the network. This will allow reaching "
-"machines in the network. Examples: 10.68.12.43/24 or "
-"10.68.12.43/255.255.255.0."
+"192.168.0.10 or 2a03:7c80:4b2c:91a2:5d41:ffee:9b82:7c17. You can also "
+"specify the network. This will allow reaching machines in the network. "
+"Examples: 10.68.12.43/24 or 10.68.12.43/255.255.255.0."
 msgstr ""
 "Adresse IP attribuée à cette machine sur le réseau privé virtuel VPN une "
 "fois connectée au serveur distant. Cette valeur est généralement fournie par "
@@ -10328,11 +10337,11 @@ msgstr ""
 "spécifier le réseau. Cela vous permettra d’atteindre les machines de ce "
 "réseau. Par exemple : 10.68.12.43/24 ou 10.68.12.43/255.255.255.0."
 
-#: plinth/modules/wireguard/forms.py:102
+#: plinth/modules/wireguard/forms.py:106
 msgid "Private key of this machine"
 msgstr "Clé privée de cette machine"
 
-#: plinth/modules/wireguard/forms.py:103
+#: plinth/modules/wireguard/forms.py:107
 msgid ""
 "Optional. New public/private keys are generated if left blank. Public key "
 "can then be provided to the server. This is the recommended way. However, "
@@ -10345,11 +10354,11 @@ msgstr ""
 "serveur insistent pour fournir eux même cette clé. Exemple : "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 
-#: plinth/modules/wireguard/forms.py:111
+#: plinth/modules/wireguard/forms.py:115
 msgid "Pre-shared key"
 msgstr "Clé pré-partagée"
 
-#: plinth/modules/wireguard/forms.py:112
+#: plinth/modules/wireguard/forms.py:116
 msgid ""
 "Optional. A shared secret key provided by the server to add an additional "
 "layer of security. Fill in only if provided. Example: "
@@ -10360,11 +10369,11 @@ msgstr ""
 "clé vous a été fournie. Exemple : "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs=."
 
-#: plinth/modules/wireguard/forms.py:118
+#: plinth/modules/wireguard/forms.py:122
 msgid "Use this connection to send all outgoing traffic"
 msgstr "Utiliser cette connexion pour y envoyer tout le trafic sortant"
 
-#: plinth/modules/wireguard/forms.py:120
+#: plinth/modules/wireguard/forms.py:124
 msgid "Typically checked for a VPN service through which all traffic is sent."
 msgstr ""
 "À activer lorsque le service de réseau privé virtuel VPN doit être utilisé "
@@ -10413,7 +10422,7 @@ msgid "Allowed IPs"
 msgstr "IP autorisées"
 
 #: plinth/modules/wireguard/templates/wireguard.html:59
-#: plinth/modules/wireguard/templates/wireguard.html:120
+#: plinth/modules/wireguard/templates/wireguard.html:126
 msgid "Last Connected Time"
 msgstr "Dernière connexion"
 
@@ -10425,47 +10434,58 @@ msgstr ""
 "l’instant."
 
 #: plinth/modules/wireguard/templates/wireguard.html:88
-msgid "Add a new peer"
+#, fuzzy
+#| msgid "Add a new peer"
+msgid "Auto add a new peer"
 msgstr "Ajouter un nouveau pair"
 
 #: plinth/modules/wireguard/templates/wireguard.html:92
-#: plinth/modules/wireguard/views.py:59
+msgid "Add Client Automatically"
+msgstr ""
+
+#: plinth/modules/wireguard/templates/wireguard.html:94
+msgid "Add a new peer"
+msgstr "Ajouter un nouveau pair"
+
+#: plinth/modules/wireguard/templates/wireguard.html:98
+#: plinth/modules/wireguard/views.py:62 plinth/modules/wireguard/views.py:149
 msgid "Add Allowed Client"
 msgstr "Ajouter un client autorisé"
 
-#: plinth/modules/wireguard/templates/wireguard.html:97
+#: plinth/modules/wireguard/templates/wireguard.html:103
 msgid "WireGuard server not started yet."
 msgstr "Le serveur WireGuard n’a pas encore démarré."
 
-#: plinth/modules/wireguard/templates/wireguard.html:101
-#: plinth/modules/wireguard/templates/wireguard.html:103
+#: plinth/modules/wireguard/templates/wireguard.html:107
+#: plinth/modules/wireguard/templates/wireguard.html:109
 msgid "Start WireGuard Server"
 msgstr "Démarrer le serveur WireGuard"
 
-#: plinth/modules/wireguard/templates/wireguard.html:109
+#: plinth/modules/wireguard/templates/wireguard.html:115
 msgid "As a Client"
 msgstr "En tant que client"
 
-#: plinth/modules/wireguard/templates/wireguard.html:111
+#: plinth/modules/wireguard/templates/wireguard.html:117
 #, python-format
 msgid "Servers that %(box_name)s will connect to:"
 msgstr "Serveurs auxquels la %(box_name)s se connecte :"
 
-#: plinth/modules/wireguard/templates/wireguard.html:118
+#: plinth/modules/wireguard/templates/wireguard.html:124
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:23
 #: plinth/modules/wireguard/templates/wireguard_delete_server.html:20
 msgid "Endpoint"
 msgstr "Serveur distant"
 
-#: plinth/modules/wireguard/templates/wireguard.html:142
+#: plinth/modules/wireguard/templates/wireguard.html:148
 msgid "No connections to remote servers are configured yet."
 msgstr "Aucune connexion vers un serveur distant n’est encore configurée."
 
-#: plinth/modules/wireguard/templates/wireguard.html:152
+#: plinth/modules/wireguard/templates/wireguard.html:158
 msgid "Add a new server"
 msgstr "Ajouter un nouveau serveur"
 
-#: plinth/modules/wireguard/templates/wireguard.html:156
-#: plinth/modules/wireguard/views.py:178
+#: plinth/modules/wireguard/templates/wireguard.html:162
+#: plinth/modules/wireguard/views.py:301
 msgid "Add Connection to Server"
 msgstr "Ajouter une connexion à un serveur"
 
@@ -10476,6 +10496,62 @@ msgstr "Adresse IP assignée à ce client"
 #: plinth/modules/wireguard/templates/wireguard_add_client.html:31
 msgid "Add Client"
 msgstr "Ajouter un client"
+
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:26
+#, fuzzy
+#| msgid "Private key path"
+msgid "Private Key"
+msgstr "Chemin de la clef privée"
+
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:29
+msgid "Click to reveal"
+msgstr ""
+
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:36
+#, fuzzy
+#| msgid "Key Import Date"
+msgid "Important:"
+msgstr "Date de l'importation de la clé"
+
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:37
+msgid "Save the private key now. This page shows it only once!"
+msgstr ""
+
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:41
+#, fuzzy
+#| msgid "configuration failed"
+msgid "Client configuration file"
+msgstr "échec de configuration"
+
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:43
+msgid ""
+"Download the configuration file (.conf) for manual import, or use the QR "
+"code to import directly from your WireGuard mobile app."
+msgstr ""
+
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:49
+#, fuzzy
+#| msgid "warning"
+msgid "Warning:"
+msgstr "avertissement"
+
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:50
+msgid ""
+"Treat this QR code like a password. Anyone who scans it can gain VPN access "
+"if the connection is enabled."
+msgstr ""
+
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:60
+#, fuzzy
+#| msgid "Download my profile"
+msgid "Download config file"
+msgstr "Télécharger mon profil"
+
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:65
+#, fuzzy
+#| msgid "Source Code"
+msgid "Show QR Code"
+msgstr "Code source"
 
 #: plinth/modules/wireguard/templates/wireguard_delete_client.html:14
 msgid "Are you sure that you want to delete this client?"
@@ -10570,67 +10646,77 @@ msgstr "Adresse IP de cette machine :"
 msgid "All outgoing traffic is sent using this connection:"
 msgstr "L’ensemble du trafic sortant est envoyé à travers cette connexion :"
 
-#: plinth/modules/wireguard/views.py:54
+#: plinth/modules/wireguard/views.py:57 plinth/modules/wireguard/views.py:144
 msgid "Added new client."
 msgstr "Nouveau client ajouté."
 
-#: plinth/modules/wireguard/views.py:79 plinth/modules/wireguard/views.py:138
+#: plinth/modules/wireguard/views.py:82 plinth/modules/wireguard/views.py:261
 msgid "Client with public key already exists"
 msgstr "Un client existe déjà avec cette clé publique"
 
-#: plinth/modules/wireguard/views.py:92
+#: plinth/modules/wireguard/views.py:199
+msgid "Session expired. Please try again."
+msgstr ""
+
+#: plinth/modules/wireguard/views.py:202
+#, fuzzy
+#| msgid "Domain already exists."
+msgid "Client already exists"
+msgstr "Le domaine existe déjà."
+
+#: plinth/modules/wireguard/views.py:215
 msgid "Allowed Client"
 msgstr "Client autorisé"
 
-#: plinth/modules/wireguard/views.py:114
+#: plinth/modules/wireguard/views.py:237
 msgid "Updated client."
 msgstr "Client mis à jour."
 
-#: plinth/modules/wireguard/views.py:119
+#: plinth/modules/wireguard/views.py:242
 msgid "Modify Client"
 msgstr "Modifier le client"
 
-#: plinth/modules/wireguard/views.py:152
+#: plinth/modules/wireguard/views.py:275
 msgid "Delete Allowed Client"
 msgstr "Supprimer un client autorisé"
 
-#: plinth/modules/wireguard/views.py:161
+#: plinth/modules/wireguard/views.py:284
 msgid "Client deleted."
 msgstr "Client supprimé."
 
-#: plinth/modules/wireguard/views.py:163
+#: plinth/modules/wireguard/views.py:286
 msgid "Client not found"
 msgstr "Client introuvable"
 
-#: plinth/modules/wireguard/views.py:173
+#: plinth/modules/wireguard/views.py:296
 msgid "Added new server."
 msgstr "Nouveau serveur ajouté."
 
-#: plinth/modules/wireguard/views.py:194
+#: plinth/modules/wireguard/views.py:317
 msgid "Connection to Server"
 msgstr "Connexion au seveur"
 
-#: plinth/modules/wireguard/views.py:212
+#: plinth/modules/wireguard/views.py:335
 msgid "Updated server."
 msgstr "Serveur mis à jour."
 
-#: plinth/modules/wireguard/views.py:217
+#: plinth/modules/wireguard/views.py:340
 msgid "Modify Connection to Server"
 msgstr "Modifier la connexion à un serveur"
 
-#: plinth/modules/wireguard/views.py:255
+#: plinth/modules/wireguard/views.py:378
 msgid "Delete Connection to Server"
 msgstr "Supprimer la connexion à un serveur"
 
-#: plinth/modules/wireguard/views.py:275
+#: plinth/modules/wireguard/views.py:398
 msgid "Server deleted."
 msgstr "Serveur supprimé."
 
-#: plinth/modules/wireguard/views.py:287
+#: plinth/modules/wireguard/views.py:410
 msgid "WireGuard server started successfully."
 msgstr "Le serveur WireGuard a été démarré."
 
-#: plinth/modules/wireguard/views.py:291
+#: plinth/modules/wireguard/views.py:414
 msgid "Failed to start WireGuard server: {}"
 msgstr "Échec du démarrage du serveur WireGuard : {}"
 
@@ -11328,6 +11414,10 @@ msgstr "avant la désinstallation de {app_id}"
 msgid "Gujarati"
 msgstr "Gujarati"
 
+#~ msgid "Enter a valid network prefix or net mask."
+#~ msgstr ""
+#~ "Veuillez saisir un préfixe réseau ou un masque de sous-réseau valide."
+
 #~ msgid "Debian:"
 #~ msgstr "Debian :"
 
@@ -11735,9 +11825,6 @@ msgstr "Gujarati"
 #~ "Ce portail fait partie de l’interface web de la %(box_name)s. "
 #~ "%(box_name)s est un logiciel libre distribué sous la licence publique "
 #~ "générale GNU Affero, version 3 ou ultérieure."
-
-#~ msgid "Source Code"
-#~ msgstr "Code source"
 
 #~ msgid "FreedomBox Foundation"
 #~ msgstr "Fondation FreedomBox"
@@ -12351,9 +12438,6 @@ msgstr "Gujarati"
 #~ msgid "OpenPGP User IDs"
 #~ msgstr "Identités OpenPGP de l'utilisateur"
 
-#~ msgid "Key Import Date"
-#~ msgstr "Date de l'importation de la clé"
-
 #~ msgid "SSH Key Type"
 #~ msgstr "Type de clé SSH"
 
@@ -12514,9 +12598,6 @@ msgstr "Gujarati"
 
 #~ msgid "Certificate path"
 #~ msgstr "Chemin du certificat"
-
-#~ msgid "Private key path"
-#~ msgstr "Chemin de la clef privée"
 
 #~ msgid "Use system default"
 #~ msgstr "Utiliser les paramètres par défaut du système"

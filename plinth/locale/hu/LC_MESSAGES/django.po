@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-28 22:01+0000\n"
+"POT-Creation-Date: 2026-06-02 00:51+0000\n"
 "PO-Revision-Date: 2025-06-04 15:01+0000\n"
 "Last-Translator: András Szűcs "
 "<andrascc86288f63c44cb5@users.noreply.hosted.weblate.org>\n"
@@ -2254,6 +2254,7 @@ msgid "Last update"
 msgstr "Legutolsó frissítés"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:29
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:22
 msgid "IP Address"
 msgstr "IP-cím"
 
@@ -6280,6 +6281,7 @@ msgstr "Wi-Fi hálózatok a közelben"
 #: plinth/modules/networks/templates/connections_list.html:20
 #: plinth/modules/networks/views.py:420
 #: plinth/modules/wireguard/templates/wireguard_add_server.html:19
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:71
 msgid "Add Connection"
 msgstr "Kapcsolat hozzáadása"
 
@@ -10294,6 +10296,7 @@ msgstr "Felhasználó törlése"
 
 #: plinth/modules/users/templates/users_passkeys.html:155
 #: plinth/modules/users/templates/users_update.html:72
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:73
 msgid "Cancel"
 msgstr "Mégse"
 
@@ -10419,22 +10422,19 @@ msgstr "Érvénytelen kulcs."
 #: plinth/modules/wireguard/forms.py:63
 #, fuzzy
 #| msgid "Enter a valid username."
-msgid "Enter a valid IPv4 address."
+msgid "Not a valid IP address."
 msgstr "Adj meg egy érvényes felhasználónevet."
 
-#: plinth/modules/wireguard/forms.py:65
-msgid "Enter a valid network prefix or net mask."
-msgstr ""
-
-#: plinth/modules/wireguard/forms.py:71
+#: plinth/modules/wireguard/forms.py:69
 #: plinth/modules/wireguard/templates/wireguard.html:29
 #: plinth/modules/wireguard/templates/wireguard.html:57
-#: plinth/modules/wireguard/templates/wireguard.html:119
+#: plinth/modules/wireguard/templates/wireguard.html:125
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:24
 #: plinth/modules/wireguard/templates/wireguard_delete_server.html:24
 msgid "Public Key"
 msgstr "Nyilvános kulcs"
 
-#: plinth/modules/wireguard/forms.py:72
+#: plinth/modules/wireguard/forms.py:70
 msgid ""
 "Public key of the peer. Example: "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
@@ -10442,22 +10442,22 @@ msgstr ""
 "A partner nyilvános kulcsa. Például: "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 
-#: plinth/modules/wireguard/forms.py:80
+#: plinth/modules/wireguard/forms.py:83
 msgid "Endpoint of the server"
 msgstr "A szerver végpontja"
 
-#: plinth/modules/wireguard/forms.py:81
+#: plinth/modules/wireguard/forms.py:84
 msgid ""
 "Domain name and port in the form \"ip:port\". Example: "
 "demo.wireguard.com:12912 ."
 msgstr ""
 "Domainnév és port \"ip:port\" formában. Például: demo.wireguard.com:12912 ."
 
-#: plinth/modules/wireguard/forms.py:86
+#: plinth/modules/wireguard/forms.py:89
 msgid "Public key of the server"
 msgstr "A szerver nyilvános kulcsa"
 
-#: plinth/modules/wireguard/forms.py:87
+#: plinth/modules/wireguard/forms.py:90
 msgid ""
 "Provided by the server operator, a long string of characters. Example: "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
@@ -10465,11 +10465,11 @@ msgstr ""
 "A szerver üzemeltetője által megadott hosszú karakterlánc. Például: "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 
-#: plinth/modules/wireguard/forms.py:92
+#: plinth/modules/wireguard/forms.py:95
 msgid "Client IP address provided by server"
 msgstr "A szerver által megadott kliens IP-cím"
 
-#: plinth/modules/wireguard/forms.py:94
+#: plinth/modules/wireguard/forms.py:97
 #, fuzzy
 #| msgid ""
 #| "IP address assigned to this machine on the VPN after connecting to the "
@@ -10478,19 +10478,19 @@ msgstr "A szerver által megadott kliens IP-cím"
 msgid ""
 "IP address assigned to this machine on the VPN after connecting to the "
 "endpoint. This value is usually provided by the server operator. Example: "
-"192.168.0.10. You can also specify the network. This will allow reaching "
-"machines in the network. Examples: 10.68.12.43/24 or "
-"10.68.12.43/255.255.255.0."
+"192.168.0.10 or 2a03:7c80:4b2c:91a2:5d41:ffee:9b82:7c17. You can also "
+"specify the network. This will allow reaching machines in the network. "
+"Examples: 10.68.12.43/24 or 10.68.12.43/255.255.255.0."
 msgstr ""
 "A gépnek a VPN-en a végponthoz való csatlakozást követően kijelölt IP-cím. "
 "Ezt az értéket általában a szerver üzemeltetője adja meg. Például: "
 "192.168.0.10."
 
-#: plinth/modules/wireguard/forms.py:102
+#: plinth/modules/wireguard/forms.py:106
 msgid "Private key of this machine"
 msgstr "A gép privát kulcsa"
 
-#: plinth/modules/wireguard/forms.py:103
+#: plinth/modules/wireguard/forms.py:107
 msgid ""
 "Optional. New public/private keys are generated if left blank. Public key "
 "can then be provided to the server. This is the recommended way. However, "
@@ -10502,11 +10502,11 @@ msgstr ""
 "módszer. Egyes szerverüzemeltetők azonban ragaszkodnak ennek megadásához. "
 "Például: MConEJFIg6+DFHgg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 
-#: plinth/modules/wireguard/forms.py:111
+#: plinth/modules/wireguard/forms.py:115
 msgid "Pre-shared key"
 msgstr "Előre megosztott kulcs"
 
-#: plinth/modules/wireguard/forms.py:112
+#: plinth/modules/wireguard/forms.py:116
 msgid ""
 "Optional. A shared secret key provided by the server to add an additional "
 "layer of security. Fill in only if provided. Example: "
@@ -10516,11 +10516,11 @@ msgstr ""
 "további biztonsági szintet biztosít. Csak akkor töltsd ki, ha rendelkezésre "
 "áll. Például: MConEJFIg6+DFHgg2J1nn9SNLOSE9KR0ysdPgmPjibEs=."
 
-#: plinth/modules/wireguard/forms.py:118
+#: plinth/modules/wireguard/forms.py:122
 msgid "Use this connection to send all outgoing traffic"
 msgstr "Használja ezt a kapcsolatot az összes kimenő forgalom küldésére"
 
-#: plinth/modules/wireguard/forms.py:120
+#: plinth/modules/wireguard/forms.py:124
 msgid "Typically checked for a VPN service through which all traffic is sent."
 msgstr ""
 "Jellemzően olyan VPN-szolgáltatásnál van bejelölve, amelyen keresztül az "
@@ -10575,7 +10575,7 @@ msgid "Allowed IPs"
 msgstr "Engedélyezett IP-címek"
 
 #: plinth/modules/wireguard/templates/wireguard.html:59
-#: plinth/modules/wireguard/templates/wireguard.html:120
+#: plinth/modules/wireguard/templates/wireguard.html:126
 msgid "Last Connected Time"
 msgstr "Utolsó csatlakozási idő"
 
@@ -10585,49 +10585,60 @@ msgid "No peers configured to connect to this %(box_name)s yet."
 msgstr "Ehhez a %(box_name)shoz még nincs partner konfigurálva."
 
 #: plinth/modules/wireguard/templates/wireguard.html:88
-msgid "Add a new peer"
+#, fuzzy
+#| msgid "Add a new peer"
+msgid "Auto add a new peer"
 msgstr "Új társ hozzáadása"
 
 #: plinth/modules/wireguard/templates/wireguard.html:92
-#: plinth/modules/wireguard/views.py:59
+msgid "Add Client Automatically"
+msgstr ""
+
+#: plinth/modules/wireguard/templates/wireguard.html:94
+msgid "Add a new peer"
+msgstr "Új társ hozzáadása"
+
+#: plinth/modules/wireguard/templates/wireguard.html:98
+#: plinth/modules/wireguard/views.py:62 plinth/modules/wireguard/views.py:149
 msgid "Add Allowed Client"
 msgstr "Engedélyezett kliens hozzáadása"
 
-#: plinth/modules/wireguard/templates/wireguard.html:97
+#: plinth/modules/wireguard/templates/wireguard.html:103
 #, fuzzy
 #| msgid "Password changed successfully."
 msgid "WireGuard server not started yet."
 msgstr "A jelszó módosítása sikeres."
 
-#: plinth/modules/wireguard/templates/wireguard.html:101
-#: plinth/modules/wireguard/templates/wireguard.html:103
+#: plinth/modules/wireguard/templates/wireguard.html:107
+#: plinth/modules/wireguard/templates/wireguard.html:109
 msgid "Start WireGuard Server"
 msgstr ""
 
-#: plinth/modules/wireguard/templates/wireguard.html:109
+#: plinth/modules/wireguard/templates/wireguard.html:115
 msgid "As a Client"
 msgstr "Ügyfélként"
 
-#: plinth/modules/wireguard/templates/wireguard.html:111
+#: plinth/modules/wireguard/templates/wireguard.html:117
 #, python-format
 msgid "Servers that %(box_name)s will connect to:"
 msgstr "Szerverek, amelyekhez a %(box_name)s csatlakozni fog:"
 
-#: plinth/modules/wireguard/templates/wireguard.html:118
+#: plinth/modules/wireguard/templates/wireguard.html:124
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:23
 #: plinth/modules/wireguard/templates/wireguard_delete_server.html:20
 msgid "Endpoint"
 msgstr "Végpont"
 
-#: plinth/modules/wireguard/templates/wireguard.html:142
+#: plinth/modules/wireguard/templates/wireguard.html:148
 msgid "No connections to remote servers are configured yet."
 msgstr "A távoli szerverekhez még nincsenek konfigurálva kapcsolatok."
 
-#: plinth/modules/wireguard/templates/wireguard.html:152
+#: plinth/modules/wireguard/templates/wireguard.html:158
 msgid "Add a new server"
 msgstr "Új szerver hozzáadása"
 
-#: plinth/modules/wireguard/templates/wireguard.html:156
-#: plinth/modules/wireguard/views.py:178
+#: plinth/modules/wireguard/templates/wireguard.html:162
+#: plinth/modules/wireguard/views.py:301
 msgid "Add Connection to Server"
 msgstr "Kapcsolat hozzáadása a szerverhez"
 
@@ -10640,6 +10651,62 @@ msgstr "A kliens által használt IP-cím:"
 #: plinth/modules/wireguard/templates/wireguard_add_client.html:31
 msgid "Add Client"
 msgstr "Kliens hozzáadása"
+
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:26
+#, fuzzy
+#| msgid "Private repository"
+msgid "Private Key"
+msgstr "Privát tároló"
+
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:29
+msgid "Click to reveal"
+msgstr ""
+
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:36
+#, fuzzy
+#| msgid "Key Import Date"
+msgid "Important:"
+msgstr "Kulcs importálásának dátuma"
+
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:37
+msgid "Save the private key now. This page shows it only once!"
+msgstr ""
+
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:41
+#, fuzzy
+#| msgid "configuration failed"
+msgid "Client configuration file"
+msgstr "konfiguráció sikertelen"
+
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:43
+msgid ""
+"Download the configuration file (.conf) for manual import, or use the QR "
+"code to import directly from your WireGuard mobile app."
+msgstr ""
+
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:49
+#, fuzzy
+#| msgid "warning"
+msgid "Warning:"
+msgstr "figyelmeztetés"
+
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:50
+msgid ""
+"Treat this QR code like a password. Anyone who scans it can gain VPN access "
+"if the connection is enabled."
+msgstr ""
+
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:60
+#, fuzzy
+#| msgid "Download my profile"
+msgid "Download config file"
+msgstr "Saját profilom letöltése"
+
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:65
+#, fuzzy
+#| msgid "Source Code"
+msgid "Show QR Code"
+msgstr "Forráskód"
 
 #: plinth/modules/wireguard/templates/wireguard_delete_client.html:14
 msgid "Are you sure that you want to delete this client?"
@@ -10734,69 +10801,79 @@ msgstr "A gép IP-címe:"
 msgid "All outgoing traffic is sent using this connection:"
 msgstr ""
 
-#: plinth/modules/wireguard/views.py:54
+#: plinth/modules/wireguard/views.py:57 plinth/modules/wireguard/views.py:144
 msgid "Added new client."
 msgstr "Új kliens hozzáadva."
 
-#: plinth/modules/wireguard/views.py:79 plinth/modules/wireguard/views.py:138
+#: plinth/modules/wireguard/views.py:82 plinth/modules/wireguard/views.py:261
 msgid "Client with public key already exists"
 msgstr "Ezzel a nyilvános kulccsal már létezik kliens"
 
-#: plinth/modules/wireguard/views.py:92
+#: plinth/modules/wireguard/views.py:199
+msgid "Session expired. Please try again."
+msgstr ""
+
+#: plinth/modules/wireguard/views.py:202
+#, fuzzy
+#| msgid "Client with public key already exists"
+msgid "Client already exists"
+msgstr "Ezzel a nyilvános kulccsal már létezik kliens"
+
+#: plinth/modules/wireguard/views.py:215
 msgid "Allowed Client"
 msgstr "Engedélyezett kliens"
 
-#: plinth/modules/wireguard/views.py:114
+#: plinth/modules/wireguard/views.py:237
 msgid "Updated client."
 msgstr "Kliens frissítve."
 
-#: plinth/modules/wireguard/views.py:119
+#: plinth/modules/wireguard/views.py:242
 msgid "Modify Client"
 msgstr "Ügyfél módosítása"
 
-#: plinth/modules/wireguard/views.py:152
+#: plinth/modules/wireguard/views.py:275
 msgid "Delete Allowed Client"
 msgstr "Engedélyezett kliensek törlése"
 
-#: plinth/modules/wireguard/views.py:161
+#: plinth/modules/wireguard/views.py:284
 msgid "Client deleted."
 msgstr "Ügyfél törölve."
 
-#: plinth/modules/wireguard/views.py:163
+#: plinth/modules/wireguard/views.py:286
 msgid "Client not found"
 msgstr "Az ügyfél nem található"
 
-#: plinth/modules/wireguard/views.py:173
+#: plinth/modules/wireguard/views.py:296
 msgid "Added new server."
 msgstr "Új szerver hozzáadva."
 
-#: plinth/modules/wireguard/views.py:194
+#: plinth/modules/wireguard/views.py:317
 msgid "Connection to Server"
 msgstr "Kapcsolat a szerverhez"
 
-#: plinth/modules/wireguard/views.py:212
+#: plinth/modules/wireguard/views.py:335
 msgid "Updated server."
 msgstr "Szerver frissítve."
 
-#: plinth/modules/wireguard/views.py:217
+#: plinth/modules/wireguard/views.py:340
 msgid "Modify Connection to Server"
 msgstr "Szerverrel létesített kapcsolat módosítása"
 
-#: plinth/modules/wireguard/views.py:255
+#: plinth/modules/wireguard/views.py:378
 msgid "Delete Connection to Server"
 msgstr "Szerverrel létesített kapcsolat törlése"
 
-#: plinth/modules/wireguard/views.py:275
+#: plinth/modules/wireguard/views.py:398
 msgid "Server deleted."
 msgstr "Szerver törölve."
 
-#: plinth/modules/wireguard/views.py:287
+#: plinth/modules/wireguard/views.py:410
 #, fuzzy
 #| msgid "Password changed successfully."
 msgid "WireGuard server started successfully."
 msgstr "A jelszó módosítása sikeres."
 
-#: plinth/modules/wireguard/views.py:291
+#: plinth/modules/wireguard/views.py:414
 msgid "Failed to start WireGuard server: {}"
 msgstr ""
 
@@ -11932,9 +12009,6 @@ msgstr "Gudzsaráti"
 #~ "Általános Nyilvános Licenc (3-as vagy újabb változat) alapján terjesztett "
 #~ "szabad szoftver."
 
-#~ msgid "Source Code"
-#~ msgstr "Forráskód"
-
 #~ msgid "FreedomBox Foundation"
 #~ msgstr "FreedomBox Alapítvány"
 
@@ -12531,9 +12605,6 @@ msgstr "Gudzsaráti"
 #~ msgid "OpenPGP User IDs"
 #~ msgstr "OpenPGP felhasználói azonosítók"
 
-#~ msgid "Key Import Date"
-#~ msgstr "Kulcs importálásának dátuma"
-
 #~ msgid "SSH Key Type"
 #~ msgstr "SSH kulcs típusa"
 
@@ -12688,11 +12759,6 @@ msgstr "Gudzsaráti"
 #~| msgid "Certificate Status"
 #~ msgid "Certificate path"
 #~ msgstr "Tanúsítvány állapot"
-
-#, fuzzy
-#~| msgid "Private repository"
-#~ msgid "Private key path"
-#~ msgstr "Privát tároló"
 
 #, fuzzy
 #~| msgid "Enable damage"
