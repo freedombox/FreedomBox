@@ -29,13 +29,24 @@ _mods = [
 ]
 
 _description = [
+    _('Luanti, formerly Minetest, is a multiplayer infinite-world '
+      'block sandbox game. It allows users to build and explore 3D '
+      'worlds, interact with others, and engage in various activities such '
+      'as crafting, mining, and combat.'),
+    _('Luanti offers several educational benefits, including:'),
+    _('<ul><li>Developing spatial reasoning and problem-solving skills.</li>'
+      '<li>Encouraging creativity and self-expression through building and '
+      'exploration.</li>'
+      '<li>Fostering social interaction and collaboration among players.</li>'
+      '</ul>'),
     format_lazy(
-        _('Luanti, formally known as Minetest, is a multiplayer '
-          'infinite-world block sandbox. This module enables the Luanti '
-          'server to be run on this {box_name}, on the default port (30000). '
-          'To connect to the server, a '
-          '<a href="https://www.luanti.org/downloads/">Luanti client</a> '
-          'is needed.'), box_name=_(cfg.box_name)),
+        _('To getting started, install the '
+          '<a href="https://www.luanti.org/downloads/">Luanti client</a> on '
+          'users\' devices and connect to the Luanti server using the '
+          '{box_name} IP and default port (30000). For more information, '
+          'please refer to the official <a href="https://docs.luanti.org/">'
+          'Minetest documentation</a> or online resources.'),
+        box_name=_(cfg.box_name)),
 ]
 
 CONFIG_FILE = '/etc/luanti/default.conf'
