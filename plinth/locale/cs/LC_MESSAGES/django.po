@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-28 22:01+0000\n"
+"POT-Creation-Date: 2026-06-02 00:51+0000\n"
 "PO-Revision-Date: 2026-04-09 10:09+0000\n"
 "Last-Translator: Jiří Podhorecký <j.podhorecky@volny.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/"
@@ -2113,6 +2113,7 @@ msgid "Last update"
 msgstr "Minulá aktualizace"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:29
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:22
 msgid "IP Address"
 msgstr "IP adresa"
 
@@ -6003,6 +6004,7 @@ msgstr "Wi-Fi sítě poblíž"
 #: plinth/modules/networks/templates/connections_list.html:20
 #: plinth/modules/networks/views.py:420
 #: plinth/modules/wireguard/templates/wireguard_add_server.html:19
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:71
 msgid "Add Connection"
 msgstr "Přidat připojení"
 
@@ -9872,6 +9874,7 @@ msgstr "Smazat přístupový klíč"
 
 #: plinth/modules/users/templates/users_passkeys.html:155
 #: plinth/modules/users/templates/users_update.html:72
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:73
 msgid "Cancel"
 msgstr "Storno"
 
@@ -9991,22 +9994,21 @@ msgid "Invalid key."
 msgstr "Neplatný klíč."
 
 #: plinth/modules/wireguard/forms.py:63
-msgid "Enter a valid IPv4 address."
+#, fuzzy
+#| msgid "Enter a valid IPv4 address."
+msgid "Not a valid IP address."
 msgstr "Zadejte platnou adresu IPv4."
 
-#: plinth/modules/wireguard/forms.py:65
-msgid "Enter a valid network prefix or net mask."
-msgstr "Zadejte platnou předponu sítě nebo net masku."
-
-#: plinth/modules/wireguard/forms.py:71
+#: plinth/modules/wireguard/forms.py:69
 #: plinth/modules/wireguard/templates/wireguard.html:29
 #: plinth/modules/wireguard/templates/wireguard.html:57
-#: plinth/modules/wireguard/templates/wireguard.html:119
+#: plinth/modules/wireguard/templates/wireguard.html:125
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:24
 #: plinth/modules/wireguard/templates/wireguard_delete_server.html:24
 msgid "Public Key"
 msgstr "Veřejný klíč"
 
-#: plinth/modules/wireguard/forms.py:72
+#: plinth/modules/wireguard/forms.py:70
 msgid ""
 "Public key of the peer. Example: "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
@@ -10014,22 +10016,22 @@ msgstr ""
 "Veřejný klíč partnera. Příklad: "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 
-#: plinth/modules/wireguard/forms.py:80
+#: plinth/modules/wireguard/forms.py:83
 msgid "Endpoint of the server"
 msgstr "Koncový bod serveru"
 
-#: plinth/modules/wireguard/forms.py:81
+#: plinth/modules/wireguard/forms.py:84
 msgid ""
 "Domain name and port in the form \"ip:port\". Example: "
 "demo.wireguard.com:12912 ."
 msgstr ""
 "Název domény a port ve tvaru \"ip:port\". Příklad: demo.wireguard.com:12912 ."
 
-#: plinth/modules/wireguard/forms.py:86
+#: plinth/modules/wireguard/forms.py:89
 msgid "Public key of the server"
 msgstr "Veřejný klíč serveru"
 
-#: plinth/modules/wireguard/forms.py:87
+#: plinth/modules/wireguard/forms.py:90
 msgid ""
 "Provided by the server operator, a long string of characters. Example: "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
@@ -10037,28 +10039,35 @@ msgstr ""
 "Poskytuje provozovatel serveru, dlouhý řetězec znaků. Příklad: "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 
-#: plinth/modules/wireguard/forms.py:92
+#: plinth/modules/wireguard/forms.py:95
 msgid "Client IP address provided by server"
 msgstr "IP adresa klienta poskytnutá serverem"
 
-#: plinth/modules/wireguard/forms.py:94
+#: plinth/modules/wireguard/forms.py:97
+#, fuzzy
+#| msgid ""
+#| "IP address assigned to this machine on the VPN after connecting to the "
+#| "endpoint. This value is usually provided by the server operator. Example: "
+#| "192.168.0.10. You can also specify the network. This will allow reaching "
+#| "machines in the network. Examples: 10.68.12.43/24 or "
+#| "10.68.12.43/255.255.255.0."
 msgid ""
 "IP address assigned to this machine on the VPN after connecting to the "
 "endpoint. This value is usually provided by the server operator. Example: "
-"192.168.0.10. You can also specify the network. This will allow reaching "
-"machines in the network. Examples: 10.68.12.43/24 or "
-"10.68.12.43/255.255.255.0."
+"192.168.0.10 or 2a03:7c80:4b2c:91a2:5d41:ffee:9b82:7c17. You can also "
+"specify the network. This will allow reaching machines in the network. "
+"Examples: 10.68.12.43/24 or 10.68.12.43/255.255.255.0."
 msgstr ""
 "IP adresa přiřazená k tomuto stroji na VPN po připojení k koncovému bodu. "
 "Tato hodnota je obvykle poskytována provozovatelem serveru. Příklad: "
 "192.168.0.10. Můžete také zadat síť. To umožní dosažení strojů v síti. "
 "Příklady: 10.68.12.43/24 nebo 10.68.12.43/255.255.255.0."
 
-#: plinth/modules/wireguard/forms.py:102
+#: plinth/modules/wireguard/forms.py:106
 msgid "Private key of this machine"
 msgstr "Soukromý klíč tohoto stroje"
 
-#: plinth/modules/wireguard/forms.py:103
+#: plinth/modules/wireguard/forms.py:107
 msgid ""
 "Optional. New public/private keys are generated if left blank. Public key "
 "can then be provided to the server. This is the recommended way. However, "
@@ -10070,11 +10079,11 @@ msgstr ""
 "způsob. Někteří provozovatelé serverů však na jeho poskytnutí trvají. "
 "Příklad: MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 
-#: plinth/modules/wireguard/forms.py:111
+#: plinth/modules/wireguard/forms.py:115
 msgid "Pre-shared key"
 msgstr "Předem sdílený klíč"
 
-#: plinth/modules/wireguard/forms.py:112
+#: plinth/modules/wireguard/forms.py:116
 msgid ""
 "Optional. A shared secret key provided by the server to add an additional "
 "layer of security. Fill in only if provided. Example: "
@@ -10084,11 +10093,11 @@ msgstr ""
 "vrstvu zabezpečení. Vyplňte pouze v případě, že byl poskytnut. Příklad: "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs=."
 
-#: plinth/modules/wireguard/forms.py:118
+#: plinth/modules/wireguard/forms.py:122
 msgid "Use this connection to send all outgoing traffic"
 msgstr "Toto připojení slouží k odesílání veškerého odchozího provozu"
 
-#: plinth/modules/wireguard/forms.py:120
+#: plinth/modules/wireguard/forms.py:124
 msgid "Typically checked for a VPN service through which all traffic is sent."
 msgstr ""
 "Obvykle se kontroluje u služby VPN, přes kterou se odesílá veškerý provoz."
@@ -10136,7 +10145,7 @@ msgid "Allowed IPs"
 msgstr "Povolené IP adresy"
 
 #: plinth/modules/wireguard/templates/wireguard.html:59
-#: plinth/modules/wireguard/templates/wireguard.html:120
+#: plinth/modules/wireguard/templates/wireguard.html:126
 msgid "Last Connected Time"
 msgstr "Čas posledního připojení"
 
@@ -10146,47 +10155,58 @@ msgid "No peers configured to connect to this %(box_name)s yet."
 msgstr "K tomuto %(box_name)s zatím není nakonfigurován žádný partner."
 
 #: plinth/modules/wireguard/templates/wireguard.html:88
-msgid "Add a new peer"
+#, fuzzy
+#| msgid "Add a new peer"
+msgid "Auto add a new peer"
 msgstr "Přidání nového peeru"
 
 #: plinth/modules/wireguard/templates/wireguard.html:92
-#: plinth/modules/wireguard/views.py:59
+msgid "Add Client Automatically"
+msgstr ""
+
+#: plinth/modules/wireguard/templates/wireguard.html:94
+msgid "Add a new peer"
+msgstr "Přidání nového peeru"
+
+#: plinth/modules/wireguard/templates/wireguard.html:98
+#: plinth/modules/wireguard/views.py:62 plinth/modules/wireguard/views.py:149
 msgid "Add Allowed Client"
 msgstr "Přidat povoleného klienta"
 
-#: plinth/modules/wireguard/templates/wireguard.html:97
+#: plinth/modules/wireguard/templates/wireguard.html:103
 msgid "WireGuard server not started yet."
 msgstr "Server WireGuard ještě nenastartoval."
 
-#: plinth/modules/wireguard/templates/wireguard.html:101
-#: plinth/modules/wireguard/templates/wireguard.html:103
+#: plinth/modules/wireguard/templates/wireguard.html:107
+#: plinth/modules/wireguard/templates/wireguard.html:109
 msgid "Start WireGuard Server"
 msgstr "Spustit WireGuard Server"
 
-#: plinth/modules/wireguard/templates/wireguard.html:109
+#: plinth/modules/wireguard/templates/wireguard.html:115
 msgid "As a Client"
 msgstr "Jako klient"
 
-#: plinth/modules/wireguard/templates/wireguard.html:111
+#: plinth/modules/wireguard/templates/wireguard.html:117
 #, python-format
 msgid "Servers that %(box_name)s will connect to:"
 msgstr "Servery, ke kterým se %(box_name)s připojí:"
 
-#: plinth/modules/wireguard/templates/wireguard.html:118
+#: plinth/modules/wireguard/templates/wireguard.html:124
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:23
 #: plinth/modules/wireguard/templates/wireguard_delete_server.html:20
 msgid "Endpoint"
 msgstr "Koncový bod"
 
-#: plinth/modules/wireguard/templates/wireguard.html:142
+#: plinth/modules/wireguard/templates/wireguard.html:148
 msgid "No connections to remote servers are configured yet."
 msgstr "Zatím nejsou nakonfigurována žádná připojení ke vzdáleným serverům."
 
-#: plinth/modules/wireguard/templates/wireguard.html:152
+#: plinth/modules/wireguard/templates/wireguard.html:158
 msgid "Add a new server"
 msgstr "Přidat nový server"
 
-#: plinth/modules/wireguard/templates/wireguard.html:156
-#: plinth/modules/wireguard/views.py:178
+#: plinth/modules/wireguard/templates/wireguard.html:162
+#: plinth/modules/wireguard/views.py:301
 msgid "Add Connection to Server"
 msgstr "Přidat připojení k serveru"
 
@@ -10197,6 +10217,62 @@ msgstr "IP adresa, která bude přiřazena k tomuto klientovi"
 #: plinth/modules/wireguard/templates/wireguard_add_client.html:31
 msgid "Add Client"
 msgstr "Přidat klienta"
+
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:26
+#, fuzzy
+#| msgid "Private repository"
+msgid "Private Key"
+msgstr "Neveřejný repozitář"
+
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:29
+msgid "Click to reveal"
+msgstr ""
+
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:36
+#, fuzzy
+#| msgid "Key Import Date"
+msgid "Important:"
+msgstr "Datum importu klíče"
+
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:37
+msgid "Save the private key now. This page shows it only once!"
+msgstr ""
+
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:41
+#, fuzzy
+#| msgid "configuration failed"
+msgid "Client configuration file"
+msgstr "konfigurace selhala"
+
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:43
+msgid ""
+"Download the configuration file (.conf) for manual import, or use the QR "
+"code to import directly from your WireGuard mobile app."
+msgstr ""
+
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:49
+#, fuzzy
+#| msgid "warning"
+msgid "Warning:"
+msgstr "varování"
+
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:50
+msgid ""
+"Treat this QR code like a password. Anyone who scans it can gain VPN access "
+"if the connection is enabled."
+msgstr ""
+
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:60
+#, fuzzy
+#| msgid "Download my profile"
+msgid "Download config file"
+msgstr "Stáhnout si svůj profil"
+
+#: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:65
+#, fuzzy
+#| msgid "Source Code"
+msgid "Show QR Code"
+msgstr "Zdrojové kódy"
 
 #: plinth/modules/wireguard/templates/wireguard_delete_client.html:14
 msgid "Are you sure that you want to delete this client?"
@@ -10291,67 +10367,77 @@ msgstr "IP adresa tohoto počítače:"
 msgid "All outgoing traffic is sent using this connection:"
 msgstr "Veškerý odchozí provoz je odeslán pomocí tohoto spojení:"
 
-#: plinth/modules/wireguard/views.py:54
+#: plinth/modules/wireguard/views.py:57 plinth/modules/wireguard/views.py:144
 msgid "Added new client."
 msgstr "Přidán nový klient."
 
-#: plinth/modules/wireguard/views.py:79 plinth/modules/wireguard/views.py:138
+#: plinth/modules/wireguard/views.py:82 plinth/modules/wireguard/views.py:261
 msgid "Client with public key already exists"
 msgstr "Klient s veřejným klíčem již existuje"
 
-#: plinth/modules/wireguard/views.py:92
+#: plinth/modules/wireguard/views.py:199
+msgid "Session expired. Please try again."
+msgstr ""
+
+#: plinth/modules/wireguard/views.py:202
+#, fuzzy
+#| msgid "Domain already exists."
+msgid "Client already exists"
+msgstr "Doména již existuje."
+
+#: plinth/modules/wireguard/views.py:215
 msgid "Allowed Client"
 msgstr "Povolený klient"
 
-#: plinth/modules/wireguard/views.py:114
+#: plinth/modules/wireguard/views.py:237
 msgid "Updated client."
 msgstr "Aktualizovaný klient."
 
-#: plinth/modules/wireguard/views.py:119
+#: plinth/modules/wireguard/views.py:242
 msgid "Modify Client"
 msgstr "Upravit klienta"
 
-#: plinth/modules/wireguard/views.py:152
+#: plinth/modules/wireguard/views.py:275
 msgid "Delete Allowed Client"
 msgstr "Odstranit povoleného klienta"
 
-#: plinth/modules/wireguard/views.py:161
+#: plinth/modules/wireguard/views.py:284
 msgid "Client deleted."
 msgstr "Klient smazán."
 
-#: plinth/modules/wireguard/views.py:163
+#: plinth/modules/wireguard/views.py:286
 msgid "Client not found"
 msgstr "Klient nenalezen"
 
-#: plinth/modules/wireguard/views.py:173
+#: plinth/modules/wireguard/views.py:296
 msgid "Added new server."
 msgstr "Přidán nový server."
 
-#: plinth/modules/wireguard/views.py:194
+#: plinth/modules/wireguard/views.py:317
 msgid "Connection to Server"
 msgstr "Připojení k serveru"
 
-#: plinth/modules/wireguard/views.py:212
+#: plinth/modules/wireguard/views.py:335
 msgid "Updated server."
 msgstr "Aktualizovaný server."
 
-#: plinth/modules/wireguard/views.py:217
+#: plinth/modules/wireguard/views.py:340
 msgid "Modify Connection to Server"
 msgstr "Změnit připojení k serveru"
 
-#: plinth/modules/wireguard/views.py:255
+#: plinth/modules/wireguard/views.py:378
 msgid "Delete Connection to Server"
 msgstr "Odstranit připojení k serveru"
 
-#: plinth/modules/wireguard/views.py:275
+#: plinth/modules/wireguard/views.py:398
 msgid "Server deleted."
 msgstr "Server smazán."
 
-#: plinth/modules/wireguard/views.py:287
+#: plinth/modules/wireguard/views.py:410
 msgid "WireGuard server started successfully."
 msgstr "Server WireGuard se úspěšně spustil."
 
-#: plinth/modules/wireguard/views.py:291
+#: plinth/modules/wireguard/views.py:414
 msgid "Failed to start WireGuard server: {}"
 msgstr "Spuštění serveru WireGuard selhalo: {}"
 
@@ -11031,6 +11117,9 @@ msgstr "před odinstalací {app_id}"
 msgid "Gujarati"
 msgstr "gudžarátština"
 
+#~ msgid "Enter a valid network prefix or net mask."
+#~ msgstr "Zadejte platnou předponu sítě nebo net masku."
+
 #~ msgid "Debian:"
 #~ msgstr "Debian:"
 
@@ -11423,9 +11512,6 @@ msgstr "gudžarátština"
 #~ "Tento portál je součástí webového rozhraní %(box_name)s. %(box_name)s je "
 #~ "svobodný software, šířený pod licencí GNU Affero General Public License, "
 #~ "verze 3 a novějších."
-
-#~ msgid "Source Code"
-#~ msgstr "Zdrojové kódy"
 
 #~ msgid "FreedomBox Foundation"
 #~ msgstr "Nadace FreedomBox"
@@ -12022,9 +12108,6 @@ msgstr "gudžarátština"
 #~ msgid "OpenPGP User IDs"
 #~ msgstr "OpenPGP identifikátory uživatele"
 
-#~ msgid "Key Import Date"
-#~ msgstr "Datum importu klíče"
-
 #~ msgid "SSH Key Type"
 #~ msgstr "Typ SSH klíče"
 
@@ -12171,11 +12254,6 @@ msgstr "gudžarátština"
 #~| msgid "Certificate Status"
 #~ msgid "Certificate path"
 #~ msgstr "Stav certifikátu"
-
-#, fuzzy
-#~| msgid "Private repository"
-#~ msgid "Private key path"
-#~ msgstr "Neveřejný repozitář"
 
 #, fuzzy
 #~| msgid "Enable damage"

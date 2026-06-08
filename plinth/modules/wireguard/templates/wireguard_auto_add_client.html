@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% comment %}
+# SPDX-License-Identifier: AGPL-3.0-or-later
+{% endcomment %}
+
+{% load bootstrap %}
+{% load i18n %}
+{% load extras %}
+
+{% block content %}
+
+  <h3>{{ title }}</h3>
+
+  <form class="form form-auto-add-client" method="post">
+    {% csrf_token %}
+
+    {{ form|bootstrap }}
+
+    {% if client_privkey %}
+    <div class="form-group">
+    <table class="table table-sm">
+      <tr><td>{% trans "IP Address" %}</td><td>{{ next_ip }}</td></tr>
+      <tr><td>{% trans "Endpoint" %}</td><td>{{ endpoint }}</td></tr>
+      <tr><td>{% trans "Public Key" %}</td>
+        <td class="pubkey-val">{{ client_pubkey }}</td></tr>
+      <tr><td>{% trans "Private Key" %}</td>
+        <td>
+          <details class="privkey-val">
+            <summary>{% trans "Click to reveal" %}</summary>
+            {{ client_privkey }}
+	  </details>
+	</td></tr>
+    </table>
+
+    <div class="alert alert-warning">
+      <strong>{% trans "Important:" %}</strong>
+      {% trans "Save the private key now. This page shows it only once!" %}
+    </div>
+    {% endif %}
+
+    <h4>{% trans "Client configuration file" %}</h4>
+    <p>
+    {% blocktrans trimmed %}
+    Download the configuration file (.conf) for manual import,
+    or use the QR code to import directly from your WireGuard mobile app.
+    {% endblocktrans %}
+    </p>
+    <p class="alert alert-warning">
+    <strong>{% trans "Warning:" %}</strong>
+    {% blocktrans trimmed %}
+    Treat this QR code like a password.
+    Anyone who scans it can gain VPN access if the connection is enabled.
+    {% endblocktrans %}
+    </p>
+    <div class="form-group">
+      <div class="btn-toolbar">
+        <a href="{% url 'wireguard:auto-add-client-download' %}"
+           class="btn btn-default">
+          {% icon 'download' %}
+          {% trans "Download config file" %}
+        </a>
+        <a href="{% url 'wireguard:auto-add-client-qr' %}"
+           class="btn btn-default" target="_blank">
+          {% icon 'qrcode' %}
+          {% trans "Show QR Code" %}
+        </a>
+      </div>
+
+    <div class="form-actions">
+      <input type="submit" class="btn btn-primary btn-auto-add-connection"
+             value="{% trans "Add Connection" %}"/>
+      <a href="{% url 'wireguard:index' %}" class="btn btn-secondary">
+        {% trans "Cancel" %}
+      </a>
+    </div>
+  </form>
+{% endblock %}

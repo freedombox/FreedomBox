@@ -7,7 +7,7 @@ import pytest
 from django.core.exceptions import ValidationError
 
 from plinth.modules.wireguard.forms import (validate_endpoint,
-                                            validate_ipv4_address_with_network,
+                                            validate_ip_address_with_network,
                                             validate_key)
 
 
@@ -73,22 +73,33 @@ def test_validate_endpoint_invalid_patterns(endpoint):
     '1.2.3.4/24',
     '1.2.3.4/255.255.255.0',
     '1.2.3.4/0.0.0.255',
+    '::1',
+    '2001:db8::1',
+    '2001:db8::1/64',
+    'fe80::1/64',
+    '::/0',
 ])
-def test_validate_ipv4_address_with_network_valid_patterns(value):
+def test_validate_ip_address_with_network_valid_patterns(value):
     """Test  validating IPv4 address with network works for valid values."""
-    validate_ipv4_address_with_network(value)
+    validate_ip_address_with_network(value)
 
 
 @pytest.mark.parametrize('value', [
-    '::1',
     '1.2.3.4/',
     'invalid-ip/24',
     '1.2.3.4/x',
     '1.2.3.4/-1',
     '1.2.3.4/33',
     '1.2.3.4/9.8.7.6',
+    '2001:db8::1/',
+    '2001:db8::1/129',
+    '2001:db8::1/x',
+    '2001:db8::1/-1',
+    '2001:db8::1/255.255.255.0',
+    '2001:db8::1::1',
+    '12345::1',
 ])
-def test_validate_ipv4_address_with_network_invalid_patterns(value):
+def test_validate_ip_address_with_network_invalid_patterns(value):
     """Test validating IPv4 address with network works for invalid values."""
     with pytest.raises(ValidationError):
-        validate_ipv4_address_with_network(value)
+        validate_ip_address_with_network(value)

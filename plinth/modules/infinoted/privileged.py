@@ -1,10 +1,8 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """Configure infinoted."""
 
-import grp
 import os
 import pathlib
-import pwd
 import shutil
 import subprocess
 import time
@@ -126,21 +124,8 @@ def setup():
 
     action_utils.service_daemon_reload()
 
-    # Create infinoted group if needed.
-    try:
-        grp.getgrnam('infinoted')
-    except KeyError:
-        action_utils.run(['addgroup', '--system', 'infinoted'], check=True)
-
-    # Create infinoted user if needed.
-    try:
-        pwd.getpwnam('infinoted')
-    except KeyError:
-        action_utils.run([
-            'adduser', '--system', '--ingroup', 'infinoted', '--home',
-            DATA_DIR, '--gecos', 'Infinoted collaborative editing server',
-            'infinoted'
-        ], check=True)
+    # Create an 'infinoted' system user and group, if needed.
+    action_utils.run(['systemd-sysusers', 'freedombox-infinoted.conf'])
 
     for directory in (DATA_DIR, KEY_DIR, SYNC_DIR):
         if not os.path.exists(directory):

@@ -37,7 +37,7 @@ class WireguardApp(app_module.App):
 
     app_id = 'wireguard'
 
-    _version = 1
+    _version = 2
 
     def __init__(self) -> None:
         """Create components for the app."""
@@ -64,7 +64,8 @@ class WireguardApp(app_module.App):
             clients=info.clients)
         self.add(shortcut)
 
-        packages = Packages('packages-wireguard', ['wireguard'])
+        packages = Packages('packages-wireguard',
+                            ['wireguard', 'python3-segno'])
         self.add(packages)
 
         firewall = Firewall('firewall-wireguard', info.name,

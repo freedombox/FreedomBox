@@ -55,14 +55,12 @@ def validate_endpoint(endpoint):
         raise ValidationError('Invalid endpoint.')
 
 
-def validate_ipv4_address_with_network(value: str):
-    """Check that value is a valid IPv4 address with an optional network."""
+def validate_ip_address_with_network(value: str):
+    """Check that value is a valid IP address with an optional network."""
     try:
-        ipaddress.IPv4Interface(value)
-    except ipaddress.AddressValueError:
-        raise ValidationError(_('Enter a valid IPv4 address.'))
-    except ipaddress.NetmaskValueError:
-        raise ValidationError(_('Enter a valid network prefix or net mask.'))
+        ipaddress.ip_interface(value)
+    except ValueError:
+        raise ValidationError(_('Not a valid IP address.'))
 
 
 class AddClientForm(forms.Form):
@@ -72,6 +70,11 @@ class AddClientForm(forms.Form):
         help_text=_('Public key of the peer. Example: '
                     'MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= .'),
         validators=[validate_key])
+
+
+class AutoAddClientForm(forms.Form):
+    """Empty form for auto-client addition UX."""
+    pass
 
 
 class AddServerForm(forms.Form):
@@ -93,10 +96,11 @@ class AddServerForm(forms.Form):
         help_text=_(
             'IP address assigned to this machine on the VPN after connecting '
             'to the endpoint. This value is usually provided by the server '
-            'operator. Example: 192.168.0.10. You can also specify the '
-            'network. This will allow reaching machines in the network. '
+            'operator. Example: 192.168.0.10 or '
+            '2a03:7c80:4b2c:91a2:5d41:ffee:9b82:7c17. You can also specify '
+            'the network. This will allow reaching machines in the network. '
             'Examples: 10.68.12.43/24 or 10.68.12.43/255.255.255.0.'),
-        validators=[validate_ipv4_address_with_network])
+        validators=[validate_ip_address_with_network])
 
     private_key = forms.CharField(
         label=_('Private key of this machine'), strip=True, help_text=_(
@@ -120,30 +124,43 @@ class AddServerForm(forms.Form):
             'Typically checked for a VPN service through which all traffic '
             'is sent.'))
 
+    def _build_ipv4_settings(self, iface) -> dict:
+        """Build IPv4 NM settings from interfaces."""
+        return {
+                'method': 'manual',
+                'address': str(iface.ip),
+                'netmask': str(iface.netmask),
+                'gateway': '',
+                'dns': '',
+                'second_dns': '',
+                }
+
+    def _build_ipv6_settings(self, iface) -> dict:
+        """Build IPv6 NM settings from interfaces."""
+        return {
+                'method': 'manual',
+                'address': str(iface.ip),
+                'prefix': iface.network.prefixlen,
+                'gateway': '',
+                'dns': '',
+                'second_dns': '',
+                }
+
     def get_settings(self) -> dict[str, dict]:
         """Return NM settings dict from cleaned data."""
-        ip_address_and_network = self.cleaned_data['ip_address_and_network']
-        ip_address_and_network = ipaddress.IPv4Interface(
-            ip_address_and_network)
-        ip_address = str(ip_address_and_network.ip)
-        prefixlen = ip_address_and_network.network.prefixlen
+        ip_interface = ipaddress.ip_interface(
+            self.cleaned_data['ip_address_and_network']
+        )
+
         if self.cleaned_data['default_route']:
             allowed_ips = ['0.0.0.0/0', '::/0']
         else:
-            allowed_ips = [f'{ip_address}/{prefixlen}']
+            allowed_ips = [str(ip_interface)]
 
         settings = {
             'common': {
                 'type': 'wireguard',
                 'zone': 'external',
-            },
-            'ipv4': {
-                'method': 'manual',
-                'address': ip_address,
-                'netmask': str(ip_address_and_network.netmask),
-                'gateway': '',
-                'dns': '',
-                'second_dns': '',
             },
             'wireguard': {
                 'peer_endpoint': self.cleaned_data['peer_endpoint'],
@@ -153,4 +170,10 @@ class AddServerForm(forms.Form):
                 'allowed_ips': allowed_ips,
             }
         }
+
+        if ip_interface.version == 4:
+            settings['ipv4'] = self._build_ipv4_settings(ip_interface)
+        else:
+            settings['ipv6'] = self._build_ipv6_settings(ip_interface)
+
         return settings
