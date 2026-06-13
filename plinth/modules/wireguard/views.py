@@ -3,6 +3,7 @@
 Views for WireGuard application.
 """
 
+from io import BytesIO
 import urllib.parse
 
 from django.contrib import messages
@@ -12,8 +13,6 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 from django.views.generic import FormView, TemplateView, View
-
-from io import BytesIO
 
 from plinth import network
 from plinth.modules.names.components import DomainName
@@ -117,8 +116,9 @@ class ClientActionsView(SessionClientDataMixin, View):
 
     def get(self, request):
         import segno
+
+        config = self.get_client_config(request)
         if self.action == 'download':
-            config = self.get_client_config(request)
             response = HttpResponse(config, content_type='text/plain')
             response['Content-Disposition'] = \
                 'attachment; filename="wg-client.conf"'
