@@ -3,7 +3,6 @@
 Views for WireGuard application.
 """
 
-import segno
 import urllib.parse
 
 from django.contrib import messages
@@ -99,26 +98,25 @@ class SessionClientDataMixin:
             raise Http404("Session expired")
 
         return {
-                'next_ip': next_ip,
-                'privkey': privkey,
-                'pubkey': pubkey,
-                'endpoint': endpoint
-                }
+            'next_ip': next_ip,
+            'privkey': privkey,
+            'pubkey': pubkey,
+            'endpoint': endpoint
+        }
 
     def get_client_config(self, request):
         """Rebuild client config from session."""
         data = self.get_session_client_data(request)
 
-        return utils.build_client_config(
-                data['next_ip'], data['privkey'],
-                data['pubkey'], data['endpoint']
-                )
+        return utils.build_client_config(data['next_ip'], data['privkey'],
+                                         data['pubkey'], data['endpoint'])
 
 
 class ClientActionsView(SessionClientDataMixin, View):
     action = None
 
     def get(self, request):
+        import segno
         if self.action == 'download':
             config = self.get_client_config(request)
             response = HttpResponse(config, content_type='text/plain')
@@ -174,7 +172,7 @@ class AutoAddClientView(SuccessMessageMixin, FormView):
                 'client_privkey': client_privkey,
                 'client_pubkey': client_pubkey,
                 'endpoint': endpoint
-                    }
+            }
 
             # Add properties to template context
             context['domains'] = filtered_domains
