@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-06-02 00:51+0000\n"
-"PO-Revision-Date: 2026-05-05 17:11+0000\n"
+"PO-Revision-Date: 2026-06-13 20:01+0000\n"
 "Last-Translator: Pierfrancesco Passerini <p.passerini@gmail.com>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/it/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.17.1\n"
+"X-Generator: Weblate 2026.7.dev0\n"
 
 #: plinth/config.py:103
 #, python-brace-format
@@ -10084,10 +10084,8 @@ msgid "Invalid key."
 msgstr "Chiave non valida."
 
 #: plinth/modules/wireguard/forms.py:63
-#, fuzzy
-#| msgid "Enter a valid IPv4 address."
 msgid "Not a valid IP address."
-msgstr "Inserisci un indirizzo IPv4 valido."
+msgstr "Non è un indirizzo IP valido."
 
 #: plinth/modules/wireguard/forms.py:69
 #: plinth/modules/wireguard/templates/wireguard.html:29
@@ -10135,13 +10133,6 @@ msgid "Client IP address provided by server"
 msgstr "Indirizzo IP client fornito dal server"
 
 #: plinth/modules/wireguard/forms.py:97
-#, fuzzy
-#| msgid ""
-#| "IP address assigned to this machine on the VPN after connecting to the "
-#| "endpoint. This value is usually provided by the server operator. Example: "
-#| "192.168.0.10. You can also specify the network. This will allow reaching "
-#| "machines in the network. Examples: 10.68.12.43/24 or "
-#| "10.68.12.43/255.255.255.0."
 msgid ""
 "IP address assigned to this machine on the VPN after connecting to the "
 "endpoint. This value is usually provided by the server operator. Example: "
@@ -10151,9 +10142,9 @@ msgid ""
 msgstr ""
 "Indirizzo IP assegnato a questa macchina sulla VPN dopo la connessione "
 "all'endpoint. Questo valore è generalmente fornito dal gestore del server. "
-"Esempio: 192.168.0.10. È inoltre possibile specificare la rete. Ciò "
-"consentirà di raggiungere le macchine nella rete. Esempi: 10.68.12.43/24 o "
-"10.68.12.43/255.255.255.0."
+"Esempio: 192.168.0.10 oppure 2a03:7c80:4b2c:91a2:5d41:ffee:9b82:7c17. È "
+"inoltre possibile specificare la rete. Ciò consentirà di raggiungere le "
+"macchine nella rete. Esempi: 10.68.12.43/24 o 10.68.12.43/255.255.255.0."
 
 #: plinth/modules/wireguard/forms.py:106
 msgid "Private key of this machine"
@@ -10248,14 +10239,12 @@ msgid "No peers configured to connect to this %(box_name)s yet."
 msgstr "Non ci sono nodi autorizzati a connettersi a %(box_name)s."
 
 #: plinth/modules/wireguard/templates/wireguard.html:88
-#, fuzzy
-#| msgid "Add a new peer"
 msgid "Auto add a new peer"
-msgstr "Aggiungi un nuovo nodo"
+msgstr "Aggiungi automaticamente un nuovo nodo"
 
 #: plinth/modules/wireguard/templates/wireguard.html:92
 msgid "Add Client Automatically"
-msgstr ""
+msgstr "Aggiungi client automaticamente"
 
 #: plinth/modules/wireguard/templates/wireguard.html:94
 msgid "Add a new peer"
@@ -10312,58 +10301,52 @@ msgid "Add Client"
 msgstr "Aggiungere Client"
 
 #: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:26
-#, fuzzy
-#| msgid "Private key path"
 msgid "Private Key"
-msgstr "Percorso chiave privata"
+msgstr "Chiave privata"
 
 #: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:29
 msgid "Click to reveal"
-msgstr ""
+msgstr "Clicca per visualizzare"
 
 #: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:36
-#, fuzzy
-#| msgid "Key Import Date"
 msgid "Important:"
-msgstr "Data Importazione Chiave"
+msgstr "Importante:"
 
 #: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:37
 msgid "Save the private key now. This page shows it only once!"
-msgstr ""
+msgstr "Salva ora la chiave privata. Questa pagina la mostra solo una volta!"
 
 #: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:41
-#, fuzzy
-#| msgid "configuration failed"
 msgid "Client configuration file"
-msgstr "configurazione fallita"
+msgstr "File di configurazione client"
 
 #: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:43
 msgid ""
 "Download the configuration file (.conf) for manual import, or use the QR "
 "code to import directly from your WireGuard mobile app."
 msgstr ""
+"Scarica il file di configurazione (.conf) per importarla manualmente o "
+"utilizza il codice QR dall'app mobile WireGuard."
 
 #: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:49
-#, fuzzy
-#| msgid "warning"
 msgid "Warning:"
-msgstr "attenzione"
+msgstr "Attenzione:"
 
 #: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:50
 msgid ""
 "Treat this QR code like a password. Anyone who scans it can gain VPN access "
 "if the connection is enabled."
 msgstr ""
+"Trattare questo codice QR come una password. Chiunque lo scansioni,se la "
+"connessione è abilitata, otterrà l'accesso VPN."
 
 #: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:60
-#, fuzzy
-#| msgid "Download my profile"
 msgid "Download config file"
-msgstr "Download del profilo"
+msgstr "Download del file di configurazione"
 
 #: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:65
 msgid "Show QR Code"
-msgstr ""
+msgstr "Mostra QR Code"
 
 #: plinth/modules/wireguard/templates/wireguard_delete_client.html:14
 msgid "Are you sure that you want to delete this client?"
@@ -10468,13 +10451,11 @@ msgstr "Il cliente con chiave pubblica esiste già"
 
 #: plinth/modules/wireguard/views.py:199
 msgid "Session expired. Please try again."
-msgstr ""
+msgstr "Sessione scaduta. Riprova."
 
 #: plinth/modules/wireguard/views.py:202
-#, fuzzy
-#| msgid "Domain already exists."
 msgid "Client already exists"
-msgstr "Il dominio esiste già."
+msgstr "Client già esistente"
 
 #: plinth/modules/wireguard/views.py:215
 msgid "Allowed Client"
