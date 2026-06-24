@@ -2,8 +2,31 @@
 
 set -e
 
-# Wait for FreedomBox setup to complete.
-sleep 30
+# Wait for FreedomBox first-boot setup to complete and the web server to
+# start listening. App setup order is not deterministic, so a fixed sleep can
+# expire before the apache app configures port 443. Poll instead of guessing.
+echo "Waiting for first-boot setup to complete..."
+
+SETUP_COMPLETE=0
+
+for _ in $(seq 1 120); do
+    if curl --fail --insecure --silent --output /tmp/fbx_status.json \
+            https://localhost/freedombox/status/; then
+
+        if grep -q '"is_first_setup_running"[[:space:]]*:[[:space:]]*false' /tmp/fbx_status.json; then
+            SETUP_COMPLETE=1
+            break
+        fi
+    fi
+    sleep 2
+done
+
+rm -f /tmp/fbx_status.json
+
+if [ "$SETUP_COMPLETE" -eq 0 ]; then
+    echo "Error: first-boot setup did not complete in the allotted time." >&2
+    exit 1
+fi
 
 journalctl --unit=plinth --unit=freedombox-privileged
 
