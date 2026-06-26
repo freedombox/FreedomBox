@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('id_domain-update_url').closest('.form-group').style.display = 'none';
         document.getElementById('id_domain-disable_ssl_cert_check').closest('.form-group').style.display = 'none';
         document.getElementById('id_domain-use_http_basic_auth').closest('.form-group').style.display = 'none';
-        document.getElementById('id_domain-use_ipv6').closest('.form-group').style.display = 'none';
+        document.getElementById('id_domain-ip_type').closest('.form-group').style.display = 'none';
         document.getElementById('id_domain-server').closest('.form-group').style.display = 'block';
     }
 
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('id_domain-update_url').closest('.form-group').style.display = 'block';
         document.getElementById('id_domain-disable_ssl_cert_check').closest('.form-group').style.display = 'block';
         document.getElementById('id_domain-use_http_basic_auth').closest('.form-group').style.display = 'block';
-        document.getElementById('id_domain-use_ipv6').closest('.form-group').style.display = 'block';
+        document.getElementById('id_domain-ip_type').closest('.form-group').style.display = 'block';
         document.getElementById('id_domain-server').closest('.form-group').style.display = 'none';
     }
 

@@ -26,7 +26,7 @@
             <th>{% trans "Domain" %}</th>
             <th>{% trans "Last update" %}</th>
             <th>{% trans "Result" %}</th>
-            <th>{% trans "IP Address" %}</th>
+            <th>{% trans "IP Addresses" %}</th>
             <th>{% trans "Actions" %}</th>
           </tr>
         </thead>
@@ -66,7 +66,9 @@
                   ({{ domain.error_code }})
                 {% endif %}
               </td>
-              <td>{{ domain.ip_address|default_if_none:'-' }}</td>
+              <td><pre>{% for ip_address in domain.ip_addresses %}{{ ip_address }}
+{% empty %}-
+{% endfor %}</pre></td>
               <td>
                 <a href="{% url 'dynamicdns:domain-edit' domain.domain %}"
                    class="btn btn-default btn-sm domain-edit" role="button"
