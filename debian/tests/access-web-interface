@@ -21,6 +21,9 @@ for _ in $(seq 1 120); do
     sleep 2
 done
 
+# Print final status in test log
+cat /tmp/fbx_status.json
+
 rm -f /tmp/fbx_status.json
 
 if [ "$SETUP_COMPLETE" -eq 0 ]; then
@@ -29,10 +32,6 @@ if [ "$SETUP_COMPLETE" -eq 0 ]; then
 fi
 
 journalctl --unit=plinth --unit=freedombox-privileged
-
-# Get FreedomBox status
-curl --location --cookie "" --fail --write-out "%{response_code}" --insecure \
-     --stderr - https://localhost/freedombox/status/
 
 # Access FreedomBox interface
 curl --location --cookie "" --fail --write-out "%{response_code}" --insecure \
