@@ -2,7 +2,7 @@
 """Configure Tor Proxy service."""
 
 import logging
-import os
+import pathlib
 import shutil
 from typing import Any
 
@@ -190,5 +190,7 @@ def uninstall():
     for directory in directories:
         shutil.rmtree(directory, ignore_errors=True)
 
-    os.unlink(f'/var/run/tor-instances/{INSTANCE_NAME}.defaults')
+    defaults_file = f'/var/run/tor-instances/{INSTANCE_NAME}.defaults'
+    pathlib.Path(defaults_file).unlink(missing_ok=True)
+
     action_utils.service_unmask(SERVICE_NAME)
