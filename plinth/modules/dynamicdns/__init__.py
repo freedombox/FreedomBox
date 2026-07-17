@@ -20,7 +20,7 @@ from plinth.modules.users.components import UsersAndGroups
 from plinth.signals import domain_added, domain_removed
 from plinth.utils import format_lazy
 
-from . import gnudip, manifest, privileged
+from . import gnudip, manifest
 
 logger = logging.getLogger(__name__)
 
@@ -123,17 +123,6 @@ class DynamicDNSApp(app_module.App):
         super().setup(old_version)
         if not old_version:
             self.enable()
-
-        if old_version == 1:
-            config = privileged.export_config()
-            if config['enabled']:
-                self.enable()
-            else:
-                self.disable()
-
-            del config['enabled']
-            set_config(config)
-            privileged.clean()
 
 
 def _lookup_public_address(domain):
