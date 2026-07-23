@@ -95,7 +95,8 @@ def action_init(console: bool = False):
     """Initialize logging for action scripts."""
     _capture_warnings()
 
-    configuration = get_configuration()
+    configuration = get_configuration(
+        syslog_identifier='freedombox-privileged')
     if console:
         configuration['root']['handlers'] = ['console']
     else:
@@ -125,7 +126,7 @@ def setup_cherrypy_static_directory(app):
     app.log.error_log.propagate = False
 
 
-def get_configuration():
+def get_configuration(syslog_identifier='freedombox'):
     """Return the main python logging module configuration."""
     configuration = {
         'version': 1,
@@ -143,7 +144,8 @@ def get_configuration():
                 'formatter': 'color'
             },
             'journal': {
-                'class': 'systemd.journal.JournalHandler'
+                'class': 'systemd.journal.JournalHandler',
+                'SYSLOG_IDENTIFIER': syslog_identifier,
             }
         },
         'root': {
