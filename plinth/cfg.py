@@ -45,10 +45,10 @@ box_name = 'FreedomBox'
 # Other globals
 develop = False
 
-config_files = []
+config_files: list[str] = []
 
 
-def expand_to_dot_d_paths(file_paths):
+def expand_to_dot_d_paths(file_paths: list[str]) -> list[str]:
     """Expand a list of file paths to include file.d/* also."""
     final_list = []
     for file_path in file_paths:
@@ -65,7 +65,7 @@ def expand_to_dot_d_paths(file_paths):
     return final_list
 
 
-def get_develop_config_path():
+def get_develop_config_path() -> str:
     """Return config path of current source folder for development mode."""
     root_directory = os.path.dirname(os.path.realpath(__file__))
     root_directory = os.path.realpath(root_directory)
@@ -73,7 +73,7 @@ def get_develop_config_path():
     return config_path
 
 
-def get_config_paths():
+def get_config_paths() -> list[str]:
     """Get default config paths."""
     return [
         '/usr/share/freedombox/freedombox.config',
@@ -82,14 +82,14 @@ def get_config_paths():
     ]
 
 
-def read():
+def read() -> None:
     """Read all configuration files."""
     config_paths = get_config_paths()
     for config_path in expand_to_dot_d_paths(config_paths):
         read_file(config_path)
 
 
-def read_file(config_path):
+def read_file(config_path: str):
     """Read and merge into defaults a single configuration file."""
     if not os.path.isfile(config_path):  # Does not throw exceptions
         # Ignore missing configuration files
@@ -101,9 +101,9 @@ def read_file(config_path):
     parser = configparser.ConfigParser(
         defaults={
             'parent_dir':
-                pathlib.Path(config_path).parent.resolve(),
+                str(pathlib.Path(config_path).parent.resolve()),
             'parent_parent_dir':
-                pathlib.Path(config_path).parent.parent.resolve(),
+                str(pathlib.Path(config_path).parent.parent.resolve()),
         })
     parser.read(config_path)  # Ignores all read errors
 
@@ -123,6 +123,7 @@ def read_file(config_path):
     )
 
     for section, name, datatype in config_items:
+        value: int | str | bool
         try:
             value = parser.get(section, name)
         except (configparser.NoSectionError, configparser.NoOptionError):

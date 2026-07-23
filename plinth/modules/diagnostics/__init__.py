@@ -9,6 +9,7 @@ import logging
 import pathlib
 import threading
 from copy import deepcopy
+from typing import Any
 
 import psutil
 from django.urls import reverse_lazy
@@ -40,7 +41,7 @@ _description = [
 
 logger = logging.Logger(__name__)
 
-current_results = {}
+current_results: dict[str, Any] = {}
 results_lock = threading.Lock()
 
 
