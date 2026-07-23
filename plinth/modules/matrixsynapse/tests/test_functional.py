@@ -17,7 +17,8 @@ class TestMatrixSynapseApp(functional.BaseAppTests):
     diagnostics_delay = 1
 
     @pytest.fixture(scope='class', autouse=True)
-    def fixture_setup(self, session_browser):
+    @classmethod
+    def fixture_setup(cls, session_browser):
         """Setup the app."""
         functional.login(session_browser)
         functional.domain_add(session_browser, 'mydomain.example')

@@ -21,7 +21,8 @@ class TestSambaApp(functional.BaseAppTests):
     has_web = False
 
     @pytest.fixture(scope='class', autouse=True)
-    def fixture_setup(self, session_browser):
+    @classmethod
+    def fixture_setup(cls, session_browser):
         """Setup the app."""
         functional.login(session_browser)
         functional.networks_set_firewall_zone(session_browser, 'internal')

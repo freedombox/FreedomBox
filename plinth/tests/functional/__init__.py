@@ -837,12 +837,13 @@ class BaseAppTests:
         install(session_browser, self.app_name)
 
     @pytest.fixture(autouse=True, scope='class', name='disable_after_tests')
-    def fixture_disable_after_tests(self, session_browser):
+    @classmethod
+    def fixture_disable_after_tests(cls, session_browser):
         """Disable the app after running tests."""
         yield
-        if self.disable_after_tests and is_installed(session_browser,
-                                                     self.app_name):
-            app_disable(session_browser, self.app_name)
+        if cls.disable_after_tests and is_installed(session_browser,
+                                                    cls.app_name):
+            app_disable(session_browser, cls.app_name)
 
     @pytest.fixture(autouse=True, name='background')
     def fixture_background(self, session_browser, disable_after_tests):
