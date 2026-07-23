@@ -26,7 +26,6 @@ See: https://docs.djangoproject.com/en/dev/ref/settings/
 
 """
 
-import django
 from django.utils.translation import gettext_lazy as _
 
 ALLOWED_HOSTS = ['*']
@@ -239,9 +238,6 @@ TEMPLATES = [
 ]
 
 TIME_ZONE = 'UTC'
-
-if django.VERSION <= (4, 0):
-    USE_L10N = True
 
 USE_TZ = True
 
