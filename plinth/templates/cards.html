@@ -20,45 +20,28 @@
     {% include "tags.html" %}
   {% endblock %}
 
-  <div class="btn-toolbar container" role="toolbar">
-    <a class="btn btn-primary" href="#available-for-install-container"
-       data-bs-toggle="collapse" role="button" aria-expanded="false"
-       aria-controls="available-for-install-container">
-      {% icon 'plus' %}
-      {% trans "Add new app" %}
-    </a>
-  </div>
-
   <div class="container card-container">
-    <div class="row">
-      <div class="card-list card-list-primary">
-        {% for item in menu_items %}
-          {% if not show_disabled or item.is_enabled %}
+    {% block header-container %}
+    {% endblock %}
+
+    {% block toolbar-container %}
+    {% endblock %}
+
+    {% if menu_items %}
+      <div class="row">
+        <div class="card-list">
+          {% for item in menu_items %}
             {% if advanced_mode or not item.advanced %}
               {% include "card.html" %}
-            {% endif %}
-          {% endif %}
-        {% endfor %}
-      </div>
-    </div>
-  </div>
-
-  {% if show_disabled %}
-    <div class="container card-container collapse" id="available-for-install-container">
-      <div class="card-section-title">{% trans "Available for install" %}</div>
-      <div class="row">
-        <div class="card-list card-list-disabled">
-          {% for item in menu_items %}
-            {% if not item.is_enabled %}
-              {% if advanced_mode or not item.advanced %}
-                {% include "card.html" %}
-              {% endif %}
             {% endif %}
           {% endfor %}
         </div>
       </div>
-    </div>
-  {% endif %}
+    {% else %}
+      {% block cards-empty %}
+      {% endblock %}
+    {% endif %}
+  </div>
 
   {% block content-container %}
   {% endblock %}

@@ -5,27 +5,21 @@
 
 {% load static %}
 {% load i18n %}
-{% load extras %}
 
 {% block page_js %}
   <script src="{% static 'tags.js' %}" defer></script>
 {% endblock %}
 
-{% block body_class %}apps-page{% endblock %}
+{% block body_class %}apps-add-page{% endblock %}
 
-{% block toolbar-container %}
-  <div class="btn-toolbar" role="toolbar">
-    <a class="btn btn-primary" href="{% url 'apps-add' %}" role="button">
-      {% icon 'plus' %}
-      {% trans "Add new app" %}
-    </a>
-  </div>
+{% block header-container %}
+  <div class="card-section-title">{% trans "Add New App" %}</div>
 {% endblock %}
 
 {% block cards-empty %}
   <p class="text-center">
     {% blocktrans trimmed %}
-      There are currently no apps added.
+      There are no more apps available to add.
     {% endblocktrans %}
   </p>
 {% endblock %}

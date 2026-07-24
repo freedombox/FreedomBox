@@ -266,8 +266,8 @@ def _get_all_tags(menu_items: list[menu.Menu]) -> list[str]:
     return sorted(get_tags(menu_items), key=_)
 
 
-class AppsIndexView(TemplateView):
-    """View for apps index.
+class AppsView(TemplateView):
+    """View for showing installed apps.
 
     This view supports filtering apps by one or more tags. If no tags are
     provided, it will show all the apps. If one or more tags are provided,
@@ -277,11 +277,39 @@ class AppsIndexView(TemplateView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context['show_disabled'] = True
         context['advanced_mode'] = get_advanced_mode()
 
         tags = self.request.GET.getlist('tag', [])
-        menu_items = menu.main_menu.active_item(self.request).items
+        menu_items = [
+            item for item in menu.main_menu.active_item(self.request).items
+            if item.is_enabled()
+        ]
+
+        context['tags'] = tags
+        context['all_tags'] = _get_all_tags(menu_items)
+        context['menu_items'] = _pick_menu_items(menu_items, tags)
+
+        return context
+
+
+class AppsAddView(TemplateView):
+    """View for showing apps that can be installed.
+
+    This view supports filtering apps by one or more tags. If no tags are
+    provided, it will show all the apps. If one or more tags are provided,
+    it will select apps matching any of the provided tags.
+    """
+    template_name = 'apps-add.html'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['advanced_mode'] = get_advanced_mode()
+
+        tags = self.request.GET.getlist('tag', [])
+        menu_items = [
+            item for item in menu.main_menu.active_item(self.request).items
+            if not item.is_enabled()
+        ]
 
         context['tags'] = tags
         context['all_tags'] = _get_all_tags(menu_items)
