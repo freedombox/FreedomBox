@@ -174,12 +174,16 @@ def index(request):
         shortcut for shortcut in shortcuts if shortcut.component_id == selected
     ]
     selected_shortcut = selected_shortcut[0] if selected_shortcut else None
+    tag_search_url = None
+    if selected_shortcut:
+        tag_search_url = _get_tag_search_url(selected_shortcut.app)
 
     return TemplateResponse(
         request, 'index.html', {
             'title': _('FreedomBox'),
             'shortcuts': shortcuts,
             'selected_shortcut': selected_shortcut,
+            'tag_search_url': tag_search_url,
         })
 
 
@@ -264,6 +268,34 @@ def _get_all_tags(menu_items: list[menu.Menu]) -> list[str]:
 
     # Sort tags by localized string
     return sorted(get_tags(menu_items), key=_)
+
+
+def _get_tag_search_url(app: app_module.App) -> str:
+    """Return the URL to which clicking on tags to redirect to."""
+    default_url = 'apps-add'
+
+    menus = list(app.get_components_of_type(menu.Menu))
+    if not menus:
+        return default_url  # When app has no menu item.
+
+    parent_section = menus[0]
+    for _index in range(10):
+        if parent_section.parent_url_name in ('index', None):
+            break
+
+        try:
+            parent_section = menu.Menu.get_with_url_name(
+                parent_section.parent_url_name)
+        except LookupError:
+            return default_url
+    else:
+        # There was a loop in traversing to the parent menu item.
+        return default_url
+
+    if parent_section.url_name == 'apps':
+        return default_url
+
+    return parent_section.url_name
 
 
 class AppsView(TemplateView):
@@ -507,6 +539,7 @@ class AppView(FormView):
         context['firewall'] = self.app.get_components_of_type(Firewall)
 
         context['has_backup_restore'] = _has_backup_restore(self.app)
+        context['tag_search_url'] = _get_tag_search_url(self.app)
 
         return context
 
@@ -532,6 +565,7 @@ class AppOperationsView(TemplateView):
         context['operations'] = operation.manager.filter(self.app.app_id)
         # Refresh periodically while operations are running
         context['refresh_page_sec'] = 3 if context['operations'] else 0
+        context['tag_search_url'] = _get_tag_search_url(self.app)
 
         return context
 
@@ -568,6 +602,8 @@ class SetupView(TemplateView):
             context['refresh_page_sec'] = 3
         elif context['setup_state'] == app_module.App.SetupState.UP_TO_DATE:
             context['refresh_page_sec'] = 0
+
+        context['tag_search_url'] = _get_tag_search_url(app)
 
         return context
 
