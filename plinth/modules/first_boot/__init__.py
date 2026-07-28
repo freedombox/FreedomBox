@@ -5,11 +5,16 @@ FreedomBox app for first boot wizard.
 
 import operator
 import os
+import pathlib
+import secrets
+import string
 import sys
 
 from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 from django.utils.translation import gettext_noop
 
+from plinth import action_utils
 from plinth import app as app_module
 from plinth import cfg
 from plinth.signals import post_setup
@@ -39,7 +44,7 @@ class FirstBootApp(app_module.App):
         super().__init__()
 
         info = app_module.Info(app_id=self.app_id, version=self._version,
-                               is_essential=True)
+                               is_essential=True, name=_('First Boot'))
         self.add(info)
 
     def post_init(self):
@@ -49,6 +54,8 @@ class FirstBootApp(app_module.App):
     def setup(self, old_version):
         """Install and configure the app."""
         super().setup(old_version)
+
+        _firstboot_wizard_secret_create()
 
         if not old_version:
             self._show_next_steps_notification()
@@ -180,3 +187,28 @@ def firstboot_wizard_secret_exists():
     """Return whether a firstboot wizard secret exists."""
     secret_file = get_secret_file_path()
     return os.path.exists(secret_file) and os.path.getsize(secret_file) > 0
+
+
+def _generate_secret_key():
+    """Generate a new random secret key for firstboot wizard."""
+    chars = string.ascii_letters + string.digits
+    return ''.join(secrets.choice(chars) for _ in range(16))
+
+
+def _firstboot_wizard_secret_create():
+    """Create a file with firstboot wizard secret if not in a disk image."""
+    if action_utils.is_disk_image():
+        return  # On a disk image, first wizard secret is not asked.
+
+    path = pathlib.Path(get_secret_file_path())
+    if path.exists():
+        return  # Secret already exists, don't change it.
+
+    secret = _generate_secret_key()
+
+    def opener(path, flags):
+        """Create and open a file with restricted permissions."""
+        return os.open(path, flags, 0o400)
+
+    with open(path, mode='w', opener=opener) as file_handle:
+        file_handle.write(secret + '\n')

@@ -11,8 +11,8 @@ class FirstbootWizardSecretForm(forms.Form):
     """Form to collect and validate the first boot wizard secret."""
     secret = forms.CharField(
         label='', help_text=_(
-            'Enter the secret generated during FreedomBox installation. '
-            'This secret can also be obtained by running the command "sudo '
+            'Enter the secret generated during {box_name} installation. '
+            'This secret can be obtained by running the command "sudo '
             'cat /var/lib/plinth/firstboot-wizard-secret" on your {box_name}'.
             format(box_name=_(cfg.box_name))), required=False,
         widget=forms.PasswordInput(
