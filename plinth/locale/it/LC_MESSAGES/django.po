@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-02 00:51+0000\n"
+"POT-Creation-Date: 2026-07-29 02:26+0000\n"
 "PO-Revision-Date: 2026-06-13 20:01+0000\n"
 "Last-Translator: Pierfrancesco Passerini <p.passerini@gmail.com>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/freedombox/"
@@ -2935,7 +2935,6 @@ msgstr "Abilitato"
 #: plinth/modules/firewall/templates/firewall.html:43
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:71
 #: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:29
-#: plinth/templates/cards.html:38
 msgid "Disabled"
 msgstr "Disabilitato"
 
@@ -2979,11 +2978,15 @@ msgstr ""
 "Operazioni avanzate sul firewall come aprire porte personalizzate sono "
 "fornite dall'app <a href=\"/_cockpit/network/firewall\">Cockpit</a>."
 
-#: plinth/modules/first_boot/__init__.py:61
+#: plinth/modules/first_boot/__init__.py:47
+msgid "First Boot"
+msgstr ""
+
+#: plinth/modules/first_boot/__init__.py:68
 msgid "Setup complete! Next steps:"
 msgstr "Configurazione completata! Prossimi passi:"
 
-#: plinth/modules/first_boot/__init__.py:63
+#: plinth/modules/first_boot/__init__.py:70
 #, python-brace-format
 msgid ""
 "Initial setup has been completed. Perform the next steps to make your "
@@ -2992,19 +2995,23 @@ msgstr ""
 "La configurazione iniziale è stata completata. Eseguire i passaggi "
 "successivi per rendere {box_name} operativo."
 
-#: plinth/modules/first_boot/__init__.py:66
+#: plinth/modules/first_boot/__init__.py:73
 msgid "Next steps"
 msgstr "Prossimi passi"
 
-#: plinth/modules/first_boot/__init__.py:73
+#: plinth/modules/first_boot/__init__.py:80
 msgid "See next steps"
 msgstr "Vedi i prossimi passi"
 
 #: plinth/modules/first_boot/forms.py:14
-#, python-brace-format
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "Enter the secret generated during FreedomBox installation. This secret "
+#| "can also be obtained by running the command \"sudo cat /var/lib/plinth/"
+#| "firstboot-wizard-secret\" on your {box_name}"
 msgid ""
-"Enter the secret generated during FreedomBox installation. This secret can "
-"also be obtained by running the command \"sudo cat /var/lib/plinth/firstboot-"
+"Enter the secret generated during {box_name} installation. This secret can "
+"be obtained by running the command \"sudo cat /var/lib/plinth/firstboot-"
 "wizard-secret\" on your {box_name}"
 msgstr ""
 "Inserire il segreto generato durante l'installazione di FreedomBox. Questo "
@@ -4689,21 +4696,36 @@ msgstr "Nome del sito aggiornato"
 msgid "Default language changed"
 msgstr "Lingua predefinita modificata"
 
-#: plinth/modules/minetest/__init__.py:33
+#: plinth/modules/minetest/__init__.py:32
+msgid ""
+"Luanti, formerly Minetest, is a multiplayer infinite-world block sandbox "
+"game. It allows users to build and explore 3D worlds, interact with others, "
+"and engage in various activities such as crafting, mining, and combat."
+msgstr ""
+
+#: plinth/modules/minetest/__init__.py:36
+msgid "Luanti offers several educational benefits, including:"
+msgstr ""
+
+#: plinth/modules/minetest/__init__.py:37
+msgid ""
+"<ul><li>Developing spatial reasoning and problem-solving skills.</"
+"li><li>Encouraging creativity and self-expression through building and "
+"exploration.</li><li>Fostering social interaction and collaboration among "
+"players.</li></ul>"
+msgstr ""
+
+#: plinth/modules/minetest/__init__.py:43
 #, python-brace-format
 msgid ""
-"Luanti, formally known as Minetest, is a multiplayer infinite-world block "
-"sandbox. This module enables the Luanti server to be run on this {box_name}, "
-"on the default port (30000). To connect to the server, a <a href=\"https://"
-"www.luanti.org/downloads/\">Luanti client</a> is needed."
+"To getting started, install the <a href=\"https://www.luanti.org/downloads/"
+"\">Luanti client</a> on users' devices and connect to the Luanti server "
+"using the {box_name} IP and default port (30000). For more information, "
+"please refer to the official <a href=\"https://docs.luanti.org/\">Minetest "
+"documentation</a> or online resources."
 msgstr ""
-"Luanti, precedentemente noto come Minetest, è un sandbox multiplayer con "
-"quadri infiniti. Questo modulo abilita l'esecuzione del server Luanti su "
-"questo {box_name}, sulla porta predefinita (30000). Per connettersi al "
-"server, è necessario un <a href=\"https://www.luanti.org/downloads/\">client "
-"Luanti</a>."
 
-#: plinth/modules/minetest/__init__.py:57 plinth/modules/minetest/manifest.py:9
+#: plinth/modules/minetest/__init__.py:68 plinth/modules/minetest/manifest.py:9
 msgid "Luanti"
 msgstr "Luanti"
 
@@ -8378,7 +8400,7 @@ msgstr "Webmail"
 msgid "Address book"
 msgstr "Rubrica"
 
-#: plinth/modules/ssh/__init__.py:22
+#: plinth/modules/ssh/__init__.py:25
 msgid ""
 "A Secure Shell server uses the secure shell protocol to accept connections "
 "from remote computers. An authorized remote computer can perform "
@@ -8390,11 +8412,11 @@ msgstr ""
 "autorizzato può eseguire attività di amministrazione, copiare file o "
 "eseguire altri servizi."
 
-#: plinth/modules/ssh/__init__.py:42
+#: plinth/modules/ssh/__init__.py:45
 msgid "Secure Shell Server"
 msgstr "Secure Shell Server"
 
-#: plinth/modules/ssh/__init__.py:75
+#: plinth/modules/ssh/__init__.py:78
 msgid "Remotely login using Secure Shell (SSH)"
 msgstr "Accesso remoto con Secure Shell (SSH)"
 
@@ -10251,7 +10273,7 @@ msgid "Add a new peer"
 msgstr "Aggiungi un nuovo nodo"
 
 #: plinth/modules/wireguard/templates/wireguard.html:98
-#: plinth/modules/wireguard/views.py:62 plinth/modules/wireguard/views.py:149
+#: plinth/modules/wireguard/views.py:60 plinth/modules/wireguard/views.py:147
 msgid "Add Allowed Client"
 msgstr "Aggiungi client autorizzato"
 
@@ -10288,7 +10310,7 @@ msgid "Add a new server"
 msgstr "Aggiungi un nuovo server"
 
 #: plinth/modules/wireguard/templates/wireguard.html:162
-#: plinth/modules/wireguard/views.py:301
+#: plinth/modules/wireguard/views.py:299
 msgid "Add Connection to Server"
 msgstr "Aggiungi Connessione a Server"
 
@@ -10441,75 +10463,75 @@ msgstr "Indirizzo IP di questa macchina:"
 msgid "All outgoing traffic is sent using this connection:"
 msgstr "Tutto il traffico in uscita utilizza questo collegamento:"
 
-#: plinth/modules/wireguard/views.py:57 plinth/modules/wireguard/views.py:144
+#: plinth/modules/wireguard/views.py:55 plinth/modules/wireguard/views.py:142
 msgid "Added new client."
 msgstr "Client aggiunto."
 
-#: plinth/modules/wireguard/views.py:82 plinth/modules/wireguard/views.py:261
+#: plinth/modules/wireguard/views.py:80 plinth/modules/wireguard/views.py:259
 msgid "Client with public key already exists"
 msgstr "Il cliente con chiave pubblica esiste già"
 
-#: plinth/modules/wireguard/views.py:199
+#: plinth/modules/wireguard/views.py:197
 msgid "Session expired. Please try again."
 msgstr "Sessione scaduta. Riprova."
 
-#: plinth/modules/wireguard/views.py:202
+#: plinth/modules/wireguard/views.py:200
 msgid "Client already exists"
 msgstr "Client già esistente"
 
-#: plinth/modules/wireguard/views.py:215
+#: plinth/modules/wireguard/views.py:213
 msgid "Allowed Client"
 msgstr "Client autorizzato"
 
-#: plinth/modules/wireguard/views.py:237
+#: plinth/modules/wireguard/views.py:235
 msgid "Updated client."
 msgstr "Client aggiornato."
 
-#: plinth/modules/wireguard/views.py:242
+#: plinth/modules/wireguard/views.py:240
 msgid "Modify Client"
 msgstr "Modifica client"
 
-#: plinth/modules/wireguard/views.py:275
+#: plinth/modules/wireguard/views.py:273
 msgid "Delete Allowed Client"
 msgstr "Elimina client autorizzato"
 
-#: plinth/modules/wireguard/views.py:284
+#: plinth/modules/wireguard/views.py:282
 msgid "Client deleted."
 msgstr "Client cancellato."
 
-#: plinth/modules/wireguard/views.py:286
+#: plinth/modules/wireguard/views.py:284
 msgid "Client not found"
 msgstr "Cliente non trovato"
 
-#: plinth/modules/wireguard/views.py:296
+#: plinth/modules/wireguard/views.py:294
 msgid "Added new server."
 msgstr "Aggiunto nuovo server."
 
-#: plinth/modules/wireguard/views.py:317
+#: plinth/modules/wireguard/views.py:315
 msgid "Connection to Server"
 msgstr "Connessione al server"
 
-#: plinth/modules/wireguard/views.py:335
+#: plinth/modules/wireguard/views.py:333
 msgid "Updated server."
 msgstr "Aggiornato server."
 
-#: plinth/modules/wireguard/views.py:340
+#: plinth/modules/wireguard/views.py:338
 msgid "Modify Connection to Server"
 msgstr "Modifica Concessione a server"
 
-#: plinth/modules/wireguard/views.py:378
+#: plinth/modules/wireguard/views.py:376
 msgid "Delete Connection to Server"
 msgstr "Cancella Connessione a server"
 
-#: plinth/modules/wireguard/views.py:398
+#: plinth/modules/wireguard/views.py:396
 msgid "Server deleted."
 msgstr "Server cancellato."
 
-#: plinth/modules/wireguard/views.py:410
+#: plinth/modules/wireguard/views.py:408
 msgid "WireGuard server started successfully."
 msgstr "Il server WireGuard è stato correttamente avviato."
 
-#: plinth/modules/wireguard/views.py:414
+#: plinth/modules/wireguard/views.py:412
 msgid "Failed to start WireGuard server: {}"
 msgstr "Avvio del server WireGuard non riuscito: {}"
 
@@ -10926,6 +10948,18 @@ msgstr "Seleziona la lingua"
 msgid "Log in"
 msgstr "Accedi"
 
+#: plinth/templates/cards.html:28
+#, fuzzy
+#| msgid "Add a new peer"
+msgid "Add new app"
+msgstr "Aggiungi un nuovo nodo"
+
+#: plinth/templates/cards.html:48
+#, fuzzy
+#| msgid "Available Domains"
+msgid "Available for install"
+msgstr "Domini disponibili"
+
 #: plinth/templates/clients-button.html:16
 msgid "Launch web client"
 msgstr "Avvia client web"
@@ -11192,6 +11226,19 @@ msgstr "Prima della disinstallazione di {app_id}"
 #: plinth/web_framework.py:126
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#, python-brace-format
+#~ msgid ""
+#~ "Luanti, formally known as Minetest, is a multiplayer infinite-world block "
+#~ "sandbox. This module enables the Luanti server to be run on this "
+#~ "{box_name}, on the default port (30000). To connect to the server, a <a "
+#~ "href=\"https://www.luanti.org/downloads/\">Luanti client</a> is needed."
+#~ msgstr ""
+#~ "Luanti, precedentemente noto come Minetest, è un sandbox multiplayer con "
+#~ "quadri infiniti. Questo modulo abilita l'esecuzione del server Luanti su "
+#~ "questo {box_name}, sulla porta predefinita (30000). Per connettersi al "
+#~ "server, è necessario un <a href=\"https://www.luanti.org/downloads/"
+#~ "\">client Luanti</a>."
 
 #~ msgid "Enter a valid network prefix or net mask."
 #~ msgstr "Inserisci un prefisso di rete od una netmask validi."
@@ -11849,9 +11896,6 @@ msgstr "Gujarati"
 
 #~ msgid "Key File"
 #~ msgstr "Key File"
-
-#~ msgid "Available Domains"
-#~ msgstr "Domini disponibili"
 
 #~ msgid "Added Domains"
 #~ msgstr "Domini Aggiunti"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-02 00:51+0000\n"
+"POT-Creation-Date: 2026-07-29 02:26+0000\n"
 "PO-Revision-Date: 2026-03-02 19:53+0000\n"
 "Last-Translator: James Valleroy <jvalleroy@mailbox.org>\n"
 "Language-Team: Tamil <https://hosted.weblate.org/projects/freedombox/"
@@ -2932,7 +2932,6 @@ msgstr "இயக்கப்பட்டது"
 #: plinth/modules/firewall/templates/firewall.html:43
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:71
 #: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:29
-#: plinth/templates/cards.html:38
 msgid "Disabled"
 msgstr "முடக்கப்பட்டது"
 
@@ -2976,11 +2975,15 @@ msgstr ""
 "தனிப்பயன் துறைமுகங்களைத் திறப்பது போன்ற மேம்பட்ட ஃபயர்வால் செயல்பாடுகள் <a href=\"/_ "
 "காக்பிட்/நெட்வொர்க்/ஃபயர்வால்\"> காக்பிட் </a> பயன்பாட்டால் வழங்கப்படுகின்றன."
 
-#: plinth/modules/first_boot/__init__.py:61
+#: plinth/modules/first_boot/__init__.py:47
+msgid "First Boot"
+msgstr ""
+
+#: plinth/modules/first_boot/__init__.py:68
 msgid "Setup complete! Next steps:"
 msgstr "அமைவு முடிந்தது! அடுத்த படிகள்:"
 
-#: plinth/modules/first_boot/__init__.py:63
+#: plinth/modules/first_boot/__init__.py:70
 #, python-brace-format
 msgid ""
 "Initial setup has been completed. Perform the next steps to make your "
@@ -2988,19 +2991,23 @@ msgid ""
 msgstr ""
 "ஆரம்ப அமைப்பு முடிந்தது. உங்கள் {box_name} செயல்பாட்டுக்கு அடுத்த படிகளைச் செய்யுங்கள்."
 
-#: plinth/modules/first_boot/__init__.py:66
+#: plinth/modules/first_boot/__init__.py:73
 msgid "Next steps"
 msgstr "அடுத்த படிகள்"
 
-#: plinth/modules/first_boot/__init__.py:73
+#: plinth/modules/first_boot/__init__.py:80
 msgid "See next steps"
 msgstr "அடுத்த படிகளைக் காண்க"
 
 #: plinth/modules/first_boot/forms.py:14
-#, python-brace-format
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "Enter the secret generated during FreedomBox installation. This secret "
+#| "can also be obtained by running the command \"sudo cat /var/lib/plinth/"
+#| "firstboot-wizard-secret\" on your {box_name}"
 msgid ""
-"Enter the secret generated during FreedomBox installation. This secret can "
-"also be obtained by running the command \"sudo cat /var/lib/plinth/firstboot-"
+"Enter the secret generated during {box_name} installation. This secret can "
+"be obtained by running the command \"sudo cat /var/lib/plinth/firstboot-"
 "wizard-secret\" on your {box_name}"
 msgstr ""
 "கட்டற்றபெட்டி நிறுவலின்போது உருவாக்கப்பட்ட ரகசியத்தை உள்ளிடவும். உங்கள் {box_name} இல் "
@@ -4654,20 +4661,36 @@ msgstr "தளத்தின் பெயர் புதுப்பிக்�
 msgid "Default language changed"
 msgstr "இயல்புநிலை மொழி மாற்றப்பட்டது"
 
-#: plinth/modules/minetest/__init__.py:33
+#: plinth/modules/minetest/__init__.py:32
+msgid ""
+"Luanti, formerly Minetest, is a multiplayer infinite-world block sandbox "
+"game. It allows users to build and explore 3D worlds, interact with others, "
+"and engage in various activities such as crafting, mining, and combat."
+msgstr ""
+
+#: plinth/modules/minetest/__init__.py:36
+msgid "Luanti offers several educational benefits, including:"
+msgstr ""
+
+#: plinth/modules/minetest/__init__.py:37
+msgid ""
+"<ul><li>Developing spatial reasoning and problem-solving skills.</"
+"li><li>Encouraging creativity and self-expression through building and "
+"exploration.</li><li>Fostering social interaction and collaboration among "
+"players.</li></ul>"
+msgstr ""
+
+#: plinth/modules/minetest/__init__.py:43
 #, python-brace-format
 msgid ""
-"Luanti, formally known as Minetest, is a multiplayer infinite-world block "
-"sandbox. This module enables the Luanti server to be run on this {box_name}, "
-"on the default port (30000). To connect to the server, a <a href=\"https://"
-"www.luanti.org/downloads/\">Luanti client</a> is needed."
+"To getting started, install the <a href=\"https://www.luanti.org/downloads/"
+"\">Luanti client</a> on users' devices and connect to the Luanti server "
+"using the {box_name} IP and default port (30000). For more information, "
+"please refer to the official <a href=\"https://docs.luanti.org/\">Minetest "
+"documentation</a> or online resources."
 msgstr ""
-"லுவான்டி, முறையாக Minetest என அறியப்படுகிறது, இது ஒரு மல்டிபிளேயர் எல்லையற்ற உலகத் "
-"தொகுதி சாண்ட்பாக்ச் ஆகும். இந்த தொகுதியானது, இயல்புநிலை போர்ட்டில் (30000) இந்த "
-"{box_name} இல் Luanti சேவையகத்தை இயக்க உதவுகிறது. சேவையகத்துடன் இணைக்க, <a "
-"href=\"https://www.luanti.org/downloads/\">Luanti கிளையன்ட்</a> தேவை."
 
-#: plinth/modules/minetest/__init__.py:57 plinth/modules/minetest/manifest.py:9
+#: plinth/modules/minetest/__init__.py:68 plinth/modules/minetest/manifest.py:9
 msgid "Luanti"
 msgstr "லுவாண்டி"
 
@@ -8289,7 +8312,7 @@ msgstr "வெப்மெயில்"
 msgid "Address book"
 msgstr "முகவரி நூல்"
 
-#: plinth/modules/ssh/__init__.py:22
+#: plinth/modules/ssh/__init__.py:25
 msgid ""
 "A Secure Shell server uses the secure shell protocol to accept connections "
 "from remote computers. An authorized remote computer can perform "
@@ -8301,11 +8324,11 @@ msgstr ""
 "செய்யலாம், கோப்புகளை நகலெடுக்கலாம் அல்லது அத்தகைய இணைப்புகளைப் பயன்படுத்தி பிற சேவைகளை "
 "இயக்கலாம்."
 
-#: plinth/modules/ssh/__init__.py:42
+#: plinth/modules/ssh/__init__.py:45
 msgid "Secure Shell Server"
 msgstr "பாதுகாப்பான செல் சேவையகம்"
 
-#: plinth/modules/ssh/__init__.py:75
+#: plinth/modules/ssh/__init__.py:78
 msgid "Remotely login using Secure Shell (SSH)"
 msgstr "பாதுகாப்பான செல் (SSH) ஐப் பயன்படுத்தி தொலைதூர உள்நுழைவு"
 
@@ -10144,7 +10167,7 @@ msgid "Add a new peer"
 msgstr "புதிய சகாக்களைச் சேர்க்கவும்"
 
 #: plinth/modules/wireguard/templates/wireguard.html:98
-#: plinth/modules/wireguard/views.py:62 plinth/modules/wireguard/views.py:149
+#: plinth/modules/wireguard/views.py:60 plinth/modules/wireguard/views.py:147
 msgid "Add Allowed Client"
 msgstr "அனுமதிக்கப்பட்ட கிளையன்ட் சேர்க்கவும்"
 
@@ -10183,7 +10206,7 @@ msgid "Add a new server"
 msgstr "புதிய சேவையகத்தைச் சேர்க்கவும்"
 
 #: plinth/modules/wireguard/templates/wireguard.html:162
-#: plinth/modules/wireguard/views.py:301
+#: plinth/modules/wireguard/views.py:299
 msgid "Add Connection to Server"
 msgstr "சேவையகத்திற்கு இணைப்பைச் சேர்க்கவும்"
 
@@ -10340,77 +10363,77 @@ msgstr "இந்த இயந்திரத்தின் ஐபி முக
 msgid "All outgoing traffic is sent using this connection:"
 msgstr ""
 
-#: plinth/modules/wireguard/views.py:57 plinth/modules/wireguard/views.py:144
+#: plinth/modules/wireguard/views.py:55 plinth/modules/wireguard/views.py:142
 msgid "Added new client."
 msgstr "புதிய கிளையன்ட் சேர்க்கப்பட்டது."
 
-#: plinth/modules/wireguard/views.py:82 plinth/modules/wireguard/views.py:261
+#: plinth/modules/wireguard/views.py:80 plinth/modules/wireguard/views.py:259
 msgid "Client with public key already exists"
 msgstr "பொது விசையுடன் கூடிய வாடிக்கையாளர் ஏற்கனவே இருக்கிறார்"
 
-#: plinth/modules/wireguard/views.py:199
+#: plinth/modules/wireguard/views.py:197
 msgid "Session expired. Please try again."
 msgstr ""
 
-#: plinth/modules/wireguard/views.py:202
+#: plinth/modules/wireguard/views.py:200
 #, fuzzy
 #| msgid "Domain already exists."
 msgid "Client already exists"
 msgstr "டொமைன் ஏற்கனவே உள்ளது."
 
-#: plinth/modules/wireguard/views.py:215
+#: plinth/modules/wireguard/views.py:213
 msgid "Allowed Client"
 msgstr "அனுமதிக்கப்பட்ட கிளையன்ட்"
 
-#: plinth/modules/wireguard/views.py:237
+#: plinth/modules/wireguard/views.py:235
 msgid "Updated client."
 msgstr "புதுப்பிக்கப்பட்ட வாங்கி."
 
-#: plinth/modules/wireguard/views.py:242
+#: plinth/modules/wireguard/views.py:240
 msgid "Modify Client"
 msgstr "கிளையண்டை மாற்றவும்"
 
-#: plinth/modules/wireguard/views.py:275
+#: plinth/modules/wireguard/views.py:273
 msgid "Delete Allowed Client"
 msgstr "அனுமதிக்கப்பட்ட கிளையன்ட் நீக்கு"
 
-#: plinth/modules/wireguard/views.py:284
+#: plinth/modules/wireguard/views.py:282
 msgid "Client deleted."
 msgstr "கிளையன்ட் நீக்கப்பட்டது."
 
-#: plinth/modules/wireguard/views.py:286
+#: plinth/modules/wireguard/views.py:284
 msgid "Client not found"
 msgstr "வாடிக்கையாளர் கண்டுபிடிக்கப்படவில்லை"
 
-#: plinth/modules/wireguard/views.py:296
+#: plinth/modules/wireguard/views.py:294
 msgid "Added new server."
 msgstr "புதிய சேவையகத்தைச் சேர்த்தது."
 
-#: plinth/modules/wireguard/views.py:317
+#: plinth/modules/wireguard/views.py:315
 msgid "Connection to Server"
 msgstr "சேவையகத்திற்கான இணைப்பு"
 
-#: plinth/modules/wireguard/views.py:335
+#: plinth/modules/wireguard/views.py:333
 msgid "Updated server."
 msgstr "புதுப்பிக்கப்பட்ட சேவையகம்."
 
-#: plinth/modules/wireguard/views.py:340
+#: plinth/modules/wireguard/views.py:338
 msgid "Modify Connection to Server"
 msgstr "சேவையகத்திற்கான இணைப்பை மாற்றவும்"
 
-#: plinth/modules/wireguard/views.py:378
+#: plinth/modules/wireguard/views.py:376
 msgid "Delete Connection to Server"
 msgstr "சேவையகத்திற்கான இணைப்பை நீக்கு"
 
-#: plinth/modules/wireguard/views.py:398
+#: plinth/modules/wireguard/views.py:396
 msgid "Server deleted."
 msgstr "சேவையகம் நீக்கப்பட்டது."
 
-#: plinth/modules/wireguard/views.py:410
+#: plinth/modules/wireguard/views.py:408
 msgid "WireGuard server started successfully."
 msgstr "WireGuard சேவையகம் வெற்றிகரமாக தொடங்கப்பட்டது."
 
-#: plinth/modules/wireguard/views.py:414
+#: plinth/modules/wireguard/views.py:412
 msgid "Failed to start WireGuard server: {}"
 msgstr "WireGuard சேவையகத்தைத் தொடங்குவதில் தோல்வி: {}"
 
@@ -10824,6 +10847,18 @@ msgstr "மொழியைத் தேர்ந்தெடுக்கவு�
 msgid "Log in"
 msgstr "புகுபதிகை"
 
+#: plinth/templates/cards.html:28
+#, fuzzy
+#| msgid "Add a new peer"
+msgid "Add new app"
+msgstr "புதிய சகாக்களைச் சேர்க்கவும்"
+
+#: plinth/templates/cards.html:48
+#, fuzzy
+#| msgid "Backup app before uninstall"
+msgid "Available for install"
+msgstr "நிறுவல் நீக்குவதற்கு முன் காப்புப்பிரதி பயன்பாடு"
+
 #: plinth/templates/clients-button.html:16
 msgid "Launch web client"
 msgstr "வலை கிளையண்டைத் தொடங்கவும்"
@@ -11086,6 +11121,18 @@ msgstr "{app_id} ஐ நிறுவல் நீக்குவதற்கு 
 #: plinth/web_framework.py:126
 msgid "Gujarati"
 msgstr "குசராத்தி"
+
+#, python-brace-format
+#~ msgid ""
+#~ "Luanti, formally known as Minetest, is a multiplayer infinite-world block "
+#~ "sandbox. This module enables the Luanti server to be run on this "
+#~ "{box_name}, on the default port (30000). To connect to the server, a <a "
+#~ "href=\"https://www.luanti.org/downloads/\">Luanti client</a> is needed."
+#~ msgstr ""
+#~ "லுவான்டி, முறையாக Minetest என அறியப்படுகிறது, இது ஒரு மல்டிபிளேயர் எல்லையற்ற "
+#~ "உலகத் தொகுதி சாண்ட்பாக்ச் ஆகும். இந்த தொகுதியானது, இயல்புநிலை போர்ட்டில் (30000) இந்த "
+#~ "{box_name} இல் Luanti சேவையகத்தை இயக்க உதவுகிறது. சேவையகத்துடன் இணைக்க, <a "
+#~ "href=\"https://www.luanti.org/downloads/\">Luanti கிளையன்ட்</a> தேவை."
 
 #~ msgid "Debian:"
 #~ msgstr "டெபியன்:"

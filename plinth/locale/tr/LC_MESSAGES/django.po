@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-02 00:51+0000\n"
+"POT-Creation-Date: 2026-07-29 02:26+0000\n"
 "PO-Revision-Date: 2026-06-03 05:01+0000\n"
 "Last-Translator: Burak Yavuz <hitowerdigit@hotmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/freedombox/"
@@ -2929,7 +2929,6 @@ msgstr "Etkinleştirildi"
 #: plinth/modules/firewall/templates/firewall.html:43
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:71
 #: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:29
-#: plinth/templates/cards.html:38
 msgid "Disabled"
 msgstr "Etkisizleştirildi"
 
@@ -2974,11 +2973,15 @@ msgstr ""
 "<a href=\"/_cockpit/network/firewall\">Cockpit</a> uygulaması tarafından "
 "sağlanır."
 
-#: plinth/modules/first_boot/__init__.py:61
+#: plinth/modules/first_boot/__init__.py:47
+msgid "First Boot"
+msgstr ""
+
+#: plinth/modules/first_boot/__init__.py:68
 msgid "Setup complete! Next steps:"
 msgstr "Kurulum tamamlandı! Sonraki adımlar:"
 
-#: plinth/modules/first_boot/__init__.py:63
+#: plinth/modules/first_boot/__init__.py:70
 #, python-brace-format
 msgid ""
 "Initial setup has been completed. Perform the next steps to make your "
@@ -2987,19 +2990,23 @@ msgstr ""
 "İlk kurulum tamamlandı. {box_name} cihazınızı çalışır duruma getirmek için "
 "sonraki adımları uygulayın."
 
-#: plinth/modules/first_boot/__init__.py:66
+#: plinth/modules/first_boot/__init__.py:73
 msgid "Next steps"
 msgstr "Sonraki adımlar"
 
-#: plinth/modules/first_boot/__init__.py:73
+#: plinth/modules/first_boot/__init__.py:80
 msgid "See next steps"
 msgstr "Sonraki adımları görün"
 
 #: plinth/modules/first_boot/forms.py:14
-#, python-brace-format
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "Enter the secret generated during FreedomBox installation. This secret "
+#| "can also be obtained by running the command \"sudo cat /var/lib/plinth/"
+#| "firstboot-wizard-secret\" on your {box_name}"
 msgid ""
-"Enter the secret generated during FreedomBox installation. This secret can "
-"also be obtained by running the command \"sudo cat /var/lib/plinth/firstboot-"
+"Enter the secret generated during {box_name} installation. This secret can "
+"be obtained by running the command \"sudo cat /var/lib/plinth/firstboot-"
 "wizard-secret\" on your {box_name}"
 msgstr ""
 "FreedomBox kurulumu sırasında oluşturulan gizli anahtarı girin. Bu gizli "
@@ -4678,21 +4685,36 @@ msgstr "Site adı güncellendi"
 msgid "Default language changed"
 msgstr "Varsayılan dil değiştirildi"
 
-#: plinth/modules/minetest/__init__.py:33
+#: plinth/modules/minetest/__init__.py:32
+msgid ""
+"Luanti, formerly Minetest, is a multiplayer infinite-world block sandbox "
+"game. It allows users to build and explore 3D worlds, interact with others, "
+"and engage in various activities such as crafting, mining, and combat."
+msgstr ""
+
+#: plinth/modules/minetest/__init__.py:36
+msgid "Luanti offers several educational benefits, including:"
+msgstr ""
+
+#: plinth/modules/minetest/__init__.py:37
+msgid ""
+"<ul><li>Developing spatial reasoning and problem-solving skills.</"
+"li><li>Encouraging creativity and self-expression through building and "
+"exploration.</li><li>Fostering social interaction and collaboration among "
+"players.</li></ul>"
+msgstr ""
+
+#: plinth/modules/minetest/__init__.py:43
 #, python-brace-format
 msgid ""
-"Luanti, formally known as Minetest, is a multiplayer infinite-world block "
-"sandbox. This module enables the Luanti server to be run on this {box_name}, "
-"on the default port (30000). To connect to the server, a <a href=\"https://"
-"www.luanti.org/downloads/\">Luanti client</a> is needed."
+"To getting started, install the <a href=\"https://www.luanti.org/downloads/"
+"\">Luanti client</a> on users' devices and connect to the Luanti server "
+"using the {box_name} IP and default port (30000). For more information, "
+"please refer to the official <a href=\"https://docs.luanti.org/\">Minetest "
+"documentation</a> or online resources."
 msgstr ""
-"Resmi olarak Minetest olarak bilinen Luanti, çok oyunculu sonsuz dünya "
-"bloklu bir korumalı alandır. Bu modül Luanti sunucusunun bu {box_name} "
-"üzerinde, varsayılan bağlantı noktasında (30000) çalıştırılmasını sağlar. "
-"Sunucuya bağlanmak için bir <a href=\"https://www.luanti.org/downloads/"
-"\">Luanti istemcisi</a> gereklidir."
 
-#: plinth/modules/minetest/__init__.py:57 plinth/modules/minetest/manifest.py:9
+#: plinth/modules/minetest/__init__.py:68 plinth/modules/minetest/manifest.py:9
 msgid "Luanti"
 msgstr "Luanti"
 
@@ -8349,7 +8371,7 @@ msgstr "Web posta"
 msgid "Address book"
 msgstr "Adres defteri"
 
-#: plinth/modules/ssh/__init__.py:22
+#: plinth/modules/ssh/__init__.py:25
 msgid ""
 "A Secure Shell server uses the secure shell protocol to accept connections "
 "from remote computers. An authorized remote computer can perform "
@@ -8361,11 +8383,11 @@ msgstr ""
 "bağlantıları kullanarak yönetim görevlerini gerçekleştirebilir, dosyaları "
 "kopyalayabilir veya diğer hizmetleri çalıştırabilir."
 
-#: plinth/modules/ssh/__init__.py:42
+#: plinth/modules/ssh/__init__.py:45
 msgid "Secure Shell Server"
 msgstr "Güvenli Kabuk Sunucusu"
 
-#: plinth/modules/ssh/__init__.py:75
+#: plinth/modules/ssh/__init__.py:78
 msgid "Remotely login using Secure Shell (SSH)"
 msgstr "Güvenli Kabuk (SSH) kullanarak uzaktan oturum açın"
 
@@ -10214,7 +10236,7 @@ msgid "Add a new peer"
 msgstr "Yeni bir kişi ekle"
 
 #: plinth/modules/wireguard/templates/wireguard.html:98
-#: plinth/modules/wireguard/views.py:62 plinth/modules/wireguard/views.py:149
+#: plinth/modules/wireguard/views.py:60 plinth/modules/wireguard/views.py:147
 msgid "Add Allowed Client"
 msgstr "İzin Verilen İstemci Ekle"
 
@@ -10251,7 +10273,7 @@ msgid "Add a new server"
 msgstr "Yeni bir sunucu ekleyin"
 
 #: plinth/modules/wireguard/templates/wireguard.html:162
-#: plinth/modules/wireguard/views.py:301
+#: plinth/modules/wireguard/views.py:299
 msgid "Add Connection to Server"
 msgstr "Sunucuya Bağlantı Ekle"
 
@@ -10405,75 +10427,75 @@ msgstr "Bu makinenin IP adresi:"
 msgid "All outgoing traffic is sent using this connection:"
 msgstr "Tüm giden trafik bu bağlantı kullanılarak gönderilir:"
 
-#: plinth/modules/wireguard/views.py:57 plinth/modules/wireguard/views.py:144
+#: plinth/modules/wireguard/views.py:55 plinth/modules/wireguard/views.py:142
 msgid "Added new client."
 msgstr "Yeni istemci eklendi."
 
-#: plinth/modules/wireguard/views.py:82 plinth/modules/wireguard/views.py:261
+#: plinth/modules/wireguard/views.py:80 plinth/modules/wireguard/views.py:259
 msgid "Client with public key already exists"
 msgstr "Ortak anahtara sahip istemci zaten var"
 
-#: plinth/modules/wireguard/views.py:199
+#: plinth/modules/wireguard/views.py:197
 msgid "Session expired. Please try again."
 msgstr "Oturumun süresi doldu. Lütfen tekrar deneyin."
 
-#: plinth/modules/wireguard/views.py:202
+#: plinth/modules/wireguard/views.py:200
 msgid "Client already exists"
 msgstr "İstemci zaten var"
 
-#: plinth/modules/wireguard/views.py:215
+#: plinth/modules/wireguard/views.py:213
 msgid "Allowed Client"
 msgstr "İzin Verilen İstemci"
 
-#: plinth/modules/wireguard/views.py:237
+#: plinth/modules/wireguard/views.py:235
 msgid "Updated client."
 msgstr "İstemci güncellendi."
 
-#: plinth/modules/wireguard/views.py:242
+#: plinth/modules/wireguard/views.py:240
 msgid "Modify Client"
 msgstr "İstemciyi Değiştir"
 
-#: plinth/modules/wireguard/views.py:275
+#: plinth/modules/wireguard/views.py:273
 msgid "Delete Allowed Client"
 msgstr "İzin Verilen İstemciyi Sil"
 
-#: plinth/modules/wireguard/views.py:284
+#: plinth/modules/wireguard/views.py:282
 msgid "Client deleted."
 msgstr "İstemci silindi."
 
-#: plinth/modules/wireguard/views.py:286
+#: plinth/modules/wireguard/views.py:284
 msgid "Client not found"
 msgstr "İstemci bulunamadı"
 
-#: plinth/modules/wireguard/views.py:296
+#: plinth/modules/wireguard/views.py:294
 msgid "Added new server."
 msgstr "Yeni sunucu eklendi."
 
-#: plinth/modules/wireguard/views.py:317
+#: plinth/modules/wireguard/views.py:315
 msgid "Connection to Server"
 msgstr "Sunucuya Bağlantı"
 
-#: plinth/modules/wireguard/views.py:335
+#: plinth/modules/wireguard/views.py:333
 msgid "Updated server."
 msgstr "Sunucu güncellendi."
 
-#: plinth/modules/wireguard/views.py:340
+#: plinth/modules/wireguard/views.py:338
 msgid "Modify Connection to Server"
 msgstr "Sunucuya Bağlantıyı Değiştir"
 
-#: plinth/modules/wireguard/views.py:378
+#: plinth/modules/wireguard/views.py:376
 msgid "Delete Connection to Server"
 msgstr "Sunucuya Bağlantıyı Sil"
 
-#: plinth/modules/wireguard/views.py:398
+#: plinth/modules/wireguard/views.py:396
 msgid "Server deleted."
 msgstr "Sunucu silindi."
 
-#: plinth/modules/wireguard/views.py:410
+#: plinth/modules/wireguard/views.py:408
 msgid "WireGuard server started successfully."
 msgstr "WireGuard sunucusu başarılı olarak başlatıldı."
 
-#: plinth/modules/wireguard/views.py:414
+#: plinth/modules/wireguard/views.py:412
 msgid "Failed to start WireGuard server: {}"
 msgstr "WireGuard sunucusunu başlatma başarısız oldu: {}"
 
@@ -10888,6 +10910,18 @@ msgstr "Dil seçin"
 msgid "Log in"
 msgstr "Oturum aç"
 
+#: plinth/templates/cards.html:28
+#, fuzzy
+#| msgid "Add a new peer"
+msgid "Add new app"
+msgstr "Yeni bir kişi ekle"
+
+#: plinth/templates/cards.html:48
+#, fuzzy
+#| msgid "Available Domains"
+msgid "Available for install"
+msgstr "Kullanılabilir Etki Alanları"
+
 #: plinth/templates/clients-button.html:16
 msgid "Launch web client"
 msgstr "Web istemcisini başlat"
@@ -11154,6 +11188,19 @@ msgstr "{app_id} kaldırılmadan önce"
 #: plinth/web_framework.py:126
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#, python-brace-format
+#~ msgid ""
+#~ "Luanti, formally known as Minetest, is a multiplayer infinite-world block "
+#~ "sandbox. This module enables the Luanti server to be run on this "
+#~ "{box_name}, on the default port (30000). To connect to the server, a <a "
+#~ "href=\"https://www.luanti.org/downloads/\">Luanti client</a> is needed."
+#~ msgstr ""
+#~ "Resmi olarak Minetest olarak bilinen Luanti, çok oyunculu sonsuz dünya "
+#~ "bloklu bir korumalı alandır. Bu modül Luanti sunucusunun bu {box_name} "
+#~ "üzerinde, varsayılan bağlantı noktasında (30000) çalıştırılmasını sağlar. "
+#~ "Sunucuya bağlanmak için bir <a href=\"https://www.luanti.org/downloads/"
+#~ "\">Luanti istemcisi</a> gereklidir."
 
 #~ msgid "Enter a valid network prefix or net mask."
 #~ msgstr "Geçerli bir ağ öneki veya ağ maskesi girin."
@@ -12177,9 +12224,6 @@ msgstr "Gujarati"
 
 #~ msgid "Key File"
 #~ msgstr "Anahtar Dosyası"
-
-#~ msgid "Available Domains"
-#~ msgstr "Kullanılabilir Etki Alanları"
 
 #~ msgid "Added Domains"
 #~ msgstr "Eklenen Etki Alanları"
