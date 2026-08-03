@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-02 00:51+0000\n"
+"POT-Creation-Date: 2026-07-29 02:26+0000\n"
 "PO-Revision-Date: 2025-05-14 17:03+0000\n"
 "Last-Translator: Sripath Roy Koganti <sripathroy@swecha.net>\n"
 "Language-Team: Telugu <https://hosted.weblate.org/projects/freedombox/"
@@ -2914,7 +2914,6 @@ msgstr "ప్రారంభించబడింది"
 #: plinth/modules/firewall/templates/firewall.html:43
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:71
 #: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:29
-#: plinth/templates/cards.html:38
 msgid "Disabled"
 msgstr "చొరవలు లేకుండా"
 
@@ -2957,30 +2956,38 @@ msgstr ""
 "అనుకూల పోర్ట్‌లను తెరవడం వంటి అధునాతన ఫైర్‌వాల్ కార్యకలాపాలు <a href=\"/_cockpit/network/"
 "firewall\">కాక్‌పిట్</a> యాప్ ద్వారా అందించబడతాయి."
 
-#: plinth/modules/first_boot/__init__.py:61
+#: plinth/modules/first_boot/__init__.py:47
+msgid "First Boot"
+msgstr ""
+
+#: plinth/modules/first_boot/__init__.py:68
 msgid "Setup complete! Next steps:"
 msgstr "సెటప్ పూర్తయింది! తదుపరి దశలు:"
 
-#: plinth/modules/first_boot/__init__.py:63
+#: plinth/modules/first_boot/__init__.py:70
 #, python-brace-format
 msgid ""
 "Initial setup has been completed. Perform the next steps to make your "
 "{box_name} operational."
 msgstr "ప్రారంభ సెటప్ పూర్తయింది. మీ {box_name} పనిచేయడానికి తదుపరి దశలను అమలు చేయండి."
 
-#: plinth/modules/first_boot/__init__.py:66
+#: plinth/modules/first_boot/__init__.py:73
 msgid "Next steps"
 msgstr "తదుపరి దశలు"
 
-#: plinth/modules/first_boot/__init__.py:73
+#: plinth/modules/first_boot/__init__.py:80
 msgid "See next steps"
 msgstr "తదుపరి దశలను చూడండి"
 
 #: plinth/modules/first_boot/forms.py:14
-#, python-brace-format
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "Enter the secret generated during FreedomBox installation. This secret "
+#| "can also be obtained by running the command \"sudo cat /var/lib/plinth/"
+#| "firstboot-wizard-secret\" on your {box_name}"
 msgid ""
-"Enter the secret generated during FreedomBox installation. This secret can "
-"also be obtained by running the command \"sudo cat /var/lib/plinth/firstboot-"
+"Enter the secret generated during {box_name} installation. This secret can "
+"be obtained by running the command \"sudo cat /var/lib/plinth/firstboot-"
 "wizard-secret\" on your {box_name}"
 msgstr ""
 "FreedomBox ఇన్‌స్టాలేషన్ సమయంలో రూపొందించబడిన రహస్యాన్ని నమోదు చేయండి. మీ {box_name}లో \"sudo "
@@ -4583,24 +4590,36 @@ msgstr "సైట్ పేరు నవీకరించబడింది"
 msgid "Default language changed"
 msgstr "డిఫాల్ట్ భాష మార్చబడింది"
 
-#: plinth/modules/minetest/__init__.py:33
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Minetest is a multiplayer infinite-world block sandbox. This module "
-#| "enables the Minetest server to be run on this {box_name}, on the default "
-#| "port (30000). To connect to the server, a <a href=\"http://"
-#| "www.minetest.net/downloads/\">Minetest client</a> is needed."
+#: plinth/modules/minetest/__init__.py:32
 msgid ""
-"Luanti, formally known as Minetest, is a multiplayer infinite-world block "
-"sandbox. This module enables the Luanti server to be run on this {box_name}, "
-"on the default port (30000). To connect to the server, a <a href=\"https://"
-"www.luanti.org/downloads/\">Luanti client</a> is needed."
+"Luanti, formerly Minetest, is a multiplayer infinite-world block sandbox "
+"game. It allows users to build and explore 3D worlds, interact with others, "
+"and engage in various activities such as crafting, mining, and combat."
 msgstr ""
-"Minetest అనేది మల్టీప్లేయర్ అనంత-వరల్డ్ బ్లాక్ శాండ్‌బాక్స్. ఈ మాడ్యూల్ డిఫాల్ట్ పోర్ట్‌లో (30000) ఈ "
-"{box_name}లో Minetest సర్వర్‌ని అమలు చేయడానికి అనుమతిస్తుంది. సర్వర్‌కి కనెక్ట్ చేయడానికి, <a "
-"href=\"http://www.minetest.net/downloads/\">Minetest క్లయింట్</a> అవసరం."
 
-#: plinth/modules/minetest/__init__.py:57 plinth/modules/minetest/manifest.py:9
+#: plinth/modules/minetest/__init__.py:36
+msgid "Luanti offers several educational benefits, including:"
+msgstr ""
+
+#: plinth/modules/minetest/__init__.py:37
+msgid ""
+"<ul><li>Developing spatial reasoning and problem-solving skills.</"
+"li><li>Encouraging creativity and self-expression through building and "
+"exploration.</li><li>Fostering social interaction and collaboration among "
+"players.</li></ul>"
+msgstr ""
+
+#: plinth/modules/minetest/__init__.py:43
+#, python-brace-format
+msgid ""
+"To getting started, install the <a href=\"https://www.luanti.org/downloads/"
+"\">Luanti client</a> on users' devices and connect to the Luanti server "
+"using the {box_name} IP and default port (30000). For more information, "
+"please refer to the official <a href=\"https://docs.luanti.org/\">Minetest "
+"documentation</a> or online resources."
+msgstr ""
+
+#: plinth/modules/minetest/__init__.py:68 plinth/modules/minetest/manifest.py:9
 msgid "Luanti"
 msgstr ""
 
@@ -8134,7 +8153,7 @@ msgstr "వెబ్మెయిల్"
 msgid "Address book"
 msgstr "చిరునామా పుస్తకం"
 
-#: plinth/modules/ssh/__init__.py:22
+#: plinth/modules/ssh/__init__.py:25
 msgid ""
 "A Secure Shell server uses the secure shell protocol to accept connections "
 "from remote computers. An authorized remote computer can perform "
@@ -8145,11 +8164,11 @@ msgstr ""
 "ఉపయోగిస్తుంది. అధీకృత రిమోట్ కంప్యూటర్ అటువంటి కనెక్షన్‌లను ఉపయోగించి అడ్మినిస్ట్రేషన్ పనులను చేయగలదు, "
 "ఫైల్‌లను కాపీ చేయగలదు లేదా ఇతర సేవలను అమలు చేయగలదు."
 
-#: plinth/modules/ssh/__init__.py:42
+#: plinth/modules/ssh/__init__.py:45
 msgid "Secure Shell Server"
 msgstr "సురక్షిత షెల్ సర్వర్"
 
-#: plinth/modules/ssh/__init__.py:75
+#: plinth/modules/ssh/__init__.py:78
 msgid "Remotely login using Secure Shell (SSH)"
 msgstr "సెక్యూర్ షెల్ (SSH) ఉపయోగించి రిమోట్‌గా లాగిన్ అవ్వండి"
 
@@ -9957,7 +9976,7 @@ msgid "Add a new peer"
 msgstr "కొత్త పరిచయకర్తని జోడించండి"
 
 #: plinth/modules/wireguard/templates/wireguard.html:98
-#: plinth/modules/wireguard/views.py:62 plinth/modules/wireguard/views.py:149
+#: plinth/modules/wireguard/views.py:60 plinth/modules/wireguard/views.py:147
 msgid "Add Allowed Client"
 msgstr "అనుమతించబడిన క్లయింట్‌ను జోడించండి"
 
@@ -9998,7 +10017,7 @@ msgid "Add a new server"
 msgstr "కొత్త సర్వర్ జోడించండి"
 
 #: plinth/modules/wireguard/templates/wireguard.html:162
-#: plinth/modules/wireguard/views.py:301
+#: plinth/modules/wireguard/views.py:299
 msgid "Add Connection to Server"
 msgstr "అనుసంధానాన్ని జతచేయండి"
 
@@ -10159,79 +10178,79 @@ msgstr "ఈ యంత్రం యొక్క IP చిరునామా:"
 msgid "All outgoing traffic is sent using this connection:"
 msgstr ""
 
-#: plinth/modules/wireguard/views.py:57 plinth/modules/wireguard/views.py:144
+#: plinth/modules/wireguard/views.py:55 plinth/modules/wireguard/views.py:142
 msgid "Added new client."
 msgstr "కొత్త క్లయింట్ జోడించబడింది."
 
-#: plinth/modules/wireguard/views.py:82 plinth/modules/wireguard/views.py:261
+#: plinth/modules/wireguard/views.py:80 plinth/modules/wireguard/views.py:259
 msgid "Client with public key already exists"
 msgstr "పబ్లిక్ కీతో క్లయింట్ ఇప్పటికే ఉంది"
 
-#: plinth/modules/wireguard/views.py:199
+#: plinth/modules/wireguard/views.py:197
 msgid "Session expired. Please try again."
 msgstr ""
 
-#: plinth/modules/wireguard/views.py:202
+#: plinth/modules/wireguard/views.py:200
 #, fuzzy
 #| msgid "Domain already exists."
 msgid "Client already exists"
 msgstr "డొమైన్ ఇప్పటికే ఉన్నది."
 
-#: plinth/modules/wireguard/views.py:215
+#: plinth/modules/wireguard/views.py:213
 msgid "Allowed Client"
 msgstr "అనుమతించబడిన క్లయింట్"
 
-#: plinth/modules/wireguard/views.py:237
+#: plinth/modules/wireguard/views.py:235
 msgid "Updated client."
 msgstr "నవీకరించబడిన క్లయింట్."
 
-#: plinth/modules/wireguard/views.py:242
+#: plinth/modules/wireguard/views.py:240
 msgid "Modify Client"
 msgstr "క్లయింట్‌ని సవరించండి"
 
-#: plinth/modules/wireguard/views.py:275
+#: plinth/modules/wireguard/views.py:273
 msgid "Delete Allowed Client"
 msgstr "అనుమతించబడిన క్లయింట్‌ను తొలగించండి"
 
-#: plinth/modules/wireguard/views.py:284
+#: plinth/modules/wireguard/views.py:282
 msgid "Client deleted."
 msgstr "క్లయింట్ తొలగించబడింది."
 
-#: plinth/modules/wireguard/views.py:286
+#: plinth/modules/wireguard/views.py:284
 msgid "Client not found"
 msgstr "క్లయింట్ దొరకలేదు"
 
-#: plinth/modules/wireguard/views.py:296
+#: plinth/modules/wireguard/views.py:294
 msgid "Added new server."
 msgstr "కొత్త సర్వర్ జోడించబడింది."
 
-#: plinth/modules/wireguard/views.py:317
+#: plinth/modules/wireguard/views.py:315
 msgid "Connection to Server"
 msgstr "సర్వర్‌కి కనెక్షన్"
 
-#: plinth/modules/wireguard/views.py:335
+#: plinth/modules/wireguard/views.py:333
 msgid "Updated server."
 msgstr "నవీకరించబడిన సర్వర్."
 
-#: plinth/modules/wireguard/views.py:340
+#: plinth/modules/wireguard/views.py:338
 msgid "Modify Connection to Server"
 msgstr "సర్వర్‌కి కనెక్షన్‌ని సవరించండి"
 
-#: plinth/modules/wireguard/views.py:378
+#: plinth/modules/wireguard/views.py:376
 msgid "Delete Connection to Server"
 msgstr "సర్వర్‌కు కనెక్షన్‌ని తొలగించండి"
 
-#: plinth/modules/wireguard/views.py:398
+#: plinth/modules/wireguard/views.py:396
 msgid "Server deleted."
 msgstr "సర్వర్ తొలగించబడింది."
 
-#: plinth/modules/wireguard/views.py:410
+#: plinth/modules/wireguard/views.py:408
 #, fuzzy
 #| msgid "Password changed successfully."
 msgid "WireGuard server started successfully."
 msgstr "పాస్‌వర్డ్ విజయవంతంగా మార్చబడినది."
 
-#: plinth/modules/wireguard/views.py:414
+#: plinth/modules/wireguard/views.py:412
 msgid "Failed to start WireGuard server: {}"
 msgstr ""
 
@@ -10647,6 +10666,18 @@ msgstr "బాషను ఎంచుకోండి"
 msgid "Log in"
 msgstr "లోనికి ప్రవేశించండి"
 
+#: plinth/templates/cards.html:28
+#, fuzzy
+#| msgid "Add a new peer"
+msgid "Add new app"
+msgstr "కొత్త పరిచయకర్తని జోడించండి"
+
+#: plinth/templates/cards.html:48
+#, fuzzy
+#| msgid "Available Domains"
+msgid "Available for install"
+msgstr "అందుబాటులో ఉన్న డొమైన్లు"
+
 #: plinth/templates/clients-button.html:16
 msgid "Launch web client"
 msgstr "వెబ్ క్లయింట్ ని ప్రారంభించండి"
@@ -10913,6 +10944,22 @@ msgstr "{app_id} ని అన్ఇన్‌స్టాల్ చేయడా�
 #: plinth/web_framework.py:126
 msgid "Gujarati"
 msgstr "గుజరాతీ"
+
+#, fuzzy, python-brace-format
+#~| msgid ""
+#~| "Minetest is a multiplayer infinite-world block sandbox. This module "
+#~| "enables the Minetest server to be run on this {box_name}, on the default "
+#~| "port (30000). To connect to the server, a <a href=\"http://"
+#~| "www.minetest.net/downloads/\">Minetest client</a> is needed."
+#~ msgid ""
+#~ "Luanti, formally known as Minetest, is a multiplayer infinite-world block "
+#~ "sandbox. This module enables the Luanti server to be run on this "
+#~ "{box_name}, on the default port (30000). To connect to the server, a <a "
+#~ "href=\"https://www.luanti.org/downloads/\">Luanti client</a> is needed."
+#~ msgstr ""
+#~ "Minetest అనేది మల్టీప్లేయర్ అనంత-వరల్డ్ బ్లాక్ శాండ్‌బాక్స్. ఈ మాడ్యూల్ డిఫాల్ట్ పోర్ట్‌లో (30000) ఈ "
+#~ "{box_name}లో Minetest సర్వర్‌ని అమలు చేయడానికి అనుమతిస్తుంది. సర్వర్‌కి కనెక్ట్ చేయడానికి, <a "
+#~ "href=\"http://www.minetest.net/downloads/\">Minetest క్లయింట్</a> అవసరం."
 
 #~ msgid "Debian:"
 #~ msgstr "డెబియన్:"
@@ -11855,9 +11902,6 @@ msgstr "గుజరాతీ"
 
 #~ msgid "Key File"
 #~ msgstr "కీ దస్త్రం"
-
-#~ msgid "Available Domains"
-#~ msgstr "అందుబాటులో ఉన్న డొమైన్లు"
 
 #~ msgid "Added Domains"
 #~ msgstr "జతచేసిన డొమైన్లు"

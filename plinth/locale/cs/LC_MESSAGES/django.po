@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-02 00:51+0000\n"
+"POT-Creation-Date: 2026-07-29 02:26+0000\n"
 "PO-Revision-Date: 2026-06-04 18:01+0000\n"
 "Last-Translator: Jiří Podhorecký <j.podhorecky@volny.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/"
@@ -2924,7 +2924,6 @@ msgstr "Zapnuto"
 #: plinth/modules/firewall/templates/firewall.html:43
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:71
 #: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:29
-#: plinth/templates/cards.html:38
 msgid "Disabled"
 msgstr "Vypnuto"
 
@@ -2968,11 +2967,15 @@ msgstr ""
 "Pokročilé operace brány firewall, jako je otevírání vlastních portů, "
 "zajišťuje aplikace <a href=\"/_cockpit/network/firewall\">Cockpit</a>."
 
-#: plinth/modules/first_boot/__init__.py:61
+#: plinth/modules/first_boot/__init__.py:47
+msgid "First Boot"
+msgstr ""
+
+#: plinth/modules/first_boot/__init__.py:68
 msgid "Setup complete! Next steps:"
 msgstr "Nastavení dokončeno! Další kroky:"
 
-#: plinth/modules/first_boot/__init__.py:63
+#: plinth/modules/first_boot/__init__.py:70
 #, python-brace-format
 msgid ""
 "Initial setup has been completed. Perform the next steps to make your "
@@ -2981,19 +2984,23 @@ msgstr ""
 "Počáteční nastavení bylo dokončeno. Proveďte další kroky pro zprovoznění "
 "vaší {box_name}."
 
-#: plinth/modules/first_boot/__init__.py:66
+#: plinth/modules/first_boot/__init__.py:73
 msgid "Next steps"
 msgstr "Další kroky"
 
-#: plinth/modules/first_boot/__init__.py:73
+#: plinth/modules/first_boot/__init__.py:80
 msgid "See next steps"
 msgstr "Viz další kroky"
 
 #: plinth/modules/first_boot/forms.py:14
-#, python-brace-format
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "Enter the secret generated during FreedomBox installation. This secret "
+#| "can also be obtained by running the command \"sudo cat /var/lib/plinth/"
+#| "firstboot-wizard-secret\" on your {box_name}"
 msgid ""
-"Enter the secret generated during FreedomBox installation. This secret can "
-"also be obtained by running the command \"sudo cat /var/lib/plinth/firstboot-"
+"Enter the secret generated during {box_name} installation. This secret can "
+"be obtained by running the command \"sudo cat /var/lib/plinth/firstboot-"
 "wizard-secret\" on your {box_name}"
 msgstr ""
 "Zadejte tajemství vygenerované při instalaci FreedomBoxu. Toto tajemství lze "
@@ -4657,20 +4664,36 @@ msgstr "Název webu aktualizován"
 msgid "Default language changed"
 msgstr "Výchozí jazyk se změnil"
 
-#: plinth/modules/minetest/__init__.py:33
+#: plinth/modules/minetest/__init__.py:32
+msgid ""
+"Luanti, formerly Minetest, is a multiplayer infinite-world block sandbox "
+"game. It allows users to build and explore 3D worlds, interact with others, "
+"and engage in various activities such as crafting, mining, and combat."
+msgstr ""
+
+#: plinth/modules/minetest/__init__.py:36
+msgid "Luanti offers several educational benefits, including:"
+msgstr ""
+
+#: plinth/modules/minetest/__init__.py:37
+msgid ""
+"<ul><li>Developing spatial reasoning and problem-solving skills.</"
+"li><li>Encouraging creativity and self-expression through building and "
+"exploration.</li><li>Fostering social interaction and collaboration among "
+"players.</li></ul>"
+msgstr ""
+
+#: plinth/modules/minetest/__init__.py:43
 #, python-brace-format
 msgid ""
-"Luanti, formally known as Minetest, is a multiplayer infinite-world block "
-"sandbox. This module enables the Luanti server to be run on this {box_name}, "
-"on the default port (30000). To connect to the server, a <a href=\"https://"
-"www.luanti.org/downloads/\">Luanti client</a> is needed."
+"To getting started, install the <a href=\"https://www.luanti.org/downloads/"
+"\">Luanti client</a> on users' devices and connect to the Luanti server "
+"using the {box_name} IP and default port (30000). For more information, "
+"please refer to the official <a href=\"https://docs.luanti.org/\">Minetest "
+"documentation</a> or online resources."
 msgstr ""
-"Luanti, dříve známý jako Minetest, je multiplayerový sandbox s nekonečným "
-"světem. Tento modul umožňuje spustit server Luanti na tomto {box_name} na "
-"výchozím portu (30000). Pro připojení k serveru je potřeba <a href=\"https://"
-"www.luanti.org/downloads/\">klient Luanti</a>."
 
-#: plinth/modules/minetest/__init__.py:57 plinth/modules/minetest/manifest.py:9
+#: plinth/modules/minetest/__init__.py:68 plinth/modules/minetest/manifest.py:9
 msgid "Luanti"
 msgstr "Luanti"
 
@@ -8311,7 +8334,7 @@ msgstr "Webmail"
 msgid "Address book"
 msgstr "Záznamník adres"
 
-#: plinth/modules/ssh/__init__.py:22
+#: plinth/modules/ssh/__init__.py:25
 msgid ""
 "A Secure Shell server uses the secure shell protocol to accept connections "
 "from remote computers. An authorized remote computer can perform "
@@ -8323,11 +8346,11 @@ msgstr ""
 "spojení provádět úkoly správy, kopírovat soubory nebo spouštět ostatní "
 "služby."
 
-#: plinth/modules/ssh/__init__.py:42
+#: plinth/modules/ssh/__init__.py:45
 msgid "Secure Shell Server"
 msgstr "Zabezpečený server Shell"
 
-#: plinth/modules/ssh/__init__.py:75
+#: plinth/modules/ssh/__init__.py:78
 msgid "Remotely login using Secure Shell (SSH)"
 msgstr "Vzdálené přihlášení pomocí Secure Shell (SSH)"
 
@@ -10052,8 +10075,8 @@ msgstr ""
 "IP adresa přidělená tomuto zařízení ve VPN po připojení ke koncovému bodu. "
 "Tuto hodnotu obvykle poskytuje provozovatel serveru. Příklad: 192.168.0.10 "
 "nebo 2a03:7c80:4b2c:91a2:5d41:ffee:9b82:7c17. Můžete také zadat síť. To "
-"umožní dosáhnout zařízení v síti. Příklady: 10.68.12.43/24 nebo 10.68.12.43/"
-"255.255.255.0."
+"umožní dosáhnout zařízení v síti. Příklady: 10.68.12.43/24 nebo "
+"10.68.12.43/255.255.255.0."
 
 #: plinth/modules/wireguard/forms.py:106
 msgid "Private key of this machine"
@@ -10159,7 +10182,7 @@ msgid "Add a new peer"
 msgstr "Přidání nového peeru"
 
 #: plinth/modules/wireguard/templates/wireguard.html:98
-#: plinth/modules/wireguard/views.py:62 plinth/modules/wireguard/views.py:149
+#: plinth/modules/wireguard/views.py:60 plinth/modules/wireguard/views.py:147
 msgid "Add Allowed Client"
 msgstr "Přidat povoleného klienta"
 
@@ -10196,7 +10219,7 @@ msgid "Add a new server"
 msgstr "Přidat nový server"
 
 #: plinth/modules/wireguard/templates/wireguard.html:162
-#: plinth/modules/wireguard/views.py:301
+#: plinth/modules/wireguard/views.py:299
 msgid "Add Connection to Server"
 msgstr "Přidat připojení k serveru"
 
@@ -10349,75 +10372,75 @@ msgstr "IP adresa tohoto počítače:"
 msgid "All outgoing traffic is sent using this connection:"
 msgstr "Veškerý odchozí provoz je odeslán pomocí tohoto spojení:"
 
-#: plinth/modules/wireguard/views.py:57 plinth/modules/wireguard/views.py:144
+#: plinth/modules/wireguard/views.py:55 plinth/modules/wireguard/views.py:142
 msgid "Added new client."
 msgstr "Přidán nový klient."
 
-#: plinth/modules/wireguard/views.py:82 plinth/modules/wireguard/views.py:261
+#: plinth/modules/wireguard/views.py:80 plinth/modules/wireguard/views.py:259
 msgid "Client with public key already exists"
 msgstr "Klient s veřejným klíčem již existuje"
 
-#: plinth/modules/wireguard/views.py:199
+#: plinth/modules/wireguard/views.py:197
 msgid "Session expired. Please try again."
 msgstr "Vypršela platnost relace. Zkuste to znovu."
 
-#: plinth/modules/wireguard/views.py:202
+#: plinth/modules/wireguard/views.py:200
 msgid "Client already exists"
 msgstr "Klient již existuje"
 
-#: plinth/modules/wireguard/views.py:215
+#: plinth/modules/wireguard/views.py:213
 msgid "Allowed Client"
 msgstr "Povolený klient"
 
-#: plinth/modules/wireguard/views.py:237
+#: plinth/modules/wireguard/views.py:235
 msgid "Updated client."
 msgstr "Aktualizovaný klient."
 
-#: plinth/modules/wireguard/views.py:242
+#: plinth/modules/wireguard/views.py:240
 msgid "Modify Client"
 msgstr "Upravit klienta"
 
-#: plinth/modules/wireguard/views.py:275
+#: plinth/modules/wireguard/views.py:273
 msgid "Delete Allowed Client"
 msgstr "Odstranit povoleného klienta"
 
-#: plinth/modules/wireguard/views.py:284
+#: plinth/modules/wireguard/views.py:282
 msgid "Client deleted."
 msgstr "Klient smazán."
 
-#: plinth/modules/wireguard/views.py:286
+#: plinth/modules/wireguard/views.py:284
 msgid "Client not found"
 msgstr "Klient nenalezen"
 
-#: plinth/modules/wireguard/views.py:296
+#: plinth/modules/wireguard/views.py:294
 msgid "Added new server."
 msgstr "Přidán nový server."
 
-#: plinth/modules/wireguard/views.py:317
+#: plinth/modules/wireguard/views.py:315
 msgid "Connection to Server"
 msgstr "Připojení k serveru"
 
-#: plinth/modules/wireguard/views.py:335
+#: plinth/modules/wireguard/views.py:333
 msgid "Updated server."
 msgstr "Aktualizovaný server."
 
-#: plinth/modules/wireguard/views.py:340
+#: plinth/modules/wireguard/views.py:338
 msgid "Modify Connection to Server"
 msgstr "Změnit připojení k serveru"
 
-#: plinth/modules/wireguard/views.py:378
+#: plinth/modules/wireguard/views.py:376
 msgid "Delete Connection to Server"
 msgstr "Odstranit připojení k serveru"
 
-#: plinth/modules/wireguard/views.py:398
+#: plinth/modules/wireguard/views.py:396
 msgid "Server deleted."
 msgstr "Server smazán."
 
-#: plinth/modules/wireguard/views.py:410
+#: plinth/modules/wireguard/views.py:408
 msgid "WireGuard server started successfully."
 msgstr "Server WireGuard se úspěšně spustil."
 
-#: plinth/modules/wireguard/views.py:414
+#: plinth/modules/wireguard/views.py:412
 msgid "Failed to start WireGuard server: {}"
 msgstr "Spuštění serveru WireGuard selhalo: {}"
 
@@ -10830,6 +10853,18 @@ msgstr "Vyberte jazyk"
 msgid "Log in"
 msgstr "Přihlásit"
 
+#: plinth/templates/cards.html:28
+#, fuzzy
+#| msgid "Add a new peer"
+msgid "Add new app"
+msgstr "Přidání nového peeru"
+
+#: plinth/templates/cards.html:48
+#, fuzzy
+#| msgid "Available Domains"
+msgid "Available for install"
+msgstr "Domény k dispozici"
+
 #: plinth/templates/clients-button.html:16
 msgid "Launch web client"
 msgstr "Spustit webového klienta"
@@ -11096,6 +11131,18 @@ msgstr "před odinstalací {app_id}"
 #: plinth/web_framework.py:126
 msgid "Gujarati"
 msgstr "gudžarátština"
+
+#, python-brace-format
+#~ msgid ""
+#~ "Luanti, formally known as Minetest, is a multiplayer infinite-world block "
+#~ "sandbox. This module enables the Luanti server to be run on this "
+#~ "{box_name}, on the default port (30000). To connect to the server, a <a "
+#~ "href=\"https://www.luanti.org/downloads/\">Luanti client</a> is needed."
+#~ msgstr ""
+#~ "Luanti, dříve známý jako Minetest, je multiplayerový sandbox s nekonečným "
+#~ "světem. Tento modul umožňuje spustit server Luanti na tomto {box_name} na "
+#~ "výchozím portu (30000). Pro připojení k serveru je potřeba <a "
+#~ "href=\"https://www.luanti.org/downloads/\">klient Luanti</a>."
 
 #~ msgid "Enter a valid network prefix or net mask."
 #~ msgstr "Zadejte platnou předponu sítě nebo net masku."
@@ -12099,9 +12146,6 @@ msgstr "gudžarátština"
 
 #~ msgid "Key File"
 #~ msgstr "Soubor s klíčem"
-
-#~ msgid "Available Domains"
-#~ msgstr "Domény k dispozici"
 
 #~ msgid "Added Domains"
 #~ msgstr "Přidané domény"

@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """FreedomBox app for OpenSSH server."""
 
+import logging
 import pathlib
 import re
 import subprocess
@@ -17,6 +18,8 @@ from plinth.modules.users.components import UsersAndGroups
 from plinth.package import Packages
 
 from . import manifest, privileged
+
+logger = logging.getLogger(__name__)
 
 _description = [
     _('A Secure Shell server uses the secure shell protocol to accept '
@@ -101,13 +104,21 @@ def get_host_keys():
                          r'.+ \((?P<algorithm>\w+)\)$')
 
     for public_key in etc_ssh.glob('*.pub'):
-        process = subprocess.run(['ssh-keygen', '-l', '-f',
-                                  str(public_key)], stdout=subprocess.PIPE,
-                                 check=True)
-        output = process.stdout.decode().strip()
-        if output:
-            match = re.match(pattern, output)
-            if match:
-                host_keys.append(match.groupdict())
+        try:
+            process = subprocess.run(
+                ['ssh-keygen', '-l', '-f',
+                 str(public_key)], stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE, check=True)
+            output = process.stdout.decode().strip()
+            if output:
+                match = re.match(pattern, output)
+                if match:
+                    host_keys.append(match.groupdict())
+        except subprocess.CalledProcessError as exception:
+            logger.warning(
+                'Unable to read SSH host public key file: %s, '
+                'returncode=%s, stdout=%s, stderr=%s', public_key,
+                exception.returncode, exception.stdout.decode(),
+                exception.stderr.decode())
 
     return host_keys

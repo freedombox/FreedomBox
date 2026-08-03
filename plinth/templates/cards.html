@@ -5,6 +5,7 @@
 
 {% load i18n %}
 {% load static %}
+{% load extras %}
 
 {% block container %}
   <div class="container">
@@ -18,6 +19,15 @@
   {% block tags %}
     {% include "tags.html" %}
   {% endblock %}
+
+  <div class="btn-toolbar container" role="toolbar">
+    <a class="btn btn-primary" href="#available-for-install-container"
+       data-bs-toggle="collapse" role="button" aria-expanded="false"
+       aria-controls="available-for-install-container">
+      {% icon 'plus' %}
+      {% trans "Add new app" %}
+    </a>
+  </div>
 
   <div class="container card-container">
     <div class="row">
@@ -34,8 +44,8 @@
   </div>
 
   {% if show_disabled %}
-    <div class="container card-container">
-      <div class="card-section-title">{% trans "Disabled" %}</div>
+    <div class="container card-container collapse" id="available-for-install-container">
+      <div class="card-section-title">{% trans "Available for install" %}</div>
       <div class="row">
         <div class="card-list card-list-disabled">
           {% for item in menu_items %}

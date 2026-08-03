@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-02 00:51+0000\n"
-"PO-Revision-Date: 2026-05-21 18:11+0000\n"
-"Last-Translator: Hosted Weblate user 151773 <paul.schell87@gmail.com>\n"
+"POT-Creation-Date: 2026-07-29 02:26+0000\n"
+"PO-Revision-Date: 2026-06-28 16:01+0000\n"
+"Last-Translator: Dietmar <sagen@permondes.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/de/>\n"
 "Language: de\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2026.6.dev0\n"
+"X-Generator: Weblate 2026.7.dev0\n"
 
 #: plinth/config.py:103
 #, python-brace-format
@@ -2976,7 +2976,6 @@ msgstr "Aktiviert"
 #: plinth/modules/firewall/templates/firewall.html:43
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:71
 #: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:29
-#: plinth/templates/cards.html:38
 msgid "Disabled"
 msgstr "Deaktiviert"
 
@@ -3021,11 +3020,15 @@ msgstr ""
 "werden von der Anwendung <a href=\"/_cockpit/network/firewall\"> Cockpit</a> "
 "bereitgestellt."
 
-#: plinth/modules/first_boot/__init__.py:61
+#: plinth/modules/first_boot/__init__.py:47
+msgid "First Boot"
+msgstr ""
+
+#: plinth/modules/first_boot/__init__.py:68
 msgid "Setup complete! Next steps:"
 msgstr "Einrichtung abgeschlossen! Nächste Schritte:"
 
-#: plinth/modules/first_boot/__init__.py:63
+#: plinth/modules/first_boot/__init__.py:70
 #, python-brace-format
 msgid ""
 "Initial setup has been completed. Perform the next steps to make your "
@@ -3034,19 +3037,23 @@ msgstr ""
 "Die Ersteinrichtung ist abgeschlossen. Führen Sie die nächsten Schritte aus, "
 "um Ihre {box_name} betriebsbereit zu machen."
 
-#: plinth/modules/first_boot/__init__.py:66
+#: plinth/modules/first_boot/__init__.py:73
 msgid "Next steps"
 msgstr "Nächste Schritte"
 
-#: plinth/modules/first_boot/__init__.py:73
+#: plinth/modules/first_boot/__init__.py:80
 msgid "See next steps"
 msgstr "Siehe nächste Schritte"
 
 #: plinth/modules/first_boot/forms.py:14
-#, python-brace-format
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "Enter the secret generated during FreedomBox installation. This secret "
+#| "can also be obtained by running the command \"sudo cat /var/lib/plinth/"
+#| "firstboot-wizard-secret\" on your {box_name}"
 msgid ""
-"Enter the secret generated during FreedomBox installation. This secret can "
-"also be obtained by running the command \"sudo cat /var/lib/plinth/firstboot-"
+"Enter the secret generated during {box_name} installation. This secret can "
+"be obtained by running the command \"sudo cat /var/lib/plinth/firstboot-"
 "wizard-secret\" on your {box_name}"
 msgstr ""
 "Geben Sie den geheimen Schlüssel ein, der während der FreedomBox-"
@@ -4756,21 +4763,36 @@ msgstr "Website-Name aktualisiert"
 msgid "Default language changed"
 msgstr "Standard-Sprache geändert"
 
-#: plinth/modules/minetest/__init__.py:33
+#: plinth/modules/minetest/__init__.py:32
+msgid ""
+"Luanti, formerly Minetest, is a multiplayer infinite-world block sandbox "
+"game. It allows users to build and explore 3D worlds, interact with others, "
+"and engage in various activities such as crafting, mining, and combat."
+msgstr ""
+
+#: plinth/modules/minetest/__init__.py:36
+msgid "Luanti offers several educational benefits, including:"
+msgstr ""
+
+#: plinth/modules/minetest/__init__.py:37
+msgid ""
+"<ul><li>Developing spatial reasoning and problem-solving skills.</"
+"li><li>Encouraging creativity and self-expression through building and "
+"exploration.</li><li>Fostering social interaction and collaboration among "
+"players.</li></ul>"
+msgstr ""
+
+#: plinth/modules/minetest/__init__.py:43
 #, python-brace-format
 msgid ""
-"Luanti, formally known as Minetest, is a multiplayer infinite-world block "
-"sandbox. This module enables the Luanti server to be run on this {box_name}, "
-"on the default port (30000). To connect to the server, a <a href=\"https://"
-"www.luanti.org/downloads/\">Luanti client</a> is needed."
+"To getting started, install the <a href=\"https://www.luanti.org/downloads/"
+"\">Luanti client</a> on users' devices and connect to the Luanti server "
+"using the {box_name} IP and default port (30000). For more information, "
+"please refer to the official <a href=\"https://docs.luanti.org/\">Minetest "
+"documentation</a> or online resources."
 msgstr ""
-"Luanti, früher bekannt als Minetest, ist eine Multiplayer-Block-"
-"Sandkastenspiel mit unendlicher Welt. Dieses Modul ermöglicht es, den Luanti-"
-"Server auf diesem {box_name} über den Standardport (30000) auszuführen. Um "
-"eine Verbindung zum Server herzustellen, wird ein <a href=\"https://"
-"www.luanti.org/downloads/\">Luanti-Client</a> benötigt."
 
-#: plinth/modules/minetest/__init__.py:57 plinth/modules/minetest/manifest.py:9
+#: plinth/modules/minetest/__init__.py:68 plinth/modules/minetest/manifest.py:9
 msgid "Luanti"
 msgstr ""
 
@@ -8475,7 +8497,7 @@ msgstr "Webmail"
 msgid "Address book"
 msgstr "Adressbuch"
 
-#: plinth/modules/ssh/__init__.py:22
+#: plinth/modules/ssh/__init__.py:25
 msgid ""
 "A Secure Shell server uses the secure shell protocol to accept connections "
 "from remote computers. An authorized remote computer can perform "
@@ -8487,11 +8509,11 @@ msgstr ""
 "verifizierter, entfernter Computer Verwaltungsaufgaben ausführen, Dateien "
 "kopieren oder andere Anwendungen starten."
 
-#: plinth/modules/ssh/__init__.py:42
+#: plinth/modules/ssh/__init__.py:45
 msgid "Secure Shell Server"
 msgstr "Secure Shell Server"
 
-#: plinth/modules/ssh/__init__.py:75
+#: plinth/modules/ssh/__init__.py:78
 msgid "Remotely login using Secure Shell (SSH)"
 msgstr "Remote-Anmeldung mit Secure Shell (SSH)"
 
@@ -10213,10 +10235,8 @@ msgid "Invalid key."
 msgstr "Ungültiger Schlüssel."
 
 #: plinth/modules/wireguard/forms.py:63
-#, fuzzy
-#| msgid "Enter a valid IPv4 address."
 msgid "Not a valid IP address."
-msgstr "Eine gültige IPv4-Adresse eingeben."
+msgstr "Keine gültige IP-Adresse."
 
 #: plinth/modules/wireguard/forms.py:69
 #: plinth/modules/wireguard/templates/wireguard.html:29
@@ -10264,13 +10284,6 @@ msgid "Client IP address provided by server"
 msgstr "Vom Server bereitgestellte Client-IP-Adresse"
 
 #: plinth/modules/wireguard/forms.py:97
-#, fuzzy
-#| msgid ""
-#| "IP address assigned to this machine on the VPN after connecting to the "
-#| "endpoint. This value is usually provided by the server operator. Example: "
-#| "192.168.0.10. You can also specify the network. This will allow reaching "
-#| "machines in the network. Examples: 10.68.12.43/24 or "
-#| "10.68.12.43/255.255.255.0."
 msgid ""
 "IP address assigned to this machine on the VPN after connecting to the "
 "endpoint. This value is usually provided by the server operator. Example: "
@@ -10280,9 +10293,10 @@ msgid ""
 msgstr ""
 "IP-Adresse, die diesem Computer auf dem VPN zugewiesen ist, nachdem eine "
 "Verbindung mit dem Endpunkt hergestellt wurde. Dieser Wert wird in der Regel "
-"vom Serverbetreiber bereitgestellt. Beispiel: 192.168.0.10. Sie können auch "
-"das Netzwerk angeben. Dadurch können Sie auf Rechner im Netzwerk zugreifen. "
-"Beispiele: 10.68.12.43/24 oder 10.68.12.43/255.255.255.0."
+"vom Serverbetreiber bereitgestellt. Beispiel: 192.168.0.10 oder "
+"2a03:7c80:4b2c:91a2:5d41:ffee:9b82:7c17. Sie können auch das Netzwerk "
+"angeben. Dadurch können Sie auf Rechner im Netzwerk zugreifen. Beispiele: "
+"10.68.12.43/24 oder 10.68.12.43/255.255.255.0."
 
 #: plinth/modules/wireguard/forms.py:106
 msgid "Private key of this machine"
@@ -10382,21 +10396,19 @@ msgstr ""
 "konfiguriert."
 
 #: plinth/modules/wireguard/templates/wireguard.html:88
-#, fuzzy
-#| msgid "Add a new peer"
 msgid "Auto add a new peer"
-msgstr "Hinzufügen eines neuen Peers"
+msgstr "Neuen Peer automatisch hinzufügen"
 
 #: plinth/modules/wireguard/templates/wireguard.html:92
 msgid "Add Client Automatically"
-msgstr ""
+msgstr "Client automatisch hinzufügen"
 
 #: plinth/modules/wireguard/templates/wireguard.html:94
 msgid "Add a new peer"
 msgstr "Hinzufügen eines neuen Peers"
 
 #: plinth/modules/wireguard/templates/wireguard.html:98
-#: plinth/modules/wireguard/views.py:62 plinth/modules/wireguard/views.py:149
+#: plinth/modules/wireguard/views.py:60 plinth/modules/wireguard/views.py:147
 msgid "Add Allowed Client"
 msgstr "Zulässige Clients hinzufügen"
 
@@ -10433,7 +10445,7 @@ msgid "Add a new server"
 msgstr "Neuen Server hinzufügen"
 
 #: plinth/modules/wireguard/templates/wireguard.html:162
-#: plinth/modules/wireguard/views.py:301
+#: plinth/modules/wireguard/views.py:299
 msgid "Add Connection to Server"
 msgstr "Verbindung zum Server hinzufügen"
 
@@ -10449,57 +10461,52 @@ msgstr "Client hinzufügen"
 #, fuzzy
 #| msgid "Private key path"
 msgid "Private Key"
-msgstr "Pfad des privaten Schlüssels"
+msgstr "Private Key"
 
 #: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:29
 msgid "Click to reveal"
 msgstr ""
 
 #: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:36
-#, fuzzy
-#| msgid "Key Import Date"
 msgid "Important:"
-msgstr "Schlüssel-Importdatum"
+msgstr "Wichtig:"
 
 #: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:37
 msgid "Save the private key now. This page shows it only once!"
 msgstr ""
 
 #: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:41
-#, fuzzy
-#| msgid "configuration failed"
 msgid "Client configuration file"
-msgstr "Konfiguration gescheitert"
+msgstr "Konfigurationsdatei des Clients"
 
 #: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:43
 msgid ""
 "Download the configuration file (.conf) for manual import, or use the QR "
 "code to import directly from your WireGuard mobile app."
 msgstr ""
+"Laden Sie die Konfigurationsdatei (.conf) für den manuellen Import herunter "
+"oder nutzen Sie den QR-Code, um die Daten direkt über Ihre WireGuard-App auf "
+"dem Smartphone zu importieren."
 
 #: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:49
-#, fuzzy
-#| msgid "warning"
 msgid "Warning:"
-msgstr "Warnung"
+msgstr "Warnung:"
 
 #: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:50
 msgid ""
 "Treat this QR code like a password. Anyone who scans it can gain VPN access "
 "if the connection is enabled."
 msgstr ""
+"Behandeln Sie diesen QR-Code wie ein Passwort. Jeder, der ihn scannt, erhält "
+"VPN-Zugang, sofern die Verbindung aktiviert ist."
 
 #: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:60
-#, fuzzy
-#| msgid "Download my profile"
 msgid "Download config file"
-msgstr "Mein Profil herunterladen"
+msgstr "Konfigurationsdatei herunterladen"
 
 #: plinth/modules/wireguard/templates/wireguard_auto_add_client.html:65
-#, fuzzy
-#| msgid "Source Code"
 msgid "Show QR Code"
-msgstr "Quellcode"
+msgstr "QR Code anzeigen"
 
 #: plinth/modules/wireguard/templates/wireguard_delete_client.html:14
 msgid "Are you sure that you want to delete this client?"
@@ -10596,77 +10603,75 @@ msgid "All outgoing traffic is sent using this connection:"
 msgstr ""
 "Der gesamte ausgehende Datenverkehr wird über diese Verbindung gesendet:"
 
-#: plinth/modules/wireguard/views.py:57 plinth/modules/wireguard/views.py:144
+#: plinth/modules/wireguard/views.py:55 plinth/modules/wireguard/views.py:142
 msgid "Added new client."
 msgstr "Neuer Client wurde hinzugefügt."
 
-#: plinth/modules/wireguard/views.py:82 plinth/modules/wireguard/views.py:261
+#: plinth/modules/wireguard/views.py:80 plinth/modules/wireguard/views.py:259
 msgid "Client with public key already exists"
 msgstr "Client mit öffentlichem Schlüssel ist bereits vorhanden"
 
-#: plinth/modules/wireguard/views.py:199
+#: plinth/modules/wireguard/views.py:197
 msgid "Session expired. Please try again."
-msgstr ""
+msgstr "Sitzung abgelaufen. Bitte versuchen Sie es erneut."
 
-#: plinth/modules/wireguard/views.py:202
-#, fuzzy
-#| msgid "Domain already exists."
+#: plinth/modules/wireguard/views.py:200
 msgid "Client already exists"
-msgstr "Domain existiert bereits."
+msgstr "Client existiert bereits"
 
-#: plinth/modules/wireguard/views.py:215
+#: plinth/modules/wireguard/views.py:213
 msgid "Allowed Client"
 msgstr "Zulässiger Client"
 
-#: plinth/modules/wireguard/views.py:237
+#: plinth/modules/wireguard/views.py:235
 msgid "Updated client."
 msgstr "Aktualisierter Client."
 
-#: plinth/modules/wireguard/views.py:242
+#: plinth/modules/wireguard/views.py:240
 msgid "Modify Client"
 msgstr "Client bearbeiten"
 
-#: plinth/modules/wireguard/views.py:275
+#: plinth/modules/wireguard/views.py:273
 msgid "Delete Allowed Client"
 msgstr "Zulässigen Client löschen"
 
-#: plinth/modules/wireguard/views.py:284
+#: plinth/modules/wireguard/views.py:282
 msgid "Client deleted."
 msgstr "Client gelöscht."
 
-#: plinth/modules/wireguard/views.py:286
+#: plinth/modules/wireguard/views.py:284
 msgid "Client not found"
 msgstr "Client nicht gefunden"
 
-#: plinth/modules/wireguard/views.py:296
+#: plinth/modules/wireguard/views.py:294
 msgid "Added new server."
 msgstr "Neuer Server wurde hinzugefügt."
 
-#: plinth/modules/wireguard/views.py:317
+#: plinth/modules/wireguard/views.py:315
 msgid "Connection to Server"
 msgstr "Verbindung zum Server"
 
-#: plinth/modules/wireguard/views.py:335
+#: plinth/modules/wireguard/views.py:333
 msgid "Updated server."
 msgstr "Aktualisierter Server."
 
-#: plinth/modules/wireguard/views.py:340
+#: plinth/modules/wireguard/views.py:338
 msgid "Modify Connection to Server"
 msgstr "Ändern der Verbindung zum Server"
 
-#: plinth/modules/wireguard/views.py:378
+#: plinth/modules/wireguard/views.py:376
 msgid "Delete Connection to Server"
 msgstr "Verbindung zum Server löschen"
 
-#: plinth/modules/wireguard/views.py:398
+#: plinth/modules/wireguard/views.py:396
 msgid "Server deleted."
 msgstr "Server gelöscht."
 
-#: plinth/modules/wireguard/views.py:410
+#: plinth/modules/wireguard/views.py:408
 msgid "WireGuard server started successfully."
 msgstr "Der WireGuard-Server wurde erfolgreich gestartet."
 
-#: plinth/modules/wireguard/views.py:414
+#: plinth/modules/wireguard/views.py:412
 msgid "Failed to start WireGuard server: {}"
 msgstr "Starten des WireGuard-Servers fehlgeschlagen: {}"
 
@@ -11093,6 +11098,18 @@ msgstr "Sprache wählen"
 msgid "Log in"
 msgstr "Anmelden"
 
+#: plinth/templates/cards.html:28
+#, fuzzy
+#| msgid "Add a new peer"
+msgid "Add new app"
+msgstr "Hinzufügen eines neuen Peers"
+
+#: plinth/templates/cards.html:48
+#, fuzzy
+#| msgid "Available Domains"
+msgid "Available for install"
+msgstr "Verfügbare Domains"
+
 #: plinth/templates/clients-button.html:16
 msgid "Launch web client"
 msgstr "Webclient starten"
@@ -11360,6 +11377,19 @@ msgstr "vor der Deinstallation von {app_id}"
 #: plinth/web_framework.py:126
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#, python-brace-format
+#~ msgid ""
+#~ "Luanti, formally known as Minetest, is a multiplayer infinite-world block "
+#~ "sandbox. This module enables the Luanti server to be run on this "
+#~ "{box_name}, on the default port (30000). To connect to the server, a <a "
+#~ "href=\"https://www.luanti.org/downloads/\">Luanti client</a> is needed."
+#~ msgstr ""
+#~ "Luanti, früher bekannt als Minetest, ist eine Multiplayer-Block-"
+#~ "Sandkastenspiel mit unendlicher Welt. Dieses Modul ermöglicht es, den "
+#~ "Luanti-Server auf diesem {box_name} über den Standardport (30000) "
+#~ "auszuführen. Um eine Verbindung zum Server herzustellen, wird ein <a "
+#~ "href=\"https://www.luanti.org/downloads/\">Luanti-Client</a> benötigt."
 
 #~ msgid "Enter a valid network prefix or net mask."
 #~ msgstr ""
@@ -12383,9 +12413,6 @@ msgstr "Gujarati"
 
 #~ msgid "Key File"
 #~ msgstr "Schlüsseldatei"
-
-#~ msgid "Available Domains"
-#~ msgstr "Verfügbare Domains"
 
 #~ msgid "Added Domains"
 #~ msgstr "Domains hinzugefügt"
