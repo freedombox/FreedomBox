@@ -6,7 +6,7 @@ from django.utils.translation import gettext as _
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 
-from plinth.modules import first_boot
+from freedombox.modules import first_boot
 
 from .forms import FirstbootWizardSecretForm
 

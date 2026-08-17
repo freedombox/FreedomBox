@@ -5,7 +5,7 @@ Test network storage.
 
 import pytest
 
-from plinth.modules.backups import store
+from freedombox.modules.backups import store
 
 pytestmark = pytest.mark.django_db
 

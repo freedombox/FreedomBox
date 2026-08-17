@@ -12,11 +12,11 @@ TODO:
 
 import logging
 
-from plinth import action_utils
-from plinth import app as app_module
-from plinth import setup
-from plinth.modules.apache import privileged as apache_privileged
-from plinth.privileged import service as service_privileged
+from freedombox import action_utils
+from freedombox import app as app_module
+from freedombox import setup
+from freedombox.modules.apache import privileged as apache_privileged
+from freedombox.privileged import service as service_privileged
 
 from .components import BackupRestore
 

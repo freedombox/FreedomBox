@@ -2,7 +2,7 @@
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth.clients import store_url
+from freedombox.clients import store_url
 
 _element_android_package_id = 'im.vector.app'
 _element_desktop_download_url = 'https://element.io/get-started'

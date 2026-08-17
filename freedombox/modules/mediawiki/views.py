@@ -6,9 +6,9 @@ import logging
 from django.contrib import messages
 from django.utils.translation import gettext as _
 
-from plinth import app as app_module
-from plinth import views
-from plinth.modules import mediawiki
+from freedombox import app as app_module
+from freedombox import views
+from freedombox.modules import mediawiki
 
 from . import privileged
 from .forms import MediaWikiForm

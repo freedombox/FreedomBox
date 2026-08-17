@@ -8,7 +8,7 @@ from __future__ import unicode_literals
 
 from django.db import migrations
 
-from plinth.models import KVStore
+from freedombox.models import KVStore
 
 
 def merge_firstboot_finished_fields(apps, schema_editor):

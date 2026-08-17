@@ -5,7 +5,7 @@ Test module for custom Django template tags.
 
 from unittest.mock import patch
 
-from plinth.templatetags import extras
+from freedombox.templatetags import extras
 
 
 def _assert_active_url(menu, url):

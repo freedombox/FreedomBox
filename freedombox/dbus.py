@@ -6,7 +6,7 @@ Expose some API over D-Bus.
 import logging
 import threading
 
-from plinth.utils import import_from_gi
+from freedombox.utils import import_from_gi
 
 from . import setup
 
@@ -95,7 +95,7 @@ class DBusServer():
         self.package_handler = PackageHandler()
         self.package_handler.register(connection)
 
-        from plinth.modules.letsencrypt.dbus import LetsEncrypt
+        from freedombox.modules.letsencrypt.dbus import LetsEncrypt
         lets_encrypt = LetsEncrypt()
         lets_encrypt.register(connection)
 

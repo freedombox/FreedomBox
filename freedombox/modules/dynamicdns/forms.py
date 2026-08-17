@@ -9,9 +9,9 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext as _
 from django.utils.translation import gettext_lazy
 
-from plinth import cfg
-from plinth.modules.dynamicdns import get_config
-from plinth.utils import format_lazy
+from freedombox import cfg
+from freedombox.modules.dynamicdns import get_config
+from freedombox.utils import format_lazy
 
 
 class DomainForm(forms.Form):

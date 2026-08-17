@@ -14,11 +14,11 @@ import apt
 from django.utils.translation import gettext_noop
 
 import plinth
-from plinth import app as app_module
-from plinth.diagnostic_check import Result
-from plinth.errors import MissingPackageError
-from plinth.package import Packages
-from plinth.signals import post_setup
+from freedombox import app as app_module
+from freedombox.diagnostic_check import Result
+from freedombox.errors import MissingPackageError
+from freedombox.package import Packages
+from freedombox.signals import post_setup
 
 from . import operation as operation_module
 from . import package

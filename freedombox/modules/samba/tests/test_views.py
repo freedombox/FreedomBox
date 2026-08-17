@@ -11,8 +11,8 @@ import pytest
 from django import urls
 from django.contrib.messages.storage.fallback import FallbackStorage
 
-from plinth import module_loader
-from plinth.modules.samba import views
+from freedombox import module_loader
+from freedombox.modules.samba import views
 
 # For all tests, use plinth.urls instead of urls configured for testing
 pytestmark = pytest.mark.urls('plinth.urls')

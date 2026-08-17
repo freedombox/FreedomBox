@@ -6,10 +6,10 @@ import re
 import shutil
 import tempfile
 
-from plinth import action_utils, utils
-from plinth.actions import privileged
-from plinth.db import postgres
-from plinth.modules.email.privileged.domain import \
+from freedombox import action_utils, utils
+from freedombox.actions import privileged
+from freedombox.db import postgres
+from freedombox.modules.email.privileged.domain import \
     get_domains as get_email_domains
 
 DB_HOST = 'localhost'

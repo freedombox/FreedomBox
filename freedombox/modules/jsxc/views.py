@@ -7,8 +7,8 @@ from django.http import Http404
 from django.views.generic import TemplateView
 
 import plinth.app as app_module
-from plinth.middleware import CONTENT_SECURITY_POLICY
-from plinth.modules.names.components import DomainName
+from freedombox.middleware import CONTENT_SECURITY_POLICY
+from freedombox.modules.names.components import DomainName
 
 
 class JsxcView(TemplateView):

@@ -7,7 +7,7 @@ import threading
 from collections import OrderedDict
 from typing import Callable
 
-from plinth.utils import SafeFormatter
+from freedombox.utils import SafeFormatter
 
 from . import app as app_module
 
@@ -156,7 +156,7 @@ class Operation:
         if not self.show_notification:
             return
 
-        from plinth.notification import Notification
+        from freedombox.notification import Notification
         severity = 'info' if not self.exception else 'error'
         app = app_module.App.get(self.app_id)
         data = {

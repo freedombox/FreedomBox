@@ -6,10 +6,10 @@ Views for mumble app.
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
 
-from plinth import app as app_module
-from plinth.modules import mumble
-from plinth.modules.mumble.forms import MumbleForm
-from plinth.views import AppView
+from freedombox import app as app_module
+from freedombox.modules import mumble
+from freedombox.modules.mumble.forms import MumbleForm
+from freedombox.views import AppView
 
 from . import privileged
 

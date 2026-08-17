@@ -9,8 +9,8 @@ import pytest
 from django.http import HttpRequest
 from django.urls import reverse
 
-from plinth import menu as menu_module
-from plinth.menu import Menu
+from freedombox import menu as menu_module
+from freedombox.menu import Menu
 
 URL_TEMPLATE = '/test{}/{}/{}/{}/'
 

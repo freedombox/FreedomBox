@@ -3,7 +3,7 @@
 Test module for setup module.
 """
 
-from plinth.setup import store_error_message, retrieve_error_messages
+from freedombox.setup import store_error_message, retrieve_error_messages
 
 
 def test_store_retrieve_error_message():

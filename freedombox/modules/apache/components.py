@@ -6,10 +6,10 @@ import subprocess
 
 from django.utils.translation import gettext_noop
 
-from plinth import action_utils, app, kvstore
-from plinth.diagnostic_check import (DiagnosticCheck,
+from freedombox import action_utils, app, kvstore
+from freedombox.diagnostic_check import (DiagnosticCheck,
                                      DiagnosticCheckParameters, Result)
-from plinth.privileged import service as service_privileged
+from freedombox.privileged import service as service_privileged
 
 from . import privileged
 

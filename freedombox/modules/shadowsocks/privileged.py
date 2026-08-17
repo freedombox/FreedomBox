@@ -8,8 +8,8 @@ import random
 import string
 from shutil import move
 
-from plinth import action_utils
-from plinth.actions import privileged, secret_str
+from freedombox import action_utils
+from freedombox.actions import privileged, secret_str
 
 SHADOWSOCKS_CONFIG_SYMLINK = '/etc/shadowsocks-libev/freedombox.json'
 SHADOWSOCKS_CONFIG_ACTUAL = \
@@ -57,7 +57,7 @@ def setup():
     if not wrong_state_dir.is_symlink() and wrong_state_dir.is_dir():
         wrong_state_dir.rmdir()
 
-    from plinth.modules.shadowsocks import ShadowsocksApp
+    from freedombox.modules.shadowsocks import ShadowsocksApp
     if action_utils.service_is_enabled(ShadowsocksApp.DAEMON):
         action_utils.service_restart(ShadowsocksApp.DAEMON)
 

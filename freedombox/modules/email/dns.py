@@ -14,7 +14,7 @@ import ipaddress
 import typing
 from dataclasses import dataclass
 
-from plinth.modules.privacy import lookup_public_address
+from freedombox.modules.privacy import lookup_public_address
 
 from . import privileged
 

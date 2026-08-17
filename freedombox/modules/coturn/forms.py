@@ -7,8 +7,8 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
-from plinth.modules import coturn
-from plinth.modules.coturn.components import TurnConfiguration
+from freedombox.modules import coturn
+from freedombox.modules.coturn.components import TurnConfiguration
 
 
 def get_domain_choices():

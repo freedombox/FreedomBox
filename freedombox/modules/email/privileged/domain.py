@@ -10,10 +10,10 @@ See: http://www.postfix.org/postconf.5.html#myhostname
 import pathlib
 import re
 
-from plinth.actions import privileged
-from plinth.app import App
-from plinth.modules.email import postfix
-from plinth.modules.names.components import DomainName
+from freedombox.actions import privileged
+from freedombox.app import App
+from freedombox.modules.email import postfix
+from freedombox.modules.names.components import DomainName
 
 from . import dkim, tls
 

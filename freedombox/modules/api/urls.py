@@ -6,7 +6,7 @@ URLs for the plinth api for android app.
 from django.urls import re_path
 from stronghold.decorators import public
 
-from plinth.modules.api import views
+from freedombox.modules.api import views
 
 urlpatterns = [
     re_path(r'^api/(?P<version>[0-9]+)/shortcuts/?$', public(views.shortcuts)),

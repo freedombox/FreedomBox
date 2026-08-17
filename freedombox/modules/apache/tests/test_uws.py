@@ -3,9 +3,10 @@
 Test module for (U)ser (Web) (S)ites.
 """
 
-from plinth.modules.apache import (user_of_uws_directory, user_of_uws_url,
-                                   uws_directory_of_url, uws_directory_of_user,
-                                   uws_url_of_directory, uws_url_of_user)
+from freedombox.modules.apache import (user_of_uws_directory, user_of_uws_url,
+                                       uws_directory_of_url,
+                                       uws_directory_of_user,
+                                       uws_url_of_directory, uws_url_of_user)
 
 
 def test_uws_namings():

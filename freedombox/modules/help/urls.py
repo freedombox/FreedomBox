@@ -6,7 +6,7 @@ URLs for the Help module
 from django.urls import re_path
 from stronghold.decorators import public
 
-from plinth.utils import non_admin_view
+from freedombox.utils import non_admin_view
 
 from . import views
 

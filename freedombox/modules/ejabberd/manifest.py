@@ -2,8 +2,8 @@
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth.clients import store_url
-from plinth.modules.jsxc import manifest as jsxc_manifest
+from freedombox.clients import store_url
+from freedombox.modules.jsxc import manifest as jsxc_manifest
 
 _clients = [{
     'name':

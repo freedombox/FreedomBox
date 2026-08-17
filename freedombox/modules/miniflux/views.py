@@ -9,7 +9,7 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 from django.views.generic.edit import FormView
 
-from plinth import views
+from freedombox import views
 
 from . import privileged
 from .forms import UserCredentialsForm

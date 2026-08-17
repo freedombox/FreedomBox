@@ -11,7 +11,7 @@ from django.core.exceptions import ValidationError
 from django.core.validators import URLValidator
 from django.utils.translation import gettext_lazy as _
 
-from plinth.modules import gitweb
+from freedombox.modules import gitweb
 
 from . import privileged
 

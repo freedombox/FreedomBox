@@ -11,9 +11,9 @@ from django.utils.translation import gettext_lazy
 from django.views.decorators.http import require_POST
 from django.views.generic.edit import FormView
 
-from plinth import network
-from plinth.modules import names, networks
-from plinth.views import AppView
+from freedombox import network
+from freedombox.modules import names, networks
+from freedombox.views import AppView
 
 from .forms import (ConnectionTypeSelectForm, EthernetForm, GenericForm,
                     InternetConnectionTypeForm, NetworkTopologyForm, PPPoEForm,

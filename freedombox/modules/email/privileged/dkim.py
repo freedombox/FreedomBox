@@ -8,9 +8,9 @@ import pathlib
 import re
 import shutil
 
-from plinth import action_utils
-from plinth.actions import privileged
-from plinth.privileged import service as service_privileged
+from freedombox import action_utils
+from freedombox.actions import privileged
+from freedombox.privileged import service as service_privileged
 
 _keys_dir = pathlib.Path('/var/lib/rspamd/dkim/')
 

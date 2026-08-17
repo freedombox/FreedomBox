@@ -4,7 +4,7 @@
 import pathlib
 import shutil
 
-from plinth.actions import privileged
+from freedombox.actions import privileged
 
 
 @privileged

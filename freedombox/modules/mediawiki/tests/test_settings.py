@@ -8,8 +8,8 @@ from unittest.mock import patch
 
 import pytest
 
-from plinth.modules import mediawiki
-from plinth.modules.mediawiki import privileged
+from freedombox.modules import mediawiki
+from freedombox.modules.mediawiki import privileged
 
 pytestmark = pytest.mark.usefixtures('mock_privileged')
 current_directory = pathlib.Path(__file__).parent

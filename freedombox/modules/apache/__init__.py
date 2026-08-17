@@ -65,18 +65,18 @@ import os
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth import action_utils
-from plinth import app as app_module
-from plinth import cfg
-from plinth.config import DropinConfigs
-from plinth.daemon import Daemon
-from plinth.modules import names
-from plinth.modules.firewall.components import Firewall
-from plinth.modules.letsencrypt.components import LetsEncrypt
-from plinth.modules.oidc.components import OpenIDConnect
-from plinth.package import Packages
-from plinth.signals import domain_added, domain_removed
-from plinth.utils import format_lazy, is_valid_user_name
+from freedombox import action_utils
+from freedombox import app as app_module
+from freedombox import cfg
+from freedombox.config import DropinConfigs
+from freedombox.daemon import Daemon
+from freedombox.modules import names
+from freedombox.modules.firewall.components import Firewall
+from freedombox.modules.letsencrypt.components import LetsEncrypt
+from freedombox.modules.oidc.components import OpenIDConnect
+from freedombox.package import Packages
+from freedombox.signals import domain_added, domain_removed
+from freedombox.utils import format_lazy, is_valid_user_name
 
 from . import privileged
 

@@ -4,7 +4,7 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-from plinth.utils import format_lazy
+from freedombox.utils import format_lazy
 
 METHODS = [('chacha20-ietf-poly1305',
             format_lazy('chacha20-ietf-poly1305 ({})', _('Recommended'))),

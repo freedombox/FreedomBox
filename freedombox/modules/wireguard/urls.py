@@ -5,7 +5,7 @@ URLs for the wireguard module.
 
 from django.urls import re_path
 
-from plinth.modules.wireguard import views
+from freedombox.modules.wireguard import views
 
 urlpatterns = [
     re_path(r'^apps/wireguard/$', views.WireguardView.as_view(), name='index'),

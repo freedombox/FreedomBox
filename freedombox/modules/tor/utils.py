@@ -1,9 +1,9 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """Tor utility functions."""
 
-from plinth import app as app_module
-from plinth.daemon import app_is_running
-from plinth.modules.names.components import DomainName
+from freedombox import app as app_module
+from freedombox.daemon import app_is_running
+from freedombox.modules.names.components import DomainName
 
 from . import privileged
 

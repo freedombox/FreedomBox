@@ -6,9 +6,8 @@ Tests for wireguard module forms.
 import pytest
 from django.core.exceptions import ValidationError
 
-from plinth.modules.wireguard.forms import (validate_endpoint,
-                                            validate_ip_address_with_network,
-                                            validate_key)
+from freedombox.modules.wireguard.forms import (
+    validate_endpoint, validate_ip_address_with_network, validate_key)
 
 
 @pytest.mark.parametrize('key', [

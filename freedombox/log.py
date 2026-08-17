@@ -28,7 +28,7 @@ class LogEmitter:
     unit: str
 
     def get_logs(self: LogEmitterProtocol) -> dict[str, str]:
-        from plinth.privileged import service as service_privileged
+        from freedombox.privileged import service as service_privileged
         return service_privileged.get_logs(self.unit)
 
 

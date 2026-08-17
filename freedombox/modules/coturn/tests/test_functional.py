@@ -4,7 +4,7 @@ Functional, browser based tests for coturn app.
 """
 
 import pytest
-from plinth.tests.functional import BaseAppTests
+from freedombox.tests.functional import BaseAppTests
 
 pytestmark = [pytest.mark.apps, pytest.mark.coturn]
 

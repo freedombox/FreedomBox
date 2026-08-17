@@ -6,8 +6,8 @@ import re
 import stat
 import subprocess
 
-from plinth import action_utils, utils
-from plinth.actions import privileged
+from freedombox import action_utils, utils
+from freedombox.actions import privileged
 
 
 @privileged

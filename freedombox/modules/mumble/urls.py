@@ -5,7 +5,7 @@ URLs for the Mumble module
 
 from django.urls import re_path
 
-from plinth.modules.mumble.views import MumbleAppView
+from freedombox.modules.mumble.views import MumbleAppView
 
 urlpatterns = [
     re_path(r'^apps/mumble/$', MumbleAppView.as_view(), name='index'),

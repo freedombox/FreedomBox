@@ -4,8 +4,8 @@
 from collections import OrderedDict
 from unittest.mock import patch
 
-from plinth.app import App, Info
-from plinth.modules.diagnostics import get_results
+from freedombox.app import App, Info
+from freedombox.modules.diagnostics import get_results
 
 
 class AppTest(App):

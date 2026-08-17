@@ -5,7 +5,7 @@ Test module for module loading mechanism.
 
 from unittest.mock import mock_open, patch
 
-from plinth import module_loader
+from freedombox import module_loader
 
 
 @patch('pathlib.Path.open', mock_open(read_data='plinth.modules.apache\n'))

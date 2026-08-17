@@ -9,8 +9,8 @@ import os
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import pgettext_lazy
 
-from plinth import app as app_module
-from plinth import cfg, menu, web_server
+from freedombox import app as app_module
+from freedombox import cfg, menu, web_server
 
 logger = logging.getLogger(__name__)
 

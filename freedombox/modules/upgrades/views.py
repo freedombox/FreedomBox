@@ -12,10 +12,10 @@ from django.utils.translation import gettext as _
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 
-from plinth import __version__
-from plinth.modules import first_boot, upgrades
-from plinth.privileged import packages as packages_privileged
-from plinth.views import AppView, messages_error
+from freedombox import __version__
+from freedombox.modules import first_boot, upgrades
+from freedombox.privileged import packages as packages_privileged
+from freedombox.views import AppView, messages_error
 
 from . import distupgrade, privileged
 from .forms import BackportsFirstbootForm, ConfigureForm

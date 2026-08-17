@@ -2,7 +2,7 @@
 
 import subprocess
 
-from plinth.errors import PlinthError
+from freedombox.errors import PlinthError
 
 
 class BorgError(PlinthError):

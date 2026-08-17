@@ -10,10 +10,10 @@ import uuid
 
 import pytest
 
-from plinth.modules import backups
-from plinth.modules.backups import privileged
-from plinth.modules.backups.repository import BorgRepository, SshBorgRepository
-from plinth.tests import config as test_config
+from freedombox.modules import backups
+from freedombox.modules.backups import privileged
+from freedombox.modules.backups.repository import BorgRepository, SshBorgRepository
+from freedombox.tests import config as test_config
 
 pytestmark = pytest.mark.usefixtures('needs_root', 'needs_borg', 'load_cfg',
                                      'mock_privileged')

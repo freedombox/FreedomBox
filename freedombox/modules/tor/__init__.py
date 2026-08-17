@@ -7,24 +7,24 @@ import logging
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import gettext_noop
 
-from plinth import action_utils
-from plinth import app as app_module
-from plinth import cfg, kvstore, menu
-from plinth import setup as setup_module_  # Not setup_module, for pytest
-from plinth.daemon import (Daemon, app_is_running, diagnose_netcat,
-                           diagnose_port_listening)
-from plinth.diagnostic_check import DiagnosticCheck, Result
-from plinth.modules import torproxy
-from plinth.modules.apache.components import Webserver
-from plinth.modules.backups.components import BackupRestore
-from plinth.modules.firewall.components import Firewall
-from plinth.modules.names.components import DomainType
-from plinth.modules.torproxy.utils import is_apt_transport_tor_enabled
-from plinth.modules.users.components import UsersAndGroups
-from plinth.package import Packages
-from plinth.privileged import service as service_privileged
-from plinth.signals import domain_added, domain_removed
-from plinth.utils import format_lazy
+from freedombox import action_utils
+from freedombox import app as app_module
+from freedombox import cfg, kvstore, menu
+from freedombox import setup as setup_module_  # Not setup_module, for pytest
+from freedombox.daemon import (Daemon, app_is_running, diagnose_netcat,
+                               diagnose_port_listening)
+from freedombox.diagnostic_check import DiagnosticCheck, Result
+from freedombox.modules import torproxy
+from freedombox.modules.apache.components import Webserver
+from freedombox.modules.backups.components import BackupRestore
+from freedombox.modules.firewall.components import Firewall
+from freedombox.modules.names.components import DomainType
+from freedombox.modules.torproxy.utils import is_apt_transport_tor_enabled
+from freedombox.modules.users.components import UsersAndGroups
+from freedombox.package import Packages
+from freedombox.privileged import service as service_privileged
+from freedombox.signals import domain_added, domain_removed
+from freedombox.utils import format_lazy
 
 from . import manifest, privileged, utils
 

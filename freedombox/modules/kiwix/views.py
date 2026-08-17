@@ -14,12 +14,12 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 from django.views.generic.edit import FormView
 
-from plinth import app as app_module
-from plinth import views
-from plinth.errors import PlinthError
-from plinth.modules import storage
-from plinth.modules.kiwix import privileged
-from plinth.views import messages_error
+from freedombox import app as app_module
+from freedombox import views
+from freedombox.errors import PlinthError
+from freedombox.modules import storage
+from freedombox.modules.kiwix import privileged
+from freedombox.views import messages_error
 
 from . import forms
 

@@ -5,7 +5,7 @@ Functional, browser based tests for Shadowsocks Client app.
 
 import pytest
 
-from plinth.tests import functional
+from freedombox.tests import functional
 
 pytestmark = [pytest.mark.apps, pytest.mark.shadowsocks]
 

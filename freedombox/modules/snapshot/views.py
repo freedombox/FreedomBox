@@ -11,10 +11,10 @@ from django.urls import reverse, reverse_lazy
 from django.utils.translation import gettext as _
 from django.utils.translation import gettext_lazy
 
-from plinth import app as app_module
-from plinth.modules import snapshot as snapshot_module
-from plinth.modules import storage
-from plinth.views import AppView, messages_error
+from freedombox import app as app_module
+from freedombox.modules import snapshot as snapshot_module
+from freedombox.modules import storage
+from freedombox.views import AppView, messages_error
 
 from . import get_configuration, privileged
 from .forms import SnapshotForm

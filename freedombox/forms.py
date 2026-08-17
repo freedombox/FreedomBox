@@ -54,7 +54,7 @@ class DomainSelectionForm(forms.Form):
     def __init__(self, show_none=False, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        from plinth.modules.names.components import DomainName
+        from freedombox.modules.names.components import DomainName
         domains = list(DomainName.list_names())
 
         choices = list(zip(domains, domains))
@@ -70,7 +70,7 @@ class DomainSelectionForm(forms.Form):
 
 def _get_domain_choices():
     """Double domain entries for inclusion in the choice field."""
-    from plinth.modules.names import get_available_tls_domains
+    from freedombox.modules.names import get_available_tls_domains
     return ((domain, domain) for domain in get_available_tls_domains())
 
 

@@ -10,8 +10,8 @@ from django import urls
 from django.contrib.messages.storage.fallback import FallbackStorage
 from django.http.response import Http404
 
-from plinth import module_loader
-from plinth.modules.gitweb import views
+from freedombox import module_loader
+from freedombox.modules.gitweb import views
 
 # For all tests, use plinth.urls instead of urls configured for testing
 pytestmark = pytest.mark.urls('plinth.urls')

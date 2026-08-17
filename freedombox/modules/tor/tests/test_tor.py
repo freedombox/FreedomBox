@@ -8,7 +8,7 @@ from unittest.mock import patch
 import pytest
 from django.core.exceptions import ValidationError
 
-from plinth.modules.tor import forms, utils
+from freedombox.modules.tor import forms, utils
 
 
 @patch('plinth.app.App.get')

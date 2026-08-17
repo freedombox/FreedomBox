@@ -16,8 +16,8 @@ from django.urls import reverse
 from django.utils.translation import get_language_from_request
 from django.utils.translation import gettext as _
 
-from plinth import __version__, cfg, menu
-from plinth.modules.upgrades import views as upgrades_views
+from freedombox import __version__, cfg, menu
+from freedombox.modules.upgrades import views as upgrades_views
 
 
 def index(request):

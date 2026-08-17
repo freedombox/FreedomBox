@@ -5,8 +5,8 @@ import logging
 
 from django.http import HttpResponse
 
-from plinth.modules.names.components import DomainName
-from plinth.views import AppView
+from freedombox.modules.names.components import DomainName
+from freedombox.views import AppView
 
 from . import privileged
 

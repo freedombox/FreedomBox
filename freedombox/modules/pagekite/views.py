@@ -6,7 +6,7 @@ from django.utils.translation import gettext as _
 from django.views.generic import View
 from django.views.generic.edit import FormView
 
-from plinth.views import AppView
+from freedombox.views import AppView
 
 from . import privileged
 from .forms import (AddCustomServiceForm, ConfigurationForm,

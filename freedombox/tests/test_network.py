@@ -9,7 +9,7 @@ import time
 
 import pytest
 
-from plinth.utils import import_from_gi
+from freedombox.utils import import_from_gi
 
 ethernet_settings = {
     'common': {
@@ -76,7 +76,7 @@ pppoe_settings = {
 @pytest.fixture(autouse=True, scope='module')
 def fixture_network_module_init():
     """Initialize network module in a separate thread."""
-    from plinth import network as network_module
+    from freedombox import network as network_module
     glib = import_from_gi('GLib', '2.0')
     main_loop = glib.MainLoop()
 
@@ -102,7 +102,7 @@ def fixture_network_module_init():
 @pytest.fixture(name='network')
 def fixture_network(needs_root):
     """Return the network module. Load it conservatively."""
-    from plinth import network as network_module
+    from freedombox import network as network_module
     return network_module
 
 

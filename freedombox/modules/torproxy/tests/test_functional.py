@@ -5,7 +5,7 @@ Functional, browser based tests for Tor Proxy app.
 
 import pytest
 
-from plinth.tests import functional
+from freedombox.tests import functional
 
 _TOR_FEATURE_TO_ELEMENT = {'software': 'torproxy-apt_transport_tor_enabled'}
 

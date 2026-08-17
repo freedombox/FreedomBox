@@ -10,8 +10,8 @@ from uuid import uuid1
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth import cfg
-from plinth.utils import format_lazy
+from freedombox import cfg
+from freedombox.utils import format_lazy
 
 from . import (_backup_handler, api, copy_ssh_client_public_key, errors,
                generate_ssh_client_auth_key, get_known_hosts_path,

@@ -3,7 +3,7 @@
 Tests for Version class.
 """
 
-from plinth.version import Version
+from freedombox.version import Version
 
 
 def test_version_comparisons():

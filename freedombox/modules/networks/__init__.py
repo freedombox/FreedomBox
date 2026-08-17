@@ -6,12 +6,12 @@ from logging import Logger
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth import app as app_module
-from plinth import daemon, kvstore, menu, network
-from plinth.config import DropinConfigs
-from plinth.diagnostic_check import DiagnosticCheck
-from plinth.modules.firewall.components import Firewall
-from plinth.package import Packages
+from freedombox import app as app_module
+from freedombox import daemon, kvstore, menu, network
+from freedombox.config import DropinConfigs
+from freedombox.diagnostic_check import DiagnosticCheck
+from freedombox.modules.firewall.components import Firewall
+from freedombox.package import Packages
 
 from . import manifest, privileged
 

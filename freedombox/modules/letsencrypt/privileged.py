@@ -11,11 +11,11 @@ import shutil
 import sys
 from typing import Any
 
-from plinth import action_utils
-from plinth import app as app_module
-from plinth import module_loader
-from plinth.actions import privileged
-from plinth.modules import letsencrypt as le
+from freedombox import action_utils
+from freedombox import app as app_module
+from freedombox import module_loader
+from freedombox.actions import privileged
+from freedombox.modules import letsencrypt as le
 
 TEST_MODE = False
 LE_DIRECTORY = '/etc/letsencrypt/'
@@ -230,7 +230,7 @@ def _assert_managed_path(module, path):
     managed_paths = []
     for cls in app_classes:
         app = cls()
-        from plinth.modules.letsencrypt.components import LetsEncrypt
+        from freedombox.modules.letsencrypt.components import LetsEncrypt
         components = app.get_components_of_type(LetsEncrypt)
         for component in components:
             if component.private_key_path:

@@ -7,13 +7,13 @@ from collections import defaultdict
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth import app as app_module
-from plinth import menu
-from plinth.config import DropinConfigs
-from plinth.daemon import Daemon, RelatedDaemon
-from plinth.modules.backups.components import BackupRestore
-from plinth.package import Packages
-from plinth.privileged import service as service_privileged
+from freedombox import app as app_module
+from freedombox import menu
+from freedombox.config import DropinConfigs
+from freedombox.daemon import Daemon, RelatedDaemon
+from freedombox.modules.backups.components import BackupRestore
+from freedombox.package import Packages
+from freedombox.privileged import service as service_privileged
 
 from . import manifest, privileged
 

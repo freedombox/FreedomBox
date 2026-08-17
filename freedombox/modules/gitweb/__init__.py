@@ -3,14 +3,14 @@
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth import app as app_module
-from plinth import frontpage, menu
-from plinth.config import DropinConfigs
-from plinth.modules.apache.components import Webserver
-from plinth.modules.backups.components import BackupRestore
-from plinth.modules.firewall.components import Firewall
-from plinth.modules.users.components import UsersAndGroups
-from plinth.package import Packages
+from freedombox import app as app_module
+from freedombox import frontpage, menu
+from freedombox.config import DropinConfigs
+from freedombox.modules.apache.components import Webserver
+from freedombox.modules.backups.components import BackupRestore
+from freedombox.modules.firewall.components import Firewall
+from freedombox.modules.users.components import UsersAndGroups
+from freedombox.package import Packages
 
 from . import manifest, privileged
 from .forms import is_repo_url

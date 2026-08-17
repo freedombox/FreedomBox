@@ -8,7 +8,7 @@ import logging
 import pytest
 import requests
 
-from plinth.tests import functional
+from freedombox.tests import functional
 
 logger = logging.getLogger(__name__)
 

@@ -6,7 +6,7 @@ from unittest.mock import call, patch
 
 import pytest
 
-from plinth.modules.calibre import privileged
+from freedombox.modules.calibre import privileged
 
 pytestmark = pytest.mark.usefixtures('mock_privileged')
 privileged_modules_to_mock = ['plinth.modules.calibre.privileged']

@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from plinth.modules import bind
+from freedombox.modules import bind
 
 
 @pytest.fixture(name='configuration_file')

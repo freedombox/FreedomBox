@@ -7,8 +7,8 @@ import re
 
 import augeas
 
-from plinth import action_utils
-from plinth.actions import privileged
+from freedombox import action_utils
+from freedombox.actions import privileged
 
 APACHE_CONFIGURATION = '/etc/apache2/conf-available/sharing-freedombox.conf'
 

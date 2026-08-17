@@ -6,8 +6,8 @@ Configuration helper for Transmission daemon.
 import json
 import pathlib
 
-from plinth import action_utils
-from plinth.actions import privileged
+from freedombox import action_utils
+from freedombox.actions import privileged
 
 _transmission_config = pathlib.Path('/etc/transmission-daemon/settings.json')
 

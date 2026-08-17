@@ -9,13 +9,13 @@ import psutil
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import gettext_noop
 
-from plinth import app as app_module
-from plinth import cfg, glib, menu
-from plinth.diagnostic_check import DiagnosticCheck, Result
-from plinth.errors import PlinthError
-from plinth.modules.backups.components import BackupRestore
-from plinth.package import Packages
-from plinth.utils import format_lazy
+from freedombox import app as app_module
+from freedombox import cfg, glib, menu
+from freedombox.diagnostic_check import DiagnosticCheck, Result
+from freedombox.errors import PlinthError
+from freedombox.modules.backups.components import BackupRestore
+from freedombox.package import Packages
+from freedombox.utils import format_lazy
 
 from . import manifest, privileged, udisks2
 
@@ -288,7 +288,7 @@ def get_error_message(error):
 
 def warn_about_low_disk_space(_data):
     """Warn about insufficient space on root partition."""
-    from plinth.notification import Notification
+    from freedombox.notification import Notification
 
     try:
         root_info = get_mount_info('/')
@@ -340,7 +340,7 @@ def report_failing_drive(id, is_failing):
     notification_id = 'storage-disk-failure-' + base64.b32encode(
         id.encode()).decode()
 
-    from plinth.notification import Notification
+    from freedombox.notification import Notification
     title = gettext_noop('Disk failure imminent')
     message = gettext_noop(
         'Disk {id} is reporting that it is likely to fail in the near future. '
@@ -372,7 +372,7 @@ def _warn_about_read_only_filesystem(_data):
 
     Remove the notification (if any) if the root filesystem is writable.
     """
-    from plinth.notification import Notification
+    from freedombox.notification import Notification
 
     show = is_partition_read_only()
     notification_id = 'storage-read-only-root-filesystem'

@@ -3,7 +3,7 @@
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth.clients import store_url
+from freedombox.clients import store_url
 
 _ORBOT_PACKAGE_ID = 'org.torproject.android'
 _TOR_BROWSER_DOWNLOAD_URL = \

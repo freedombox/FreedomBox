@@ -8,11 +8,11 @@ from typing import Literal
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import gettext_noop
 
-from plinth import app as app_module
-from plinth import kvstore, menu
-from plinth.config import DropinConfigs
-from plinth.modules.backups.components import BackupRestore
-from plinth.package import Packages
+from freedombox import app as app_module
+from freedombox import kvstore, menu
+from freedombox.config import DropinConfigs
+from freedombox.modules.backups.components import BackupRestore
+from freedombox.package import Packages
 
 from . import manifest, privileged
 
@@ -70,7 +70,7 @@ class PrivacyApp(app_module.App):
 
 def _show_privacy_notification():
     """Show a notification asking user to review privacy settings."""
-    from plinth.notification import Notification
+    from freedombox.notification import Notification
     message = gettext_noop(
         'Please update privacy settings to match your preferences.')
     data = {

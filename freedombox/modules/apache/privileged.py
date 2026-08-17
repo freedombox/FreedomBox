@@ -11,8 +11,8 @@ import urllib.parse
 
 import augeas
 
-from plinth import action_utils, utils
-from plinth.actions import privileged, secret_str
+from freedombox import action_utils, utils
+from freedombox.actions import privileged, secret_str
 
 openidc_config_path = pathlib.Path(
     '/etc/apache2/conf-available/freedombox-openidc.conf')

@@ -5,7 +5,7 @@ Test module for Kiwix validations.
 
 import pytest
 
-from plinth.modules import kiwix
+from freedombox.modules import kiwix
 
 
 def test_add_file_with_invalid_extension():

@@ -2,8 +2,8 @@
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth import cfg
-from plinth.utils import format_lazy
+from freedombox import cfg
+from freedombox.utils import format_lazy
 
 clients = [{
     'name':

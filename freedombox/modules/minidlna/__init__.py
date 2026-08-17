@@ -5,14 +5,14 @@ FreedomBox app to configure minidlna.
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
-from plinth import app as app_module
-from plinth import frontpage, menu
-from plinth.daemon import Daemon
-from plinth.modules import firewall
-from plinth.modules.backups.components import BackupRestore
-from plinth.modules.firewall.components import Firewall
-from plinth.package import Packages, install
-from plinth.utils import Version
+from freedombox import app as app_module
+from freedombox import frontpage, menu
+from freedombox.daemon import Daemon
+from freedombox.modules import firewall
+from freedombox.modules.backups.components import BackupRestore
+from freedombox.modules.firewall.components import Firewall
+from freedombox.package import Packages, install
+from freedombox.utils import Version
 
 from . import manifest, privileged
 
@@ -90,8 +90,9 @@ class MiniDLNAApp(app_module.App):
 
         if old_version and old_version <= 5:
             # Remove minidlna LDAP group and disable minidlna apache config
-            from plinth.modules.apache import privileged as apache_privileged
-            from plinth.modules.users import privileged as users_privileged
+            from freedombox.modules.apache import \
+                privileged as apache_privileged
+            from freedombox.modules.users import privileged as users_privileged
 
             users_privileged.remove_group('minidlna')
             apache_privileged.disable('minidlna-freedombox', 'config')

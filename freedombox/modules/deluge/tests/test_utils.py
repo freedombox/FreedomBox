@@ -5,7 +5,7 @@ Tests for utilities that edit Deluge configuration files.
 
 import pytest
 
-from plinth.modules.deluge.utils import Config
+from freedombox.modules.deluge.utils import Config
 
 test_content = '''{
     "file": 3,

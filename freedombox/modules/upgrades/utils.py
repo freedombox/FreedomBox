@@ -6,8 +6,8 @@ import re
 
 import augeas
 
-from plinth import action_utils
-from plinth.modules.apache.components import check_url
+from freedombox import action_utils
+from freedombox.modules.apache.components import check_url
 
 RELEASE_FILE_URL = \
     'https://deb.debian.org/debian/dists/{}/Release'
@@ -35,7 +35,7 @@ def check_auto() -> bool:
 def get_http_protocol() -> str:
     """Return the protocol to use for newly added repository sources."""
     try:
-        from plinth.modules.torproxy import utils
+        from freedombox.modules.torproxy import utils
         if utils.is_apt_transport_tor_enabled():
             return 'tor+http'
     except Exception:

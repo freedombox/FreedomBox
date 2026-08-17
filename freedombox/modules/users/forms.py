@@ -20,9 +20,9 @@ from django.utils.translation import gettext_lazy
 
 import plinth.forms
 import plinth.modules.ssh.privileged as ssh_privileged
-from plinth.modules import first_boot
-from plinth.utils import is_user_admin
-from plinth.views import messages_error
+from freedombox.modules import first_boot
+from freedombox.utils import is_user_admin
+from freedombox.views import messages_error
 
 from . import get_last_admin_user, privileged
 from .components import UsersAndGroups

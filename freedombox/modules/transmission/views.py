@@ -9,7 +9,7 @@ import socket
 from django.contrib import messages
 from django.utils.translation import gettext as _
 
-from plinth import views
+from freedombox import views
 
 from . import get_download_dir, privileged
 from .forms import TransmissionForm

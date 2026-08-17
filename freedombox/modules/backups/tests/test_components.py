@@ -7,7 +7,7 @@ from unittest.mock import call, patch
 
 import pytest
 
-from plinth import kvstore
+from freedombox import kvstore
 
 from .. import components
 from ..components import BackupRestore

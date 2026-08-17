@@ -11,7 +11,7 @@ from unittest.mock import patch
 
 import pytest
 
-from plinth import cfg
+from freedombox import cfg
 
 TEST_CONFIG_DIR = \
     os.path.join(os.path.dirname(os.path.realpath(__file__)),

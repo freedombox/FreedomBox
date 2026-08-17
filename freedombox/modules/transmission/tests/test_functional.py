@@ -8,7 +8,7 @@ import os
 import pytest
 from splinter.exceptions import ElementDoesNotExist
 
-from plinth.tests import functional
+from freedombox.tests import functional
 
 pytestmark = [pytest.mark.apps, pytest.mark.transmission]
 

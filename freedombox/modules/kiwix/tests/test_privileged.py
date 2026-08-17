@@ -10,7 +10,7 @@ from unittest.mock import patch
 import pytest
 
 import plinth.settings
-from plinth.modules.kiwix import privileged
+from freedombox.modules.kiwix import privileged
 
 pytestmark = pytest.mark.usefixtures('mock_privileged')
 privileged_modules_to_mock = ['plinth.modules.kiwix.privileged']

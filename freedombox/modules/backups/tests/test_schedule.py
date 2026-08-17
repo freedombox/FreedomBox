@@ -10,7 +10,7 @@ from unittest.mock import MagicMock, call, patch
 import pytest
 
 import plinth.modules.backups.repository as repository_module
-from plinth.app import App
+from freedombox.app import App
 
 from ..components import BackupRestore
 from ..schedule import Schedule

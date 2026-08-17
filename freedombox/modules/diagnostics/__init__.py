@@ -16,16 +16,16 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import gettext_noop
 
-from plinth import app as app_module
-from plinth import cfg, glib, kvstore, menu
-from plinth import operation as operation_module
-from plinth.daemon import RelatedDaemon, diagnose_port_listening
-from plinth.diagnostic_check import (CheckJSONDecoder, CheckJSONEncoder,
-                                     DiagnosticCheck, Result)
-from plinth.modules.apache.components import diagnose_url_on_all
-from plinth.modules.backups.components import BackupRestore
-from plinth.setup import run_repair_on_app
-from plinth.utils import format_lazy
+from freedombox import app as app_module
+from freedombox import cfg, glib, kvstore, menu
+from freedombox import operation as operation_module
+from freedombox.daemon import RelatedDaemon, diagnose_port_listening
+from freedombox.diagnostic_check import (CheckJSONDecoder, CheckJSONEncoder,
+                                         DiagnosticCheck, Result)
+from freedombox.modules.apache.components import diagnose_url_on_all
+from freedombox.modules.backups.components import BackupRestore
+from freedombox.setup import run_repair_on_app
+from freedombox.utils import format_lazy
 
 from . import manifest
 
@@ -213,7 +213,7 @@ def _get_memory_info():
 
 def _warn_about_low_ram_space(request):
     """Warn about insufficient RAM space."""
-    from plinth.notification import Notification
+    from freedombox.notification import Notification
 
     memory_info = _get_memory_info()
     if memory_info['free_bytes'] < 1024**3:
@@ -291,7 +291,7 @@ def start_diagnostics():
 
 def _run_diagnostics():
     """Run diagnostics and notify for failures."""
-    from plinth.notification import Notification
+    from freedombox.notification import Notification
 
     _run_on_all_enabled_modules()
     apps_with_issues = set()

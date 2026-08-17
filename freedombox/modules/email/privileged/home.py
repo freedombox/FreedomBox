@@ -6,8 +6,8 @@ See:
 https://doc.dovecot.org/configuration_manual/authentication/user_databases_userdb/
 """
 
-from plinth import action_utils
-from plinth.actions import privileged
+from freedombox import action_utils
+from freedombox.actions import privileged
 
 
 @privileged

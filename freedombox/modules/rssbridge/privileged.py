@@ -3,8 +3,8 @@
 
 import pathlib
 
-from plinth import action_utils
-from plinth.actions import privileged
+from freedombox import action_utils
+from freedombox.actions import privileged
 
 PUBLIC_ACCESS_FILE = pathlib.Path('/etc/rss-bridge/is_public')
 ENABLE_LIST = pathlib.Path('/etc/rss-bridge/whitelist.txt')

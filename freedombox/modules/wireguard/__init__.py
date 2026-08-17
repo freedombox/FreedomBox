@@ -6,11 +6,11 @@ FreedomBox app for wireguard.
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
-from plinth import app as app_module
-from plinth import cfg, frontpage, menu
-from plinth.modules.firewall.components import Firewall
-from plinth.package import Packages
-from plinth.utils import format_lazy, import_from_gi
+from freedombox import app as app_module
+from freedombox import cfg, frontpage, menu
+from freedombox.modules.firewall.components import Firewall
+from freedombox.package import Packages
+from freedombox.utils import format_lazy, import_from_gi
 
 from . import manifest, utils
 
@@ -74,21 +74,21 @@ class WireguardApp(app_module.App):
 
     def enable(self):
         """Enable the app by simply storing a flag in key/value store."""
-        from plinth import kvstore
+        from freedombox import kvstore
         super().enable()
         kvstore.set('wireguard-enabled', True)
         utils.enable_connections(True)
 
     def disable(self):
         """Disable the app by simply storing a flag in key/value store."""
-        from plinth import kvstore
+        from freedombox import kvstore
         super().disable()
         kvstore.set('wireguard-enabled', False)
         utils.enable_connections(False)
 
     def is_enabled(self):
         """Return whether all leader components are enabled and flag is set."""
-        from plinth import kvstore
+        from freedombox import kvstore
         enabled = super().is_enabled()
         return enabled and kvstore.get_default('wireguard-enabled', False)
 

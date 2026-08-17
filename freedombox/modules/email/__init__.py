@@ -7,18 +7,18 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
 import plinth.app
-from plinth import cfg, frontpage, menu
-from plinth.config import DropinConfigs
-from plinth.daemon import Daemon
-from plinth.modules.apache.components import Webserver
-from plinth.modules.backups.components import BackupRestore
-from plinth.modules.firewall.components import (Firewall,
+from freedombox import cfg, frontpage, menu
+from freedombox.config import DropinConfigs
+from freedombox.daemon import Daemon
+from freedombox.modules.apache.components import Webserver
+from freedombox.modules.backups.components import BackupRestore
+from freedombox.modules.firewall.components import (Firewall,
                                                 FirewallLocalProtection)
-from plinth.modules.letsencrypt.components import LetsEncrypt
-from plinth.package import Packages
-from plinth.privileged import service as service_privileged
-from plinth.signals import domain_added, domain_removed
-from plinth.utils import format_lazy, gettext_noop
+from freedombox.modules.letsencrypt.components import LetsEncrypt
+from freedombox.package import Packages
+from freedombox.privileged import service as service_privileged
+from freedombox.signals import domain_added, domain_removed
+from freedombox.utils import format_lazy, gettext_noop
 
 from . import aliases, dovecot, manifest, privileged
 

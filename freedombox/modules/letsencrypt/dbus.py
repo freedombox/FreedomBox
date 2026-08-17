@@ -5,7 +5,7 @@ Expose API over D-Bus to receive renewal notifications.
 
 import logging
 
-from plinth.utils import import_from_gi
+from freedombox.utils import import_from_gi
 
 gio = import_from_gi('Gio', '2.0')
 
@@ -62,6 +62,6 @@ class LetsEncrypt:
         logger.info('LE certificate renewed (deployed): %s, %s.',
                     renewed_domains, renewed_lineage)
 
-        from plinth.modules.letsencrypt import components
+        from freedombox.modules.letsencrypt import components
         components.on_certificate_event('renewed', renewed_domains,
                                         renewed_lineage)

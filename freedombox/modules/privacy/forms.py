@@ -5,9 +5,9 @@ from django import forms
 from django.core import validators
 from django.utils.translation import gettext_lazy as _
 
-from plinth import cfg
-from plinth.modules import names
-from plinth.utils import format_lazy
+from freedombox import cfg
+from freedombox.modules import names
+from freedombox.utils import format_lazy
 
 
 class PrivacyForm(forms.Form):

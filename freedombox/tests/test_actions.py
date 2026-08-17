@@ -13,8 +13,8 @@ from unittest.mock import Mock, call, patch
 
 import pytest
 
-from plinth import actions
-from plinth.actions import privileged, secret_str
+from freedombox import actions
+from freedombox.actions import privileged, secret_str
 
 actions_name = 'actions'
 

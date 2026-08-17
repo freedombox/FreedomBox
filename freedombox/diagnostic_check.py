@@ -9,7 +9,7 @@ from typing import TypeAlias
 
 from django.utils.translation import gettext
 
-from plinth.utils import SafeFormatter
+from freedombox.utils import SafeFormatter
 
 DiagnosticCheckParameters: TypeAlias = dict[str, str | int | bool | None]
 

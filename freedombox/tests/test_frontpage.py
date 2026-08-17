@@ -7,7 +7,7 @@ from unittest.mock import patch
 
 import pytest
 
-from plinth.frontpage import Shortcut, add_custom_shortcuts
+from freedombox.frontpage import Shortcut, add_custom_shortcuts
 
 # pylint: disable=protected-access
 

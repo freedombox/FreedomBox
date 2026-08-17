@@ -3,7 +3,7 @@
 
 import pathlib
 
-from plinth.actions import privileged
+from freedombox.actions import privileged
 
 
 @privileged

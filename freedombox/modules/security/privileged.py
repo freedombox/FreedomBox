@@ -3,7 +3,7 @@
 
 import os
 
-from plinth.actions import privileged
+from freedombox.actions import privileged
 
 ACCESS_CONF_FILE = '/etc/security/access.d/50freedombox.conf'
 ACCESS_CONF_FILE_OLD = '/etc/security/access.conf'

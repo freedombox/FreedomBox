@@ -7,11 +7,11 @@ from django import forms
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
-from plinth import cfg
-from plinth.modules import ejabberd
-from plinth.modules.coturn.forms import turn_uris_validator
-from plinth.modules.names.components import DomainName
-from plinth.utils import format_lazy
+from freedombox import cfg
+from freedombox.modules import ejabberd
+from freedombox.modules.coturn.forms import turn_uris_validator
+from freedombox.modules.names.components import DomainName
+from freedombox.utils import format_lazy
 
 
 class EjabberdForm(forms.Form):

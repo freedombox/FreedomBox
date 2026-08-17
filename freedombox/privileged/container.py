@@ -1,10 +1,10 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """Handle container run using podman."""
 
-from plinth import action_utils
-from plinth import app as app_module
-from plinth import module_loader
-from plinth.actions import privileged
+from freedombox import action_utils
+from freedombox import app as app_module
+from freedombox import module_loader
+from freedombox.actions import privileged
 
 
 @privileged
@@ -55,7 +55,7 @@ def container_uninstall(container: str, image_name: str, volume_name: str,
 
 def _get_managed_containers() -> set[str]:
     """Get a set of all containers managed by FreedomBox."""
-    from plinth.container import Container
+    from freedombox.container import Container
 
     containers = set()
     module_loader.load_modules()

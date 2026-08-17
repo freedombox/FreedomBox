@@ -10,11 +10,11 @@ import apt.cache
 import apt_inst
 import apt_pkg
 
-from plinth import action_utils
-from plinth import app as app_module
-from plinth import module_loader
-from plinth.action_utils import run, run_apt_command
-from plinth.actions import privileged
+from freedombox import action_utils
+from freedombox import app as app_module
+from freedombox import module_loader
+from freedombox.action_utils import run, run_apt_command
+from freedombox.actions import privileged
 
 logger = logging.getLogger(__name__)
 
@@ -91,7 +91,7 @@ def remove(app_id: str, packages: list[str], purge: bool):
 
 def _assert_managed_packages(app_id, packages):
     """Check that list of packages are in fact managed by module."""
-    from plinth.package import Packages
+    from freedombox.package import Packages
 
     module_loader.load_modules()
     app_module.apps_init()

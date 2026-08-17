@@ -5,7 +5,7 @@ Functional, browser based tests for tor app.
 
 import pytest
 
-from plinth.tests import functional
+from freedombox.tests import functional
 
 _TOR_FEATURE_TO_ELEMENT = {
     'relay': 'tor-relay_enabled',

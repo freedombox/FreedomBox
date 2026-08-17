@@ -10,7 +10,7 @@ import pytest
 from django.contrib.auth.models import Group, User
 from django.core.exceptions import ValidationError
 
-from plinth.notification import Notification
+from freedombox.notification import Notification
 
 pytestmark = pytest.mark.django_db
 

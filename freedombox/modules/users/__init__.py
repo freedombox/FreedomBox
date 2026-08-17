@@ -9,15 +9,15 @@ from django.utils.text import format_lazy
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import gettext_noop
 
-from plinth import action_utils
-from plinth import app as app_module
-from plinth import cfg, menu
-from plinth.config import DropinConfigs
-from plinth.daemon import Daemon
-from plinth.diagnostic_check import (DiagnosticCheck,
-                                     DiagnosticCheckParameters, Result)
-from plinth.package import Packages
-from plinth.privileged import service as service_privileged
+from freedombox import action_utils
+from freedombox import app as app_module
+from freedombox import cfg, menu
+from freedombox.config import DropinConfigs
+from freedombox.daemon import Daemon
+from freedombox.diagnostic_check import (DiagnosticCheck,
+                                         DiagnosticCheckParameters, Result)
+from freedombox.package import Packages
+from freedombox.privileged import service as service_privileged
 
 from . import manifest, privileged
 from .components import UsersAndGroups

@@ -6,9 +6,9 @@ import pathlib
 import threading
 from typing import ClassVar
 
-from plinth import app
-from plinth.modules.names.components import DomainName
-from plinth.privileged import service as service_privileged
+from freedombox import app
+from freedombox.modules.names.components import DomainName
+from freedombox.privileged import service as service_privileged
 
 from . import privileged
 
@@ -276,7 +276,7 @@ class LetsEncrypt(app.FollowerComponent):
     @staticmethod
     def _get_letsencrypt_domains():
         """Return the list of domains with LE certificates."""
-        from plinth.modules import letsencrypt
+        from freedombox.modules import letsencrypt
         status = letsencrypt.get_status()
         domains = {
             domain
@@ -406,5 +406,5 @@ def on_certificate_event_sync(event, domains, lineage):
                 component.component_id, event, domains, lineage, exception)
 
     if event in ('obtained', 'renewed'):
-        from plinth.modules import letsencrypt
+        from freedombox.modules import letsencrypt
         letsencrypt.certificate_set_last_seen_modified_time(lineage)

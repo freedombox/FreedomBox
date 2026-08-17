@@ -8,10 +8,10 @@ from typing import Any
 
 import augeas
 
-from plinth import action_utils
-from plinth.actions import privileged
-from plinth.modules.torproxy.utils import (APT_TOR_PREFIX, get_augeas,
-                                           iter_apt_uris)
+from freedombox import action_utils
+from freedombox.actions import privileged
+from freedombox.modules.torproxy.utils import (APT_TOR_PREFIX, get_augeas,
+                                               iter_apt_uris)
 
 logger = logging.getLogger(__name__)
 

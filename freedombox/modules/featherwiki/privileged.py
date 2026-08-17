@@ -6,8 +6,8 @@ import re
 import shutil
 import urllib.request
 
-from plinth import action_utils
-from plinth.actions import privileged
+from freedombox import action_utils
+from freedombox.actions import privileged
 
 EMPTY_WIKI_FILE = 'https://ftp.freedombox.org/pub/featherwiki/empty.html'
 

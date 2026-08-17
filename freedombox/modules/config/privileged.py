@@ -6,8 +6,8 @@ import pathlib
 
 import augeas
 
-from plinth import action_utils
-from plinth.actions import privileged
+from freedombox import action_utils
+from freedombox.actions import privileged
 
 APACHE_CONF_ENABLED_DIR = '/etc/apache2/conf-enabled'
 APACHE_HOMEPAGE_CONF_FILE_NAME = 'freedombox-apache-homepage.conf'

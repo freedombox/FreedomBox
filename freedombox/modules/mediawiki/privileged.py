@@ -7,9 +7,9 @@ import shutil
 import subprocess
 import tempfile
 
-from plinth import action_utils
-from plinth.actions import privileged, secret_str
-from plinth.utils import generate_password
+from freedombox import action_utils
+from freedombox.actions import privileged, secret_str
+from freedombox.utils import generate_password
 
 MAINTENANCE_SCRIPTS_DIR = "/usr/share/mediawiki/maintenance"
 CONF_FILE = '/etc/mediawiki/FreedomBoxSettings.php'

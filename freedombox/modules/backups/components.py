@@ -3,7 +3,7 @@
 
 import copy
 
-from plinth import app
+from freedombox import app
 
 from . import privileged
 
@@ -157,7 +157,7 @@ class BackupRestore(app.FollowerComponent):
         if not self.settings:
             return
 
-        from plinth import kvstore
+        from freedombox import kvstore
         data = {}
         for key in self.settings:
             try:
@@ -181,6 +181,6 @@ class BackupRestore(app.FollowerComponent):
 
         data = privileged.load_settings(self.app_id)
 
-        from plinth import kvstore
+        from freedombox import kvstore
         for key, value in data.items():
             kvstore.set(key, value)

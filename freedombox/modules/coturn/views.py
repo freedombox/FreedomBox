@@ -5,8 +5,8 @@ from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
 
 import plinth.modules.coturn as coturn
-from plinth import app as app_module
-from plinth import views
+from freedombox import app as app_module
+from freedombox import views
 
 from . import forms
 

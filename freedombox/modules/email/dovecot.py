@@ -3,7 +3,7 @@
 
 import apt
 
-from plinth.utils import Version
+from freedombox.utils import Version
 
 
 def is_version_24():

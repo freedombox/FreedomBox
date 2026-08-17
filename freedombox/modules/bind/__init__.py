@@ -3,13 +3,13 @@
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth import app as app_module
-from plinth import cfg, menu
-from plinth.daemon import Daemon
-from plinth.modules.backups.components import BackupRestore
-from plinth.modules.firewall.components import Firewall
-from plinth.package import Packages, install
-from plinth.utils import format_lazy
+from freedombox import app as app_module
+from freedombox import cfg, menu
+from freedombox.daemon import Daemon
+from freedombox.modules.backups.components import BackupRestore
+from freedombox.modules.firewall.components import Firewall
+from freedombox.package import Packages, install
+from freedombox.utils import format_lazy
 
 from . import manifest, privileged
 

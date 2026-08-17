@@ -14,9 +14,9 @@ import psutil
 import pytest
 from django.utils.translation import gettext_noop
 
-from plinth.diagnostic_check import DiagnosticCheck, Result
-from plinth.modules import storage
-from plinth.modules.storage import privileged
+from freedombox.diagnostic_check import DiagnosticCheck, Result
+from freedombox.modules import storage
+from freedombox.modules.storage import privileged
 
 
 def _is_container():

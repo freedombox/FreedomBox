@@ -7,8 +7,8 @@ import pathlib
 import random
 import string
 
-from plinth import action_utils
-from plinth.actions import privileged, secret_str
+from freedombox import action_utils
+from freedombox.actions import privileged, secret_str
 
 SHADOWSOCKS_CONFIG_SYMLINK = '/etc/shadowsocks-libev/fbxserver.json'
 SHADOWSOCKS_CONFIG_ACTUAL = \
@@ -40,7 +40,7 @@ def setup():
         }
         _merge_config(initial_config)
 
-    from plinth.modules.shadowsocksserver import ShadowsocksServerApp
+    from freedombox.modules.shadowsocksserver import ShadowsocksServerApp
     if action_utils.service_is_enabled(ShadowsocksServerApp.DAEMON):
         action_utils.service_restart(ShadowsocksServerApp.DAEMON)
 

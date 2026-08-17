@@ -8,8 +8,8 @@ import subprocess
 import psutil
 from django.utils.translation import gettext_noop
 
-from plinth import action_utils, app, log
-from plinth.diagnostic_check import (DiagnosticCheck,
+from freedombox import action_utils, app, log
+from freedombox.diagnostic_check import (DiagnosticCheck,
                                      DiagnosticCheckParameters, Result)
 
 
@@ -71,14 +71,14 @@ class Daemon(app.LeaderComponent, log.LogEmitter):
 
     def enable(self):
         """Run operations to enable the daemon/unit."""
-        from plinth.privileged import service as service_privileged
+        from freedombox.privileged import service as service_privileged
         service_privileged.enable(self.unit)
         if self.alias:
             service_privileged.enable(self.alias)
 
     def disable(self):
         """Run operations to disable the daemon/unit."""
-        from plinth.privileged import service as service_privileged
+        from freedombox.privileged import service as service_privileged
         service_privileged.disable(self.unit)
         if self.alias:
             service_privileged.disable(self.alias)
@@ -90,7 +90,7 @@ class Daemon(app.LeaderComponent, log.LogEmitter):
     @contextlib.contextmanager
     def ensure_running(self):
         """Ensure a service is running and return to previous state."""
-        from plinth.privileged import service as service_privileged
+        from freedombox.privileged import service as service_privileged
 
         if action_utils.service_show(self.unit)['LoadState'] == 'not-found':
             # The service's package not installed yet, don't try to start it

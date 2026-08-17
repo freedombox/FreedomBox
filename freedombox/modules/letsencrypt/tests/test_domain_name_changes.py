@@ -7,7 +7,7 @@ from unittest.mock import call, patch
 
 import pytest
 
-from plinth.modules.names.components import DomainType
+from freedombox.modules.names.components import DomainType
 
 from .. import on_domain_added, on_domain_removed
 

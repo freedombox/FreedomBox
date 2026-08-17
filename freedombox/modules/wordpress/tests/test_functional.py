@@ -5,7 +5,7 @@ Functional, browser based tests for WordPress.
 
 import pytest
 
-from plinth.tests import functional
+from freedombox.tests import functional
 
 pytestmark = [pytest.mark.apps, pytest.mark.wordpress]
 

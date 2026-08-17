@@ -6,9 +6,9 @@ from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
 
-from plinth import app as app_module
-from plinth import package
-from plinth.views import AppView
+from freedombox import app as app_module
+from freedombox import package
+from freedombox.views import AppView
 
 from . import privileged
 

@@ -8,7 +8,7 @@ import time
 
 import pytest
 
-from plinth.tests import functional
+from freedombox.tests import functional
 
 pytestmark = [pytest.mark.apps, pytest.mark.calibre]
 

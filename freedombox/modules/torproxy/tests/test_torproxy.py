@@ -7,7 +7,7 @@ from unittest.mock import patch
 
 import pytest
 
-from plinth.modules.torproxy import utils
+from freedombox.modules.torproxy import utils
 
 
 class TestTorProxy:

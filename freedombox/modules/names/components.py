@@ -7,7 +7,7 @@ from typing import ClassVar
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth import app
+from freedombox import app
 
 _SERVICES = {
     '__all__': {

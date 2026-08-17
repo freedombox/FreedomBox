@@ -13,7 +13,7 @@ import uuid
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth.utils import import_from_gi
+from freedombox.utils import import_from_gi
 
 glib = import_from_gi('GLib', '2.0')
 nm = import_from_gi('NM', '1.0')

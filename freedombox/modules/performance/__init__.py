@@ -5,11 +5,11 @@ FreedomBox app for System Monitoring (cockpit-pcp) in ‘System’.
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth import app as app_module
-from plinth import menu
-from plinth.daemon import Daemon
-from plinth.modules.backups.components import BackupRestore
-from plinth.package import Package, Packages
+from freedombox import app as app_module
+from freedombox import menu
+from freedombox.daemon import Daemon
+from freedombox.modules.backups.components import BackupRestore
+from freedombox.package import Package, Packages
 
 from . import manifest
 

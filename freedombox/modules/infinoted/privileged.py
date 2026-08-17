@@ -7,8 +7,8 @@ import shutil
 import subprocess
 import time
 
-from plinth import action_utils
-from plinth.actions import privileged
+from freedombox import action_utils
+from freedombox.actions import privileged
 
 DATA_DIR = '/var/lib/infinoted'
 KEY_DIR = '/etc/infinoted'

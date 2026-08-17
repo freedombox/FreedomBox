@@ -10,9 +10,9 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 from django.views.generic import FormView
 
-from plinth import app as app_module
-from plinth import views
-from plinth.modules import gitweb
+from freedombox import app as app_module
+from freedombox import views
+from freedombox.modules import gitweb
 
 from . import privileged
 from .forms import CreateRepoForm, EditRepoForm

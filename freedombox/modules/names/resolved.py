@@ -7,7 +7,7 @@ import subprocess
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth.utils import import_from_gi
+from freedombox.utils import import_from_gi
 
 gio = import_from_gi('Gio', '2.0')
 

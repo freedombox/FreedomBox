@@ -5,11 +5,11 @@ from django.contrib import messages
 from django.template.response import TemplateResponse
 from django.utils.translation import gettext as _
 
-from plinth import action_utils
-from plinth.modules import security
-from plinth.modules.upgrades import is_backports_requested
-from plinth.privileged import service as service_privileged
-from plinth.views import AppView
+from freedombox import action_utils
+from freedombox.modules import security
+from freedombox.modules.upgrades import is_backports_requested
+from freedombox.privileged import service as service_privileged
+from freedombox.views import AppView
 
 from .forms import SecurityForm
 

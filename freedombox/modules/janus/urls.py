@@ -6,7 +6,7 @@ URLs for the janus app.
 from django.urls import re_path
 from stronghold.decorators import public
 
-from plinth.views import AppView
+from freedombox.views import AppView
 
 from .views import JanusRoomView
 

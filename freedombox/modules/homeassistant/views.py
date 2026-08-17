@@ -6,8 +6,8 @@ import logging
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
 
-from plinth.forms import DomainSelectionForm
-from plinth.views import AppView
+from freedombox.forms import DomainSelectionForm
+from freedombox.views import AppView
 
 logger = logging.getLogger(__name__)
 

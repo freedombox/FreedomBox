@@ -14,9 +14,9 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 from django.views.generic import FormView, TemplateView, View
 
-from plinth import network
-from plinth.modules.names.components import DomainName
-from plinth.views import AppView
+from freedombox import network
+from freedombox.modules.names.components import DomainName
+from freedombox.views import AppView
 
 from . import forms, utils
 

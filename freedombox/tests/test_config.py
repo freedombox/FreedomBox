@@ -7,9 +7,9 @@ from unittest.mock import Mock, patch
 
 import pytest
 
-from plinth.app import App
-from plinth.config import DropinConfigs
-from plinth.diagnostic_check import DiagnosticCheck, Result
+from freedombox.app import App
+from freedombox.config import DropinConfigs
+from freedombox.diagnostic_check import DiagnosticCheck, Result
 
 pytestmark = pytest.mark.usefixtures('mock_privileged')
 privileged_modules_to_mock = ['plinth.privileged.config']

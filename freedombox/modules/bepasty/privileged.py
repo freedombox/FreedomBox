@@ -10,9 +10,9 @@ import string
 
 import augeas
 
-from plinth import action_utils
-from plinth.actions import privileged, secret_str
-from plinth.modules import bepasty
+from freedombox import action_utils
+from freedombox.actions import privileged, secret_str
+from freedombox.modules import bepasty
 
 CONF_FILE = pathlib.Path('/etc/bepasty-freedombox.conf')
 DATA_DIR = '/var/lib/private/bepasty'

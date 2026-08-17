@@ -7,11 +7,11 @@ import pathlib
 import re
 import subprocess
 
-from plinth import action_utils
-from plinth.action_utils import (apt_hold_flag, apt_unhold_freedombox,
-                                 is_package_manager_busy, run_apt_command,
-                                 service_is_running)
-from plinth.actions import privileged
+from freedombox import action_utils
+from freedombox.action_utils import (apt_hold_flag, apt_unhold_freedombox,
+                                     is_package_manager_busy, run_apt_command,
+                                     service_is_running)
+from freedombox.actions import privileged
 
 from . import distupgrade, utils
 
@@ -231,7 +231,7 @@ def _check_and_backports_sources(develop=False):
     if os.path.exists(old_sources_list):
         os.remove(old_sources_list)
 
-    from plinth.modules.upgrades import is_backports_current
+    from freedombox.modules.upgrades import is_backports_current
     if is_backports_current():
         logging.info('Repositories list up-to-date. Skipping update.')
         return

@@ -10,7 +10,7 @@ from django.utils.translation import gettext_lazy as _
 from django.views.decorators.http import require_POST
 from django.views.generic import FormView
 
-from plinth.views import AppView
+from freedombox.views import AppView
 
 from . import privileged
 from .forms import AddShareForm

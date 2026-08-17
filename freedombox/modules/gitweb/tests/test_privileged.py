@@ -8,7 +8,7 @@ from unittest.mock import call, patch
 import pytest
 from django.forms import ValidationError
 
-from plinth.modules.gitweb import privileged
+from freedombox.modules.gitweb import privileged
 
 REPO_NAME = 'Test-repo'
 REPO_DATA = {

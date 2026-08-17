@@ -5,7 +5,7 @@ URLs for the Secure Shell Server module.
 
 from django.urls import re_path
 
-from plinth.modules.ssh.views import SshAppView
+from freedombox.modules.ssh.views import SshAppView
 
 urlpatterns = [
     re_path(r'^sys/ssh/$', SshAppView.as_view(), name='index'),

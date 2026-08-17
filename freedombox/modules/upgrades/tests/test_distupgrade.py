@@ -11,7 +11,7 @@ from unittest.mock import Mock, call, patch
 
 import pytest
 
-from plinth.modules.upgrades import distupgrade
+from freedombox.modules.upgrades import distupgrade
 
 # pylint: disable=protected-access
 

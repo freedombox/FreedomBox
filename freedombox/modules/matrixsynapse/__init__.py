@@ -8,17 +8,18 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from ruamel.yaml.util import load_yaml_guess_indent
 
-from plinth import app as app_module
-from plinth import frontpage, menu
-from plinth.config import DropinConfigs
-from plinth.daemon import Daemon
-from plinth.modules.apache.components import Webserver
-from plinth.modules.backups.components import BackupRestore
-from plinth.modules.coturn.components import TurnConfiguration, TurnConsumer
-from plinth.modules.firewall.components import Firewall
-from plinth.modules.letsencrypt.components import LetsEncrypt
-from plinth.package import Packages, install
-from plinth.utils import format_lazy, is_non_empty_file
+from freedombox import app as app_module
+from freedombox import frontpage, menu
+from freedombox.config import DropinConfigs
+from freedombox.daemon import Daemon
+from freedombox.modules.apache.components import Webserver
+from freedombox.modules.backups.components import BackupRestore
+from freedombox.modules.coturn.components import (TurnConfiguration,
+                                                  TurnConsumer)
+from freedombox.modules.firewall.components import Firewall
+from freedombox.modules.letsencrypt.components import LetsEncrypt
+from freedombox.package import Packages, install
+from freedombox.utils import format_lazy, is_non_empty_file
 
 from . import manifest, privileged
 

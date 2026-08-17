@@ -5,9 +5,9 @@ import pathlib
 
 from django.utils.translation import gettext_noop
 
-from plinth.diagnostic_check import (DiagnosticCheck,
-                                     DiagnosticCheckParameters, Result)
-from plinth.privileged import config as privileged
+from freedombox.diagnostic_check import (DiagnosticCheck,
+                                         DiagnosticCheckParameters, Result)
+from freedombox.privileged import config as privileged
 
 from . import app as app_module
 

@@ -6,7 +6,7 @@ Views for radicale module.
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
 
-from plinth.views import AppView
+from freedombox.views import AppView
 
 from . import privileged
 from .forms import RadicaleForm

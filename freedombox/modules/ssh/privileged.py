@@ -10,8 +10,8 @@ import stat
 
 import augeas
 
-from plinth import action_utils, utils
-from plinth.actions import privileged, secret_str
+from freedombox import action_utils, utils
+from freedombox.actions import privileged, secret_str
 
 config_file = pathlib.Path('/etc/ssh/sshd_config.d/freedombox.conf')
 

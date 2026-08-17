@@ -6,8 +6,8 @@ import shutil
 
 import augeas
 
-from plinth import action_utils
-from plinth.actions import privileged
+from freedombox import action_utils
+from freedombox.actions import privileged
 
 old_config_file = pathlib.Path('/etc/minetest/minetest.conf')
 config_file = pathlib.Path('/etc/luanti/default.conf')

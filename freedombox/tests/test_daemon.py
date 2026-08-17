@@ -9,10 +9,10 @@ from unittest.mock import Mock, call, patch
 
 import pytest
 
-from plinth.app import App, FollowerComponent, Info
-from plinth.daemon import (Daemon, RelatedDaemon, SharedDaemon, app_is_running,
+from freedombox.app import App, FollowerComponent, Info
+from freedombox.daemon import (Daemon, RelatedDaemon, SharedDaemon, app_is_running,
                            diagnose_netcat, diagnose_port_listening)
-from plinth.diagnostic_check import DiagnosticCheck, Result
+from freedombox.diagnostic_check import DiagnosticCheck, Result
 
 privileged_modules_to_mock = ['plinth.privileged.service']
 

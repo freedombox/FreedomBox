@@ -11,7 +11,7 @@ import urllib.parse
 import pytest
 import requests
 
-from plinth.tests import functional
+from freedombox.tests import functional
 
 pytestmark = [pytest.mark.system, pytest.mark.backups]
 

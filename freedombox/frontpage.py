@@ -6,8 +6,8 @@ import logging
 import pathlib
 from typing import ClassVar
 
-from plinth import app, cfg
-from plinth.modules.users import privileged as users_privileged
+from freedombox import app, cfg
+from freedombox.modules.users import privileged as users_privileged
 
 logger = logging.getLogger(__name__)
 

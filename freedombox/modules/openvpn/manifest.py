@@ -5,7 +5,7 @@ Application manifest for OpenVPN.
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth.clients import store_url
+from freedombox.clients import store_url
 
 _package_id = 'de.blinkt.openvpn'
 _download_url = 'https://openvpn.net/community-downloads'

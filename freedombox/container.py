@@ -5,9 +5,9 @@ import contextlib
 
 from django.utils.translation import gettext_noop
 
-from plinth import app, log, privileged
-from plinth.daemon import diagnose_port_listening
-from plinth.diagnostic_check import (DiagnosticCheck,
+from freedombox import app, log, privileged
+from freedombox.daemon import diagnose_port_listening
+from freedombox.diagnostic_check import (DiagnosticCheck,
                                      DiagnosticCheckParameters, Result)
 
 
@@ -89,7 +89,7 @@ class Container(app.LeaderComponent, log.LogEmitter):
     @contextlib.contextmanager
     def ensure_running(self):
         """Ensure a service is running and return to previous state."""
-        from plinth.privileged import service as service_privileged
+        from freedombox.privileged import service as service_privileged
         starting_state = self.is_running()
         if not starting_state:
             service_privileged.enable(self.name)

@@ -4,9 +4,9 @@
 import pathlib
 import shutil
 
-from plinth import action_utils
-from plinth.actions import privileged
-from plinth.modules import calibre
+from freedombox import action_utils
+from freedombox.actions import privileged
+from freedombox.modules import calibre
 
 LIBRARIES_PATH = pathlib.Path('/var/lib/calibre-server-freedombox/libraries')
 

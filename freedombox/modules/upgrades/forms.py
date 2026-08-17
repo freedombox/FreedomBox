@@ -6,7 +6,7 @@ Forms for configuring unattended-upgrades.
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-from plinth.modules import upgrades
+from freedombox.modules import upgrades
 
 
 class ConfigureForm(forms.Form):

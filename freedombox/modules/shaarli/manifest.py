@@ -5,7 +5,7 @@ Application manifest for Shaarli.
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth.clients import store_url
+from freedombox.clients import store_url
 
 clients = [{
     'name':

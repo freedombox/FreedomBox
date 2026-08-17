@@ -12,11 +12,11 @@ import tarfile
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth import action_utils, actions
-from plinth import app as app_module
-from plinth import module_loader
-from plinth.actions import privileged, secret_str
-from plinth.utils import Version
+from freedombox import action_utils, actions
+from freedombox import app as app_module
+from freedombox import module_loader
+from freedombox.actions import privileged, secret_str
+from freedombox.utils import Version
 
 from . import errors
 
@@ -492,7 +492,7 @@ def delete_before_restore(app_id: str):
     app_module.apps_init()
     app = app_module.App.get(app_id)
 
-    from plinth.modules.backups.components import BackupRestore
+    from freedombox.modules.backups.components import BackupRestore
     components = app.get_components_of_type(BackupRestore)
     for component in components:
         for path in component.delete_before_restore:

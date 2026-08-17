@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """FreedomBox app to configure a firewall."""
 
-from plinth import views
-from plinth.modules import firewall
+from freedombox import views
+from freedombox.modules import firewall
 
 from . import components
 

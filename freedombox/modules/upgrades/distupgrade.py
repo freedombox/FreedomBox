@@ -10,8 +10,8 @@ from typing import Generator
 
 import augeas
 
-from plinth import action_utils
-from plinth.modules import snapshot as snapshot_module
+from freedombox import action_utils
+from freedombox.modules import snapshot as snapshot_module
 
 from . import utils
 
@@ -128,7 +128,7 @@ def get_status() -> dict[str, bool | str | None]:
     - On old stable, ready to do dist upgrade. Manual upgrade possible.
 
     """
-    from plinth.modules import upgrades
+    from freedombox.modules import upgrades
     updates_enabled = utils.check_auto()
     dist_upgrade_enabled = upgrades.is_dist_upgrade_enabled()
     has_free_space = utils.is_sufficient_free_space()

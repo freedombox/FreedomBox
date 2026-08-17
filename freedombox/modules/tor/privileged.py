@@ -13,8 +13,8 @@ from typing import Any
 
 import augeas
 
-from plinth import action_utils
-from plinth.actions import privileged
+from freedombox import action_utils
+from freedombox.actions import privileged
 
 INSTANCE_NAME = 'plinth'
 SERVICE_FILE = '/etc/firewalld/services/tor-{0}.xml'

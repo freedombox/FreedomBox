@@ -11,8 +11,8 @@ import logging
 import re
 import subprocess
 
-from plinth import action_utils
-from plinth.actions import privileged
+from freedombox import action_utils
+from freedombox.actions import privileged
 
 
 def _sort_interfaces(interfaces: list[str]) -> list[str]:

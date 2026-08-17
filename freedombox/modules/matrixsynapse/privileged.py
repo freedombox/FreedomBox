@@ -11,8 +11,8 @@ import shutil
 import requests
 import yaml
 
-from plinth import action_utils, utils
-from plinth.actions import privileged
+from freedombox import action_utils, utils
+from freedombox.actions import privileged
 
 CONF_DIR = "/etc/matrix-synapse/conf.d/"
 

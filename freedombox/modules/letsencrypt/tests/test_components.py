@@ -9,8 +9,8 @@ from unittest.mock import call, patch
 
 import pytest
 
-from plinth.modules.letsencrypt.components import LetsEncrypt
-from plinth.modules.names.components import DomainName, DomainType
+from freedombox.modules.letsencrypt.components import LetsEncrypt
+from freedombox.modules.names.components import DomainName, DomainType
 
 
 @pytest.fixture(name='empty_letsencrypt_list', autouse=True)

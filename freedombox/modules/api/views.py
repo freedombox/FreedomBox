@@ -10,7 +10,7 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.http import HttpResponse
 from django.templatetags.static import static
 
-from plinth import frontpage
+from freedombox import frontpage
 
 
 def shortcuts(request, **kwargs):

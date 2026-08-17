@@ -6,9 +6,9 @@ import pathlib
 import re
 import subprocess
 
-from plinth import action_utils
-from plinth.actions import privileged
-from plinth.db import mariadb
+from freedombox import action_utils
+from freedombox.actions import privileged
+from freedombox.db import mariadb
 
 APACHE_CONF = '/etc/apache2/conf-available/zoph.conf'
 DB_CONF = pathlib.Path('/etc/zoph.ini')

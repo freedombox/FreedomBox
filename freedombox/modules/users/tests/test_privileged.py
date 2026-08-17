@@ -12,9 +12,9 @@ import subprocess
 
 import pytest
 
-from plinth import action_utils
-from plinth.modules.users import privileged
-from plinth.tests import config as test_config
+from freedombox import action_utils
+from freedombox.modules.users import privileged
+from freedombox.tests import config as test_config
 
 _cleanup_users = None
 _cleanup_groups = None

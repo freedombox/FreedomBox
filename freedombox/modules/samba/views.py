@@ -12,8 +12,8 @@ from django.urls import reverse
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
-from plinth import views
-from plinth.modules import samba, storage
+from freedombox import views
+from freedombox.modules import samba, storage
 
 from . import privileged
 

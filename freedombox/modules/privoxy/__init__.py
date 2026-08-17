@@ -7,17 +7,17 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import gettext_noop
 
-from plinth import action_utils
-from plinth import app as app_module
-from plinth import cfg, frontpage, menu
-from plinth.daemon import Daemon
-from plinth.diagnostic_check import DiagnosticCheck
-from plinth.modules.apache.components import diagnose_url
-from plinth.modules.backups.components import BackupRestore
-from plinth.modules.firewall.components import Firewall
-from plinth.modules.users.components import UsersAndGroups
-from plinth.package import Packages
-from plinth.utils import format_lazy
+from freedombox import action_utils
+from freedombox import app as app_module
+from freedombox import cfg, frontpage, menu
+from freedombox.daemon import Daemon
+from freedombox.diagnostic_check import DiagnosticCheck
+from freedombox.modules.apache.components import diagnose_url
+from freedombox.modules.backups.components import BackupRestore
+from freedombox.modules.firewall.components import Firewall
+from freedombox.modules.users.components import UsersAndGroups
+from freedombox.package import Packages
+from freedombox.utils import format_lazy
 
 from . import manifest, privileged
 

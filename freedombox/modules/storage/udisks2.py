@@ -5,8 +5,8 @@ import logging
 import threading
 from typing import Any
 
-from plinth import cfg
-from plinth.utils import import_from_gi
+from freedombox import cfg
+from freedombox.utils import import_from_gi
 
 from . import privileged
 

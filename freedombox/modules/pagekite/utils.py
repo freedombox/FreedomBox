@@ -6,8 +6,8 @@ import os
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth import app as app_module
-from plinth.signals import domain_added, domain_removed
+from freedombox import app as app_module
+from freedombox.signals import domain_added, domain_removed
 
 LOGGER = logging.getLogger(__name__)
 

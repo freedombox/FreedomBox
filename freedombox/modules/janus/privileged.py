@@ -3,8 +3,8 @@
 Configure Janus server.
 """
 
-from plinth import action_utils
-from plinth.actions import privileged
+from freedombox import action_utils
+from freedombox.actions import privileged
 
 JANUS_CONF_PATH = '/etc/janus/janus.jcfg'
 

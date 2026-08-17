@@ -8,7 +8,7 @@ from unittest.mock import call, patch
 
 import pytest
 
-from plinth.utils import random_string
+from freedombox.utils import random_string
 
 from .. import notify_configuration_change
 from ..components import (TurnConfiguration, TurnConsumer,

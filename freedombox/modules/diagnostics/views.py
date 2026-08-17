@@ -14,12 +14,12 @@ from django.utils.translation import gettext_lazy as _
 from django.views.decorators.http import require_POST
 from django.views.generic import TemplateView
 
-from plinth import operation
-from plinth.app import App
-from plinth.diagnostic_check import Result
-from plinth.modules import diagnostics
-from plinth.setup import run_repair_on_app
-from plinth.views import AppView
+from freedombox import operation
+from freedombox.app import App
+from freedombox.diagnostic_check import Result
+from freedombox.modules import diagnostics
+from freedombox.setup import run_repair_on_app
+from freedombox.views import AppView
 
 from .forms import ConfigureForm
 

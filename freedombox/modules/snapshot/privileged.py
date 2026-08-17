@@ -8,8 +8,8 @@ import signal
 import augeas
 import dbus
 
-from plinth import action_utils
-from plinth.actions import privileged
+from freedombox import action_utils
+from freedombox.actions import privileged
 
 FSTAB = '/etc/fstab'
 DEFAULT_FILE = '/etc/default/snapper'

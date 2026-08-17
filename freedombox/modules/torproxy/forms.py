@@ -6,7 +6,7 @@ Forms for configuring Tor Proxy.
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-from plinth.modules.tor.forms import TorCommonForm
+from freedombox.modules.tor.forms import TorCommonForm
 
 
 class TorProxyForm(TorCommonForm):

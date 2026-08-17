@@ -5,7 +5,7 @@ Functional, browser based tests for ssh app.
 
 import pytest
 
-from plinth.tests.functional import BaseAppTests
+from freedombox.tests.functional import BaseAppTests
 
 pytestmark = [pytest.mark.system, pytest.mark.ssh]
 

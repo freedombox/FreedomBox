@@ -7,8 +7,8 @@ import pathlib
 
 import augeas
 
-from plinth import action_utils
-from plinth.actions import privileged, secret_str
+from freedombox import action_utils
+from freedombox.actions import privileged, secret_str
 
 CONFIG_FILE = '/etc/mumble/mumble-server.ini'
 OLD_CONFIG_FILE = '/etc/mumble-server.ini'

@@ -5,8 +5,8 @@ Forms for Deluge app.
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth.modules.storage.forms import (DirectorySelectForm,
-                                          DirectoryValidator)
+from freedombox.modules.storage.forms import (DirectorySelectForm,
+                                              DirectoryValidator)
 
 from . import SYSTEM_USER
 

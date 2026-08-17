@@ -5,8 +5,8 @@ import json
 
 import pytest
 
-from plinth.diagnostic_check import (CheckJSONDecoder, CheckJSONEncoder,
-                                     DiagnosticCheck, Result)
+from freedombox.diagnostic_check import (CheckJSONDecoder, CheckJSONEncoder,
+                                         DiagnosticCheck, Result)
 
 
 def test_result():

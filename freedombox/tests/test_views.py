@@ -9,7 +9,7 @@ import pytest
 from django.http import JsonResponse
 from django.urls import resolve
 
-from plinth.views import get_breadcrumbs, is_safe_url, json_exception
+from freedombox.views import get_breadcrumbs, is_safe_url, json_exception
 
 
 def test_get_breadcrumbs(rf, test_menu):

@@ -7,9 +7,9 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
-from plinth import app as app_module
-from plinth.modules import storage
-from plinth.modules.samba import privileged as samba_privileged
+from freedombox import app as app_module
+from freedombox.modules import storage
+from freedombox.modules.samba import privileged as samba_privileged
 
 from . import privileged
 

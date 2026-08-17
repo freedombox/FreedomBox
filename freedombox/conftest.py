@@ -62,7 +62,7 @@ def pytest_collection_modifyitems(config, items):
 @pytest.fixture(name='load_cfg')
 def fixture_load_cfg():
     """Load test configuration."""
-    from plinth import cfg
+    from freedombox import cfg
 
     keys = ('file_root', 'data_dir', 'custom_static_dir', 'store_file',
             'doc_dir', 'server_dir', 'host', 'port', 'use_x_forwarded_for',
@@ -187,7 +187,7 @@ def fixture_mock_run_as_user():
     """A fixture to override action_utils.run_as_user."""
 
     def _bypass_runuser(*args, username, **kwargs):
-        from plinth import action_utils
+        from freedombox import action_utils
         return action_utils.run(*args, **kwargs)
 
     with patch('plinth.action_utils.run_as_user') as mock:
@@ -287,7 +287,7 @@ def fixture_host_sudo(host):
 @pytest.fixture(name='test_menu')
 def fixture_test_menu():
     """Initialized menu module."""
-    from plinth import menu as menu_module
+    from freedombox import menu as menu_module
 
     menu_module.Menu._all_menus = set()
     menu_module.init()

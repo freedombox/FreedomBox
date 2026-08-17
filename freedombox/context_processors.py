@@ -6,8 +6,8 @@ Django context processors to provide common data to templates.
 from django.utils.translation import gettext as _
 from django.utils.translation import gettext_noop
 
-from plinth import cfg, views, web_server
-from plinth.utils import is_user_admin
+from freedombox import cfg, views, web_server
+from freedombox.utils import is_user_admin
 
 
 def common(request):
@@ -20,7 +20,7 @@ def common(request):
     # the brand name 'FreedomBox' itself to be translated.
     gettext_noop('FreedomBox')
 
-    from plinth.notification import Notification
+    from freedombox.notification import Notification
     notifications_context = Notification.get_display_context(
         request, user=request.user)
 

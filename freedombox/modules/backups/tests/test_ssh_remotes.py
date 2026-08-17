@@ -11,7 +11,7 @@ import subprocess
 import pytest
 from django.forms import ValidationError
 
-from plinth.utils import generate_password, random_string
+from freedombox.utils import generate_password, random_string
 
 from .. import forms
 

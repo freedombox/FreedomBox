@@ -14,7 +14,7 @@ import traceback
 import types
 import typing
 
-from plinth import cfg, module_loader
+from freedombox import cfg, module_loader
 
 logger = logging.getLogger(__name__)
 

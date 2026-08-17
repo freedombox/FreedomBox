@@ -8,12 +8,12 @@ import subprocess
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import gettext_noop
 
-from plinth import app as app_module
-from plinth import menu
-from plinth.daemon import Daemon, RelatedDaemon
-from plinth.diagnostic_check import DiagnosticCheck, Result
-from plinth.modules.backups.components import BackupRestore
-from plinth.package import Packages
+from freedombox import app as app_module
+from freedombox import menu
+from freedombox.daemon import Daemon, RelatedDaemon
+from freedombox.diagnostic_check import DiagnosticCheck, Result
+from freedombox.modules.backups.components import BackupRestore
+from freedombox.package import Packages
 
 from . import manifest
 

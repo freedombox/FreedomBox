@@ -6,12 +6,12 @@ import logging
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
-from plinth import app as app_module
-from plinth import frontpage, menu
-from plinth.modules.backups.components import BackupRestore
-from plinth.modules.firewall.components import Firewall
-from plinth.package import Packages
-from plinth.web_server import StaticFiles
+from freedombox import app as app_module
+from freedombox import frontpage, menu
+from freedombox.modules.backups.components import BackupRestore
+from freedombox.modules.firewall.components import Firewall
+from freedombox.package import Packages
+from freedombox.web_server import StaticFiles
 
 from . import manifest
 

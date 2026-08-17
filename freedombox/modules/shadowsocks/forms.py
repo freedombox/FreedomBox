@@ -4,7 +4,7 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-from plinth.modules.shadowsocksserver.forms import METHODS
+from freedombox.modules.shadowsocksserver.forms import METHODS
 
 
 class TrimmedCharField(forms.CharField):

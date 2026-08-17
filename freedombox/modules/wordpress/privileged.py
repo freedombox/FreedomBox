@@ -9,8 +9,8 @@ import string
 
 import augeas
 
-from plinth import action_utils
-from plinth.actions import privileged
+from freedombox import action_utils
+from freedombox.actions import privileged
 
 _public_access_file = pathlib.Path('/etc/wordpress/is_public')
 _config_file_path = pathlib.Path('/etc/wordpress/config-default.php')

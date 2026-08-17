@@ -9,9 +9,9 @@ import inspect
 import logging
 from typing import ClassVar, TypeAlias
 
-from plinth import cfg
-from plinth.diagnostic_check import DiagnosticCheck
-from plinth.signals import post_app_loading
+from freedombox import cfg
+from freedombox.diagnostic_check import DiagnosticCheck
+from freedombox.signals import post_app_loading
 
 from . import clients as clients_module
 from . import db
@@ -314,7 +314,7 @@ class App:
 
         This is typically true if the apps has daemons or containers.
         """
-        from plinth import log
+        from freedombox import log
         for component in self.components.values():
             if isinstance(component, log.LogEmitter):
                 return True
@@ -323,7 +323,7 @@ class App:
 
     def get_logs(self) -> _list_type[dict[str, str]]:
         """Return the logs in a dictionary format."""
-        from plinth import log
+        from freedombox import log
         logs: list[dict[str, str]] = []
         for component in self.components.values():
             if isinstance(component, log.LogEmitter):
@@ -611,17 +611,17 @@ class EnableState(LeaderComponent):
 
     def is_enabled(self):
         """Return whether the app/component is enabled."""
-        from plinth import kvstore
+        from freedombox import kvstore
         return kvstore.get_default(self.key, False)
 
     def enable(self):
         """Store that the app/component is enabled."""
-        from plinth import kvstore
+        from freedombox import kvstore
         kvstore.set(self.key, True)
 
     def disable(self):
         """Store that the app/component is disabled."""
-        from plinth import kvstore
+        from freedombox import kvstore
         kvstore.set(self.key, False)
 
 

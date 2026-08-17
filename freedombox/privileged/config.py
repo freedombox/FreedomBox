@@ -5,9 +5,9 @@ import importlib
 import inspect
 import shutil
 
-from plinth import app as app_module
-from plinth import module_loader
-from plinth.actions import privileged
+from freedombox import app as app_module
+from freedombox import module_loader
+from freedombox.actions import privileged
 
 
 def _get_managed_dropin_config(app_id: str, path: str):
@@ -21,7 +21,7 @@ def _get_managed_dropin_config(app_id: str, path: str):
 
     for cls in app_classes:
         app = cls()
-        from plinth.config import DropinConfigs
+        from freedombox.config import DropinConfigs
         components = app.get_components_of_type(DropinConfigs)
         for component in components:
             if path in component.etc_paths:

@@ -12,11 +12,11 @@ from django.utils.translation import gettext as _
 from django.utils.translation import gettext_lazy, gettext_noop
 
 import plinth.privileged.packages as privileged
-from plinth import app as app_module
-from plinth.diagnostic_check import (DiagnosticCheck,
+from freedombox import app as app_module
+from freedombox.diagnostic_check import (DiagnosticCheck,
                                      DiagnosticCheckParameters, Result)
-from plinth.errors import MissingPackageError
-from plinth.utils import format_lazy
+from freedombox.errors import MissingPackageError
+from freedombox.utils import format_lazy
 
 from . import kvstore
 from . import operation as operation_module

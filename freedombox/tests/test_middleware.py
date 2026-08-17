@@ -15,8 +15,8 @@ from django.test.client import RequestFactory
 from django.urls import resolve
 from stronghold.decorators import public
 
-from plinth import app as app_module
-from plinth.middleware import (AdminRequiredMiddleware, CommonErrorMiddleware,
+from freedombox import app as app_module
+from freedombox.middleware import (AdminRequiredMiddleware, CommonErrorMiddleware,
                                SetupMiddleware)
 
 

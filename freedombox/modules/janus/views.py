@@ -7,8 +7,8 @@ import copy
 
 from django.views.generic import TemplateView
 
-from plinth import app as app_module
-from plinth.middleware import CONTENT_SECURITY_POLICY
+from freedombox import app as app_module
+from freedombox.middleware import CONTENT_SECURITY_POLICY
 
 
 class JanusRoomView(TemplateView):

@@ -7,7 +7,7 @@ import pathlib
 
 import pytest
 
-from plinth.modules.snapshot import privileged
+from freedombox.modules.snapshot import privileged
 
 systemctl_path = pathlib.Path('/usr/bin/systemctl')
 systemd_installed = pytest.mark.skipif(not systemctl_path.exists(),

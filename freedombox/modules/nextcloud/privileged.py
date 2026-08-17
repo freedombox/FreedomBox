@@ -12,8 +12,8 @@ import time
 
 import augeas
 
-from plinth import action_utils
-from plinth.actions import privileged, secret_str
+from freedombox import action_utils
+from freedombox.actions import privileged, secret_str
 
 CONTAINER_NAME = 'nextcloud-freedombox'
 SERVICE_NAME = 'nextcloud-freedombox'

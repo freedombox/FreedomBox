@@ -5,7 +5,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
-from plinth.modules.users.components import UsersAndGroups
+from freedombox.modules.users.components import UsersAndGroups
 
 from . import privileged
 

@@ -6,9 +6,9 @@ from django.urls import reverse_lazy
 from django.utils.functional import lazy
 from django.utils.translation import gettext_lazy as _
 
-from plinth import cfg, network
-from plinth.modules import names
-from plinth.utils import format_lazy, import_from_gi
+from freedombox import cfg, network
+from freedombox.modules import names
+from freedombox.utils import format_lazy, import_from_gi
 
 nm = import_from_gi('NM', '1.0')
 
@@ -19,7 +19,7 @@ def _get_dns_over_tls():
         return str(_('unknown'))
 
     try:
-        from plinth.modules.names import privileged
+        from freedombox.modules.names import privileged
         dns_over_tls = privileged.get_resolved_configuration()['dns_over_tls']
     except Exception:
         return str(_('unknown'))
@@ -166,7 +166,7 @@ class ConnectionForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         """Disable DNS fallback field if necessary."""
-        from plinth.modules import names
+        from freedombox.modules import names
         super().__init__(*args, **kwargs)
         if 'dns_over_tls' in self.fields:
             self.fields['dns_over_tls'].disabled = (

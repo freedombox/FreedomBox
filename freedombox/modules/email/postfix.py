@@ -11,7 +11,7 @@ import re
 import subprocess
 from dataclasses import dataclass
 
-from plinth import action_utils
+from freedombox import action_utils
 
 
 @dataclass

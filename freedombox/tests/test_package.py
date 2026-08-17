@@ -9,10 +9,10 @@ from unittest.mock import Mock, call, patch
 
 import pytest
 
-from plinth.app import App
-from plinth.diagnostic_check import DiagnosticCheck, Result
-from plinth.errors import MissingPackageError
-from plinth.package import Package, Packages, packages_installed
+from freedombox.app import App
+from freedombox.diagnostic_check import DiagnosticCheck, Result
+from freedombox.errors import MissingPackageError
+from freedombox.package import Package, Packages, packages_installed
 
 
 @pytest.fixture(autouse=True)

@@ -8,7 +8,7 @@ from unittest.mock import Mock, call, patch
 
 import pytest
 
-from plinth.web_server import StaticFiles, resolve_static_path
+from freedombox.web_server import StaticFiles, resolve_static_path
 
 
 @pytest.fixture(autouse=True)

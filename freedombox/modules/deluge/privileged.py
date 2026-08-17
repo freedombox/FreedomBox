@@ -5,9 +5,9 @@ import pathlib
 import shutil
 import time
 
-from plinth import action_utils
-from plinth.actions import privileged
-from plinth.modules.deluge.utils import Config
+from freedombox import action_utils
+from freedombox.actions import privileged
+from freedombox.modules.deluge.utils import Config
 
 DELUGE_CONF_DIR = pathlib.Path('/var/lib/deluged/config/')
 

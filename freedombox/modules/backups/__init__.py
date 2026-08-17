@@ -14,10 +14,10 @@ from django.utils.text import get_valid_filename
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import gettext_noop
 
-from plinth import app as app_module
-from plinth import cfg, glib, menu
-from plinth.modules.names.components import DomainName
-from plinth.package import Packages
+from freedombox import app as app_module
+from freedombox import cfg, glib, menu
+from freedombox.modules.names.components import DomainName
+from freedombox.package import Packages
 
 from . import api, errors, manifest, privileged
 
@@ -239,7 +239,7 @@ def split_path(path):
 
 def _show_schedule_setup_notification():
     """Show a notification hinting to setup a remote backup schedule."""
-    from plinth.notification import Notification
+    from freedombox.notification import Notification
     message = gettext_noop(
         'Enable an automatic backup schedule for data safety. Prefer an '
         'encrypted remote backup location or an extra attached disk.')
@@ -267,7 +267,7 @@ def on_schedule_save(repository):
     if not repository.schedule.enabled:
         return
 
-    from plinth.notification import Notification
+    from freedombox.notification import Notification
     try:
         note = Notification.get('backups-remote-schedule')
         note.dismiss()
@@ -277,7 +277,7 @@ def on_schedule_save(repository):
 
 def _show_schedule_error_notification(repository, is_error, exception=None):
     """Show or hide a notification related scheduled backup operation."""
-    from plinth.notification import Notification
+    from freedombox.notification import Notification
     id_ = 'backups-schedule-error-' + repository.uuid
     try:
         note = Notification.get(id_)

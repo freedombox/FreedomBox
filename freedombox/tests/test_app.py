@@ -8,10 +8,10 @@ from unittest.mock import Mock, call, patch
 
 import pytest
 
-from plinth import log
-from plinth.app import (App, Component, EnableState, FollowerComponent, Info,
+from freedombox import log
+from freedombox.app import (App, Component, EnableState, FollowerComponent, Info,
                         LeaderComponent, apps_init)
-from plinth.diagnostic_check import DiagnosticCheck, Result
+from freedombox.diagnostic_check import DiagnosticCheck, Result
 
 # pylint: disable=protected-access
 
@@ -197,7 +197,7 @@ def test_get_set_setup_version():
     """Setting and getting the setup version of the app."""
     app = AppSetupTest()
 
-    from plinth import models
+    from freedombox import models
     try:
         models.Module.objects.get(pk=app.app_id).delete()
     except models.Module.DoesNotExist:

@@ -7,7 +7,7 @@ Uses utilities from 'postgres' package such as 'psql' and 'pg_dump'.
 import os
 import pathlib
 
-from plinth import action_utils
+from freedombox import action_utils
 
 
 def _run_as(command, **kwargs):

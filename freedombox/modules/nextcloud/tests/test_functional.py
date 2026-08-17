@@ -7,7 +7,7 @@ import urllib
 import pytest
 from selenium.webdriver.common.keys import Keys
 
-from plinth.tests import functional
+from freedombox.tests import functional
 
 pytestmark = [pytest.mark.apps, pytest.mark.nextcloud]
 

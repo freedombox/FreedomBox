@@ -9,7 +9,7 @@ Django migration for adding the notification model.
 
 from django.db import migrations, models
 
-from plinth.models import JSONField
+from freedombox.models import JSONField
 
 
 class Migration(migrations.Migration):

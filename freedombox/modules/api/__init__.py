@@ -3,7 +3,7 @@
 FreedomBox app for api for android app.
 """
 
-from plinth import app as app_module
+from freedombox import app as app_module
 
 
 class ApiApp(app_module.App):

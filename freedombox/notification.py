@@ -11,8 +11,8 @@ from django.template.response import SimpleTemplateResponse
 from django.utils import timezone
 from django.utils.translation import gettext
 
-from plinth import cfg
-from plinth.utils import SafeFormatter
+from freedombox import cfg
+from freedombox.utils import SafeFormatter
 
 from . import db, models
 

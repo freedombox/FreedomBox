@@ -7,9 +7,9 @@ from unittest.mock import call, patch
 
 import pytest
 
-from plinth.app import App
-from plinth.diagnostic_check import DiagnosticCheck, Result
-from plinth.modules.firewall.components import (Firewall,
+from freedombox.app import App
+from freedombox.diagnostic_check import DiagnosticCheck, Result
+from freedombox.modules.firewall.components import (Firewall,
                                                 FirewallLocalProtection)
 
 

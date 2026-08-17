@@ -10,10 +10,10 @@ import shutil
 import augeas
 import yaml
 
-from plinth import action_utils
-from plinth.actions import privileged
-from plinth.modules.searx.manifest import PUBLIC_ACCESS_SETTING_FILE
-from plinth.utils import gunzip
+from freedombox import action_utils
+from freedombox.actions import privileged
+from freedombox.modules.searx.manifest import PUBLIC_ACCESS_SETTING_FILE
+from freedombox.utils import gunzip
 
 SETTINGS_FILE = '/etc/searx/settings.yml'
 

@@ -5,12 +5,12 @@ FreedomBox app to configure Shaarli.
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth import app as app_module
-from plinth import frontpage, menu
-from plinth.modules.apache.components import Webserver
-from plinth.modules.backups.components import BackupRestore
-from plinth.modules.firewall.components import Firewall
-from plinth.package import Packages
+from freedombox import app as app_module
+from freedombox import frontpage, menu
+from freedombox.modules.apache.components import Webserver
+from freedombox.modules.backups.components import BackupRestore
+from freedombox.modules.firewall.components import Firewall
+from freedombox.package import Packages
 
 from . import manifest
 

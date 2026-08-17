@@ -7,7 +7,7 @@ from unittest.mock import Mock, patch
 
 import pytest
 
-from plinth.modules.dynamicdns import gnudip
+from freedombox.modules.dynamicdns import gnudip
 
 response_to_salt_request = """
 <html>

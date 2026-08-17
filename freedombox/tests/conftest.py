@@ -8,7 +8,7 @@ from unittest.mock import patch
 
 import pytest
 
-from plinth import cfg
+from freedombox import cfg
 
 
 @pytest.fixture(name='shortcuts_file')

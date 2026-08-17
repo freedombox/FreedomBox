@@ -11,7 +11,7 @@ import urllib
 
 import pytest
 
-from plinth.tests import functional
+from freedombox.tests import functional
 
 _admin_password = functional.config['DEFAULT']['password']
 

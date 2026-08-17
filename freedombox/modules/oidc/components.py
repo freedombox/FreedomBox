@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """App component for other apps to authenticate with OpenID Connect."""
 
-from plinth import app as app_module
+from freedombox import app as app_module
 
 
 class OpenIDConnect(app_module.FollowerComponent):
@@ -143,7 +143,7 @@ class OpenIDConnect(app_module.FollowerComponent):
 
     def _get_redirect_uris(self) -> str:
         """Return an expanded list of redirect URIs."""
-        from plinth.modules.names.components import DomainName
+        from freedombox.modules.names.components import DomainName
         final_uris = []
         # redirect_uris list can't be empty. Otherwise, validations for
         # 'localhost' and IP addresses won't work.
@@ -159,7 +159,7 @@ class OpenIDConnect(app_module.FollowerComponent):
 
     def _get_allowed_origins(self) -> str:
         """Return a list of all allowed origins for CORS header."""
-        from plinth.modules.names.components import DomainName
+        from freedombox.modules.names.components import DomainName
 
         # redirect_uris list can't be empty. Otherwise, validations for
         # 'localhost' and IP addresses won't work. Keep origins in line with

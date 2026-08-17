@@ -36,12 +36,12 @@ from fido2.server import Fido2Server
 from fido2.webauthn import AttestedCredentialData, AuthenticationResponse
 
 import plinth.modules.ssh.privileged as ssh_privileged
-from plinth import translation
-from plinth.models import UserPasskey
-from plinth.modules import first_boot
-from plinth.utils import is_user_admin
-from plinth.version import Version
-from plinth.views import AppView, json_exception
+from freedombox import translation
+from freedombox.models import UserPasskey
+from freedombox.modules import first_boot
+from freedombox.utils import is_user_admin
+from freedombox.version import Version
+from freedombox.views import AppView, json_exception
 
 from . import privileged
 from .forms import (AuthenticationForm, CaptchaForm, CreateUserForm,

@@ -1,11 +1,11 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """List and handle system services."""
 
-from plinth import action_utils
-from plinth import app as app_module
-from plinth import module_loader
-from plinth.actions import privileged
-from plinth.daemon import Daemon, RelatedDaemon
+from freedombox import action_utils
+from freedombox import app as app_module
+from freedombox import module_loader
+from freedombox.actions import privileged
+from freedombox.daemon import Daemon, RelatedDaemon
 
 
 @privileged
@@ -116,7 +116,7 @@ def get_logs(service: str) -> dict[str, str]:
 
 def _get_managed_services():
     """Get a set of all services managed by FreedomBox."""
-    from plinth.container import Container
+    from freedombox.container import Container
 
     services = set()
     module_loader.load_modules()

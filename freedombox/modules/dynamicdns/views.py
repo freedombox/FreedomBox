@@ -10,8 +10,8 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 
-from plinth import views
-from plinth.modules import dynamicdns
+from freedombox import views
+from freedombox.modules import dynamicdns
 
 from .forms import DomainForm
 

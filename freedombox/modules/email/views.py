@@ -9,8 +9,8 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView
 
-from plinth.modules.email import dns
-from plinth.views import AppView
+from freedombox.modules.email import dns
+from freedombox.views import AppView
 
 from . import aliases as aliases_module
 from . import forms, privileged

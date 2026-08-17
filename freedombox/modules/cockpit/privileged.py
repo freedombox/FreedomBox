@@ -5,8 +5,8 @@ Configure Cockpit.
 
 import augeas
 
-from plinth import action_utils
-from plinth.actions import privileged
+from freedombox import action_utils
+from freedombox.actions import privileged
 
 CONFIG_FILE = '/etc/cockpit/cockpit.conf'
 

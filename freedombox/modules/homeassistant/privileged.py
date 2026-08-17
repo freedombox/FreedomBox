@@ -9,7 +9,7 @@ from dataclasses import dataclass
 
 import yaml
 
-from plinth.actions import privileged
+from freedombox.actions import privileged
 
 _settings_file = pathlib.Path(
     '/var/lib/home-assistant-freedombox/config/configuration.yaml')

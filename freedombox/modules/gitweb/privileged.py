@@ -12,10 +12,11 @@ import time
 from typing import Any
 from urllib import parse
 
-from plinth import action_utils
-from plinth.actions import privileged, secret_str
-from plinth.modules.gitweb.forms import RepositoryValidator, get_name_from_url
-from plinth.modules.gitweb.manifest import GIT_REPO_PATH, REPO_DIR_OWNER
+from freedombox import action_utils
+from freedombox.actions import privileged, secret_str
+from freedombox.modules.gitweb.forms import (RepositoryValidator,
+                                             get_name_from_url)
+from freedombox.modules.gitweb.manifest import GIT_REPO_PATH, REPO_DIR_OWNER
 
 logger = logging.getLogger(__name__)
 

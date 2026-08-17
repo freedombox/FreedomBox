@@ -11,8 +11,8 @@ import types
 
 import django
 
-from plinth import cfg
-from plinth.signals import pre_module_loading
+from freedombox import cfg
+from freedombox.signals import pre_module_loading
 
 logger = logging.getLogger(__name__)
 
@@ -50,7 +50,7 @@ def load_modules():
 
 def _include_module_urls(module_import_path, module_name):
     """Include the module's URLs in global project URLs list"""
-    from plinth import urls
+    from freedombox import urls
     url_module = module_import_path + '.urls'
     try:
         urls.urlpatterns += [

@@ -4,8 +4,8 @@
 import pathlib
 import re
 
-from plinth import action_utils
-from plinth.actions import privileged
+from freedombox import action_utils
+from freedombox.actions import privileged
 
 _config_file = pathlib.Path('/etc/roundcube/freedombox-config.php')
 _rc_db_file = pathlib.Path('/var/lib/dbconfig-common/sqlite3/'

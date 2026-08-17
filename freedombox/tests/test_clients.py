@@ -3,12 +3,12 @@
 Test module for clients module.
 """
 
-from plinth import clients
-from plinth.modules.deluge.manifest import clients as deluge_clients
-from plinth.modules.infinoted.manifest import clients as infinoted_clients
-from plinth.modules.quassel.manifest import clients as quassel_clients
-from plinth.modules.syncthing.manifest import clients as syncthing_clients
-from plinth.modules.tor.manifest import clients as tor_clients
+from freedombox import clients
+from freedombox.modules.deluge.manifest import clients as deluge_clients
+from freedombox.modules.infinoted.manifest import clients as infinoted_clients
+from freedombox.modules.quassel.manifest import clients as quassel_clients
+from freedombox.modules.syncthing.manifest import clients as syncthing_clients
+from freedombox.modules.tor.manifest import clients as tor_clients
 
 
 def test_of_type_web():

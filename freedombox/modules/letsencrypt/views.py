@@ -11,8 +11,8 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
-from plinth.modules import letsencrypt
-from plinth.views import AppView, messages_error
+from freedombox.modules import letsencrypt
+from freedombox.views import AppView, messages_error
 
 logger = logging.getLogger(__name__)
 

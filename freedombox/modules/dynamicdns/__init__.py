@@ -11,14 +11,14 @@ from typing import Any, Literal, Tuple
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth import app as app_module
-from plinth import cfg, glib, kvstore, menu
-from plinth.modules.backups.components import BackupRestore
-from plinth.modules.names.components import DomainType
-from plinth.modules.privacy import lookup_public_address
-from plinth.modules.users.components import UsersAndGroups
-from plinth.signals import domain_added, domain_removed
-from plinth.utils import format_lazy
+from freedombox import app as app_module
+from freedombox import cfg, glib, kvstore, menu
+from freedombox.modules.backups.components import BackupRestore
+from freedombox.modules.names.components import DomainType
+from freedombox.modules.privacy import lookup_public_address
+from freedombox.modules.users.components import UsersAndGroups
+from freedombox.signals import domain_added, domain_removed
+from freedombox.utils import format_lazy
 
 from . import generic, gnudip, manifest
 

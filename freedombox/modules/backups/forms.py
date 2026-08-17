@@ -15,9 +15,9 @@ from django.core.validators import (FileExtensionValidator,
 from django.utils.translation import gettext
 from django.utils.translation import gettext_lazy as _
 
-from plinth import cfg
-from plinth.modules.storage import get_mounts
-from plinth.utils import format_lazy
+from freedombox import cfg
+from freedombox.modules.storage import get_mounts
+from freedombox.utils import format_lazy
 
 from . import api, split_path
 from .repository import get_repositories

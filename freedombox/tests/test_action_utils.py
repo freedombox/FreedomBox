@@ -11,7 +11,7 @@ from unittest.mock import Mock, call, patch
 
 import pytest
 
-from plinth.action_utils import (get_addresses, get_hostname,
+from freedombox.action_utils import (get_addresses, get_hostname,
                                  is_systemd_running, move_uploaded_file, run,
                                  run_as_user, service_action, service_disable,
                                  service_enable, service_is_enabled,

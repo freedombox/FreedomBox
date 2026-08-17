@@ -8,9 +8,9 @@ from django.core import validators
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
-from plinth import cfg
-from plinth.modules import names
-from plinth.utils import format_lazy
+from freedombox import cfg
+from freedombox.modules import names
+from freedombox.utils import format_lazy
 
 HOSTNAME_REGEX = r'^[a-zA-Z0-9]([-a-zA-Z0-9]{,61}[a-zA-Z0-9])?$'
 

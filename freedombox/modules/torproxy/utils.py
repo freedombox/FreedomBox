@@ -5,8 +5,8 @@ import itertools
 
 import augeas
 
-from plinth import app as app_module
-from plinth.daemon import app_is_running
+from freedombox import app as app_module
+from freedombox.daemon import app_is_running
 
 from . import privileged
 

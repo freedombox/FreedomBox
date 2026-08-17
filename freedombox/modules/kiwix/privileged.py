@@ -8,9 +8,9 @@ import shutil
 import subprocess
 from xml.etree import ElementTree
 
-from plinth import action_utils
-from plinth.actions import privileged
-from plinth.modules import kiwix
+from freedombox import action_utils
+from freedombox.actions import privileged
+from freedombox.modules import kiwix
 
 # Only one central library is supported.
 KIWIX_HOME = pathlib.Path('/var/lib/kiwix-server-freedombox')

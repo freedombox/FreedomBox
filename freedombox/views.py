@@ -26,13 +26,13 @@ from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 from stronghold.decorators import public
 
-from plinth import app as app_module
-from plinth import menu
-from plinth.daemon import app_is_running
-from plinth.modules.config import get_advanced_mode
-from plinth.modules.firewall.components import get_port_forwarding_info
-from plinth.package import Packages
-from plinth.translation import get_language_from_request, set_language
+from freedombox import app as app_module
+from freedombox import menu
+from freedombox.daemon import app_is_running
+from freedombox.modules.config import get_advanced_mode
+from freedombox.modules.firewall.components import get_port_forwarding_info
+from freedombox.package import Packages
+from freedombox.translation import get_language_from_request, set_language
 
 from . import forms, frontpage, operation, setup
 
@@ -156,7 +156,7 @@ def _get_redirect_url_from_param(request):
 
 def _has_backup_restore(app):
     """Return whether an app implements backup/restore."""
-    from plinth.modules.backups.components import BackupRestore
+    from freedombox.modules.backups.components import BackupRestore
     return any([
         component.has_data
         for component in app.get_components_of_type(BackupRestore)
@@ -535,7 +535,7 @@ class AppView(FormView):
         context['show_uninstall'] = not self.app.info.is_essential
         context['refresh_page_sec'] = None
 
-        from plinth.modules.firewall.components import Firewall
+        from freedombox.modules.firewall.components import Firewall
         context['firewall'] = self.app.get_components_of_type(Firewall)
 
         context['has_backup_restore'] = _has_backup_restore(self.app)

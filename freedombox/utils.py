@@ -14,7 +14,7 @@ import markupsafe
 import ruamel.yaml
 from django.utils.functional import lazy
 
-from plinth.version import Version  # noqa
+from freedombox.version import Version  # noqa
 
 
 def import_from_gi(library, version):

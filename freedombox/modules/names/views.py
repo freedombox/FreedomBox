@@ -12,9 +12,9 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 
-from plinth.modules import names
-from plinth.signals import domain_added, domain_removed
-from plinth.views import AppView
+from freedombox.modules import names
+from freedombox.signals import domain_added, domain_removed
+from freedombox.views import AppView
 
 from . import components, privileged, resolved
 from .forms import DomainAddForm, HostnameForm, NamesConfigurationForm

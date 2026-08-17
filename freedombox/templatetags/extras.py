@@ -6,8 +6,8 @@ from urllib.parse import urlparse
 from django import template
 from django.utils.safestring import mark_safe
 
-from plinth import clients as clients_module
-from plinth import utils, web_server
+from freedombox import clients as clients_module
+from freedombox import utils, web_server
 
 register = template.Library()
 
@@ -73,7 +73,7 @@ def _is_internal_url(url):
     if not parsed_url.netloc:
         return True
 
-    from plinth.modules.names.components import DomainName
+    from freedombox.modules.names.components import DomainName
     return parsed_url.netloc in DomainName.list_names()
 
 

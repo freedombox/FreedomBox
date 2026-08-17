@@ -5,7 +5,7 @@ import urllib.parse
 
 from oauth2_provider import oauth2_validators
 
-from plinth import action_utils
+from freedombox import action_utils
 
 
 class OAuth2Validator(oauth2_validators.OAuth2Validator):

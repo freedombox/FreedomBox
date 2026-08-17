@@ -4,7 +4,7 @@ Functional, browser based tests for pagekite app.
 """
 
 import pytest
-from plinth.tests import functional
+from freedombox.tests import functional
 
 pytestmark = [pytest.mark.system, pytest.mark.domain, pytest.mark.pagekite]
 

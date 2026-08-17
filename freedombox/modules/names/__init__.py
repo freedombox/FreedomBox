@@ -12,18 +12,18 @@ from typing import Iterator
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import gettext_noop
 
-from plinth import app as app_module
-from plinth import cfg, glib, kvstore, menu, network, setup
-from plinth.daemon import Daemon
-from plinth.diagnostic_check import (DiagnosticCheck,
-                                     DiagnosticCheckParameters, Result)
-from plinth.modules.backups.components import BackupRestore
-from plinth.modules.names.components import DomainType
-from plinth.package import Packages
-from plinth.privileged import service as service_privileged
-from plinth.signals import (domain_added, domain_removed, post_hostname_change,
-                            pre_hostname_change)
-from plinth.utils import format_lazy
+from freedombox import app as app_module
+from freedombox import cfg, glib, kvstore, menu, network, setup
+from freedombox.daemon import Daemon
+from freedombox.diagnostic_check import (DiagnosticCheck,
+                                         DiagnosticCheckParameters, Result)
+from freedombox.modules.backups.components import BackupRestore
+from freedombox.modules.names.components import DomainType
+from freedombox.package import Packages
+from freedombox.privileged import service as service_privileged
+from freedombox.signals import (domain_added, domain_removed,
+                                post_hostname_change, pre_hostname_change)
+from freedombox.utils import format_lazy
 
 from . import components, manifest, privileged
 
@@ -256,7 +256,7 @@ def on_domain_added(sender: str, domain_type: str, name: str = '',
     # won't happen if in the signal calling order, oidc module get notified
     # first. A proper fix is being worked on as a complete overhaul to domain
     # change notification mechanism.
-    from plinth.modules import oidc
+    from freedombox.modules import oidc
     oidc.on_domain_added(sender, domain_type, name, description, services,
                          **kwargs)
 
@@ -273,7 +273,7 @@ def on_domain_removed(sender: str, domain_type: str, name: str = '', **kwargs):
         # domains. This won't happen if in the signal calling order, oidc
         # module get notified first. A proper fix is being worked on as a
         # complete overhaul to domain change notification mechanism.
-        from plinth.modules import oidc
+        from freedombox.modules import oidc
         oidc.on_domain_removed(sender, domain_type, name, **kwargs)
     else:
         for domain_name in components.DomainName.list():

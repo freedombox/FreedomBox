@@ -11,7 +11,7 @@ from dataclasses import dataclass, field
 from time import time
 from typing import ClassVar, Iterable
 
-from plinth import app
+from freedombox import app
 
 TURN_REST_TTL = 24 * 3600
 
@@ -129,7 +129,7 @@ class TurnConsumer(app.FollowerComponent):
 
     def get_configuration(self) -> TurnConfiguration:
         """Return current coturn configuration."""
-        from plinth.modules import coturn
+        from freedombox.modules import coturn
         return coturn.get_config()
 
 
@@ -145,7 +145,7 @@ class TurnTimeLimitedConsumer(TurnConsumer):
 
     def get_configuration(self) -> UserTurnConfiguration:
         """Return user coturn configuration."""
-        from plinth.modules import coturn
+        from freedombox.modules import coturn
         static_config = coturn.get_config()
         timestamp = int(time()) + TURN_REST_TTL
         username = str(timestamp) + ':' + TURN_REST_USER

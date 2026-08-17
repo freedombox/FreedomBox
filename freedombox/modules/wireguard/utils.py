@@ -6,9 +6,9 @@ import logging
 import subprocess
 import time
 
-from plinth import app as app_module
-from plinth import network
-from plinth.utils import import_from_gi
+from freedombox import app as app_module
+from freedombox import network
+from freedombox.utils import import_from_gi
 
 from . import privileged
 

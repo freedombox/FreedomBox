@@ -11,8 +11,8 @@ import ruamel.yaml
 from django.test.client import RequestFactory
 from ruamel.yaml.compat import StringIO
 
-from plinth.utils import (SafeFormatter, YAMLFile, is_user_admin,
-                          is_valid_user_name)
+from freedombox.utils import (SafeFormatter, YAMLFile, is_user_admin,
+                              is_valid_user_name)
 
 
 def test_is_valid_user_name():

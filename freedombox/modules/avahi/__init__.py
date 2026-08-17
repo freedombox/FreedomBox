@@ -3,17 +3,18 @@
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth import app as app_module
-from plinth import cfg, menu
-from plinth.daemon import Daemon
-from plinth.modules.backups.components import BackupRestore
-from plinth.modules.firewall.components import Firewall
-from plinth.modules.names import get_hostname
-from plinth.modules.names.components import DomainType
-from plinth.package import Packages
-from plinth.privileged import service as service_privileged
-from plinth.signals import domain_added, domain_removed, post_hostname_change
-from plinth.utils import format_lazy
+from freedombox import app as app_module
+from freedombox import cfg, menu
+from freedombox.daemon import Daemon
+from freedombox.modules.backups.components import BackupRestore
+from freedombox.modules.firewall.components import Firewall
+from freedombox.modules.names import get_hostname
+from freedombox.modules.names.components import DomainType
+from freedombox.package import Packages
+from freedombox.privileged import service as service_privileged
+from freedombox.signals import (domain_added, domain_removed,
+                                post_hostname_change)
+from freedombox.utils import format_lazy
 
 from . import manifest
 

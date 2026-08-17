@@ -5,9 +5,9 @@ from unittest.mock import call, patch
 
 import pytest
 
-from plinth.app import App, Info
-from plinth.container import Container
-from plinth.diagnostic_check import DiagnosticCheck, Result
+from freedombox.app import App, Info
+from freedombox.container import Container
+from freedombox.diagnostic_check import DiagnosticCheck, Result
 
 pytestmark = pytest.mark.usefixtures('mock_privileged')
 privileged_modules_to_mock = [

@@ -7,9 +7,9 @@ from unittest.mock import patch, Mock
 
 import pytest
 
-from plinth.modules import matrixsynapse
-from plinth.modules.coturn.components import TurnConfiguration
-from plinth.modules.matrixsynapse import privileged
+from freedombox.modules import matrixsynapse
+from freedombox.modules.coturn.components import TurnConfiguration
+from freedombox.modules.matrixsynapse import privileged
 
 pytestmark = pytest.mark.usefixtures('mock_privileged')
 privileged_modules_to_mock = ['plinth.modules.matrixsynapse.privileged']

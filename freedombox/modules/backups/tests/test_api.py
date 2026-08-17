@@ -8,7 +8,7 @@ from unittest.mock import MagicMock, call, patch
 import pytest
 from django.core.files.uploadedfile import SimpleUploadedFile
 
-from plinth.app import App
+from freedombox.app import App
 
 from .. import api, forms, repository
 from ..components import BackupRestore

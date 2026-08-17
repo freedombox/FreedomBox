@@ -4,8 +4,8 @@
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
 
-from plinth.modules import names
-from plinth.views import AppView
+from freedombox.modules import names
+from freedombox.views import AppView
 
 from . import get_configuration, privileged
 from .forms import MinetestForm

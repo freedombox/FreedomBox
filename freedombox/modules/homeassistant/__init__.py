@@ -4,16 +4,16 @@
 from django.utils.functional import lazy
 from django.utils.translation import gettext_lazy as _
 
-from plinth import app as app_module
-from plinth import cfg, frontpage, menu
-from plinth.config import DropinConfigs
-from plinth.container import Container
-from plinth.modules.apache.components import WebserverRoot
-from plinth.modules.backups.components import BackupRestore
-from plinth.modules.firewall.components import (Firewall,
-                                                FirewallLocalProtection)
-from plinth.package import Packages
-from plinth.utils import format_lazy
+from freedombox import app as app_module
+from freedombox import cfg, frontpage, menu
+from freedombox.config import DropinConfigs
+from freedombox.container import Container
+from freedombox.modules.apache.components import WebserverRoot
+from freedombox.modules.backups.components import BackupRestore
+from freedombox.modules.firewall.components import (Firewall,
+                                                    FirewallLocalProtection)
+from freedombox.package import Packages
+from freedombox.utils import format_lazy
 
 from . import manifest, privileged
 

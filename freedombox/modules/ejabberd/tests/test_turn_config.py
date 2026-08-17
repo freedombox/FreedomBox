@@ -9,9 +9,9 @@ from unittest.mock import Mock, patch
 
 import pytest
 
-from plinth.modules import ejabberd
-from plinth.modules.coturn.components import TurnConfiguration
-from plinth.modules.ejabberd import privileged
+from freedombox.modules import ejabberd
+from freedombox.modules.coturn.components import TurnConfiguration
+from freedombox.modules.ejabberd import privileged
 
 managed_configuration = TurnConfiguration(
     'freedombox.local', [],

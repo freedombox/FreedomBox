@@ -4,9 +4,9 @@
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
 
-from plinth.modules import ssh
-from plinth.privileged import service as service_privileged
-from plinth.views import AppView
+from freedombox.modules import ssh
+from freedombox.privileged import service as service_privileged
+from freedombox.views import AppView
 
 from . import privileged
 from .forms import SSHServerForm

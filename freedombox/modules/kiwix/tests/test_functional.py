@@ -8,7 +8,7 @@ from time import sleep
 
 import pytest
 
-from plinth.tests import functional
+from freedombox.tests import functional
 
 from .test_privileged import ZIM_ID
 

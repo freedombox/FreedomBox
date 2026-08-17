@@ -7,8 +7,8 @@ import logging
 import random
 import threading
 
-from plinth import dbus, network
-from plinth.utils import import_from_gi
+from freedombox import dbus, network
+from freedombox.utils import import_from_gi
 
 from . import cfg
 

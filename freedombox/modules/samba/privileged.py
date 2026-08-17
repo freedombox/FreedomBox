@@ -7,8 +7,8 @@ import pathlib
 import shutil
 import subprocess
 
-from plinth import action_utils
-from plinth.actions import privileged
+from freedombox import action_utils
+from freedombox.actions import privileged
 
 DEFAULT_FILE = '/etc/default/samba'
 
@@ -280,7 +280,7 @@ def get_users() -> list[str]:
 @privileged
 def setup():
     """Configure samba, use custom samba config file."""
-    from plinth import action_utils
+    from freedombox import action_utils
     with open(CONF_PATH, 'w', encoding='utf-8') as file_handle:
         file_handle.write(CONF)
     _use_config_file(CONF_PATH)

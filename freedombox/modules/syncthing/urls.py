@@ -5,7 +5,7 @@ URLs for the Syncthing module.
 
 from django.urls import re_path
 
-from plinth.views import AppView
+from freedombox.views import AppView
 
 urlpatterns = [
     re_path(r'^apps/syncthing/$', AppView.as_view(app_id='syncthing'),

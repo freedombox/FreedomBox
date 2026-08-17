@@ -6,8 +6,8 @@ import logging
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
 
-from plinth.modules.nextcloud.forms import NextcloudForm
-from plinth.views import AppView
+from freedombox.modules.nextcloud.forms import NextcloudForm
+from freedombox.views import AppView
 
 from . import privileged
 

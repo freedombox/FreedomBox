@@ -790,7 +790,7 @@ def move_uploaded_file(source: str | pathlib.Path,
     If allow_overwrite is set to False and destination file exists, an
     exception is raised.
     """
-    from plinth import settings
+    from freedombox import settings
 
     if isinstance(source, str):
         source = pathlib.Path(source)

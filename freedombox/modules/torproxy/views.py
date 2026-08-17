@@ -6,9 +6,9 @@ import logging
 from django.utils.translation import gettext_noop
 from django.views.generic.edit import FormView
 
-from plinth import app as app_module
-from plinth import operation as operation_module
-from plinth.views import AppView
+from freedombox import app as app_module
+from freedombox import operation as operation_module
+from freedombox.views import AppView
 
 from . import privileged
 from . import utils as tor_utils

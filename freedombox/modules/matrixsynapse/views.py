@@ -9,11 +9,11 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import FormView
 
-from plinth import app as app_module
-from plinth.forms import DomainSelectionForm
-from plinth.modules import matrixsynapse, names
-from plinth.modules.coturn.components import TurnConfiguration
-from plinth.views import AppView
+from freedombox import app as app_module
+from freedombox.forms import DomainSelectionForm
+from freedombox.modules import matrixsynapse, names
+from freedombox.modules.coturn.components import TurnConfiguration
+from freedombox.views import AppView
 
 from . import get_turn_configuration, privileged
 from .forms import MatrixSynapseForm

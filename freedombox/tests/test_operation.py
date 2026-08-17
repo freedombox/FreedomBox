@@ -8,7 +8,7 @@ from unittest.mock import Mock, call, patch
 
 import pytest
 
-from plinth import app
+from freedombox import app
 
 from .. import operation as operation_module
 from ..notification import Notification

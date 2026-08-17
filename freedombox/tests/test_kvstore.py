@@ -5,8 +5,8 @@ Test module for key/value store.
 
 import pytest
 
-from plinth import kvstore
-from plinth.models import KVStore
+from freedombox import kvstore
+from freedombox.models import KVStore
 
 pytestmark = pytest.mark.django_db
 

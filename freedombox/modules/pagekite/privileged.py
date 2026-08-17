@@ -5,9 +5,9 @@ import os
 
 import augeas
 
-from plinth import action_utils
-from plinth.actions import privileged, secret_str
-from plinth.modules.pagekite import utils
+from freedombox import action_utils
+from freedombox.actions import privileged, secret_str
+from freedombox.modules.pagekite import utils
 
 PATHS = {
     'service_on':

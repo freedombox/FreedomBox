@@ -7,9 +7,9 @@ from django import forms
 from django.utils.translation import gettext as _
 from django.utils.translation import gettext_lazy
 
-from plinth import cfg, frontpage
-from plinth.modules.apache import get_users_with_website
-from plinth.utils import format_lazy
+from freedombox import cfg, frontpage
+from freedombox.modules.apache import get_users_with_website
+from freedombox.utils import format_lazy
 
 from . import home_page_url2scid
 

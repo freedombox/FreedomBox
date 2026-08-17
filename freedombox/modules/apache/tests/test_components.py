@@ -8,9 +8,9 @@ from unittest.mock import Mock, PropertyMock, call, patch
 
 import pytest
 
-from plinth import app, kvstore
-from plinth.diagnostic_check import DiagnosticCheck, Result
-from plinth.modules.apache.components import (Webserver, WebserverRoot,
+from freedombox import app, kvstore
+from freedombox.diagnostic_check import DiagnosticCheck, Result
+from freedombox.modules.apache.components import (Webserver, WebserverRoot,
                                               check_url, diagnose_url,
                                               diagnose_url_on_all)
 

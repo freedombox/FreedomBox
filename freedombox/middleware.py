@@ -19,9 +19,9 @@ from django.utils.deprecation import MiddlewareMixin
 from django.utils.translation import gettext as _
 from stronghold.utils import is_view_func_public
 
-from plinth import app as app_module
-from plinth import setup
-from plinth.utils import is_user_admin
+from freedombox import app as app_module
+from freedombox import setup
+from freedombox.utils import is_user_admin
 
 from . import operation as operation_module
 from . import views

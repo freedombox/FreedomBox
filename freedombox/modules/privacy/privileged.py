@@ -5,7 +5,7 @@ import pathlib
 
 import augeas
 
-from plinth.actions import privileged
+from freedombox.actions import privileged
 
 CONFIG_FILE = pathlib.Path('/etc/popularity-contest.d/freedombox.conf')
 

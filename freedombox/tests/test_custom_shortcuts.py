@@ -6,7 +6,7 @@ Test module for custom shortcuts.
 import json
 import pathlib
 
-from plinth.modules.api.views import get_shortcuts_as_json
+from freedombox.modules.api.views import get_shortcuts_as_json
 
 
 def test_non_existent_custom_shortcuts_file(shortcuts_file):

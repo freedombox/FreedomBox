@@ -9,10 +9,10 @@ from typing import ClassVar, TypeAlias
 
 from django.utils.translation import gettext_noop
 
-from plinth import app
-from plinth.diagnostic_check import (DiagnosticCheck,
+from freedombox import app
+from freedombox.diagnostic_check import (DiagnosticCheck,
                                      DiagnosticCheckParameters, Result)
-from plinth.modules import firewall
+from freedombox.modules import firewall
 
 logger = logging.getLogger(__name__)
 
@@ -223,7 +223,7 @@ class FirewallLocalProtection(app.FollowerComponent):
 
 def get_port_forwarding_info(app_):
     """Return a list of ports to be forwarded for this app to work."""
-    from plinth.modules import networks
+    from freedombox.modules import networks
     info = {
         'network_topology_type': networks.get_network_topology_type(),
         'router_configuration_type': networks.get_router_configuration_type(),

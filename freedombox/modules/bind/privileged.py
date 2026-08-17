@@ -8,8 +8,8 @@ from pathlib import Path
 
 import augeas
 
-from plinth import action_utils
-from plinth.actions import privileged
+from freedombox import action_utils
+from freedombox.actions import privileged
 
 CONFIG_FILE = '/etc/bind/named.conf.options'
 ZONES_DIR = '/var/bind/pri'

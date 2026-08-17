@@ -9,10 +9,10 @@ from unittest.mock import Mock, patch
 
 import pytest
 
-from plinth import __main__ as plinth_main
-from plinth import utils
-from plinth.modules.apache import uws_directory_of_user, uws_url_of_user
-from plinth.modules.config import (_home_page_scid2url, change_home_page,
+from freedombox import __main__ as plinth_main
+from freedombox import utils
+from freedombox.modules.apache import uws_directory_of_user, uws_url_of_user
+from freedombox.modules.config import (_home_page_scid2url, change_home_page,
                                    get_home_page, home_page_url2scid)
 
 

@@ -4,7 +4,7 @@
 from django.contrib import messages
 from django.utils.translation import gettext as _
 
-from plinth import views
+from freedombox import views
 
 from . import privileged
 from .forms import DelugeForm

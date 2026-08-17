@@ -6,7 +6,7 @@ Manage storage of repository information in KVStore table in database.
 import json
 from uuid import uuid1
 
-from plinth import kvstore
+from freedombox import kvstore
 
 # kvstore key for repository store
 STORAGE_KEY = 'network_storage'

@@ -11,9 +11,9 @@ from django.http.response import HttpResponseRedirect
 from django.urls import reverse
 from django.utils.deprecation import MiddlewareMixin
 
-from plinth import setup
-from plinth.modules import first_boot
-from plinth.utils import is_user_admin
+from freedombox import setup
+from freedombox.modules import first_boot
+from freedombox.utils import is_user_admin
 
 LOGGER = logging.getLogger(__name__)
 

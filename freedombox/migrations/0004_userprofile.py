@@ -7,7 +7,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import migrations, models
 
-from plinth.models import UserProfile
+from freedombox.models import UserProfile
 
 
 def insert_users(apps, schema_editor):

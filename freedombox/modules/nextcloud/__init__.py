@@ -5,19 +5,19 @@ import contextlib
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth import app as app_module
-from plinth import cfg, frontpage, menu
-from plinth.config import DropinConfigs
-from plinth.daemon import Daemon, SharedDaemon
-from plinth.modules.apache.components import (Webserver, diagnose_url,
-                                              diagnose_url_on_all)
-from plinth.modules.backups.components import BackupRestore
-from plinth.modules.firewall.components import (Firewall,
-                                                FirewallLocalProtection)
-from plinth.modules.names.components import DomainName
-from plinth.package import Packages
-from plinth.signals import domain_added, domain_removed
-from plinth.utils import format_lazy
+from freedombox import app as app_module
+from freedombox import cfg, frontpage, menu
+from freedombox.config import DropinConfigs
+from freedombox.daemon import Daemon, SharedDaemon
+from freedombox.modules.apache.components import (Webserver, diagnose_url,
+                                                  diagnose_url_on_all)
+from freedombox.modules.backups.components import BackupRestore
+from freedombox.modules.firewall.components import (Firewall,
+                                                    FirewallLocalProtection)
+from freedombox.modules.names.components import DomainName
+from freedombox.package import Packages
+from freedombox.signals import domain_added, domain_removed
+from freedombox.utils import format_lazy
 
 from . import manifest, privileged
 

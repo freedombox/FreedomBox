@@ -3,10 +3,10 @@
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
 
-from plinth import app as app_module
-from plinth.forms import TLSDomainForm
-from plinth.modules import quassel
-from plinth.views import AppView
+from freedombox import app as app_module
+from freedombox.forms import TLSDomainForm
+from freedombox.modules import quassel
+from freedombox.views import AppView
 
 
 class QuasselAppView(AppView):

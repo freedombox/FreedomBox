@@ -14,10 +14,10 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import gettext_noop
 
-from plinth import action_utils
-from plinth import app as app_module
-from plinth import cfg
-from plinth.signals import post_setup
+from freedombox import action_utils
+from freedombox import app as app_module
+from freedombox import cfg
+from freedombox.signals import post_setup
 
 first_boot_steps = [
     {
@@ -64,7 +64,7 @@ class FirstBootApp(app_module.App):
 
     def _show_next_steps_notification(self):
         """After first setup, show notification for next steps."""
-        from plinth.notification import Notification
+        from freedombox.notification import Notification
         title = gettext_noop('Setup complete! Next steps:')
         message = gettext_noop(
             'Initial setup has been completed. Perform the next steps to make '
@@ -138,7 +138,7 @@ def next_step_or_none():
 
     If there are no more step remaining, return None.
     """
-    from plinth import kvstore
+    from freedombox import kvstore
 
     for step in _get_steps():
         done = kvstore.get_default(step['id'], 0)
@@ -151,7 +151,7 @@ def mark_step_done(id):
 
     :param id: id of the firstboot step
     """
-    from plinth import kvstore
+    from freedombox import kvstore
 
     kvstore.set(id, 1)
     if not next_step_or_none():
@@ -160,7 +160,7 @@ def mark_step_done(id):
 
 def is_completed():
     """Return whether first boot process is completed."""
-    from plinth import kvstore
+    from freedombox import kvstore
 
     global _is_completed
     if _is_completed is None:
@@ -171,7 +171,7 @@ def is_completed():
 
 def set_completed():
     """Set the first boot process as completed."""
-    from plinth import kvstore
+    from freedombox import kvstore
 
     global _is_completed
     _is_completed = True

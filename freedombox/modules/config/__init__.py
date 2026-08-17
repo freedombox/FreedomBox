@@ -6,13 +6,13 @@ import pathlib
 import augeas
 from django.utils.translation import gettext_lazy as _
 
-from plinth import app as app_module
-from plinth import frontpage, menu
-from plinth.daemon import RelatedDaemon
-from plinth.modules.apache import (get_users_with_website, user_of_uws_url,
-                                   uws_url_of_user)
-from plinth.package import Packages
-from plinth.privileged import service as service_privileged
+from freedombox import app as app_module
+from freedombox import frontpage, menu
+from freedombox.daemon import RelatedDaemon
+from freedombox.modules.apache import (get_users_with_website, user_of_uws_url,
+                                       uws_url_of_user)
+from freedombox.package import Packages
+from freedombox.privileged import service as service_privileged
 
 from . import manifest, privileged
 
@@ -170,11 +170,11 @@ def change_home_page(shortcut_id: str):
 
 def get_advanced_mode():
     """Get whether option is enabled."""
-    from plinth import kvstore
+    from freedombox import kvstore
     return kvstore.get_default(ADVANCED_MODE_KEY, False)
 
 
 def set_advanced_mode(advanced_mode):
     """Turn on/off advanced mode."""
-    from plinth import kvstore
+    from freedombox import kvstore
     kvstore.set(ADVANCED_MODE_KEY, advanced_mode)

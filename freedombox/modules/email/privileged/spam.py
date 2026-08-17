@@ -11,9 +11,9 @@ For testing DKIM signatures: https://www.mail-tester.com/
 import pathlib
 import re
 
-from plinth import action_utils
-from plinth.actions import privileged
-from plinth.modules.email import postfix
+from freedombox import action_utils
+from freedombox.actions import privileged
+from freedombox.modules.email import postfix
 
 _milter_config = {
     'smtpd_milters': 'inet:127.0.0.1:11332',

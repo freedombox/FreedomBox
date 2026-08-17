@@ -8,10 +8,10 @@ from typing import Tuple
 
 import pexpect
 
-from plinth import action_utils
-from plinth.actions import privileged, secret_str
-from plinth.db import postgres, dbconfig
-from plinth.utils import is_non_empty_file
+from freedombox import action_utils
+from freedombox.actions import privileged, secret_str
+from freedombox.db import postgres, dbconfig
+from freedombox.utils import is_non_empty_file
 
 STATIC_SETTINGS = {
     'BASE_URL': 'http://localhost/miniflux/',

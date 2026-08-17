@@ -7,9 +7,9 @@ from tempfile import mkstemp
 
 import augeas
 
-from plinth import action_utils
-from plinth.actions import privileged
-from plinth.utils import grep
+from freedombox import action_utils
+from freedombox.actions import privileged
+from freedombox.utils import grep
 
 CONFIG_PATH = '/etc/minidlna.conf'
 

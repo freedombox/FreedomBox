@@ -7,21 +7,22 @@ import logging
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
-from plinth import app as app_module
-from plinth import cfg, frontpage, menu
-from plinth.config import DropinConfigs
-from plinth.daemon import Daemon
-from plinth.modules.apache.components import Webserver
-from plinth.modules.backups.components import BackupRestore
-from plinth.modules.coturn.components import TurnConfiguration, TurnConsumer
-from plinth.modules.firewall.components import Firewall
-from plinth.modules.letsencrypt.components import LetsEncrypt
-from plinth.modules.names.components import DomainName
-from plinth.modules.users.components import UsersAndGroups
-from plinth.package import Packages
-from plinth.signals import (domain_added, post_hostname_change,
-                            pre_hostname_change)
-from plinth.utils import format_lazy
+from freedombox import app as app_module
+from freedombox import cfg, frontpage, menu
+from freedombox.config import DropinConfigs
+from freedombox.daemon import Daemon
+from freedombox.modules.apache.components import Webserver
+from freedombox.modules.backups.components import BackupRestore
+from freedombox.modules.coturn.components import (TurnConfiguration,
+                                                  TurnConsumer)
+from freedombox.modules.firewall.components import Firewall
+from freedombox.modules.letsencrypt.components import LetsEncrypt
+from freedombox.modules.names.components import DomainName
+from freedombox.modules.users.components import UsersAndGroups
+from freedombox.package import Packages
+from freedombox.signals import (domain_added, post_hostname_change,
+                                pre_hostname_change)
+from freedombox.utils import format_lazy
 
 from . import manifest, privileged
 

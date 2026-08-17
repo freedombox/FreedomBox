@@ -4,8 +4,8 @@
 from django.contrib import messages
 from django.utils.translation import gettext as _
 
-from plinth import views
-from plinth.modules import config
+from freedombox import views
+from freedombox.modules import config
 
 from . import privileged
 from .forms import ConfigurationForm

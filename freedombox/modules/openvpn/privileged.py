@@ -9,8 +9,8 @@ import subprocess
 
 import augeas
 
-from plinth import action_utils
-from plinth.actions import privileged
+from freedombox import action_utils
+from freedombox.actions import privileged
 
 KEYS_DIRECTORY = pathlib.Path('/etc/openvpn/freedombox-keys')
 CA_CERTIFICATE_PATH = KEYS_DIRECTORY / 'pki' / 'ca.crt'

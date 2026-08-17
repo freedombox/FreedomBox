@@ -9,8 +9,8 @@ from urllib.parse import urlparse
 import pytest
 import requests
 
-from plinth.tests import functional
-from plinth.tests.functional import config
+from freedombox.tests import functional
+from freedombox.tests.functional import config
 
 pytestmark = [pytest.mark.apps, pytest.mark.mediawiki]
 

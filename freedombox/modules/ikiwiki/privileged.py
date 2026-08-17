@@ -6,8 +6,8 @@ import pathlib
 import re
 import shutil
 
-from plinth import action_utils
-from plinth.actions import privileged, secret_str
+from freedombox import action_utils
+from freedombox.actions import privileged, secret_str
 
 SETUP_WIKI = '/etc/ikiwiki/plinth-wiki.setup'
 SETUP_BLOG = '/etc/ikiwiki/plinth-blog.setup'

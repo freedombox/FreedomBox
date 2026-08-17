@@ -11,14 +11,14 @@ from django.utils.translation import gettext_lazy as _
 from django.utils.translation import gettext_noop
 
 import plinth
-from plinth import action_utils
-from plinth import app as app_module
-from plinth import cfg, glib, kvstore, menu, package
-from plinth.config import DropinConfigs
-from plinth.daemon import RelatedDaemon
-from plinth.diagnostic_check import DiagnosticCheck, Result
-from plinth.modules.backups.components import BackupRestore
-from plinth.package import Packages
+from freedombox import action_utils
+from freedombox import app as app_module
+from freedombox import cfg, glib, kvstore, menu, package
+from freedombox.config import DropinConfigs
+from freedombox.daemon import RelatedDaemon
+from freedombox.diagnostic_check import DiagnosticCheck, Result
+from freedombox.modules.backups.components import BackupRestore
+from freedombox.package import Packages
 
 from . import distupgrade, manifest, privileged, utils
 
@@ -108,7 +108,7 @@ class UpgradesApp(app_module.App):
 
     def _show_new_release_notification(self):
         """When upgraded to new release, show a notification."""
-        from plinth.notification import Notification
+        from freedombox.notification import Notification
         try:
             note = Notification.get('upgrades-new-release')
             if note.data['version'] == plinth.__version__:
@@ -137,7 +137,7 @@ class UpgradesApp(app_module.App):
 
     def _show_first_manual_update_notification(self):
         """After first setup, show notification to manually run updates."""
-        from plinth.notification import Notification
+        from freedombox.notification import Notification
         title = gettext_noop('Run software update manually')
         message = gettext_noop(
             'Automatic software update runs daily by default. For the first '
@@ -250,7 +250,7 @@ def dist_upgrade_show_notification(status: dict, starting: bool):
       days before next distribution upgrade. If user dismisses the
       notification, don't show it again.
     """
-    from plinth.notification import Notification
+    from freedombox.notification import Notification
 
     try:
         note = Notification.get('upgrades-dist-upgrade')

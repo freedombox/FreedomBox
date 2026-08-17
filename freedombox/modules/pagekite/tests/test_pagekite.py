@@ -3,7 +3,7 @@
 Test modules for Pagekite functions.
 """
 
-from plinth.modules.pagekite import utils
+from freedombox.modules.pagekite import utils
 
 _tests = [
     {

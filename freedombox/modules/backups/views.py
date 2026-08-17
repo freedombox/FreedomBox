@@ -19,9 +19,9 @@ from django.utils.translation import gettext_lazy
 from django.views.decorators.http import require_POST
 from django.views.generic import FormView, TemplateView, View
 
-from plinth.errors import PlinthError
-from plinth.modules import backups, storage
-from plinth.views import AppView
+from freedombox.errors import PlinthError
+from freedombox.modules import backups, storage
+from freedombox.views import AppView
 
 from . import (SESSION_PATH_VARIABLE, api, errors, forms,
                generate_ssh_client_auth_key, get_known_hosts_path,

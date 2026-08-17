@@ -4,9 +4,9 @@
 from django.contrib import messages
 from django.utils.translation import gettext as _
 
-from plinth.modules import coturn, ejabberd
-from plinth.modules.coturn.components import TurnConfiguration
-from plinth.views import AppView
+from freedombox.modules import coturn, ejabberd
+from freedombox.modules.coturn.components import TurnConfiguration
+from freedombox.views import AppView
 
 from . import privileged
 from .forms import EjabberdForm

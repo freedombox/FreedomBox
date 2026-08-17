@@ -12,9 +12,9 @@ from typing import Any
 
 from ruamel.yaml import YAML, scalarstring
 
-from plinth import action_utils
-from plinth.actions import privileged
-from plinth.version import Version
+from freedombox import action_utils
+from freedombox.actions import privileged
+from freedombox.version import Version
 
 logger = logging.getLogger(__name__)
 

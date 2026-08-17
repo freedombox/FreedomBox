@@ -20,9 +20,9 @@ from django.conf import settings
 from django.http import Http404
 from django.urls import re_path
 
-from plinth import cfg, module_loader
-from plinth.modules import help as help_module
-from plinth.modules.help import views
+from freedombox import cfg, module_loader
+from freedombox.modules import help as help_module
+from freedombox.modules.help import views
 
 # For all tests, use plinth.urls instead of urls configured for testing
 pytestmark = pytest.mark.urls('plinth.urls')

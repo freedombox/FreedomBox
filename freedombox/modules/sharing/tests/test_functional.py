@@ -6,7 +6,7 @@ Functional, browser based tests for sharing app.
 import pytest
 import splinter
 
-from plinth.tests import functional
+from freedombox.tests import functional
 
 pytestmark = [pytest.mark.apps, pytest.mark.sharing]
 

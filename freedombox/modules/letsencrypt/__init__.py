@@ -7,18 +7,18 @@ import pathlib
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth import app as app_module
-from plinth import cfg, menu
-from plinth.config import DropinConfigs
-from plinth.diagnostic_check import DiagnosticCheck
-from plinth.modules import names
-from plinth.modules.apache.components import diagnose_url
-from plinth.modules.backups.components import BackupRestore
-from plinth.modules.names.components import DomainType
-from plinth.package import Packages
-from plinth.setup import store_error_message
-from plinth.signals import domain_added, domain_removed, post_app_loading
-from plinth.utils import format_lazy
+from freedombox import app as app_module
+from freedombox import cfg, menu
+from freedombox.config import DropinConfigs
+from freedombox.diagnostic_check import DiagnosticCheck
+from freedombox.modules import names
+from freedombox.modules.apache.components import diagnose_url
+from freedombox.modules.backups.components import BackupRestore
+from freedombox.modules.names.components import DomainType
+from freedombox.package import Packages
+from freedombox.setup import store_error_message
+from freedombox.signals import domain_added, domain_removed, post_app_loading
+from freedombox.utils import format_lazy
 
 from . import components, manifest, privileged
 
@@ -253,7 +253,7 @@ def _certificate_handle_modified_internal():
 
 def certificate_get_last_seen_modified_time(lineage):
     """Return the last seen expiry date of a certificate."""
-    from plinth import kvstore
+    from freedombox import kvstore
     info = kvstore.get_default('letsencrypt_certificate_info', '{}')
     info = json.loads(info)
     try:
@@ -267,7 +267,7 @@ def certificate_set_last_seen_modified_time(lineage):
     lineage = pathlib.Path(lineage)
     modified_time = privileged.get_modified_time(lineage.name)
 
-    from plinth import kvstore
+    from freedombox import kvstore
     info = kvstore.get_default('letsencrypt_certificate_info', '{}')
     info = json.loads(info)
 

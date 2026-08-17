@@ -7,7 +7,7 @@ from unittest.mock import MagicMock, Mock, patch
 
 from django.urls import resolve
 
-from plinth import context_processors as cp
+from freedombox import context_processors as cp
 
 
 @patch('plinth.notification.Notification')

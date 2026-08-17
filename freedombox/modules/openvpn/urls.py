@@ -3,7 +3,7 @@
 
 from django.urls import re_path
 
-from plinth.utils import user_group_view
+from freedombox.utils import user_group_view
 
 from . import views
 

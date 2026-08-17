@@ -8,17 +8,17 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import gettext_noop
 
-from plinth import app as app_module
-from plinth import frontpage, menu
-from plinth.daemon import Daemon
-from plinth.diagnostic_check import DiagnosticCheck, Result
-from plinth.modules import names
-from plinth.modules.backups.components import BackupRestore
-from plinth.modules.firewall.components import Firewall
-from plinth.modules.letsencrypt.components import LetsEncrypt
-from plinth.modules.users.components import UsersAndGroups
-from plinth.package import Packages, install
-from plinth.utils import Version
+from freedombox import app as app_module
+from freedombox import frontpage, menu
+from freedombox.daemon import Daemon
+from freedombox.diagnostic_check import DiagnosticCheck, Result
+from freedombox.modules import names
+from freedombox.modules.backups.components import BackupRestore
+from freedombox.modules.firewall.components import Firewall
+from freedombox.modules.letsencrypt.components import LetsEncrypt
+from freedombox.modules.users.components import UsersAndGroups
+from freedombox.package import Packages, install
+from freedombox.utils import Version
 
 from . import manifest, privileged
 

@@ -6,7 +6,7 @@ App component to manage users and groups.
 import itertools
 from typing import ClassVar
 
-from plinth import app
+from freedombox import app
 
 
 class UsersAndGroups(app.FollowerComponent):

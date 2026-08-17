@@ -10,7 +10,7 @@ See: https://doc.dovecot.org/configuration_manual/howto/postfix_dovecot_lmtp/
 See: http://www.postfix.org/TLS_README.html
 """
 
-from plinth.actions import privileged
+from freedombox.actions import privileged
 
 from .. import postfix as postconf
 

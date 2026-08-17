@@ -6,7 +6,7 @@ Functional, browser based tests for RSS-Bridge app.
 import json
 import subprocess
 
-from plinth.tests import functional
+from freedombox.tests import functional
 
 
 class TestRSSBridgeApp(functional.BaseAppTests):
