@@ -113,7 +113,7 @@ class ApacheApp(app_module.App):
         self.add(web_server_ports)
 
         freedombox_ports = Firewall(
-            'firewall-plinth',
+            'firewall-freedombox',
             format_lazy(_('{box_name} Web Interface (Plinth)'),
                         box_name=_(cfg.box_name)), ports=['http', 'https'],
             is_external=True)

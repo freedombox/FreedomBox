@@ -345,7 +345,8 @@ def test_app_has_logs(app_with_components):
     assert not app.has_diagnostics()
 
 
-@patch('freedombox.privileged.service._assert_service_is_managed_by_plinth')
+@patch(
+    'freedombox.privileged.service._assert_service_is_managed_by_freedombox')
 @patch('freedombox.action_utils.service_get_logs')
 @patch('freedombox.action_utils.service_show')
 def test_app_get_logs(service_show, service_get_logs, _, app_with_components,

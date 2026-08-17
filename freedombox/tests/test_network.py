@@ -14,7 +14,7 @@ from freedombox.utils import import_from_gi
 ethernet_settings = {
     'common': {
         'type': '802-3-ethernet',
-        'name': 'plinth_test_eth',
+        'name': 'fbx_test_eth',
         'interface': 'eth0',
         'zone': 'internal',
         'dns_over_tls': 'opportunistic',
@@ -34,7 +34,7 @@ ethernet_settings = {
 wifi_settings = {
     'common': {
         'type': '802-11-wireless',
-        'name': 'plinth_test_wifi',
+        'name': 'fbx_test_wifi',
         'interface': 'wlan0',
         'zone': 'external',
         'dns_over_tls': 'yes',
@@ -50,7 +50,7 @@ wifi_settings = {
         'second_dns': '',
     },
     'wireless': {
-        'ssid': 'plinthtestwifi',
+        'ssid': 'fbxtestwifi',
         'mode': 'adhoc',
         'auth_mode': 'open',
         'band': 'a',
@@ -62,7 +62,7 @@ wifi_settings = {
 pppoe_settings = {
     'common': {
         'type': 'pppoe',
-        'name': 'plinth_test_pppoe',
+        'name': 'fbx_test_pppoe',
         'interface': 'eth1',
         'zone': 'internal',
     },
@@ -139,18 +139,18 @@ def test_get_connection_list(network):
     connections = network.get_connection_list()
     connection_names = [conn['name'] for conn in connections]
 
-    assert 'plinth_test_eth' in connection_names
-    assert 'plinth_test_wifi' in connection_names
-    assert 'plinth_test_pppoe' in connection_names
+    assert 'fbx_test_eth' in connection_names
+    assert 'fbx_test_wifi' in connection_names
+    assert 'fbx_test_pppoe' in connection_names
 
 
 def test_get_connection(network, ethernet_uuid, wifi_uuid):
     """Check that we can get a connection by name."""
     connection = network.get_connection(ethernet_uuid)
-    assert connection.get_id() == 'plinth_test_eth'
+    assert connection.get_id() == 'fbx_test_eth'
 
     connection = network.get_connection(wifi_uuid)
-    assert connection.get_id() == 'plinth_test_wifi'
+    assert connection.get_id() == 'fbx_test_wifi'
 
     with pytest.raises(network.ConnectionNotFound):
         network.get_connection('x-invalid-network-id')
@@ -160,7 +160,7 @@ def test_edit_ethernet_connection(network, ethernet_uuid):
     """Check that we can update an ethernet connection."""
     connection = network.get_connection(ethernet_uuid)
     ethernet_settings2 = copy.deepcopy(ethernet_settings)
-    ethernet_settings2['common']['name'] = 'plinth_test_eth_new'
+    ethernet_settings2['common']['name'] = 'fbx_test_eth_new'
     ethernet_settings2['common']['interface'] = 'eth1'
     ethernet_settings2['common']['zone'] = 'external'
     ethernet_settings2['common']['dns_over_tls'] = 'no'
@@ -169,7 +169,7 @@ def test_edit_ethernet_connection(network, ethernet_uuid):
     network.edit_connection(connection, ethernet_settings2)
 
     connection = network.get_connection(ethernet_uuid)
-    assert connection.get_id() == 'plinth_test_eth_new'
+    assert connection.get_id() == 'fbx_test_eth_new'
 
     settings_connection = connection.get_setting_connection()
     assert settings_connection.get_interface_name() == 'eth1'
@@ -185,7 +185,7 @@ def test_edit_pppoe_connection(network, pppoe_uuid):
     """Check that we can update a PPPoE connection."""
     connection = network.get_connection(pppoe_uuid)
     pppoe_settings2 = copy.deepcopy(pppoe_settings)
-    pppoe_settings2['common']['name'] = 'plinth_test_pppoe_new'
+    pppoe_settings2['common']['name'] = 'fbx_test_pppoe_new'
     pppoe_settings2['common']['interface'] = 'eth2'
     pppoe_settings2['common']['zone'] = 'external'
     pppoe_settings2['common']['autoconnect'] = False
@@ -194,7 +194,7 @@ def test_edit_pppoe_connection(network, pppoe_uuid):
     network.edit_connection(connection, pppoe_settings2)
 
     connection = network.get_connection(pppoe_uuid)
-    assert connection.get_id() == 'plinth_test_pppoe_new'
+    assert connection.get_id() == 'fbx_test_pppoe_new'
 
     settings_connection = connection.get_setting_connection()
     assert settings_connection.get_interface_name() == 'eth2'
@@ -215,13 +215,13 @@ def test_edit_wifi_connection(network, wifi_uuid):
     """Check that we can update a wifi connection."""
     connection = network.get_connection(wifi_uuid)
     wifi_settings2 = copy.deepcopy(wifi_settings)
-    wifi_settings2['common']['name'] = 'plinth_test_wifi_new'
+    wifi_settings2['common']['name'] = 'fbx_test_wifi_new'
     wifi_settings2['common']['interface'] = 'wlan1'
     wifi_settings2['common']['zone'] = 'external'
     wifi_settings2['common']['dns_over_tls'] = 'opportunistic'
     wifi_settings2['common']['autoconnect'] = False
     wifi_settings2['ipv4']['method'] = 'auto'
-    wifi_settings2['wireless']['ssid'] = 'plinthtestwifi2'
+    wifi_settings2['wireless']['ssid'] = 'fbxtestwifi2'
     wifi_settings2['wireless']['mode'] = 'infrastructure'
     wifi_settings2['wireless']['auth_mode'] = 'wpa'
     wifi_settings2['wireless']['passphrase'] = 'secretpassword'
@@ -229,7 +229,7 @@ def test_edit_wifi_connection(network, wifi_uuid):
 
     connection = network.get_connection(wifi_uuid)
 
-    assert connection.get_id() == 'plinth_test_wifi_new'
+    assert connection.get_id() == 'fbx_test_wifi_new'
 
     settings_connection = connection.get_setting_connection()
     assert settings_connection.get_interface_name() == 'wlan1'
@@ -238,9 +238,8 @@ def test_edit_wifi_connection(network, wifi_uuid):
     assert not settings_connection.get_autoconnect()
 
     settings_wireless = connection.get_setting_wireless()
-    assert settings_wireless.get_ssid().get_data() == b'plinthtestwifi2'
-    assert settings_wireless.get_ssid().get_data().decode(
-    ) == 'plinthtestwifi2'
+    assert settings_wireless.get_ssid().get_data() == b'fbxtestwifi2'
+    assert settings_wireless.get_ssid().get_data().decode() == 'fbxtestwifi2'
     assert settings_wireless.get_mode() == 'infrastructure'
 
     wifi_sec = connection.get_setting_wireless_security()
@@ -310,7 +309,7 @@ def test_wifi_manual_ipv4_address(network, wifi_uuid):
     wifi_settings2['ipv4']['gateway'] = '169.254.0.254'
     wifi_settings2['ipv4']['dns'] = '1.2.3.4'
     wifi_settings2['ipv4']['second_dns'] = '1.2.3.5'
-    wifi_settings2['wireless']['ssid'] = 'plinthtestwifi'
+    wifi_settings2['wireless']['ssid'] = 'fbxtestwifi'
     wifi_settings2['wireless']['mode'] = 'adhoc'
     wifi_settings2['wireless']['auth_mode'] = 'open'
     network.edit_connection(connection, wifi_settings2)
@@ -338,7 +337,7 @@ def test_wifi_manual_ipv6_address(network, wifi_uuid):
     wifi_settings2['ipv6']['gateway'] = '::ffff:169.254.0.254'
     wifi_settings2['ipv6']['dns'] = '::ffff:1.2.3.4'
     wifi_settings2['ipv6']['second_dns'] = '::ffff:1.2.3.5'
-    wifi_settings2['wireless']['ssid'] = 'plinthtestwifi'
+    wifi_settings2['wireless']['ssid'] = 'fbxtestwifi'
     wifi_settings2['wireless']['mode'] = 'adhoc'
     wifi_settings2['wireless']['auth_mode'] = 'open'
     network.edit_connection(connection, wifi_settings2)

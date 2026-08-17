@@ -9,7 +9,7 @@ from unittest.mock import Mock, patch
 
 import pytest
 
-from freedombox import __main__ as plinth_main
+from freedombox import __main__ as freedombox_main
 from freedombox import utils
 from freedombox.modules.apache import uws_directory_of_user, uws_url_of_user
 from freedombox.modules.config import (_home_page_scid2url, change_home_page,
@@ -131,6 +131,6 @@ def test_locale_path():
     Test that the 'locale' directory is in the same folder as __main__.py.
     This is required for detecting translated languages.
     """
-    plinth_dir = os.path.dirname(plinth_main.__file__)
-    locale_dir = os.path.join(plinth_dir, 'locale')
+    freedombox_dir = os.path.dirname(freedombox_main.__file__)
+    locale_dir = os.path.join(freedombox_dir, 'locale')
     assert os.path.isdir(locale_dir)

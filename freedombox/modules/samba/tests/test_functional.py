@@ -67,7 +67,7 @@ def _write_to_share(share_type, as_guest=False):
         share_name = '{0}_{1}'.format(disk_name, share_type)
     hostname = urllib.parse.urlparse(default_url).hostname
     servicename = '\\\\{0}\\{1}'.format(hostname, share_name)
-    directory = '_plinth-test_{0}'.format(''.join(
+    directory = '_freedombox-test_{0}'.format(''.join(
         random.SystemRandom().choices(string.ascii_letters, k=8)))
     port = functional.config['DEFAULT']['samba_port']
 

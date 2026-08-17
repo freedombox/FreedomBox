@@ -20,49 +20,49 @@ def systemd_set_default(target: str):
 @privileged
 def start(service: str):
     """Start a service."""
-    _assert_service_is_managed_by_plinth(service)
+    _assert_service_is_managed_by_freedombox(service)
     action_utils.service_start(service)
 
 
 @privileged
 def stop(service: str):
     """Stop a running service."""
-    _assert_service_is_managed_by_plinth(service)
+    _assert_service_is_managed_by_freedombox(service)
     action_utils.service_stop(service)
 
 
 @privileged
 def enable(service: str):
     """Enable a service so that it start on system boot."""
-    _assert_service_is_managed_by_plinth(service)
+    _assert_service_is_managed_by_freedombox(service)
     action_utils.service_enable(service)
 
 
 @privileged
 def disable(service: str):
     """Disable a service so that it does not start on system boot."""
-    _assert_service_is_managed_by_plinth(service)
+    _assert_service_is_managed_by_freedombox(service)
     action_utils.service_disable(service)
 
 
 @privileged
 def restart(service: str):
     """Restart a service."""
-    _assert_service_is_managed_by_plinth(service)
+    _assert_service_is_managed_by_freedombox(service)
     action_utils.service_restart(service)
 
 
 @privileged
 def try_restart(service: str):
     """Restart a service if it is running."""
-    _assert_service_is_managed_by_plinth(service)
+    _assert_service_is_managed_by_freedombox(service)
     action_utils.service_try_restart(service)
 
 
 @privileged
 def reload(service: str):
     """Reload a service."""
-    _assert_service_is_managed_by_plinth(service)
+    _assert_service_is_managed_by_freedombox(service)
     action_utils.service_reload(service)
 
 
@@ -72,41 +72,41 @@ def try_reload_or_restart(service: str):
 
     Do nothing if service is not running.
     """
-    _assert_service_is_managed_by_plinth(service)
+    _assert_service_is_managed_by_freedombox(service)
     action_utils.service_try_reload_or_restart(service)
 
 
 @privileged
 def mask(service: str):
     """Mask a service."""
-    _assert_service_is_managed_by_plinth(service)
+    _assert_service_is_managed_by_freedombox(service)
     action_utils.service_mask(service)
 
 
 @privileged
 def unmask(service: str):
     """Unmask a service."""
-    _assert_service_is_managed_by_plinth(service)
+    _assert_service_is_managed_by_freedombox(service)
     action_utils.service_unmask(service)
 
 
 @privileged
 def is_enabled(service: str) -> bool:
     """Return whether a service is enabled."""
-    _assert_service_is_managed_by_plinth(service)
+    _assert_service_is_managed_by_freedombox(service)
     return action_utils.service_is_enabled(service)
 
 
 @privileged
 def is_running(service: str) -> bool:
     """Return whether a service is running."""
-    _assert_service_is_managed_by_plinth(service)
+    _assert_service_is_managed_by_freedombox(service)
     return action_utils.service_is_running(service)
 
 
 @privileged
 def get_logs(service: str) -> dict[str, str]:
-    _assert_service_is_managed_by_plinth(service)
+    _assert_service_is_managed_by_freedombox(service)
     return {
         'unit': service,
         'description': action_utils.service_show(service)['Description'],
@@ -139,7 +139,7 @@ def _get_managed_services():
     return services
 
 
-def _assert_service_is_managed_by_plinth(service_name):
+def _assert_service_is_managed_by_freedombox(service_name):
     managed_services = _get_managed_services()
     if service_name not in managed_services:
         msg = ("The service '%s' is not managed by FreedomBox. Access is only "

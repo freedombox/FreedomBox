@@ -366,9 +366,9 @@ def test_validate_directory_writable(path, error):
 @pytest.mark.usefixtures('needs_not_root')
 @pytest.mark.parametrize(
     'path,error',
-    [('/var/lib/plinth_storage_test_not_exists', PermissionError('write')),
-     ('/tmp/plint_storage_test_not_exists', None),
-     ('/var/../tmp/plint_storage_test_not_exists', None)])
+    [('/var/lib/fbx_storage_test_not_exists', PermissionError('write')),
+     ('/tmp/fbx_storage_test_not_exists', None),
+     ('/var/../tmp/fbx_storage_test_not_exists', None)])
 def test_validate_directory_creatable(path, error):
     """Test that directory creatable validation returns expected output."""
     _assert_validate_directory(path, error, check_creatable=True)

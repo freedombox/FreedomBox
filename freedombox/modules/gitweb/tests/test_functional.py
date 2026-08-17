@@ -260,7 +260,7 @@ def _gitweb_git_command_is_successful(command, cwd):
 @contextlib.contextmanager
 def _gitweb_temp_directory():
     """Create temporary directory"""
-    name = tempfile.mkdtemp(prefix='plinth_test_gitweb_')
+    name = tempfile.mkdtemp(prefix='fbx_test_gitweb_')
     yield name
     shutil.rmtree(name)
 

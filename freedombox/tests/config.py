@@ -12,7 +12,7 @@ backups_ssh_path = None
 # provide backups_ssh_path and either a password or a keyfile for ssh tests
 backups_ssh_password = None
 backups_ssh_keyfile = None
-backups_ssh_repo_uuid = 'plinth_test_sshfs'  # will be mounted to /media/<uuid>
+backups_ssh_repo_uuid = 'fbx_test_sshfs'  # will be mounted to /media/<uuid>
 
 # An existing admin account for privileged actions. If this admin account
 # doesn't exist and no other admin accounts exist, a random admin account is
