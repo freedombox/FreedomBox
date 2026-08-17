@@ -59,7 +59,7 @@ def merge_firstboot_finished_fields(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('plinth', '0002_modulestore'),
+        ('freedombox', '0002_modulestore'),
     ]
 
     operations = [

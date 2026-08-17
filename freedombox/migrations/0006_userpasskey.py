@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('plinth', '0005_storednotification'),
+        ('freedombox', '0005_storednotification'),
     ]
 
     operations = [

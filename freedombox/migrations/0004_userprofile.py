@@ -24,7 +24,7 @@ def truncate_user_profile(apps, schema_editor):
 class Migration(migrations.Migration):
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('plinth', '0003_merge_firstboot_completed_fields'),
+        ('freedombox', '0003_merge_firstboot_completed_fields'),
     ]
 
     operations = [

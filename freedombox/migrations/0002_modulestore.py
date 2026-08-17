@@ -8,7 +8,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('plinth', '0001_initial'),
+        ('freedombox', '0001_initial'),
     ]
 
     operations = [

@@ -127,7 +127,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'oauth2_provider',
     'stronghold',
-    'plinth',
+    'freedombox',
 ]
 
 # Overridden based on configuration key use_x_forwarded_host
@@ -137,7 +137,7 @@ IPWARE_META_PRECEDENCE_ORDER = ('REMOTE_ADDR', )
 LANGUAGES = [('en', 'English')]
 
 # A list of directories where Django looks for translation files.
-LOCALE_PATHS = ['plinth/locale']
+LOCALE_PATHS = ['freedombox/locale']
 
 # Overridden by log configuration in log.py
 LOGGING = {'version': 1}
@@ -150,7 +150,7 @@ LOGIN_REDIRECT_URL = 'index'
 MESSAGE_TAGS: dict = {}
 
 MIDDLEWARE = (
-    'plinth.middleware.CommonHeadersMiddleware',
+    'freedombox.middleware.CommonHeadersMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
@@ -159,12 +159,12 @@ MIDDLEWARE = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'plinth.middleware.CommonErrorMiddleware',
+    'freedombox.middleware.CommonErrorMiddleware',
     'stronghold.middleware.LoginRequiredMiddleware',
-    'plinth.middleware.AdminRequiredMiddleware',
-    'plinth.middleware.FirstSetupMiddleware',
-    'plinth.modules.first_boot.middleware.FirstBootMiddleware',
-    'plinth.middleware.SetupMiddleware',
+    'freedombox.middleware.AdminRequiredMiddleware',
+    'freedombox.middleware.FirstSetupMiddleware',
+    'freedombox.modules.first_boot.middleware.FirstBootMiddleware',
+    'freedombox.middleware.SetupMiddleware',
 
     # AxesMiddleware should be the last middleware. It only formats user
     # lockout messages and renders Axes lockout responses on failed user
@@ -173,8 +173,10 @@ MIDDLEWARE = (
 )
 
 OAUTH2_PROVIDER = {
-    'OIDC_ENABLED': True,
-    'OAUTH2_VALIDATOR_CLASS': 'plinth.modules.oidc.validators.OAuth2Validator',
+    'OIDC_ENABLED':
+        True,
+    'OAUTH2_VALIDATOR_CLASS':
+        'freedombox.modules.oidc.validators.OAuth2Validator',
     'SCOPES': {
         'openid':
             _('Uniquely identify your user account with username'),
@@ -188,13 +190,13 @@ OAUTH2_PROVIDER = {
 }
 
 PASSWORD_HASHERS = [
-    'plinth.hashers.Argon2PasswordHasherLowMemory',
+    'freedombox.hashers.Argon2PasswordHasherLowMemory',
     'django.contrib.auth.hashers.PBKDF2PasswordHasher',
     'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
     'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
 ]
 
-ROOT_URLCONF = 'plinth.urls'
+ROOT_URLCONF = 'freedombox.urls'
 
 SECURE_CONTENT_TYPE_NOSNIFF = True
 
@@ -231,7 +233,7 @@ TEMPLATES = [
                 'django.template.context_processors.static',
                 'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
-                'plinth.context_processors.common',
+                'freedombox.context_processors.common',
             ],
         },
     },

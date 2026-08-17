@@ -15,7 +15,7 @@ from freedombox.models import JSONField
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('plinth', '0004_userprofile'),
+        ('freedombox', '0004_userprofile'),
     ]
 
     operations = [

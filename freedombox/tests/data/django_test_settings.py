@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'oauth2_provider',
     'stronghold',
-    'plinth',
+    'freedombox',
 ]
 
 # These are included here solely to suppress Django warnings
@@ -48,7 +48,7 @@ MIDDLEWARE = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-ROOT_URLCONF = 'plinth.tests.data.urls'
+ROOT_URLCONF = 'freedombox.tests.data.urls'
 
 SECRET_KEY = 'django_tests_secret_key'
 
@@ -57,7 +57,7 @@ STRONGHOLD_PUBLIC_URLS = (r'^/o/', )
 TEMPLATES = [{
     'BACKEND': 'django.template.backends.django.DjangoTemplates',
     'APP_DIRS': True,
-    'DIRS': ['plinth/tests/data/templates/'],
+    'DIRS': ['freedombox/tests/data/templates/'],
 }]
 
 TIME_ZONE = 'UTC'
