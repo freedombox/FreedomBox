@@ -1392,6 +1392,7 @@ class VM(Machine):
 
         with tempfile.NamedTemporaryFile() as file_handle:
             file_handle.write(domain_xml.encode())
+            file_handle.flush()
             logger.info('Running `virsh define %s`', file_handle.name)
             self._virsh(['define', file_handle.name],
                         stdout=subprocess.DEVNULL)
