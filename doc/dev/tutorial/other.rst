@@ -13,9 +13,9 @@ framework as part of the components used by an app. FreedomBox takes care of
 calling the diagnostics method and displaying the list in a formatted manner.
 
 To implement additional diagnostic tests on top of those provided by the
-framework, the method :meth:`plinth.app.App.diagnose` has to be overridden or in
-a component that belongs to the app, the method
-:meth:`plinth.app.Component.diagnose` has to be overridden. The methods must
+framework, the method :meth:`freedombox.app.App.diagnose` has to be overridden
+or in a component that belongs to the app, the method
+:meth:`freedombox.app.Component.diagnose` has to be overridden. The methods must
 return a list in which each item is the result of a test performed. The item
 itself is a two-tuple containing the display name of the test followed by the
 result as ``passed``, ``failed`` or ``error``.
@@ -36,7 +36,7 @@ result as ``passed``, ``failed`` or ``error``.
 The user can trigger the diagnostics test by going to **System -> Diagnostics**
 page. This runs diagnostics for all the applications. Users can also run
 diagnostics specifically for this app from the app's page. A diagnostics menu
-item is shown by the :class:`plinth.views.AppView` and `app.html` template
+item is shown by the :class:`freedombox.views.AppView` and `app.html` template
 automatically when ``diagnose()`` method is overridden in the app or a
 component.
 

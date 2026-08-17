@@ -3,5 +3,5 @@
 Let's Encrypt
 ^^^^^^^^^^^^^
 
-.. autoclass:: plinth.modules.letsencrypt.components.LetsEncrypt
+.. autoclass:: freedombox.modules.letsencrypt.components.LetsEncrypt
    :members:

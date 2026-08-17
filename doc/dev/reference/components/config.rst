@@ -3,5 +3,5 @@
 Configuration
 ^^^^^^^^^^^^^
 
-.. autoclass:: plinth.config.DropinConfigs
+.. autoclass:: freedombox.config.DropinConfigs
    :members:

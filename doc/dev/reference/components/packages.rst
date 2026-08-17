@@ -3,5 +3,5 @@
 Packages
 ^^^^^^^^
 
-.. autoclass:: plinth.package.Packages
+.. autoclass:: freedombox.package.Packages
    :members:

@@ -3,5 +3,5 @@
 EnableState
 ^^^^^^^^^^^
 
-.. autoclass:: plinth.app.EnableState
+.. autoclass:: freedombox.app.EnableState
    :members:

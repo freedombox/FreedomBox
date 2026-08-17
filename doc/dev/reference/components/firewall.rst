@@ -3,8 +3,8 @@
 Firewall
 ^^^^^^^^
 
-.. autoclass:: plinth.modules.firewall.components.Firewall
+.. autoclass:: freedombox.modules.firewall.components.Firewall
    :members:
 
-.. autoclass:: plinth.modules.firewall.components.FirewallLocalProtection
+.. autoclass:: freedombox.modules.firewall.components.FirewallLocalProtection
    :members:

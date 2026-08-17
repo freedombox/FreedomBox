@@ -3,5 +3,5 @@
 Backups
 ^^^^^^^
 
-.. autoclass:: plinth.modules.backups.components.BackupRestore
+.. autoclass:: freedombox.modules.backups.components.BackupRestore
    :members:

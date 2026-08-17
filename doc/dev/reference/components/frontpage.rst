@@ -3,5 +3,5 @@
 Frontpage
 ^^^^^^^^^
 
-.. autoclass:: plinth.frontpage.Shortcut
+.. autoclass:: freedombox.frontpage.Shortcut
    :members:

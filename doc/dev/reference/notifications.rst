@@ -3,5 +3,5 @@
 Notification
 ^^^^^^^^^^^^
 
-.. autoclass:: plinth.notification.Notification
+.. autoclass:: freedombox.notification.Notification
    :members:

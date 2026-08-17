@@ -3,5 +3,5 @@
 Container
 ^^^^^^^^^
 
-.. autoclass:: plinth.container.Container
+.. autoclass:: freedombox.container.Container
    :members:

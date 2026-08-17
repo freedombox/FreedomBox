@@ -3,8 +3,8 @@
 Webserver
 ^^^^^^^^^
 
-.. autoclass:: plinth.modules.apache.components.Webserver
+.. autoclass:: freedombox.modules.apache.components.Webserver
    :members:
 
-.. autoclass:: plinth.modules.apache.components.WebserverRoot
+.. autoclass:: freedombox.modules.apache.components.WebserverRoot
    :members:

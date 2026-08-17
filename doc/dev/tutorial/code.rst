@@ -6,56 +6,56 @@ Full Code
 Transmission app is already included in FreedomBox. Here is the full source for
 the module for reference.
 
-plinth/modules/transmission/__init__.py
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+freedombox/modules/transmission/__init__.py
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. literalinclude:: ../../../plinth/modules/transmission/__init__.py
+.. literalinclude:: ../../../freedombox/modules/transmission/__init__.py
    :language: python3
 
-plinth/modules/transmission/forms.py
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+freedombox/modules/transmission/forms.py
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. literalinclude:: ../../../plinth/modules/transmission/forms.py
+.. literalinclude:: ../../../freedombox/modules/transmission/forms.py
    :language: python3
 
-plinth/modules/transmission/manifest.py
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+freedombox/modules/transmission/manifest.py
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. literalinclude:: ../../../plinth/modules/transmission/manifest.py
+.. literalinclude:: ../../../freedombox/modules/transmission/manifest.py
    :language: python3
 
-plinth/modules/transmission/privileged.py
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. literalinclude:: ../../../plinth/modules/transmission/privileged.py
-   :language: python3
-
-plinth/modules/transmission/urls.py
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. literalinclude:: ../../../plinth/modules/transmission/urls.py
-   :language: python3
-
-plinth/modules/transmission/views.py
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. literalinclude:: ../../../plinth/modules/transmission/views.py
-   :language: python3
-
-plinth/modules/transmission/data/usr/share/freedombox/modules-enabled/transmission
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. literalinclude:: ../../../plinth/modules/transmission/data/usr/share/freedombox/modules-enabled/transmission
-   :language: text
-
-plinth/modules/transmission/data/usr/share/freedombox/etc/apache2/conf-available/transmission-plinth.conf
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. literalinclude:: ../../../plinth/modules/transmission/data/usr/share/freedombox/etc/apache2/conf-available/transmission-plinth.conf
-   :language: apache
-
-plinth/modules/transmission/tests/__init__.py
+freedombox/modules/transmission/privileged.py
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. literalinclude:: ../../../plinth/modules/transmission/tests/__init__.py
+.. literalinclude:: ../../../freedombox/modules/transmission/privileged.py
+   :language: python3
+
+freedombox/modules/transmission/urls.py
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. literalinclude:: ../../../freedombox/modules/transmission/urls.py
+   :language: python3
+
+freedombox/modules/transmission/views.py
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. literalinclude:: ../../../freedombox/modules/transmission/views.py
+   :language: python3
+
+freedombox/modules/transmission/data/usr/share/freedombox/modules-enabled/transmission
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. literalinclude:: ../../../freedombox/modules/transmission/data/usr/share/freedombox/modules-enabled/transmission
+   :language: text
+
+freedombox/modules/transmission/data/usr/share/freedombox/etc/apache2/conf-available/transmission-plinth.conf
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. literalinclude:: ../../../freedombox/modules/transmission/data/usr/share/freedombox/etc/apache2/conf-available/transmission-plinth.conf
+   :language: apache
+
+freedombox/modules/transmission/tests/__init__.py
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. literalinclude:: ../../../freedombox/modules/transmission/tests/__init__.py
    :language: python3

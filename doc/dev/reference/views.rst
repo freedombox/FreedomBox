@@ -3,5 +3,5 @@
 Views
 -----
 
-.. autoclass:: plinth.views.AppView
+.. autoclass:: freedombox.views.AppView
    :members:

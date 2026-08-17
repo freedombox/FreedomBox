@@ -3,8 +3,8 @@
 Coturn
 ^^^^^^
 
-.. autoclass:: plinth.modules.coturn.components.TurnConsumer
+.. autoclass:: freedombox.modules.coturn.components.TurnConsumer
    :members:
 
-.. autoclass:: plinth.modules.coturn.components.TurnConfiguration
+.. autoclass:: freedombox.modules.coturn.components.TurnConfiguration
    :members:
