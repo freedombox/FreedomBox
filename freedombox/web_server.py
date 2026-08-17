@@ -24,7 +24,7 @@ logger = logging.getLogger(__name__)
 # temporary failure in requests served leading to failures in functional tests.
 # Workaround this by preventing auto-reloading for all but FreedomBox's python
 # modules.
-AUTORELOAD_REGEX = r'^plinth'
+AUTORELOAD_REGEX = r'^freedombox'
 
 _CUSTOM_STATIC_URL = '/custom/static'
 

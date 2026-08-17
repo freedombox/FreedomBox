@@ -17,15 +17,12 @@ Vagrant.configure(2) do |config|
   config.vm.provision "shell", run: 'always', inline: <<-SHELL
     # Disable automatic upgrades
     echo -e 'APT::Periodic::Update-Package-Lists "0";\nAPT::Periodic::Unattended-Upgrade "0";' > //etc/apt/apt.conf.d/20auto-upgrades
-    # Do not run system plinth
-    systemctl stop plinth
-    systemctl disable plinth
   SHELL
   config.vm.provision "shell", inline: <<-SHELL
     cd /freedombox/
     make provision-dev
   SHELL
-  config.vm.provision "tests", run: "never", type: "shell", path: "plinth/tests/functional/install.sh"
+  config.vm.provision "tests", run: "never", type: "shell", path: "freedombox/tests/functional/install.sh"
   config.vm.post_up_message = "FreedomBox virtual machine is ready
 for development. To get the IP address:
 $ vagrant ssh

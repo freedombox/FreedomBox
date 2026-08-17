@@ -1,5 +1,5 @@
 [project]
-name = "plinth"
+name = "freedombox"
 description = "A web front end for administering FreedomBox"
 license = "AGPL-3.0-or-later"
 license-files = ["COPYING.md"]
@@ -108,15 +108,15 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project.scripts]
-plinth = "plinth.__main__:main"
-freedombox-privileged = "plinth.privileged_daemon:main"
-freedombox-cmd = "plinth.privileged_daemon:client_main"
+plinth = "freedombox.__main__:main"
+freedombox-privileged = "freedombox.privileged_daemon:main"
+freedombox-cmd = "freedombox.privileged_daemon:client_main"
 
 [tool.setuptools.dynamic]
-version = {attr = "plinth.__version__"}
+version = {attr = "freedombox.__version__"}
 
 [tool.setuptools.packages.find]
-include = ["plinth", "plinth.*"]
+include = ["freedombox", "freedombox.*"]
 
 [tool.setuptools.package-data]
 "*" = [
@@ -130,7 +130,7 @@ include = ["plinth", "plinth.*"]
 "*" = ["*/data/*"]
 
 [tool.isort]
-known_first_party = ["plinth"]
+known_first_party = ["freedombox"]
 
 [tool.coverage.run]
 branch = true
@@ -141,7 +141,7 @@ precision = 2
 omit = ["*/tests/*"]
 
 [tool.pytest.ini_options]
-addopts = "--ds=plinth.tests.data.django_test_settings"
+addopts = "--ds=freedombox.tests.data.django_test_settings"
 markers = [
     "essential",
     "functional",
@@ -181,7 +181,7 @@ module = [
   "pam.*",
   "pexpect.*",
   "pgi.*",
-  "plinth.tests.config_local",
+  "freedombox.tests.config_local",
   "pytest_splinter.*",
   "ruamel.*",
   "segno.*",

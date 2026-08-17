@@ -58,14 +58,14 @@ FIND_ARGS := \
 
 
 ROOT_DATA_FILES := $(shell find data -type f $(FIND_ARGS))
-MODULE_DATA_FILES := $(shell find $(wildcard plinth/modules/*/data) -type f $(FIND_ARGS))
+MODULE_DATA_FILES := $(shell find $(wildcard freedombox/modules/*/data) -type f $(FIND_ARGS))
 
 update-translations:
 	$(DJANGO_ADMIN) makemessages --all --domain django --keep-pot \
 		--verbosity=1 --ignore conftest.py --ignore doc --ignore build \
 		--ignore htmlcov --ignore screenshots --ignore debian --ignore \
 		actions --ignore preseed --ignore static --ignore data \
-		--settings plinth.settings --pythonpath .
+		--settings freedombox.settings --pythonpath .
 
 configure:
 	# Nothing to do
@@ -78,7 +78,7 @@ build:
 	$(MAKE) -C doc -j 8
 
 	# Build .whl package
-	rm -f dist/plinth-*.whl
+	rm -f dist/freedombox-*.whl
 	$(PYTHON) -m build --no-isolation --skip-dependency-check --wheel
 
 install:
@@ -96,14 +96,14 @@ install:
 	# Python package
 	temp=$$(mktemp -d) && \
         lib_dir=$$($(PYTHON) -c 'import sysconfig; print(sysconfig.get_paths(scheme="deb_system")["purelib"])') && \
-	$(PYTHON) -m pip install dist/plinth-*.whl --break-system-packages \
+	$(PYTHON) -m pip install dist/freedombox-*.whl --break-system-packages \
             --no-deps --no-compile --no-warn-script-location \
             --ignore-installed --target=$${temp} && \
         $(INSTALL) -d $(DESTDIR)$${lib_dir} && \
-	rm -rf $(DESTDIR)$${lib_dir}/plinth $(DESTDIR)$${lib_dir}/plinth*.dist-info && \
-        mv $${temp}/plinth $${temp}/plinth*.dist-info $(DESTDIR)$${lib_dir} && \
-	rm -f $(DESTDIR)$${lib_dir}/plinth*.dist-info/licenses/COPYING.md && \
-	rm -f $(DESTDIR)$${lib_dir}/plinth*.dist-info/direct_url.json && \
+	rm -rf $(DESTDIR)$${lib_dir}/freedombox $(DESTDIR)$${lib_dir}/freedombox*.dist-info && \
+        mv $${temp}/freedombox $${temp}/freedombox*.dist-info $(DESTDIR)$${lib_dir} && \
+	rm -f $(DESTDIR)$${lib_dir}/freedombox*.dist-info/licenses/COPYING.md && \
+	rm -f $(DESTDIR)$${lib_dir}/freedombox*.dist-info/direct_url.json && \
         $(INSTALL) -D -t $(BIN_DIR) bin/plinth
 	$(INSTALL) -D -t $(LIB_DIR)/freedombox bin/freedombox-privileged
 	$(INSTALL) -D -t $(BIN_DIR) bin/freedombox-cmd
@@ -121,7 +121,7 @@ install:
 	    cp $(CP_ARGS) $${file} $${target} ; \
 	done
 	for file in $(MODULE_DATA_FILES) ; do \
-	    target=$$(dirname $(DESTDIR)$$(echo $${file} | sed -e 's|^plinth/modules/[^/]*/data||')) ; \
+	    target=$$(dirname $(DESTDIR)$$(echo $${file} | sed -e 's|^freedombox/modules/[^/]*/data||')) ; \
 	    $(INSTALL) --directory --mode=755 $${target} ; \
 	    cp $(CP_ARGS) $${file} $${target} ; \
 	done
@@ -137,12 +137,12 @@ check-tests:
 
 # Tests with coverage report
 check-tests-cov:
-	$(PYTHON) -m pytest $(PYTEST_ARGS) --cov=plinth \
+	$(PYTHON) -m pytest $(PYTEST_ARGS) --cov=freedombox \
 	    --cov-report=html:./htmlcov --cov-report=term
 
 # Code quality checking using flake8
 check-code:
-	$(PYTHON) -m flake8 plinth container
+	$(PYTHON) -m flake8 freedombox container
 
 # Static type checking using mypy
 check-type:
@@ -154,8 +154,8 @@ check-doc:
 
 clean:
 	make -C doc clean
-	rm -rf Plinth.egg-info
-	find plinth/locale -name *.mo -delete
+	rm -rf Freedombox.egg-info
+	find freedombox/locale -name *.mo -delete
 
 define DEVELOP_SERVICE_CONF
 [Service]
