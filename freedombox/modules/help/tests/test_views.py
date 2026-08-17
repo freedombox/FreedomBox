@@ -24,8 +24,8 @@ from freedombox import cfg, module_loader
 from freedombox.modules import help as help_module
 from freedombox.modules.help import views
 
-# For all tests, use plinth.urls instead of urls configured for testing
-pytestmark = pytest.mark.urls('plinth.urls')
+# For all tests, use freedombox.urls instead of urls configured for testing
+pytestmark = pytest.mark.urls('freedombox.urls')
 
 
 def _is_page(response):
@@ -36,14 +36,14 @@ def _is_page(response):
 
 @pytest.fixture(autouse=True, scope='module')
 def fixture_app_urls():
-    """Make sure app's URLs are part of plinth.urls."""
+    """Make sure app's URLs are part of freedombox.urls."""
     urls = [
         re_path(r'^apps/$', views.index, name='apps'),
         re_path(r'^system/$', views.index, name='system')
     ]
-    with patch('plinth.module_loader._modules_to_load', new=[]) as modules, \
-            patch('plinth.urls.urlpatterns', new=urls):
-        modules.append('plinth.modules.help')
+    with (patch('freedombox.module_loader._modules_to_load', new=[]) as
+          modules, patch('freedombox.urls.urlpatterns', new=urls)):
+        modules.append('freedombox.modules.help')
         module_loader.include_urls()
         yield
 
@@ -105,8 +105,8 @@ def test_contribute_page(requests_get, decompress, apt_cache, rf):
                       response.context_data['help'])
 
 
-@patch('plinth.modules.upgrades.views.is_newer_version_available')
-@patch('plinth.modules.upgrades.views.get_os_release')
+@patch('freedombox.modules.upgrades.views.is_newer_version_available')
+@patch('freedombox.modules.upgrades.views.get_os_release')
 def test_about(_get_os_release, _is_newer_version_available, rf):
     """Test some expected items in about view."""
     about_url = urls.reverse('help:about')

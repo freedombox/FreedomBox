@@ -16,17 +16,17 @@ from freedombox.modules.users import views
 
 from ..components import UsersAndGroups
 
-# For all tests, plinth.urls instead of urls configured for testing, and
+# For all tests, freedombox.urls instead of urls configured for testing, and
 # django database
-pytestmark = [pytest.mark.urls('plinth.urls'), pytest.mark.django_db]
+pytestmark = [pytest.mark.urls('freedombox.urls'), pytest.mark.django_db]
 
 
 @pytest.fixture(autouse=True, scope='module')
 def fixture_users_urls():
-    """Make sure users app's URLs are part of plinth.urls."""
-    with patch('plinth.module_loader._modules_to_load', new=[]) as modules, \
-            patch('plinth.urls.urlpatterns', new=[]):
-        modules.append('plinth.modules.users')
+    """Make sure users app's URLs are part of freedombox.urls."""
+    with (patch('freedombox.module_loader._modules_to_load', new=[]) as
+          modules, patch('freedombox.urls.urlpatterns', new=[])):
+        modules.append('freedombox.modules.users')
         module_loader.include_urls()
         yield
 
@@ -42,7 +42,7 @@ def module_patch():
     UsersAndGroups('users-and-groups-minetest',
                    reserved_usernames=['debian-minetest'])
 
-    privileged = 'plinth.modules.users.privileged'
+    privileged = 'freedombox.modules.users.privileged'
     with patch('pwd.getpwall', return_value=pwd_users), \
          patch(f'{privileged}.create_user'), \
          patch(f'{privileged}.add_user_to_group'), \
@@ -50,8 +50,8 @@ def module_patch():
          patch(f'{privileged}.set_user_status'), \
          patch(f'{privileged}.rename_user'), \
          patch(f'{privileged}.get_group_users') as get_group_users, \
-         patch('plinth.modules.ssh.privileged.set_keys'), \
-         patch('plinth.modules.ssh.privileged.get_keys') as get_keys, \
+         patch('freedombox.modules.ssh.privileged.set_keys'), \
+         patch('freedombox.modules.ssh.privileged.get_keys') as get_keys, \
          patch(f'{privileged}.get_user_groups') as get_user_groups, \
          patch(f'{privileged}.remove_user'):
         get_group_users.return_value = ['admin']
@@ -72,11 +72,11 @@ def make_request(request, view, as_admin=True, **kwargs):
 
     request.user = admin_user if as_admin else user
 
-    with patch('plinth.modules.users.forms.is_user_admin',
+    with patch('freedombox.modules.users.forms.is_user_admin',
                return_value=as_admin), \
-            patch('plinth.modules.users.views.is_user_admin',
+            patch('freedombox.modules.users.views.is_user_admin',
                   return_value=as_admin), \
-            patch('plinth.modules.users.views.update_session_auth_hash'):
+            patch('freedombox.modules.users.views.update_session_auth_hash'):
 
         response = view(request, **kwargs)
 
@@ -85,9 +85,9 @@ def make_request(request, view, as_admin=True, **kwargs):
 
 def test_users_list_view(rf):
     """Test users list view has correct view data."""
-    with (patch('plinth.views.AppView.get_context_data',
+    with (patch('freedombox.views.AppView.get_context_data',
                 return_value={'is_enabled': True}),
-          patch('plinth.views.AppView.app', return_value=None)):
+          patch('freedombox.views.AppView.app', return_value=None)):
         view = views.UserList.as_view()
         response, messages = make_request(rf.get('/'), view)
 

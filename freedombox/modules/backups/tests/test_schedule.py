@@ -9,7 +9,7 @@ from unittest.mock import MagicMock, call, patch
 
 import pytest
 
-import plinth.modules.backups.repository as repository_module
+import freedombox.modules.backups.repository as repository_module
 from freedombox.app import App
 
 from ..components import BackupRestore
@@ -420,8 +420,8 @@ cases = [
 
 @pytest.mark.parametrize(
     'schedule_params,archives_data,test_now,run_periods,cleanups', cases)
-@patch('plinth.app.App.get_setup_state')
-@patch('plinth.modules.backups.repository.get_instance')
+@patch('freedombox.app.App.get_setup_state')
+@patch('freedombox.modules.backups.repository.get_instance')
 def test_run_schedule(get_instance, get_setup_state, schedule_params,
                       archives_data, test_now, run_periods, cleanups):
     """Test that backups are run at expected time."""
@@ -434,9 +434,10 @@ def test_run_schedule(get_instance, get_setup_state, schedule_params,
     repository.generate_archive_name = lambda: \
         repository_module.BaseBorgRepository.generate_archive_name(None)
 
-    with patch('plinth.modules.backups.schedule.datetime') as mock_datetime, \
-         patch('plinth.modules.backups.repository.datetime') \
-         as repo_datetime, patch('plinth.app.App.list') as app_list:
+    with patch('freedombox.modules.backups.schedule.datetime') as \
+         mock_datetime, \
+         patch('freedombox.modules.backups.repository.datetime') \
+         as repo_datetime, patch('freedombox.app.App.list') as app_list:
         app_list.return_value = [
             _get_test_app('test-app1'),
             _get_test_app('test-app2'),

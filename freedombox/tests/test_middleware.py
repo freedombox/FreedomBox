@@ -16,8 +16,8 @@ from django.urls import resolve
 from stronghold.decorators import public
 
 from freedombox import app as app_module
-from freedombox.middleware import (AdminRequiredMiddleware, CommonErrorMiddleware,
-                               SetupMiddleware)
+from freedombox.middleware import (AdminRequiredMiddleware,
+                                   CommonErrorMiddleware, SetupMiddleware)
 
 
 @pytest.fixture(name='kwargs')
@@ -89,7 +89,7 @@ class TestSetupMiddleware:
         assert response is None
 
     @staticmethod
-    @patch('plinth.views.SetupView')
+    @patch('freedombox.views.SetupView')
     @patch('django.urls.resolve')
     @patch('django.urls.reverse', return_value='users:login')
     @pytest.mark.django_db
@@ -133,7 +133,7 @@ class TestSetupMiddleware:
         view.assert_called_once_with(request, app_id='mockapp')
 
     @staticmethod
-    @patch('plinth.operation.manager')
+    @patch('freedombox.operation.manager')
     @patch('django.contrib.messages.error')
     @patch('django.contrib.messages.success')
     @patch('django.urls.resolve')
@@ -221,8 +221,8 @@ class TestAdminMiddleware:
         web_request.user.groups.filter().exists = Mock(return_value=False)
         web_request.session = MagicMock()
         with patch(
-                'plinth.middleware.AdminRequiredMiddleware.check_user_group',
-                lambda x, y: False):
+                'freedombox.middleware.AdminRequiredMiddleware.'
+                'check_user_group', lambda x, y: False):
             with pytest.raises(PermissionDenied):
                 middleware.process_view(web_request, **kwargs)
 
@@ -233,8 +233,8 @@ class TestAdminMiddleware:
         web_request.user.groups.filter().exists = Mock(return_value=False)
         web_request.session = MagicMock()
         with patch(
-                'plinth.middleware.AdminRequiredMiddleware.check_user_group',
-                lambda x, y: True):
+                'freedombox.middleware.AdminRequiredMiddleware.'
+                'check_user_group', lambda x, y: True):
             response = middleware.process_view(web_request, **kwargs)
             assert response is None
 

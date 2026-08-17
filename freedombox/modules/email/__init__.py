@@ -6,14 +6,14 @@ import logging
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
-import plinth.app
+import freedombox.app
 from freedombox import cfg, frontpage, menu
 from freedombox.config import DropinConfigs
 from freedombox.daemon import Daemon
 from freedombox.modules.apache.components import Webserver
 from freedombox.modules.backups.components import BackupRestore
 from freedombox.modules.firewall.components import (Firewall,
-                                                FirewallLocalProtection)
+                                                    FirewallLocalProtection)
 from freedombox.modules.letsencrypt.components import LetsEncrypt
 from freedombox.package import Packages
 from freedombox.privileged import service as service_privileged
@@ -47,7 +47,7 @@ _description = [
 logger = logging.getLogger(__name__)
 
 
-class EmailApp(plinth.app.App):
+class EmailApp(freedombox.app.App):
     """FreedomBox app for an email server."""
 
     app_id = 'email'
@@ -58,12 +58,12 @@ class EmailApp(plinth.app.App):
         """Initialize the email app."""
         super().__init__()
 
-        info = plinth.app.Info(app_id=self.app_id, version=self._version,
-                               name=_('Postfix/Dovecot'),
-                               icon_filename='email', description=_description,
-                               manual_page='Email', clients=manifest.clients,
-                               tags=manifest.tags,
-                               donation_url='https://rspamd.com/support.html')
+        info = freedombox.app.Info(
+            app_id=self.app_id, version=self._version,
+            name=_('Postfix/Dovecot'), icon_filename='email',
+            description=_description, manual_page='Email',
+            clients=manifest.clients, tags=manifest.tags,
+            donation_url='https://rspamd.com/support.html')
         self.add(info)
 
         menu_item = menu.Menu('menu-email', info.name, info.icon_filename,
@@ -260,7 +260,7 @@ def _get_first_admin():
 def on_domain_added(sender, domain_type, name, description='', services=None,
                     **kwargs):
     """Handle addition of a new domain."""
-    app = plinth.app.App.get('email')
+    app = freedombox.app.App.get('email')
     if app.needs_setup():
         return
 
@@ -269,7 +269,7 @@ def on_domain_added(sender, domain_type, name, description='', services=None,
 
 def on_domain_removed(sender, domain_type, name='', **kwargs):
     """Handle removal of a domain."""
-    app = plinth.app.App.get('email')
+    app = freedombox.app.App.get('email')
     if app.needs_setup():
         return
 

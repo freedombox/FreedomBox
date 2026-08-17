@@ -714,7 +714,7 @@ class UninstallView(FormView):
         if self.has_backup_restore and form.cleaned_data['should_backup']:
             repository_id = form.cleaned_data['repository']
 
-            import plinth.modules.backups.repository as repository_module
+            import freedombox.modules.backups.repository as repository_module
             repository = repository_module.get_instance(repository_id)
             if repository.flags.get('mountable'):
                 repository.mount()

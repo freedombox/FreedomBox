@@ -18,8 +18,8 @@ from django.utils.deconstruct import deconstructible
 from django.utils.translation import gettext as _
 from django.utils.translation import gettext_lazy
 
-import plinth.forms
-import plinth.modules.ssh.privileged as ssh_privileged
+import freedombox.forms
+import freedombox.modules.ssh.privileged as ssh_privileged
 from freedombox.modules import first_boot
 from freedombox.utils import is_user_admin
 from freedombox.views import messages_error
@@ -181,7 +181,8 @@ class PasswordConfirmForm(forms.Form):
 
 
 class CreateUserForm(ValidNewUsernameCheckMixin, EmailFieldMixin,
-                     GroupsFieldMixin, plinth.forms.LanguageSelectionFormMixin,
+                     GroupsFieldMixin,
+                     freedombox.forms.LanguageSelectionFormMixin,
                      PasswordConfirmForm, UserCreationForm):
     """Custom user create form.
 
@@ -190,7 +191,7 @@ class CreateUserForm(ValidNewUsernameCheckMixin, EmailFieldMixin,
 
     username = USERNAME_FIELD
 
-    language = plinth.forms.LanguageSelectionFormMixin.language
+    language = freedombox.forms.LanguageSelectionFormMixin.language
 
     class Meta(UserCreationForm.Meta):
         """Metadata to control automatic form building."""
@@ -198,7 +199,7 @@ class CreateUserForm(ValidNewUsernameCheckMixin, EmailFieldMixin,
         fields = ('username', 'email', 'password1', 'password2', 'groups',
                   'language', 'confirm_password')
         widgets = {
-            'groups': plinth.forms.CheckboxSelectMultiple(),
+            'groups': freedombox.forms.CheckboxSelectMultiple(),
         }
 
     def __init__(self, request, *args, **kwargs):
@@ -254,7 +255,8 @@ class CreateUserForm(ValidNewUsernameCheckMixin, EmailFieldMixin,
 
 class UserUpdateForm(ValidNewUsernameCheckMixin, PasswordConfirmForm,
                      EmailFieldMixin, GroupsFieldMixin,
-                     plinth.forms.LanguageSelectionFormMixin, forms.ModelForm):
+                     freedombox.forms.LanguageSelectionFormMixin,
+                     forms.ModelForm):
     """When user info is changed, also updates LDAP user."""
 
     username = USERNAME_FIELD
@@ -267,7 +269,7 @@ class UserUpdateForm(ValidNewUsernameCheckMixin, PasswordConfirmForm,
             'line. Blank lines and lines starting with # will be '
             'ignored.'))
 
-    language = plinth.forms.LanguageSelectionFormMixin.language
+    language = freedombox.forms.LanguageSelectionFormMixin.language
 
     delete = forms.BooleanField(
         label=gettext_lazy('Delete user'), required=False,
@@ -283,7 +285,7 @@ class UserUpdateForm(ValidNewUsernameCheckMixin, PasswordConfirmForm,
                   'is_active', 'delete', 'confirm_password')
         model = User
         widgets = {
-            'groups': plinth.forms.CheckboxSelectMultipleWithReadOnly(),
+            'groups': freedombox.forms.CheckboxSelectMultipleWithReadOnly(),
         }
 
     def __init__(self, request, username, *args, **kwargs):

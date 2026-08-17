@@ -19,7 +19,7 @@ REPO_DATA = {
 }
 
 pytestmark = pytest.mark.usefixtures('mock_privileged', 'mock_run_as_user')
-privileged_modules_to_mock = ['plinth.modules.gitweb.privileged']
+privileged_modules_to_mock = ['freedombox.modules.gitweb.privileged']
 git_installed = pytest.mark.skipif(not pathlib.Path('/usr/bin/git').exists(),
                                    reason='git is not installed')
 
@@ -125,7 +125,7 @@ def test_action_create_repo_with_invalid_urls(url):
                                keep_ownership=True)
 
 
-@patch('plinth.action_utils.run')
+@patch('freedombox.action_utils.run')
 def test_setup_git_creentials(run):
     """Test that setting up git credentials works."""
     url = 'https://user:pass@host.example/path?key=value'

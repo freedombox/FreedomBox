@@ -100,9 +100,9 @@ def test_privileged_argument_annotation_check():
     privileged(func2_valid)
 
 
-@patch('plinth.actions._read_from_server')
-@patch('plinth.actions._request_to_server')
-@patch('plinth.actions._get_privileged_action_module_name')
+@patch('freedombox.actions._read_from_server')
+@patch('freedombox.actions._request_to_server')
+@patch('freedombox.actions._get_privileged_action_module_name')
 def test_privileged_method_call(get_module_name, request_to_server,
                                 read_from_server):
     """Test that privileged method calls the superuser action properly."""
@@ -129,9 +129,9 @@ def test_privileged_method_call(get_module_name, request_to_server,
     ]
 
 
-@patch('plinth.actions._read_from_server')
-@patch('plinth.actions._request_to_server')
-@patch('plinth.actions._get_privileged_action_module_name')
+@patch('freedombox.actions._read_from_server')
+@patch('freedombox.actions._request_to_server')
+@patch('freedombox.actions._get_privileged_action_module_name')
 def test_privileged_method_exceptions(get_module_name, request_to_server,
                                       read_from_server):
     """Test that exceptions on privileged methods are return properly."""
@@ -157,7 +157,7 @@ def test_privileged_method_exceptions(get_module_name, request_to_server,
 
 
 @patch('importlib.import_module')
-@patch('plinth.module_loader.get_module_import_path')
+@patch('freedombox.module_loader.get_module_import_path')
 @patch('os.getuid')
 def test_call_syntax_checks(getuid, get_module_import_path, import_module):
     """Test that calling a method results in proper syntax checks."""
@@ -169,13 +169,13 @@ def test_call_syntax_checks(getuid, get_module_import_path, import_module):
         privileged_call('foo.bar', 'x-action', {})
 
     # Module import test
-    get_module_import_path.return_value = 'plinth.modules.test_module'
+    get_module_import_path.return_value = 'freedombox.modules.test_module'
     import_module.side_effect = ModuleNotFoundError
     with pytest.raises(SyntaxError, match='Specified module not found'):
         privileged_call('test_module', 'x-action', {})
 
     import_module.assert_has_calls(
-        [call('plinth.modules.test_module.privileged')])
+        [call('freedombox.modules.test_module.privileged')])
 
     # Finding action in a module
     module = type('', (), {})

@@ -93,7 +93,7 @@ class TestBackupProcesses:
         backup_handler.assert_called_once()
 
     @staticmethod
-    @patch('plinth.modules.backups.api._install_apps_before_restore')
+    @patch('freedombox.modules.backups.api._install_apps_before_restore')
     def test_restore_apps(mock_install):
         """Test that restore_handler is called."""
         restore_handler = MagicMock()
@@ -101,8 +101,8 @@ class TestBackupProcesses:
         restore_handler.assert_called_once()
 
     @staticmethod
-    @patch('plinth.app.App.get_setup_state')
-    @patch('plinth.app.App.list')
+    @patch('freedombox.app.App.get_setup_state')
+    @patch('freedombox.app.App.list')
     def test_get_all_components_for_backup(apps_list, get_setup_state):
         """Test listing components supporting backup and needing backup."""
         get_setup_state.side_effect = [
@@ -121,7 +121,7 @@ class TestBackupProcesses:
         assert returned_components == expected_components
 
     @staticmethod
-    @patch('plinth.app.App.list')
+    @patch('freedombox.app.App.list')
     def test_get_components_in_order(apps_list):
         """Test that components are listed in correct dependency order."""
         apps = [
@@ -155,10 +155,10 @@ class TestBackupProcesses:
         assert not apps[1].locked
 
     @staticmethod
-    @patch('plinth.action_utils.webserver_is_enabled')
-    @patch('plinth.action_utils.service_is_running')
-    @patch('plinth.privileged.service.stop')
-    @patch('plinth.modules.apache.privileged.disable')
+    @patch('freedombox.action_utils.webserver_is_enabled')
+    @patch('freedombox.action_utils.service_is_running')
+    @patch('freedombox.privileged.service.stop')
+    @patch('freedombox.modules.apache.privileged.disable')
     def test__shutdown_services(apache_disable, service_stop,
                                 service_is_running, webserver_is_enabled):
         """Test that services are stopped in correct order."""
@@ -188,8 +188,8 @@ class TestBackupProcesses:
         service_stop.assert_has_calls([call('b'), call('a')])
 
     @staticmethod
-    @patch('plinth.privileged.service.start')
-    @patch('plinth.modules.apache.privileged.enable')
+    @patch('freedombox.privileged.service.start')
+    @patch('freedombox.modules.apache.privileged.enable')
     def test__restore_services(apache_enable, service_start):
         """Test that services are restored in correct order."""
         original_state = [

@@ -35,7 +35,7 @@ from fido2 import webauthn
 from fido2.server import Fido2Server
 from fido2.webauthn import AttestedCredentialData, AuthenticationResponse
 
-import plinth.modules.ssh.privileged as ssh_privileged
+import freedombox.modules.ssh.privileged as ssh_privileged
 from freedombox import translation
 from freedombox.models import UserPasskey
 from freedombox.modules import first_boot

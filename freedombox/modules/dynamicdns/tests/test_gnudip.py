@@ -71,7 +71,7 @@ def test_update_success():
     update_resp = Mock()
     update_resp.text = response_to_update_request
 
-    with patch('plinth.modules.dynamicdns.gnudip.requests.get',
+    with patch('freedombox.modules.dynamicdns.gnudip.requests.get',
                side_effect=[salt_resp, update_resp]) as mock_get:
         addr = gnudip.update(server='http://www.2mbit.com:80', ip_type='ipv4',
                              domain='gnudip.dyn.mpis.net', username='gnudip',

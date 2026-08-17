@@ -37,7 +37,7 @@ def fixture_component():
 @pytest.fixture(name='copy_certificate')
 def fixture_copy_certificate():
     """Patch and return privileged.copy_certificate call."""
-    with patch('plinth.modules.letsencrypt.privileged.copy_certificate'
+    with patch('freedombox.modules.letsencrypt.privileged.copy_certificate'
                ) as copy_certificate:
         yield copy_certificate
 
@@ -45,7 +45,7 @@ def fixture_copy_certificate():
 @pytest.fixture(name='compare_certificate')
 def fixture_compare_certificate():
     """Patch and return privileged.compare_certificate call."""
-    with patch('plinth.modules.letsencrypt.privileged.compare_certificate'
+    with patch('freedombox.modules.letsencrypt.privileged.compare_certificate'
                ) as compare_certificate:
         yield compare_certificate
 
@@ -54,7 +54,7 @@ def fixture_compare_certificate():
 def fixture_get_status():
     """Return patched letsencrypt.get_status() method."""
     domains = ['valid.example']
-    with patch('plinth.modules.letsencrypt.get_status') as get_status:
+    with patch('freedombox.modules.letsencrypt.get_status') as get_status:
         get_status.return_value = {
             'domains': {
                 domain: {
@@ -70,7 +70,7 @@ def fixture_get_status():
 @pytest.fixture(name='domain_list')
 def fixture_domain_list():
     """Return patch DomainName.list() method."""
-    method = 'plinth.modules.names.components.DomainName.list'
+    method = 'freedombox.modules.names.components.DomainName.list'
     with patch(method) as domain_list:
         DomainType._all = {}
         DomainType('domain-type-1', 'type-1', 'url1', False)
@@ -178,9 +178,9 @@ def _assert_restarted_daemons(component, daemons=None):
     daemons = daemons if daemons is not None else component.daemons
 
     expected_calls = [call(daemon) for daemon in daemons]
-    with patch('plinth.privileged.service.try_reload_or_restart'
+    with patch('freedombox.privileged.service.try_reload_or_restart'
                ) as try_reload_or_restart, patch(
-                   'plinth.privileged.service.try_restart') as try_restart:
+                   'freedombox.privileged.service.try_restart') as try_restart:
         yield
 
         if component.reload_daemons:

@@ -10,16 +10,16 @@ from django.contrib.messages.storage.fallback import FallbackStorage
 from freedombox import module_loader
 from freedombox.modules.miniflux import views
 
-# For all tests, use plinth.urls instead of urls configured for testing
-pytestmark = pytest.mark.urls('plinth.urls')
+# For all tests, use freedombox.urls instead of urls configured for testing
+pytestmark = pytest.mark.urls('freedombox.urls')
 
 
 @pytest.fixture(autouse=True, scope='module')
 def fixture_miniflux_urls():
-    """Make sure Miniflux app's URLs are part of plinth.urls."""
-    with patch('plinth.module_loader._modules_to_load', new=[]) as modules, \
-            patch('plinth.urls.urlpatterns', new=[]):
-        modules.append('plinth.modules.miniflux')
+    """Make sure Miniflux app's URLs are part of freedombox.urls."""
+    with (patch('freedombox.module_loader._modules_to_load', new=[]) as
+          modules, patch('freedombox.urls.urlpatterns', new=[])):
+        modules.append('freedombox.modules.miniflux')
         module_loader.include_urls()
         yield
 
@@ -48,7 +48,7 @@ def test_create_admin_user_view(rf):
     assert response.status_code == 200
 
 
-@patch('plinth.modules.miniflux.privileged.create_admin_user')
+@patch('freedombox.modules.miniflux.privileged.create_admin_user')
 def test_create_admin_user_form_valid(create_admin_user, rf):
     """Test that the create admin user form is valid and redirects."""
     form_data = {
@@ -99,7 +99,7 @@ def test_password_too_short(rf):
         0] == 'Ensure this value has at least 6 characters (it has 4).'
 
 
-@patch('plinth.modules.miniflux.privileged.create_admin_user')
+@patch('freedombox.modules.miniflux.privileged.create_admin_user')
 def test_recreate_existing_user(create_admin_user, rf):
     """Test that trying to recreate an existing user fails."""
     create_admin_user.side_effect = Exception(
@@ -126,7 +126,7 @@ def test_recreate_existing_user(create_admin_user, rf):
 ############################
 
 
-@patch('plinth.modules.miniflux.privileged.reset_user_password')
+@patch('freedombox.modules.miniflux.privileged.reset_user_password')
 def test_reset_user_password_form_valid(reset_user_password, rf):
     """Test that the reset user password form is valid and redirects."""
     reset_user_password.return_value = 'Password changed!'
@@ -145,7 +145,7 @@ def test_reset_user_password_form_valid(reset_user_password, rf):
     assert list(messages)[0].message == 'Password reset for user: admin'
 
 
-@patch('plinth.modules.miniflux.privileged.reset_user_password')
+@patch('freedombox.modules.miniflux.privileged.reset_user_password')
 def test_reset_user_password_for_invalid_user(reset_user_password, rf):
     """Test that the resetting user password for an invalid user fails."""
     reset_user_password.side_effect = Exception('user not found')

@@ -9,11 +9,11 @@ from unittest.mock import patch
 
 import pytest
 
-import plinth.settings
+import freedombox.settings
 from freedombox.modules.kiwix import privileged
 
 pytestmark = pytest.mark.usefixtures('mock_privileged')
-privileged_modules_to_mock = ['plinth.modules.kiwix.privileged']
+privileged_modules_to_mock = ['freedombox.modules.kiwix.privileged']
 
 EMPTY_LIBRARY_CONTENTS = '''<?xml version="1.0" encoding="UTF-8"?>
 <library version="20110515">
@@ -40,10 +40,10 @@ def fixture_kiwix_home(tmp_path):
 @pytest.fixture(name='upload_dir')
 def fixture_upload_dir(tmp_path):
     """Overwrite the Django upload path."""
-    old_value = plinth.settings.FILE_UPLOAD_TEMP_DIR
-    plinth.settings.FILE_UPLOAD_TEMP_DIR = tmp_path
+    old_value = freedombox.settings.FILE_UPLOAD_TEMP_DIR
+    freedombox.settings.FILE_UPLOAD_TEMP_DIR = tmp_path
     yield tmp_path
-    plinth.settings.FILE_UPLOAD_TEMP_DIR = old_value
+    freedombox.settings.FILE_UPLOAD_TEMP_DIR = old_value
 
 
 @pytest.fixture(autouse=True)

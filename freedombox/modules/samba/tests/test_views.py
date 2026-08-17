@@ -14,8 +14,8 @@ from django.contrib.messages.storage.fallback import FallbackStorage
 from freedombox import module_loader
 from freedombox.modules.samba import views
 
-# For all tests, use plinth.urls instead of urls configured for testing
-pytestmark = pytest.mark.urls('plinth.urls')
+# For all tests, use freedombox.urls instead of urls configured for testing
+pytestmark = pytest.mark.urls('freedombox.urls')
 setfacl_path = pathlib.Path('/usr/bin/setfacl')
 
 USERS = {"access_ok": ["testuser"], 'password_re_enter_needed': []}
@@ -62,10 +62,10 @@ SHARES = [
 
 @pytest.fixture(autouse=True, scope='module')
 def fixture_samba_urls():
-    """Make sure samba app's URLs are part of plinth.urls."""
-    with patch('plinth.module_loader._modules_to_load', new=[]) as modules, \
-            patch('plinth.urls.urlpatterns', new=[]):
-        modules.append('plinth.modules.samba')
+    """Make sure samba app's URLs are part of freedombox.urls."""
+    with (patch('freedombox.module_loader._modules_to_load', new=[]) as
+          modules, patch('freedombox.urls.urlpatterns', new=[])):
+        modules.append('freedombox.modules.samba')
         module_loader.include_urls()
         yield
 
@@ -73,9 +73,10 @@ def fixture_samba_urls():
 @pytest.fixture(autouse=True)
 def samba_patch_privileged():
     """Patch privileged scripts runner."""
-    with patch('plinth.modules.samba.privileged.get_shares') as get_shares, \
-         patch('plinth.modules.samba.privileged.delete_share'), \
-         patch('plinth.modules.samba.privileged.add_share'):
+    with (patch('freedombox.modules.samba.privileged.get_shares')
+          as get_shares,
+          patch('freedombox.modules.samba.privileged.delete_share'),
+          patch('freedombox.modules.samba.privileged.add_share')):
         get_shares.return_value = SHARES
         yield
 
@@ -92,11 +93,11 @@ def make_request(request, view, **kwargs):
 
 def test_samba_shares_view(rf):
     """Test that a share list has correct view data."""
-    with (patch('plinth.views.AppView.get_context_data',
+    with (patch('freedombox.views.AppView.get_context_data',
                 return_value={'is_enabled': True}),
-          patch('plinth.modules.samba.get_users', return_value=USERS),
-          patch('plinth.modules.storage.get_mounts', return_value=DISKS),
-          patch('plinth.views.AppView.app', return_value=None)):
+          patch('freedombox.modules.samba.get_users', return_value=USERS),
+          patch('freedombox.modules.storage.get_mounts', return_value=DISKS),
+          patch('freedombox.views.AppView.app', return_value=None)):
         view = views.SambaAppView.as_view()
         response, _ = make_request(rf.get(''), view)
 
@@ -133,7 +134,7 @@ def test_enable_samba_share_failed_view(rf):
     form_data = {'filesystem_type': 'ext4', 'open_share': 'enable'}
     mount_point = urllib.parse.quote('/')
     error_message = 'Sharing failed'
-    with patch('plinth.modules.samba.add_share',
+    with patch('freedombox.modules.samba.add_share',
                side_effect=RuntimeError(error_message)):
         response, messages = make_request(rf.post('', data=form_data),
                                           views.share, mount_point=mount_point)
@@ -161,7 +162,7 @@ def test_disable_samba_share_failed_view(rf):
     form_data = {'filesystem_type': 'ext4', 'open_share': 'disable'}
     mount_point = urllib.parse.quote('/')
     error_message = 'Unsharing failed'
-    with patch('plinth.modules.samba.privileged.delete_share',
+    with patch('freedombox.modules.samba.privileged.delete_share',
                side_effect=RuntimeError(error_message)):
         response, messages = make_request(rf.post('', data=form_data),
                                           views.share, mount_point=mount_point)

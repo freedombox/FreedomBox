@@ -4,7 +4,7 @@
 from django.contrib import messages
 from django.utils.translation import gettext as _
 
-import plinth.modules.names.privileged as names_privileged
+import freedombox.modules.names.privileged as names_privileged
 from freedombox.modules import names, privacy
 from freedombox.modules.privacy.forms import PrivacyForm
 from freedombox.views import AppView

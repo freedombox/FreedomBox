@@ -20,7 +20,7 @@ class AppTest(App):
 
 def test_get_results():
     """Test getting the diagnostics results."""
-    var = 'plinth.modules.diagnostics.current_results'
+    var = 'freedombox.modules.diagnostics.current_results'
     with patch(var, {}):
         assert get_results() == {'progress_percentage': 100, 'results': {}}
 

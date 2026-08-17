@@ -133,7 +133,7 @@ def get_configuration(syslog_identifier='freedombox'):
         'disable_existing_loggers': False,
         'formatters': {
             'color': {
-                '()': 'plinth.log.ColoredFormatter',
+                '()': 'freedombox.log.ColoredFormatter',
                 'format': '{colored_levelname} {colored_name} {message}',
                 'style': '{'
             }

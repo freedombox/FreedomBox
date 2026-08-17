@@ -46,7 +46,7 @@ def test_read_default_config_file():
     compare_configurations(parser)
 
 
-@patch('plinth.cfg.get_config_paths')
+@patch('freedombox.cfg.get_config_paths')
 def test_read_primary_config_file(get_config_paths):
     """Verify that the primary config file is used by default."""
     config_path = CONFIG_FILE_WITH_MISSING_OPTIONS
@@ -55,7 +55,7 @@ def test_read_primary_config_file(get_config_paths):
     assert cfg.config_files[-1] == config_path
 
 
-@patch('plinth.cfg.get_config_paths')
+@patch('freedombox.cfg.get_config_paths')
 def test_read_dot_d_config_files(get_config_paths):
     """Verify that the configuration is read from .d directories."""
     root_dir = pathlib.Path(__file__).resolve().parent
@@ -74,7 +74,7 @@ def test_read_develop_config_file():
     """Verify that the correct develop config file is used."""
     test_dir = os.path.dirname(os.path.realpath(__file__))
     develop_root = os.path.realpath(os.path.join(test_dir, '..', '..'))
-    develop_config_file = os.path.join(develop_root, 'plinth',
+    develop_config_file = os.path.join(develop_root, 'freedombox',
                                        'develop.config')
     config_path = cfg.get_develop_config_path()
     cfg.read_file(config_path)

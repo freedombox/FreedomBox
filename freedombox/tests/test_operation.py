@@ -25,7 +25,7 @@ class AppTest(app.App):
         self.add(info)
 
 
-@patch('plinth.operation.Operation._update_notification')
+@patch('freedombox.operation.Operation._update_notification')
 def test_operation_default_initialization(update_notification):
     """Test Operation initialization with default values."""
     target = Mock()
@@ -48,7 +48,7 @@ def test_operation_default_initialization(update_notification):
     update_notification.assert_has_calls([call()])
 
 
-@patch('plinth.operation.Operation._update_notification')
+@patch('freedombox.operation.Operation._update_notification')
 def test_operation_initialization(update_notification):
     """Test Operation initialization with explicit values."""
     on_complete = Mock()
@@ -73,7 +73,7 @@ def test_operation_str():
     assert str(operation) == 'Operation: testapp: op1'
 
 
-@patch('plinth.operation.Operation._update_notification')
+@patch('freedombox.operation.Operation._update_notification')
 def test_successful_operation(update_notification):
     """Test running a operation that succeeds."""
     target = Mock()
@@ -90,7 +90,7 @@ def test_successful_operation(update_notification):
     update_notification.assert_has_calls([call(), call()])
 
 
-@patch('plinth.operation.Operation._update_notification')
+@patch('freedombox.operation.Operation._update_notification')
 def test_error_operation(update_notification):
     """Test running an operation that fails."""
     target = Mock()
@@ -109,7 +109,7 @@ def test_error_operation(update_notification):
     update_notification.assert_has_calls([call(), call()])
 
 
-@patch('plinth.operation.Operation._update_notification')
+@patch('freedombox.operation.Operation._update_notification')
 def test_join_before_start(update_notification):
     """Test waiting until operation finishes.."""
     event = threading.Event()
@@ -131,7 +131,7 @@ def test_join_before_start(update_notification):
     assert success
 
 
-@patch('plinth.operation.Operation._update_notification')
+@patch('freedombox.operation.Operation._update_notification')
 def test_join_raises_exception(update_notification):
     """Test that joining raises exception if thread does.."""
     target = Mock()
@@ -157,7 +157,7 @@ def test_getting_operation_from_thread():
     assert operation.thread_data['test_operation'] == operation
 
 
-@patch('plinth.operation.Operation._update_notification')
+@patch('freedombox.operation.Operation._update_notification')
 def test_updating_operation(update_notification):
     """Test that operation object can be updated from within the thread."""
     exception = RuntimeError('error1')
@@ -176,7 +176,7 @@ def test_updating_operation(update_notification):
     update_notification.assert_has_calls([call(), call(), call()])
 
 
-@patch('plinth.app.App.get')
+@patch('freedombox.app.App.get')
 def test_message(app_get):
     """Test getting the operation's message."""
     operation = Operation('testid', 'testapp', 'op1', Mock())
@@ -205,7 +205,7 @@ def test_message(app_get):
     assert operation.translated_message == 'Finished: op1'
 
 
-@patch('plinth.app.App.get')
+@patch('freedombox.app.App.get')
 @pytest.mark.django_db
 def test_update_notification(app_get):
     """Test that operation notification is created."""

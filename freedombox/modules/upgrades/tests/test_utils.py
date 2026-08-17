@@ -46,7 +46,7 @@ deb http://deb.debian.org/debian trixie main
 '''
 
     sources_list = tmp_path / 'sources.list'
-    module = 'plinth.modules.upgrades.utils'
+    module = 'freedombox.modules.upgrades.utils'
     with patch(f'{module}.sources_list', sources_list):
         sources_list.write_text(list1)
         assert utils.get_sources_list_codename() == 'bookworm'
@@ -71,7 +71,7 @@ def test_get_current_release(run):
     assert utils.get_current_release() == ('test-release', 'test-codename')
 
 
-@patch('plinth.modules.upgrades.utils.get_sources_list_codename')
+@patch('freedombox.modules.upgrades.utils.get_sources_list_codename')
 def test_is_distribution_unstable(get_sources_list_codename):
     """Test that checking for unstable distribution works."""
     get_sources_list_codename.return_value = 'unstable'
@@ -84,7 +84,7 @@ def test_is_distribution_unstable(get_sources_list_codename):
     assert not utils.is_distribution_unstable()
 
 
-@patch('plinth.modules.upgrades.utils.get_current_release')
+@patch('freedombox.modules.upgrades.utils.get_current_release')
 def test_is_distribution_rolling(get_current_release):
     """Test that checking for testing/unstable distribution works."""
     for value in ['unstable', 'testing', 'n/a']:

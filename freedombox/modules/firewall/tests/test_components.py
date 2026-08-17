@@ -10,7 +10,7 @@ import pytest
 from freedombox.app import App
 from freedombox.diagnostic_check import DiagnosticCheck, Result
 from freedombox.modules.firewall.components import (Firewall,
-                                                FirewallLocalProtection)
+                                                    FirewallLocalProtection)
 
 
 @pytest.fixture(name='empty_firewall_list', autouse=True)
@@ -42,7 +42,7 @@ def test_init():
     assert firewall.is_external
 
 
-@patch('plinth.modules.firewall.get_port_details')
+@patch('freedombox.modules.firewall.get_port_details')
 def test_port_details(get_port_details):
     """Test retrieving port details for a firewall component."""
     return_values = {
@@ -64,8 +64,8 @@ def test_port_details(get_port_details):
     }]
 
 
-@patch('plinth.modules.firewall.add_service')
-@patch('plinth.modules.firewall.get_enabled_services')
+@patch('freedombox.modules.firewall.add_service')
+@patch('freedombox.modules.firewall.get_enabled_services')
 def test_enable(get_enabled_services, add_service):
     """Test enabling a firewall component."""
 
@@ -92,9 +92,9 @@ def test_enable(get_enabled_services, add_service):
     add_service.assert_has_calls(calls)
 
 
-@patch('plinth.modules.firewall.remove_service')
-@patch('plinth.modules.firewall.add_service')
-@patch('plinth.modules.firewall.get_enabled_services')
+@patch('freedombox.modules.firewall.remove_service')
+@patch('freedombox.modules.firewall.add_service')
+@patch('freedombox.modules.firewall.get_enabled_services')
 def test_disable(get_enabled_services, add_service, remove_service):
     """Test disabling a firewall component."""
     Firewall('firewall-1', ports=['test-port1'], is_external=False)
@@ -130,8 +130,8 @@ def test_disable(get_enabled_services, add_service, remove_service):
     remove_service.assert_has_calls(calls)
 
 
-@patch('plinth.modules.firewall.get_port_details')
-@patch('plinth.modules.firewall.get_enabled_services')
+@patch('freedombox.modules.firewall.get_port_details')
+@patch('freedombox.modules.firewall.get_enabled_services')
 def test_diagnose(get_enabled_services, get_port_details):
     """Test diagnosing open/closed firewall ports."""
 
@@ -227,7 +227,7 @@ def test_local_protection_init():
     assert component.tcp_ports == ['1234', '4567']
 
 
-@patch('plinth.modules.firewall.add_passthrough')
+@patch('freedombox.modules.firewall.add_passthrough')
 def test_local_protection_enable(add_passthrough):
     """Test enabling local protection component."""
     component = FirewallLocalProtection('test-component', ['1234', '4567'])
@@ -246,7 +246,7 @@ def test_local_protection_enable(add_passthrough):
     add_passthrough.assert_has_calls(calls)
 
 
-@patch('plinth.modules.firewall.remove_passthrough')
+@patch('freedombox.modules.firewall.remove_passthrough')
 def test_local_protection_disable(remove_passthrough):
     """Test disabling local protection component."""
     component = FirewallLocalProtection('test-component', ['1234', '4567'])
@@ -265,7 +265,7 @@ def test_local_protection_disable(remove_passthrough):
     remove_passthrough.assert_has_calls(calls)
 
 
-@patch('plinth.modules.firewall.components.FirewallLocalProtection.enable')
+@patch('freedombox.modules.firewall.components.FirewallLocalProtection.enable')
 def test_local_protection_setup(enable):
     """Test setting up protection when updating the app."""
 

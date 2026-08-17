@@ -8,7 +8,7 @@ from django.utils.translation import gettext_noop
 from freedombox import app, log, privileged
 from freedombox.daemon import diagnose_port_listening
 from freedombox.diagnostic_check import (DiagnosticCheck,
-                                     DiagnosticCheckParameters, Result)
+                                         DiagnosticCheckParameters, Result)
 
 
 class Container(app.LeaderComponent, log.LogEmitter):

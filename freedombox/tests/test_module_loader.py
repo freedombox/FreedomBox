@@ -8,8 +8,8 @@ from unittest.mock import mock_open, patch
 from freedombox import module_loader
 
 
-@patch('pathlib.Path.open', mock_open(read_data='plinth.modules.apache\n'))
+@patch('pathlib.Path.open', mock_open(read_data='freedombox.modules.apache\n'))
 def test_get_module_import_path():
     """Returning the module import path."""
     import_path = module_loader.get_module_import_path('apache')
-    assert import_path == 'plinth.modules.apache'
+    assert import_path == 'freedombox.modules.apache'

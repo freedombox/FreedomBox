@@ -9,7 +9,7 @@ import pytest
 from freedombox.modules.calibre import privileged
 
 pytestmark = pytest.mark.usefixtures('mock_privileged')
-privileged_modules_to_mock = ['plinth.modules.calibre.privileged']
+privileged_modules_to_mock = ['freedombox.modules.calibre.privileged']
 
 
 @pytest.fixture(autouse=True)

@@ -6,7 +6,7 @@ import copy
 from django.http import Http404
 from django.views.generic import TemplateView
 
-import plinth.app as app_module
+import freedombox.app as app_module
 from freedombox.middleware import CONTENT_SECURITY_POLICY
 from freedombox.modules.names.components import DomainName
 

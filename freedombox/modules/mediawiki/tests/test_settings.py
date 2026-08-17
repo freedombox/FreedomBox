@@ -13,7 +13,7 @@ from freedombox.modules.mediawiki import privileged
 
 pytestmark = pytest.mark.usefixtures('mock_privileged')
 current_directory = pathlib.Path(__file__).parent
-privileged_modules_to_mock = ['plinth.modules.mediawiki.privileged']
+privileged_modules_to_mock = ['freedombox.modules.mediawiki.privileged']
 
 
 @pytest.fixture(name='test_configuration', autouse=True)
@@ -25,8 +25,9 @@ def fixture_test_configuration(tmp_path):
     settings_file_name = 'FreedomBoxSettings.php'
     conf_file = tmp_path / settings_file_name
     conf_file.touch()
-    with (patch('plinth.modules.mediawiki.USER_CONFIG_FILE', conf_file),
-          patch('plinth.modules.mediawiki.privileged.CONF_FILE', conf_file)):
+    with (patch('freedombox.modules.mediawiki.USER_CONFIG_FILE', conf_file),
+          patch('freedombox.modules.mediawiki.privileged.CONF_FILE',
+                conf_file)):
         yield
 
 

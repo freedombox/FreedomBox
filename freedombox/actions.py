@@ -463,8 +463,8 @@ def _privileged_call(module_name, action_name, arguments, log_error=True):
         raise SyntaxError('Invalid module name')
 
     cfg.read()
-    if module_name == 'plinth':
-        import_path = 'plinth'
+    if module_name == 'freedombox':
+        import_path = 'freedombox'
     else:
         try:
             import_path = module_loader.get_module_import_path(module_name)

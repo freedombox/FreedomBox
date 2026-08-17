@@ -12,7 +12,7 @@ from freedombox.config import DropinConfigs
 from freedombox.diagnostic_check import DiagnosticCheck, Result
 
 pytestmark = pytest.mark.usefixtures('mock_privileged')
-privileged_modules_to_mock = ['plinth.privileged.config']
+privileged_modules_to_mock = ['freedombox.privileged.config']
 
 
 @pytest.fixture(name='dropin_configs')
@@ -33,7 +33,8 @@ def fixture_dropin_configs():
 @pytest.fixture(autouse=True)
 def fixture_assert_dropin_config(dropin_configs):
     """Mock asserting dropin config path."""
-    with patch('plinth.privileged.config._get_managed_dropin_config') as mock:
+    with patch(
+            'freedombox.privileged.config._get_managed_dropin_config') as mock:
         mock.return_value = dropin_configs
         yield
 
@@ -70,7 +71,7 @@ def _assert_symlinks(component, tmp_path, should_exist, copy_only=False):
 
 def test_dropin_configs_setup(dropin_configs, tmp_path):
     """Test setup for dropin configs component."""
-    with patch('plinth.config.DropinConfigs.ROOT', new=tmp_path):
+    with patch('freedombox.config.DropinConfigs.ROOT', new=tmp_path):
         is_enabled = Mock()
         App.get('test-app').is_enabled = is_enabled
 
@@ -85,7 +86,7 @@ def test_dropin_configs_setup(dropin_configs, tmp_path):
 
 def test_dropin_configs_enable_disable_symlinks(dropin_configs, tmp_path):
     """Test enable/disable for dropin configs component for symlinks."""
-    with patch('plinth.config.DropinConfigs.ROOT', new=tmp_path):
+    with patch('freedombox.config.DropinConfigs.ROOT', new=tmp_path):
         # Enable when nothing exists
         dropin_configs.enable()
         _assert_symlinks(dropin_configs, tmp_path, should_exist=True)
@@ -117,7 +118,7 @@ def test_dropin_configs_enable_disable_symlinks(dropin_configs, tmp_path):
 
 def test_dropin_configs_enable_disable_copy_only(dropin_configs, tmp_path):
     """Test enable/disable for dropin configs component for copying."""
-    with patch('plinth.config.DropinConfigs.ROOT', new=tmp_path):
+    with patch('freedombox.config.DropinConfigs.ROOT', new=tmp_path):
         dropin_configs.copy_only = True
         for path in ['/etc/test/path1', '/etc/path2']:
             target = dropin_configs.get_target_path(path)
@@ -159,7 +160,7 @@ def test_dropin_configs_enable_disable_copy_only(dropin_configs, tmp_path):
 
 def test_dropin_config_diagnose_symlinks(dropin_configs, tmp_path):
     """Test diagnosing dropin configs for symlinks."""
-    with patch('plinth.config.DropinConfigs.ROOT', new=tmp_path):
+    with patch('freedombox.config.DropinConfigs.ROOT', new=tmp_path):
         # Nothing exists
         results = dropin_configs.diagnose()
         assert results == [
@@ -202,7 +203,7 @@ def test_dropin_config_diagnose_symlinks(dropin_configs, tmp_path):
 
 def test_dropin_config_diagnose_copy_only(dropin_configs, tmp_path):
     """Test diagnosing dropin configs."""
-    with patch('plinth.config.DropinConfigs.ROOT', new=tmp_path):
+    with patch('freedombox.config.DropinConfigs.ROOT', new=tmp_path):
         dropin_configs.copy_only = True
         for path in ['/etc/test/path1', '/etc/path2']:
             target = dropin_configs.get_target_path(path)

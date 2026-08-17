@@ -14,18 +14,18 @@ from django.http.response import Http404
 from freedombox import module_loader
 from freedombox.modules.kiwix import views
 
-# For all tests, use plinth.urls instead of urls configured for testing
-pytestmark = pytest.mark.urls('plinth.urls')
+# For all tests, use freedombox.urls instead of urls configured for testing
+pytestmark = pytest.mark.urls('freedombox.urls')
 
 ZIM_ID = 'bc4f8cdf-5626-2b13-3860-0033deddfbea'
 
 
 @pytest.fixture(autouse=True, scope='module')
 def fixture_kiwix_urls():
-    """Make sure kiwix app's URLs are part of plinth.urls."""
-    with patch('plinth.module_loader._modules_to_load', new=[]) as modules, \
-            patch('plinth.urls.urlpatterns', new=[]):
-        modules.append('plinth.modules.kiwix')
+    """Make sure kiwix app's URLs are part of freedombox.urls."""
+    with (patch('freedombox.module_loader._modules_to_load', new=[]) as
+          modules, patch('freedombox.urls.urlpatterns', new=[])):
+        modules.append('freedombox.modules.kiwix')
         module_loader.include_urls()
         yield
 
@@ -43,8 +43,8 @@ def make_request(request, view, **kwargs):
 @pytest.fixture(autouse=True)
 def fixture_kiwix_patch():
     """Patch kiwix methods."""
-    with patch(
-            'plinth.modules.kiwix.privileged.list_packages') as list_libraries:
+    with patch('freedombox.modules.kiwix.privileged.list_packages'
+               ) as list_libraries:
         list_libraries.return_value = {
             ZIM_ID: {
                 'title': 'TestExistingPackage',
@@ -75,7 +75,7 @@ def add_package_request(rf, file_path):
     return request
 
 
-@patch('plinth.modules.kiwix.privileged.add_package')
+@patch('freedombox.modules.kiwix.privileged.add_package')
 def test_add_package(add_package, file_path, add_package_request):
     """Test that adding content view works."""
     response, messages = make_request(add_package_request,
@@ -86,7 +86,7 @@ def test_add_package(add_package, file_path, add_package_request):
     add_package.assert_has_calls([call('FreedomBox.zim', file_path)])
 
 
-@patch('plinth.modules.kiwix.privileged.add_package')
+@patch('freedombox.modules.kiwix.privileged.add_package')
 def test_add_package_failed(add_package, add_package_request):
     """Test that adding content package fails in case of an error."""
     add_package.side_effect = RuntimeError('TestError')
@@ -98,7 +98,7 @@ def test_add_package_failed(add_package, add_package_request):
         'Failed to add content package.')
 
 
-@patch('plinth.app.App.get')
+@patch('freedombox.app.App.get')
 def test_delete_package_confirmation_view(_app, rf):
     """Test that deleting content confirmation shows correct title."""
     response, _ = make_request(rf.get(''), views.delete_package, zim_id=ZIM_ID)
@@ -106,8 +106,8 @@ def test_delete_package_confirmation_view(_app, rf):
     assert response.context_data['name'] == 'TestExistingPackage'
 
 
-@patch('plinth.modules.kiwix.privileged.delete_package')
-@patch('plinth.app.App.get')
+@patch('freedombox.modules.kiwix.privileged.delete_package')
+@patch('freedombox.app.App.get')
 def test_delete_package(_app, delete_package, rf):
     """Test that deleting a content package works."""
     response, messages = make_request(rf.post(''), views.delete_package,
@@ -118,7 +118,7 @@ def test_delete_package(_app, delete_package, rf):
     delete_package.assert_has_calls([call(ZIM_ID)])
 
 
-@patch('plinth.modules.kiwix.privileged.delete_package')
+@patch('freedombox.modules.kiwix.privileged.delete_package')
 def test_delete_package_error(delete_package, rf):
     """Test that deleting content shows an error when operation fails."""
     delete_package.side_effect = ValueError('TestError')

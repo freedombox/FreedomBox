@@ -4,7 +4,7 @@
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
 
-import plinth.modules.coturn as coturn
+import freedombox.modules.coturn as coturn
 from freedombox import app as app_module
 from freedombox import views
 

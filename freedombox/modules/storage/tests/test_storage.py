@@ -32,7 +32,7 @@ def _is_container():
 
 
 pytestmark = pytest.mark.usefixtures('mock_privileged', 'mock_run_as_user')
-privileged_modules_to_mock = ['plinth.modules.storage.privileged']
+privileged_modules_to_mock = ['freedombox.modules.storage.privileged']
 skip_if_container = pytest.mark.skipif(_is_container(),
                                        reason='running inside a container')
 

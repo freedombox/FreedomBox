@@ -73,7 +73,7 @@ def fixture_load_cfg():
         saved_state[key] = getattr(cfg, key)
 
     root_dir = pathlib.Path(__file__).resolve().parent
-    cfg_file = root_dir / 'plinth' / 'develop.config'
+    cfg_file = root_dir / 'freedombox' / 'develop.config'
     cfg.read_file(str(cfg_file))
     yield cfg
 
@@ -190,7 +190,7 @@ def fixture_mock_run_as_user():
         from freedombox import action_utils
         return action_utils.run(*args, **kwargs)
 
-    with patch('plinth.action_utils.run_as_user') as mock:
+    with patch('freedombox.action_utils.run_as_user') as mock:
         mock.side_effect = _bypass_runuser
         yield
 

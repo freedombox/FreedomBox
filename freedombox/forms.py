@@ -11,12 +11,12 @@ from django.utils import translation
 from django.utils.translation import get_language_info
 from django.utils.translation import gettext_lazy as _
 
-import plinth
+import freedombox
 
 
 def _get_repository_choices():
     """Return the list of available repositories."""
-    import plinth.modules.backups.repository as repository_module
+    import freedombox.modules.backups.repository as repository_module
     choices = [(repository.uuid, repository.name)
                for repository in repository_module.get_repositories()
                if repository.is_usable()]
@@ -109,9 +109,9 @@ class LanguageSelectionFormMixin:
 
         for language_code, language_name in settings.LANGUAGES:
             locale_code = translation.to_locale(language_code)
-            plinth_dir = os.path.dirname(plinth.__file__)
+            freedombox_dir = os.path.dirname(freedombox.__file__)
             if language_code == 'en' or os.path.exists(
-                    os.path.join(plinth_dir, 'locale', locale_code)):
+                    os.path.join(freedombox_dir, 'locale', locale_code)):
                 supported_languages.append(
                     (language_code,
                      _get_local_name(language_code, language_name)))

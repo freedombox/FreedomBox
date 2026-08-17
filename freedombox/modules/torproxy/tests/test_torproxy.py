@@ -22,7 +22,7 @@ class TestTorProxy:
         utils.is_apt_transport_tor_enabled()
 
     @staticmethod
-    @patch('plinth.app.App.get')
+    @patch('freedombox.app.App.get')
     @pytest.mark.usefixtures('needs_root', 'load_cfg')
     def test_get_status(_app_get):
         """Test that get_status does not raise any unhandled exceptions.

@@ -334,7 +334,7 @@ def test_list_filter_user_and_group(note, user):
     assert list(Notification.list(user=user)) == [note]
 
 
-@patch('plinth.notification.gettext')
+@patch('freedombox.notification.gettext')
 def test_display_context(gettext, note, user, rf):
     """Test display context for a notification."""
     request = rf.get('/freedombox/help/about/')

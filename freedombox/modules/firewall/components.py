@@ -11,7 +11,7 @@ from django.utils.translation import gettext_noop
 
 from freedombox import app
 from freedombox.diagnostic_check import (DiagnosticCheck,
-                                     DiagnosticCheckParameters, Result)
+                                         DiagnosticCheckParameters, Result)
 from freedombox.modules import firewall
 
 logger = logging.getLogger(__name__)
@@ -120,7 +120,7 @@ class Firewall(app.FollowerComponent):
     def diagnose(self) -> _list_type[DiagnosticCheck]:
         """Check if the firewall ports are open and only as expected.
 
-        See :py:meth:`plinth.app.Component.diagnose`.
+        See :py:meth:`freedombox.app.Component.diagnose`.
 
         """
         results = []

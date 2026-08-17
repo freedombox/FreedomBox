@@ -109,7 +109,7 @@ def test_packages_get_actual_packages(cache):
         component.get_actual_packages()
 
 
-@patch('plinth.package.install')
+@patch('freedombox.package.install')
 def test_packages_setup(install):
     """Test setting up packages component."""
 
@@ -139,9 +139,9 @@ def test_packages_setup(install):
     install.assert_has_calls([call(['python3'], skip_recommends=False)])
 
 
-@patch('plinth.package.packages_installed')
-@patch('plinth.package.uninstall')
-@patch('plinth.package.install')
+@patch('freedombox.package.packages_installed')
+@patch('freedombox.package.uninstall')
+@patch('freedombox.package.install')
 def test_packages_setup_with_conflicts(install, uninstall, packages_installed):
     """Test setting up packages with conflicts."""
     packages_installed.return_value = ['exim4-base']
@@ -169,8 +169,8 @@ def test_packages_setup_with_conflicts(install, uninstall, packages_installed):
     install.assert_has_calls([call(['bash'], skip_recommends=False)])
 
 
-@patch('plinth.package.refresh_package_lists')
-@patch('plinth.package.uninstall')
+@patch('freedombox.package.refresh_package_lists')
+@patch('freedombox.package.uninstall')
 def test_packages_uninstall(uninstall, _refresh_package_lists):
     """Test uninstalling packages component."""
 
@@ -185,8 +185,8 @@ def test_packages_uninstall(uninstall, _refresh_package_lists):
     uninstall.assert_has_calls([call(['bash', 'dash'], purge=True)])
 
 
-@patch('plinth.package.refresh_package_lists')
-@patch('plinth.package.uninstall')
+@patch('freedombox.package.refresh_package_lists')
+@patch('freedombox.package.uninstall')
 @patch('apt.Cache')
 def test_packages_uninstall_exclusion(cache, uninstall,
                                       _refresh_package_lists):
@@ -333,7 +333,7 @@ def test_diagnose(cache):
     ]
 
 
-@patch('plinth.package.packages_installed')
+@patch('freedombox.package.packages_installed')
 def test_packages_find_conflicts(packages_installed_):
     """Test finding conflicts."""
     packages_installed_.return_value = []
@@ -353,7 +353,7 @@ def test_packages_find_conflicts(packages_installed_):
     assert component.find_conflicts() == ['package1', 'package2']
 
 
-@patch('plinth.package.refresh_package_lists')
+@patch('freedombox.package.refresh_package_lists')
 @patch('apt.Cache')
 @patch('pathlib.Path')
 def test_packages_is_available(path_class, cache, refresh_package_lists):

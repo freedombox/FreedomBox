@@ -10,11 +10,12 @@ from unittest.mock import Mock, call, patch
 import pytest
 
 from freedombox.app import App, FollowerComponent, Info
-from freedombox.daemon import (Daemon, RelatedDaemon, SharedDaemon, app_is_running,
-                           diagnose_netcat, diagnose_port_listening)
+from freedombox.daemon import (Daemon, RelatedDaemon, SharedDaemon,
+                               app_is_running, diagnose_netcat,
+                               diagnose_port_listening)
 from freedombox.diagnostic_check import DiagnosticCheck, Result
 
-privileged_modules_to_mock = ['plinth.privileged.service']
+privileged_modules_to_mock = ['freedombox.privileged.service']
 
 
 class AppTest(App):
@@ -35,7 +36,7 @@ def fixture_app_list(daemon):
     app1 = AppTest()
     app1.add(Info('test-app', 1))
     app1.add(daemon)
-    with patch('plinth.app.App.list') as app_list:
+    with patch('freedombox.app.App.list') as app_list:
         app_list.return_value = [app1]
         yield app_list
 
@@ -60,7 +61,7 @@ def test_initialization():
     assert daemon.alias == 'test-unit-2'
 
 
-@patch('plinth.action_utils.service_is_enabled')
+@patch('freedombox.action_utils.service_is_enabled')
 def test_is_enabled(service_is_enabled, daemon):
     """Test that daemon enabled check works."""
     service_is_enabled.return_value = True
@@ -77,7 +78,7 @@ def test_is_enabled(service_is_enabled, daemon):
     service_is_enabled.assert_has_calls([call('test-unit', strict_check=True)])
 
 
-@patch('plinth.app.apps_init')
+@patch('freedombox.app.apps_init')
 @patch('subprocess.run')
 def test_enable(subprocess_run, apps_init, app_list, mock_privileged, daemon):
     """Test that enabling the daemon works."""
@@ -105,7 +106,7 @@ def test_enable(subprocess_run, apps_init, app_list, mock_privileged, daemon):
                                    **common_args)
 
 
-@patch('plinth.app.apps_init')
+@patch('freedombox.app.apps_init')
 @patch('subprocess.run')
 def test_disable(subprocess_run, apps_init, app_list, mock_privileged, daemon):
     """Test that disabling the daemon works."""
@@ -132,7 +133,7 @@ def test_disable(subprocess_run, apps_init, app_list, mock_privileged, daemon):
                                    **common_args)
 
 
-@patch('plinth.action_utils.service_is_running')
+@patch('freedombox.action_utils.service_is_running')
 def test_is_running(service_is_running, daemon):
     """Test that checking that the daemon is running works."""
     service_is_running.return_value = True
@@ -143,9 +144,9 @@ def test_is_running(service_is_running, daemon):
     assert not daemon.is_running()
 
 
-@patch('plinth.app.apps_init')
-@patch('plinth.action_utils.service_is_running')
-@patch('plinth.action_utils.service_show')
+@patch('freedombox.app.apps_init')
+@patch('freedombox.action_utils.service_is_running')
+@patch('freedombox.action_utils.service_show')
 @patch('subprocess.run')
 def test_ensure_running(subprocess_run, service_show, service_is_running,
                         apps_init, app_list, mock_privileged, daemon):
@@ -182,8 +183,8 @@ def test_ensure_running(subprocess_run, service_show, service_is_running,
     ]
 
 
-@patch('plinth.action_utils.service_is_running')
-@patch('plinth.daemon.diagnose_port_listening')
+@patch('freedombox.action_utils.service_is_running')
+@patch('freedombox.daemon.diagnose_port_listening')
 def test_diagnose(port_listening, service_is_running, daemon):
     """Test running diagnostics."""
 
@@ -216,7 +217,7 @@ def test_diagnose(port_listening, service_is_running, daemon):
     assert results[0].result == Result.FAILED
 
 
-@patch('plinth.action_utils.service_is_running')
+@patch('freedombox.action_utils.service_is_running')
 def test_app_is_running(service_is_running):
     """Test that checking whether app is running works."""
     daemon1 = Daemon('test-daemon-1', 'test-unit-1')
@@ -388,7 +389,7 @@ def test_shared_daemon_leader():
     assert not component1.is_leader
 
 
-@patch('plinth.action_utils.service_is_enabled')
+@patch('freedombox.action_utils.service_is_enabled')
 def test_shared_daemon_set_enabled(service_is_enabled):
     """Test that enabled status is determined by unit status."""
     component = SharedDaemon('test-component', 'test-daemon')
@@ -406,7 +407,7 @@ def test_shared_daemon_set_enabled(service_is_enabled):
     assert component.is_enabled()
 
 
-@patch('plinth.privileged.service.disable')
+@patch('freedombox.privileged.service.disable')
 def test_shared_daemon_disable(disable_method):
     """Test that shared daemon disables service correctly."""
 

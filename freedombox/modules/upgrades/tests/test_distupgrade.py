@@ -65,7 +65,7 @@ deb https://deb.debian.org/debian bookwormish main
     sources_list = tmp_path / 'sources.list'
     temp_sources_list = tmp_path / 'sources.list.fbx-dist-upgrade'
 
-    module = 'plinth.modules.upgrades.distupgrade'
+    module = 'freedombox.modules.upgrades.distupgrade'
     with patch(f'{module}.sources_list', sources_list), \
          patch(f'{module}.temp_sources_list', temp_sources_list):
         sources_list.write_text(original)
@@ -81,12 +81,13 @@ deb https://deb.debian.org/debian bookwormish main
 
 
 @patch('datetime.datetime')
-@patch('plinth.modules.upgrades.utils.get_current_release')
-@patch('plinth.modules.upgrades.distupgrade.utils.get_sources_list_codename')
-@patch('plinth.action_utils.service_is_running')
-@patch('plinth.modules.upgrades.utils.is_sufficient_free_space')
-@patch('plinth.modules.upgrades.is_dist_upgrade_enabled')
-@patch('plinth.modules.upgrades.utils.check_auto')
+@patch('freedombox.modules.upgrades.utils.get_current_release')
+@patch(
+    'freedombox.modules.upgrades.distupgrade.utils.get_sources_list_codename')
+@patch('freedombox.action_utils.service_is_running')
+@patch('freedombox.modules.upgrades.utils.is_sufficient_free_space')
+@patch('freedombox.modules.upgrades.is_dist_upgrade_enabled')
+@patch('freedombox.modules.upgrades.utils.check_auto')
 def test_get_status(check_auto, is_dist_upgrade_enabled,
                     is_sufficient_free_space, service_is_running,
                     get_sources_list_codename, get_current_release, datetime):
@@ -204,8 +205,8 @@ def test_get_status(check_auto, is_dist_upgrade_enabled,
 
 
 @patch('subprocess.run')
-@patch('plinth.modules.snapshot.is_apt_snapshots_enabled')
-@patch('plinth.modules.snapshot.is_supported')
+@patch('freedombox.modules.snapshot.is_apt_snapshots_enabled')
+@patch('freedombox.modules.snapshot.is_supported')
 def test_snapshot_run_and_disable(is_supported, is_apt_snapshots_enabled, run):
     """Test taking a snapshot."""
     is_supported.return_value = False
@@ -245,9 +246,9 @@ def test_snapshot_run_and_disable(is_supported, is_apt_snapshots_enabled, run):
     ]
 
 
-@patch('plinth.action_utils.service_enable')
-@patch('plinth.action_utils.service_disable')
-@patch('plinth.action_utils.service_is_running')
+@patch('freedombox.action_utils.service_enable')
+@patch('freedombox.action_utils.service_disable')
+@patch('freedombox.action_utils.service_is_running')
 def test_services_disable(service_is_running, service_disable, service_enable):
     """Test that disabling services works."""
     service_is_running.return_value = False
@@ -275,8 +276,8 @@ def test_apt_hold_packages(run, tmp_path):
 
     hold_flag = tmp_path / 'flag'
     run.side_effect = _run
-    with patch('plinth.action_utils.apt_hold_flag', hold_flag), \
-         patch('plinth.modules.upgrades.distupgrade.PACKAGES_WITH_PROMPTS',
+    with patch('freedombox.action_utils.apt_hold_flag', hold_flag), \
+         patch('freedombox.modules.upgrades.distupgrade.PACKAGES_WITH_PROMPTS',
                ['package1', 'package2']):
         with distupgrade._apt_hold_packages():
             assert hold_flag.exists()
@@ -311,10 +312,11 @@ def test_apt_hold_packages(run, tmp_path):
         assert run.call_args_list == expected_call
 
 
-@patch('plinth.action_utils.debconf_set_selections')
+@patch('freedombox.action_utils.debconf_set_selections')
 def test_debconf_set_selections(debconf_set_selections):
     """Test that setting debconf selections works."""
-    selections = 'plinth.modules.upgrades.distupgrade.PRE_DEBCONF_SELECTIONS'
+    selections = ('freedombox.modules.upgrades.distupgrade.'
+                  'PRE_DEBCONF_SELECTIONS')
     with patch(selections, []):
         distupgrade._debconf_set_selections()
         debconf_set_selections.assert_not_called()
@@ -328,26 +330,26 @@ def test_debconf_set_selections(debconf_set_selections):
         ['grub-pc grub-pc/install_devices_empty boolean true'])
 
 
-@patch('plinth.modules.upgrades.distupgrade._apt_run')
+@patch('freedombox.modules.upgrades.distupgrade._apt_run')
 def test_packages_remove_obsolete(apt_run):
     """Test that obsolete packages are removed."""
     distupgrade._packages_remove_obsolete()
     apt_run.assert_not_called()  # No obsolete package to remove currently.
 
-    with patch('plinth.modules.upgrades.distupgrade.OBSOLETE_PACKAGES',
+    with patch('freedombox.modules.upgrades.distupgrade.OBSOLETE_PACKAGES',
                ['searx']):
         distupgrade._packages_remove_obsolete()
         apt_run.assert_called_with(['remove', 'searx'])
 
 
-@patch('plinth.modules.upgrades.distupgrade._apt_run')
+@patch('freedombox.modules.upgrades.distupgrade._apt_run')
 def test_apt_update(apt_run):
     """Test that apt update works."""
     distupgrade._apt_update()
     apt_run.assert_called_with(['update'])
 
 
-@patch('plinth.modules.upgrades.distupgrade._apt_run')
+@patch('freedombox.modules.upgrades.distupgrade._apt_run')
 @patch('subprocess.run')
 def test_apt_fix(run, apt_run):
     """Test that apt fixes work."""
@@ -359,14 +361,14 @@ def test_apt_fix(run, apt_run):
     assert apt_run.call_args_list == [call(['--fix-broken', 'install'])]
 
 
-@patch('plinth.modules.upgrades.distupgrade._apt_run')
+@patch('freedombox.modules.upgrades.distupgrade._apt_run')
 def test_apt_autoremove(apt_run):
     """Test that apt autoremove works."""
     distupgrade._apt_autoremove()
     apt_run.assert_called_with(['autoremove'])
 
 
-@patch('plinth.modules.upgrades.distupgrade._apt_run')
+@patch('freedombox.modules.upgrades.distupgrade._apt_run')
 def test_apt_full_upgrade(apt_run):
     """Test that apt full upgrade works."""
     apt_run.return_value = 0
@@ -384,7 +386,7 @@ def test_unatteneded_upgrades_run(run):
                            check=False)
 
 
-@patch('plinth.action_utils.service_restart')
+@patch('freedombox.action_utils.service_restart')
 def test_freedombox_restart(service_restart):
     """Test that restarting freedombox service works."""
     distupgrade._freedombox_restart()
@@ -410,7 +412,7 @@ def test_on_complete(tmp_path):
     temp_sources_list = tmp_path / 'sources.list.fbx-dist-upgrade'
     temp_sources_list.write_text('after')
 
-    module = 'plinth.modules.upgrades.distupgrade'
+    module = 'freedombox.modules.upgrades.distupgrade'
     with patch(f'{module}.sources_list', sources_list), \
          patch(f'{module}.temp_sources_list', temp_sources_list):
         distupgrade.on_complete()

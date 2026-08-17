@@ -3,7 +3,7 @@
 Test module for Matrix Synapse STUN/TURN configuration.
 """
 
-from unittest.mock import patch, Mock
+from unittest.mock import Mock, patch
 
 import pytest
 
@@ -12,7 +12,7 @@ from freedombox.modules.coturn.components import TurnConfiguration
 from freedombox.modules.matrixsynapse import privileged
 
 pytestmark = pytest.mark.usefixtures('mock_privileged')
-privileged_modules_to_mock = ['plinth.modules.matrixsynapse.privileged']
+privileged_modules_to_mock = ['freedombox.modules.matrixsynapse.privileged']
 
 
 @pytest.fixture(name='managed_turn_conf_file')
@@ -34,7 +34,7 @@ def fixture_set_paths(managed_turn_conf_file, overridden_turn_conf_file):
     """Run actions with custom root path."""
     privileged.TURN_CONF_PATH = managed_turn_conf_file
     privileged.OVERRIDDEN_TURN_CONF_PATH = overridden_turn_conf_file
-    with patch('plinth.privileged.service.try_restart'):
+    with patch('freedombox.privileged.service.try_restart'):
         yield
 
 
@@ -45,13 +45,14 @@ def fixture_test_configuration(managed_turn_conf_file,
 
     Overrides TURN configuration files.
     """
-    matrixsynapse = 'plinth.modules.matrixsynapse'
+    matrixsynapse = 'freedombox.modules.matrixsynapse'
     with (patch(f'{matrixsynapse}.privileged.TURN_CONF_PATH',
                 managed_turn_conf_file),
           patch(f'{matrixsynapse}.privileged.OVERRIDDEN_TURN_CONF_PATH',
                 overridden_turn_conf_file),
-          patch(f'{matrixsynapse}.is_setup', return_value=True),
-          patch('plinth.app.App.get') as app_get):
+          patch(f'{matrixsynapse}.is_setup',
+                return_value=True), patch('freedombox.app.App.get') as
+          app_get):
         app = Mock()
         app_get.return_value = app
         app.needs_setup.return_value = False
@@ -72,13 +73,12 @@ updated_coturn_configuration = TurnConfiguration(
 
 
 def _set_managed_configuration(config=coturn_configuration):
-    with patch('plinth.action_utils.service_try_restart'):
+    with patch('freedombox.action_utils.service_try_restart'):
         matrixsynapse.update_turn_configuration(config)
 
 
-def _set_overridden_configuration(
-                                  config=overridden_configuration):
-    with patch('plinth.action_utils.service_try_restart'):
+def _set_overridden_configuration(config=overridden_configuration):
+    with patch('freedombox.action_utils.service_try_restart'):
         matrixsynapse.update_turn_configuration(config, managed=False)
 
 

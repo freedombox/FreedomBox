@@ -39,7 +39,8 @@ pytestmark: list[pytest.MarkDecorator] = [
     pytest.mark.skipif(not _is_ldap_set_up(), reason='LDAP is not configured')
 ]
 privileged_modules_to_mock = [
-    'plinth.modules.users.privileged', 'plinth.modules.security.privileged'
+    'freedombox.modules.users.privileged',
+    'freedombox.modules.security.privileged'
 ]
 
 

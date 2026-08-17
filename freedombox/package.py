@@ -11,10 +11,10 @@ import apt.cache
 from django.utils.translation import gettext as _
 from django.utils.translation import gettext_lazy, gettext_noop
 
-import plinth.privileged.packages as privileged
+import freedombox.privileged.packages as privileged
 from freedombox import app as app_module
 from freedombox.diagnostic_check import (DiagnosticCheck,
-                                     DiagnosticCheckParameters, Result)
+                                         DiagnosticCheckParameters, Result)
 from freedombox.errors import MissingPackageError
 from freedombox.utils import format_lazy
 

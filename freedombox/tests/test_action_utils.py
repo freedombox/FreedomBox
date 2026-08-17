@@ -12,13 +12,15 @@ from unittest.mock import Mock, call, patch
 import pytest
 
 from freedombox.action_utils import (get_addresses, get_hostname,
-                                 is_systemd_running, move_uploaded_file, run,
-                                 run_as_user, service_action, service_disable,
-                                 service_enable, service_is_enabled,
-                                 service_is_running, service_reload,
-                                 service_restart, service_start, service_stop,
-                                 service_try_reload_or_restart,
-                                 service_try_restart, service_unmask, umask)
+                                     is_systemd_running, move_uploaded_file,
+                                     run, run_as_user, service_action,
+                                     service_disable, service_enable,
+                                     service_is_enabled, service_is_running,
+                                     service_reload, service_restart,
+                                     service_start, service_stop,
+                                     service_try_reload_or_restart,
+                                     service_try_restart, service_unmask,
+                                     umask)
 
 UNKNOWN = 'unknowndeamon.service'
 UNKNOWN_SOCKET = 'unknowndeamon.socket'
@@ -75,7 +77,7 @@ def test_service_enable_and_disable():
     service_enable(UNKNOWN)
 
 
-@patch('plinth.action_utils.service_action')
+@patch('freedombox.action_utils.service_action')
 @systemd_installed
 def test_service_start(mock):
     """Test staring a service."""
@@ -87,7 +89,7 @@ def test_service_start(mock):
     mock.mock_calls = [call(UNKNOWN, 'start', check=True)]
 
 
-@patch('plinth.action_utils.service_action')
+@patch('freedombox.action_utils.service_action')
 @systemd_installed
 def test_service_stop(mock):
     """Test stopping a service."""
@@ -106,7 +108,7 @@ def test_service_stop(mock):
     ]
 
 
-@patch('plinth.action_utils.service_action')
+@patch('freedombox.action_utils.service_action')
 @systemd_installed
 def test_service_restart(mock):
     """Test restaring a service."""
@@ -122,7 +124,7 @@ def test_service_restart(mock):
     assert mock.mock_calls == [call(UNKNOWN, 'stop', check=False)]
 
 
-@patch('plinth.action_utils.service_action')
+@patch('freedombox.action_utils.service_action')
 @systemd_installed
 def test_service_try_restart(mock):
     """Test try-restaring a service."""
@@ -138,7 +140,7 @@ def test_service_try_restart(mock):
     assert mock.mock_calls == [call(UNKNOWN, 'stop', check=False)]
 
 
-@patch('plinth.action_utils.service_action')
+@patch('freedombox.action_utils.service_action')
 @systemd_installed
 def test_service_reload(mock):
     """Test reloading a service."""
@@ -154,7 +156,7 @@ def test_service_reload(mock):
     assert mock.mock_calls == [call(UNKNOWN, 'reload', check=False)]
 
 
-@patch('plinth.action_utils.service_action')
+@patch('freedombox.action_utils.service_action')
 @systemd_installed
 def test_service_try_reload_or_restart(mock):
     """Test try-reload-or-restart on a service."""
@@ -231,11 +233,11 @@ def fixture_update_dir(tmp_path):
     tmp_path /= 'source'
     tmp_path.mkdir()
 
-    import plinth.settings
-    old_value = plinth.settings.FILE_UPLOAD_TEMP_DIR
-    plinth.settings.FILE_UPLOAD_TEMP_DIR = tmp_path
+    import freedombox.settings
+    old_value = freedombox.settings.FILE_UPLOAD_TEMP_DIR
+    freedombox.settings.FILE_UPLOAD_TEMP_DIR = tmp_path
     yield tmp_path
-    plinth.settings.FILE_UPLOAD_TEMP_DIR = old_value
+    freedombox.settings.FILE_UPLOAD_TEMP_DIR = old_value
 
 
 def test_move_uploaded_file(tmp_path, upload_dir):
@@ -329,7 +331,7 @@ def test_run_as_user(subprocess_run):
     ]
 
 
-@patch('plinth.actions.thread_storage')
+@patch('freedombox.actions.thread_storage')
 @patch('subprocess.run')
 def test_run_capture(subprocess_run, thread_storage):
     """Test running a command with stdin/stdout capture works."""
@@ -350,7 +352,7 @@ def test_run_capture(subprocess_run, thread_storage):
     assert thread_storage.stderr == 'initial-stderrtest-stderr'
 
 
-@patch('plinth.actions.thread_storage')
+@patch('freedombox.actions.thread_storage')
 @patch('subprocess.run')
 def test_run_no_capture(subprocess_run, thread_storage):
     """Test running a command without stdin/stdout capture works."""
@@ -372,7 +374,7 @@ def test_run_no_capture(subprocess_run, thread_storage):
     assert thread_storage.stderr == 'initial-stderr'
 
 
-@patch('plinth.actions.thread_storage', None)
+@patch('freedombox.actions.thread_storage', None)
 @patch('subprocess.run')
 def test_run_no_storage(subprocess_run):
     """Test running a command without thread storage."""

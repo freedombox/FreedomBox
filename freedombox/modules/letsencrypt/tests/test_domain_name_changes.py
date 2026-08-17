@@ -27,8 +27,8 @@ def test_add_onion_domain():
     assert not on_domain_removed('test', 'domain-type-tor', 'ddddd.onion')
 
 
-@patch('plinth.modules.letsencrypt.get_status')
-@patch('plinth.modules.letsencrypt.certificate_obtain')
+@patch('freedombox.modules.letsencrypt.get_status')
+@patch('freedombox.modules.letsencrypt.certificate_obtain')
 @pytest.mark.usefixtures('load_cfg')
 @pytest.mark.parametrize('domain,status_input,obtain,result', [
     ('domain1.tld', {
@@ -59,7 +59,7 @@ def test_add_valid_domain(certificate_obtain, get_status, domain, status_input,
         certificate_obtain.assert_not_called()
 
 
-@patch('plinth.modules.letsencrypt.certificate_revoke')
+@patch('freedombox.modules.letsencrypt.certificate_revoke')
 @pytest.mark.usefixtures('load_cfg')
 @pytest.mark.parametrize('domain,revoke,result', [
     ('domain1.tld', True, True),

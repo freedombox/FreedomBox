@@ -50,7 +50,7 @@ def test_get_client_secret(openid_connect):
 
 
 @pytest.mark.django_db
-@patch('plinth.modules.names.components.DomainName.list_names')
+@patch('freedombox.modules.names.components.DomainName.list_names')
 def test_setup(list_names, openid_connect):
     """Test creating a DB object."""
     list_names.return_value = ('a.example', 'b.example')

@@ -104,7 +104,7 @@ def test_component_init_and_list():
     assert [component1, component2, component3] == list(TurnConsumer.list())
 
 
-@patch('plinth.modules.coturn.get_config')
+@patch('freedombox.modules.coturn.get_config')
 def test_notify_on_configuration_changed(get_config, turn_configuration):
     """Test configuration change notifications."""
     component = TurnConsumer('component')
@@ -114,7 +114,7 @@ def test_notify_on_configuration_changed(get_config, turn_configuration):
         mock_method.assert_has_calls([call(turn_configuration)])
 
 
-@patch('plinth.modules.coturn.get_config')
+@patch('freedombox.modules.coturn.get_config')
 def test_get_configuration(get_config, turn_configuration):
     """Test coturn configuration retrieval using component."""
     get_config.return_value = turn_configuration
@@ -122,7 +122,7 @@ def test_get_configuration(get_config, turn_configuration):
     assert component.get_configuration() == turn_configuration
 
 
-@patch('plinth.modules.coturn.get_config')
+@patch('freedombox.modules.coturn.get_config')
 def test_get_user_configuration(get_config, turn_configuration):
     """Test coturn user configuration retrieval using component."""
     get_config.return_value = turn_configuration

@@ -23,7 +23,7 @@ overridden_configuration = TurnConfiguration(
 
 pytestmark = pytest.mark.usefixtures('mock_privileged')
 current_directory = pathlib.Path(__file__).parent
-privileged_modules_to_mock = ['plinth.modules.ejabberd.privileged']
+privileged_modules_to_mock = ['freedombox.modules.ejabberd.privileged']
 
 
 @pytest.fixture(name='conf_file')
@@ -58,7 +58,7 @@ def fixture_test_configuration(conf_file):
 
     The module state is patched to be 'up-to-date'.
     """
-    with patch('plinth.app.App.get') as app_get:
+    with patch('freedombox.app.App.get') as app_get:
         app = Mock()
         app_get.return_value = app
         app.needs_setup.return_value = False
@@ -66,7 +66,8 @@ def fixture_test_configuration(conf_file):
 
 
 def _set_turn_configuration(config=managed_configuration, managed=True):
-    with patch('plinth.action_utils.service_is_running', return_value=False):
+    with patch('freedombox.action_utils.service_is_running',
+               return_value=False):
         ejabberd.update_turn_configuration(config, managed=managed)
 
 

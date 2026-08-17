@@ -9,13 +9,13 @@ from unittest.mock import Mock, call, patch
 import pytest
 
 from freedombox import log
-from freedombox.app import (App, Component, EnableState, FollowerComponent, Info,
-                        LeaderComponent, apps_init)
+from freedombox.app import (App, Component, EnableState, FollowerComponent,
+                            Info, LeaderComponent, apps_init)
 from freedombox.diagnostic_check import DiagnosticCheck, Result
 
 # pylint: disable=protected-access
 
-privileged_modules_to_mock = ['plinth.privileged']
+privileged_modules_to_mock = ['freedombox.privileged']
 
 
 class AppTest(App):
@@ -300,7 +300,7 @@ def test_app_has_diagnostics(app_with_components):
         assert app.has_diagnostics()
 
 
-@patch('plinth.setup.run_setup_on_app')
+@patch('freedombox.setup.run_setup_on_app')
 def test_app_repair(_run_setup_on_app, app_with_components):
     """Test running repair on an app."""
     component = app_with_components.get_component('test-follower-1')
@@ -345,9 +345,9 @@ def test_app_has_logs(app_with_components):
     assert not app.has_diagnostics()
 
 
-@patch('plinth.privileged.service._assert_service_is_managed_by_plinth')
-@patch('plinth.action_utils.service_get_logs')
-@patch('plinth.action_utils.service_show')
+@patch('freedombox.privileged.service._assert_service_is_managed_by_plinth')
+@patch('freedombox.action_utils.service_get_logs')
+@patch('freedombox.action_utils.service_show')
 def test_app_get_logs(service_show, service_get_logs, _, app_with_components,
                       mock_privileged):
     """Test retrieving logs from an app."""
@@ -443,7 +443,7 @@ def test_component_has_diagnostics():
     assert not component.has_diagnostics()
 
 
-@patch('plinth.setup.run_setup_on_app')
+@patch('freedombox.setup.run_setup_on_app')
 def test_component_repair(_run_setup_on_app):
     """Test running repair on component."""
     component = Component('test-component')
@@ -608,7 +608,7 @@ class ModuleTest2:
             self.add(Info('app3', version=1))
 
 
-@patch('plinth.module_loader.loaded_modules')
+@patch('freedombox.module_loader.loaded_modules')
 def test_apps_init(loaded_modules):
     """Test that initializing all apps works."""
     loaded_modules.items.return_value = [('test1', ModuleTest1()),
@@ -646,7 +646,7 @@ class ModuleCircularTest:
             self.add(Info('app3', version=1))
 
 
-@patch('plinth.module_loader.loaded_modules')
+@patch('freedombox.module_loader.loaded_modules')
 def test_apps_init_circular_depends(loaded_modules):
     """Test initializing apps with circular dependencies."""
     loaded_modules.items.return_value = [('test', ModuleCircularTest())]

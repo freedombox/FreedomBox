@@ -10,7 +10,7 @@ from django.utils.translation import gettext_noop
 
 from freedombox import action_utils, app, log
 from freedombox.diagnostic_check import (DiagnosticCheck,
-                                     DiagnosticCheckParameters, Result)
+                                         DiagnosticCheckParameters, Result)
 
 
 class Daemon(app.LeaderComponent, log.LogEmitter):

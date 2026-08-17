@@ -10,7 +10,7 @@ from aptsources import sourceslist
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import gettext_noop
 
-import plinth
+import freedombox
 from freedombox import action_utils
 from freedombox import app as app_module
 from freedombox import cfg, glib, kvstore, menu, package
@@ -111,7 +111,7 @@ class UpgradesApp(app_module.App):
         from freedombox.notification import Notification
         try:
             note = Notification.get('upgrades-new-release')
-            if note.data['version'] == plinth.__version__:
+            if note.data['version'] == freedombox.__version__:
                 # User already has notification for update to this version. It
                 # may be dismissed or not yet dismissed
                 return
@@ -124,7 +124,7 @@ class UpgradesApp(app_module.App):
             dismiss = True
 
         data = {
-            'version': plinth.__version__,
+            'version': freedombox.__version__,
             'app_name': 'translate:' + gettext_noop('Software Update'),
             'app_icon': 'fa-refresh'
         }

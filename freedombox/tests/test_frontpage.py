@@ -106,7 +106,7 @@ def test_shortcut_list_web_apps_only(common_shortcuts):
     assert return_list == [cuts[0], cuts[1], cuts[2]]
 
 
-@patch('plinth.modules.users.privileged.get_user_groups')
+@patch('freedombox.modules.users.privileged.get_user_groups')
 def test_shortcut_list_with_username(get_user_groups, common_shortcuts):
     """Test listing for particular users."""
     cuts = common_shortcuts

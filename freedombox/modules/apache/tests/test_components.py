@@ -11,8 +11,8 @@ import pytest
 from freedombox import app, kvstore
 from freedombox.diagnostic_check import DiagnosticCheck, Result
 from freedombox.modules.apache.components import (Webserver, WebserverRoot,
-                                              check_url, diagnose_url,
-                                              diagnose_url_on_all)
+                                                  check_url, diagnose_url,
+                                                  diagnose_url_on_all)
 
 
 def test_webserver_init():
@@ -34,7 +34,7 @@ def test_webserver_init():
     assert not webserver.expect_redirects
 
 
-@patch('plinth.action_utils.webserver_is_enabled')
+@patch('freedombox.action_utils.webserver_is_enabled')
 def test_webserver_is_enabled(webserver_is_enabled):
     """Test that checking webserver configuration enabled works."""
     webserver = Webserver('test-webserver', 'test-config', kind='module')
@@ -49,7 +49,7 @@ def test_webserver_is_enabled(webserver_is_enabled):
     webserver_is_enabled.assert_has_calls([call('test-config', kind='module')])
 
 
-@patch('plinth.modules.apache.privileged.enable')
+@patch('freedombox.modules.apache.privileged.enable')
 def test_webserver_enable(enable):
     """Test that enabling webserver configuration works."""
     webserver = Webserver('test-webserver', 'test-config', kind='module')
@@ -58,7 +58,7 @@ def test_webserver_enable(enable):
     enable.assert_has_calls([call('test-config', 'module')])
 
 
-@patch('plinth.modules.apache.privileged.disable')
+@patch('freedombox.modules.apache.privileged.disable')
 def test_webserver_disable(disable):
     """Test that disabling webserver configuration works."""
     webserver = Webserver('test-webserver', 'test-config', kind='module')
@@ -67,8 +67,8 @@ def test_webserver_disable(disable):
     disable.assert_has_calls([call('test-config', 'module')])
 
 
-@patch('plinth.modules.apache.components.diagnose_url')
-@patch('plinth.modules.apache.components.diagnose_url_on_all')
+@patch('freedombox.modules.apache.components.diagnose_url')
+@patch('freedombox.modules.apache.components.diagnose_url_on_all')
 def test_webserver_diagnose(diagnose_url_on_all, diagnose_url):
     """Test running diagnostics."""
 
@@ -111,8 +111,8 @@ def test_webserver_diagnose(diagnose_url_on_all, diagnose_url):
     ])
 
 
-@patch('plinth.privileged.service.restart')
-@patch('plinth.privileged.service.reload')
+@patch('freedombox.privileged.service.restart')
+@patch('freedombox.privileged.service.reload')
 def test_webserver_setup(service_reload, service_restart):
     """Test that component restart/reloads web server during app upgrades."""
 
@@ -181,12 +181,12 @@ def test_webserver_root_init():
     assert webserver.last_updated_version == 0
 
 
-@patch('plinth.modules.apache.privileged.link_root')
+@patch('freedombox.modules.apache.privileged.link_root')
 def test_webserver_root_enable(link_root):
     """Test that enabling webserver root works."""
     webserver = WebserverRoot('test-webserver', 'test-config')
 
-    with patch('plinth.modules.apache.components.WebserverRoot.domain_get'
+    with patch('freedombox.modules.apache.components.WebserverRoot.domain_get'
                ) as get:
         get.return_value = None
         webserver.enable()
@@ -197,12 +197,12 @@ def test_webserver_root_enable(link_root):
         link_root.assert_has_calls([call('x-domain', 'test-config')])
 
 
-@patch('plinth.modules.apache.privileged.unlink_root')
+@patch('freedombox.modules.apache.privileged.unlink_root')
 def test_webserver_root_disable(unlink_root):
     """Test that disabling webserver root works."""
     webserver = WebserverRoot('test-webserver', 'test-config')
 
-    with patch('plinth.modules.apache.components.WebserverRoot.domain_get'
+    with patch('freedombox.modules.apache.components.WebserverRoot.domain_get'
                ) as get:
         get.return_value = None
         webserver.disable()
@@ -224,9 +224,9 @@ def test_webserver_root_domain_get():
 
 
 @pytest.mark.django_db
-@patch('plinth.modules.apache.privileged.unlink_root')
-@patch('plinth.modules.apache.privileged.link_root')
-@patch('plinth.app.Component.app', new_callable=PropertyMock)
+@patch('freedombox.modules.apache.privileged.unlink_root')
+@patch('freedombox.modules.apache.privileged.link_root')
+@patch('freedombox.app.Component.app', new_callable=PropertyMock)
 def test_webserver_root_domain_set(component_app, link_root, unlink_root):
     """Test setting webserver root's domain."""
     webserver = WebserverRoot('test-webserver', 'test-config')
@@ -253,10 +253,10 @@ def test_webserver_root_domain_set(component_app, link_root, unlink_root):
 
 
 @pytest.mark.django_db
-@patch('plinth.modules.apache.components.WebserverRoot.disable')
-@patch('plinth.modules.apache.components.WebserverRoot.enable')
-@patch('plinth.modules.apache.components.diagnose_url')
-@patch('plinth.app.Component.app', new_callable=PropertyMock)
+@patch('freedombox.modules.apache.components.WebserverRoot.disable')
+@patch('freedombox.modules.apache.components.WebserverRoot.enable')
+@patch('freedombox.modules.apache.components.diagnose_url')
+@patch('freedombox.app.Component.app', new_callable=PropertyMock)
 def test_webserver_root_diagnose(component_app, diagnose_url, enable, disable):
     """Test running diagnostics on webserver root component."""
     webserver = WebserverRoot('test-webserver', 'test-config')
@@ -269,7 +269,7 @@ def test_webserver_root_diagnose(component_app, diagnose_url, enable, disable):
     assert webserver.diagnose() == [result]
 
 
-@patch('plinth.privileged.service.reload')
+@patch('freedombox.privileged.service.reload')
 def test_webserver_root_setup(service_reload):
     """Test that component reloads web server during app upgrades."""
 
@@ -311,9 +311,9 @@ def test_webserver_root_setup(service_reload):
 
 
 @pytest.mark.django_db
-@patch('plinth.modules.apache.components.WebserverRoot.disable')
-@patch('plinth.modules.apache.components.WebserverRoot.enable')
-@patch('plinth.app.Component.app', new_callable=PropertyMock)
+@patch('freedombox.modules.apache.components.WebserverRoot.disable')
+@patch('freedombox.modules.apache.components.WebserverRoot.enable')
+@patch('freedombox.app.Component.app', new_callable=PropertyMock)
 def test_webserver_root_uninstall(component_app, enable, disable):
     """Test that component removes the DB key during uninstall."""
     webserver = WebserverRoot('test-webserver', 'test-config')
@@ -326,8 +326,8 @@ def test_webserver_root_uninstall(component_app, enable, disable):
     assert kvstore.get_default('test-webserver_domain', 'x-value') == 'x-value'
 
 
-@patch('plinth.modules.apache.components.check_url')
-@patch('plinth.action_utils.get_addresses')
+@patch('freedombox.modules.apache.components.check_url')
+@patch('freedombox.action_utils.get_addresses')
 def test_diagnose_url(get_addresses, check):
     """Test diagnosing a URL."""
     args = {

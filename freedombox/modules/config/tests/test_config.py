@@ -13,7 +13,7 @@ from freedombox import __main__ as plinth_main
 from freedombox import utils
 from freedombox.modules.apache import uws_directory_of_user, uws_url_of_user
 from freedombox.modules.config import (_home_page_scid2url, change_home_page,
-                                   get_home_page, home_page_url2scid)
+                                       get_home_page, home_page_url2scid)
 
 
 def test_homepage_mapping():
@@ -70,7 +70,7 @@ def test_homepage_mapping_skip_ci():
 
 
 @patch(
-    'plinth.frontpage.Shortcut.list',
+    'freedombox.frontpage.Shortcut.list',
     Mock(return_value=[
         Mock(url='url/for/' + id, component_id=id) for id in ('a', 'b')
     ]))

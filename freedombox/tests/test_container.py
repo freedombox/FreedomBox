@@ -11,8 +11,8 @@ from freedombox.diagnostic_check import DiagnosticCheck, Result
 
 pytestmark = pytest.mark.usefixtures('mock_privileged')
 privileged_modules_to_mock = [
-    'plinth.privileged', 'plinth.privileged.container',
-    'plinth.privileged.service'
+    'freedombox.privileged', 'freedombox.privileged.container',
+    'freedombox.privileged.service'
 ]
 
 
@@ -31,7 +31,7 @@ def fixture_container():
                           ['service1.service'], {'/dev/host1': '/dev/cont1'},
                           [(1234, 'tcp4')])
     app1.add(container)
-    with patch('plinth.app.App.list') as app_list:
+    with patch('freedombox.app.App.list') as app_list:
         app_list.return_value = [app1]
         yield container
 
@@ -63,7 +63,7 @@ def test_container_init(container):
     assert container.listen_ports == [(1234, 'tcp4')]
 
 
-@patch('plinth.action_utils.podman_is_enabled')
+@patch('freedombox.action_utils.podman_is_enabled')
 def test_container_is_enabled(podman_is_enabled, container):
     """Test checking if container is enabled."""
     podman_is_enabled.return_value = False
@@ -73,8 +73,8 @@ def test_container_is_enabled(podman_is_enabled, container):
     assert container.is_enabled()
 
 
-@patch('plinth.action_utils.service_enable')
-@patch('plinth.action_utils.podman_enable')
+@patch('freedombox.action_utils.service_enable')
+@patch('freedombox.action_utils.podman_enable')
 def test_container_enable(podman_enable, enable, container):
     """Test enabling a container component."""
     container.enable()
@@ -82,8 +82,8 @@ def test_container_enable(podman_enable, enable, container):
     assert enable.mock_calls == [call('name1')]
 
 
-@patch('plinth.action_utils.service_disable')
-@patch('plinth.action_utils.podman_disable')
+@patch('freedombox.action_utils.service_disable')
+@patch('freedombox.action_utils.podman_disable')
 def test_container_disable(podman_disable, disable, container):
     """Test disabling a container component."""
     container.disable()
@@ -91,7 +91,7 @@ def test_container_disable(podman_disable, disable, container):
     assert disable.mock_calls == [call('name1')]
 
 
-@patch('plinth.action_utils.service_is_running')
+@patch('freedombox.action_utils.service_is_running')
 def test_container_is_running(service_is_running, container):
     """Test checking of container component is running."""
     service_is_running.return_value = False
@@ -103,9 +103,9 @@ def test_container_is_running(service_is_running, container):
     assert container.is_running()
 
 
-@patch('plinth.action_utils.service_disable')
-@patch('plinth.action_utils.service_enable')
-@patch('plinth.action_utils.service_is_running')
+@patch('freedombox.action_utils.service_disable')
+@patch('freedombox.action_utils.service_enable')
+@patch('freedombox.action_utils.service_is_running')
 def test_container_ensure_running(service_is_running, enable, disable,
                                   container):
     """Test checking of container component can be ensured to be running."""
@@ -124,11 +124,11 @@ def test_container_ensure_running(service_is_running, enable, disable,
     assert disable.mock_calls == [call('name1')]
 
 
-@patch('plinth.action_utils.service_disable')
-@patch('plinth.action_utils.service_start')
-@patch('plinth.action_utils.podman_disable')
-@patch('plinth.action_utils.podman_is_enabled')
-@patch('plinth.action_utils.podman_create')
+@patch('freedombox.action_utils.service_disable')
+@patch('freedombox.action_utils.service_start')
+@patch('freedombox.action_utils.podman_disable')
+@patch('freedombox.action_utils.podman_is_enabled')
+@patch('freedombox.action_utils.podman_create')
 def test_container_setup(podman_create, is_enabled, disable, service_start,
                          service_disable, container):
     """Test setting up the container."""
@@ -152,7 +152,7 @@ def test_container_setup(podman_create, is_enabled, disable, service_start,
     assert service_disable.mock_calls == [call('name1')]
 
 
-@patch('plinth.action_utils.podman_uninstall')
+@patch('freedombox.action_utils.podman_uninstall')
 def test_container_uninstall(podman_uninstall, container):
     """Test uninstalling the container."""
     container.uninstall()
@@ -162,8 +162,8 @@ def test_container_uninstall(podman_uninstall, container):
     ]
 
 
-@patch('plinth.action_utils.service_is_running')
-@patch('plinth.container.diagnose_port_listening')
+@patch('freedombox.action_utils.service_is_running')
+@patch('freedombox.container.diagnose_port_listening')
 def test_container_diagnose(diagnose_port_listening, service_is_running,
                             container):
     """Test diagnosing the container."""

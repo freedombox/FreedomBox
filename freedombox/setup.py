@@ -13,7 +13,7 @@ from typing import Union
 import apt
 from django.utils.translation import gettext_noop
 
-import plinth
+import freedombox
 from freedombox import app as app_module
 from freedombox.diagnostic_check import Result
 from freedombox.errors import MissingPackageError
@@ -443,7 +443,7 @@ class ForceUpgrader():
 
     def __init__(self):
         """Initialize the force upgrader."""
-        if plinth.cfg.develop:
+        if freedombox.cfg.develop:
             self.UPGRADE_ATTEMPT_WAIT_SECONDS = 10
 
     def on_package_cache_updated(self):
@@ -724,7 +724,7 @@ class DpkgHandler:
 
     def __init__(self) -> None:
         """Initialize the dpkg handler."""
-        if plinth.cfg.develop:
+        if freedombox.cfg.develop:
             self.HANDLE_ATTEMPT_WAIT_SECONDS = 10
 
     def on_dpkg_invoked(self) -> None:

@@ -13,7 +13,7 @@ from freedombox import cfg
 
 @pytest.fixture(name='shortcuts_file')
 def fixture_shortcuts_file():
-    with patch('plinth.frontpage.get_custom_shortcuts_paths') as func:
+    with patch('freedombox.frontpage.get_custom_shortcuts_paths') as func:
 
         def setter(file_name):
             path = pathlib.Path(__file__).parent / 'data' / 'shortcuts'

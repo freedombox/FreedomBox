@@ -49,7 +49,7 @@ def test_highlighting():
         assert _verify_active_menuitems(menu)
 
 
-@patch('plinth.web_server.resolve_static_path')
+@patch('freedombox.web_server.resolve_static_path')
 def test_icon(resolve_static_path, tmp_path):
     """Test that the icon tag works for basic usage."""
     icon1 = tmp_path / 'icon1.svg'
@@ -60,7 +60,7 @@ def test_icon(resolve_static_path, tmp_path):
                             '><cirlcle></circle></svg>')
 
 
-@patch('plinth.web_server.resolve_static_path')
+@patch('freedombox.web_server.resolve_static_path')
 def test_icon_attributes(resolve_static_path, tmp_path):
     """Test that the icon tag works with attributes."""
     icon1 = tmp_path / 'icon1.svg'
@@ -78,8 +78,8 @@ def test_icon_attributes(resolve_static_path, tmp_path):
                             'data-icon-name="icon1" ><cirlcle></circle></svg>')
 
 
-@patch('plinth.utils.random_string')
-@patch('plinth.web_server.resolve_static_path')
+@patch('freedombox.utils.random_string')
+@patch('freedombox.web_server.resolve_static_path')
 def test_icon_auto_ids(resolve_static_path, random_string, tmp_path):
     """Test that the icon tag works for implementing automatic IDs."""
     random_string.return_value = 'randomvalue'
@@ -93,7 +93,7 @@ def test_icon_auto_ids(resolve_static_path, random_string, tmp_path):
                             '<path id="randomvalue-bar"></path></svg>')
 
 
-@patch('plinth.web_server.resolve_static_path')
+@patch('freedombox.web_server.resolve_static_path')
 def test_icon_xml_stripping(resolve_static_path, tmp_path):
     """Test that the icon tag strips the XML header."""
     icon2 = tmp_path / 'icon2.svg'

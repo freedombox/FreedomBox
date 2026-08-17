@@ -13,8 +13,8 @@ from django.http.response import Http404
 from freedombox import module_loader
 from freedombox.modules.gitweb import views
 
-# For all tests, use plinth.urls instead of urls configured for testing
-pytestmark = pytest.mark.urls('plinth.urls')
+# For all tests, use freedombox.urls instead of urls configured for testing
+pytestmark = pytest.mark.urls('freedombox.urls')
 
 EXISTING_REPOS = [
     {
@@ -38,10 +38,10 @@ EXISTING_REPOS = [
 
 @pytest.fixture(autouse=True, scope='module')
 def fixture_gitweb_urls():
-    """Make sure gitweb app's URLs are part of plinth.urls."""
-    with patch('plinth.module_loader._modules_to_load', new=[]) as modules, \
-            patch('plinth.urls.urlpatterns', new=[]):
-        modules.append('plinth.modules.gitweb')
+    """Make sure gitweb app's URLs are part of freedombox.urls."""
+    with (patch('freedombox.module_loader._modules_to_load', new=[]) as
+          modules, patch('freedombox.urls.urlpatterns', new=[])):
+        modules.append('freedombox.modules.gitweb')
         module_loader.include_urls()
         yield
 
@@ -49,9 +49,9 @@ def fixture_gitweb_urls():
 @pytest.fixture(autouse=True)
 def gitweb_patch():
     """Patch gitweb."""
-    privileged = 'plinth.modules.gitweb.privileged'
-    with patch('plinth.modules.gitweb.get_repo_list') as get_repo_list, \
-         patch('plinth.app.App.get') as app_get, \
+    privileged = 'freedombox.modules.gitweb.privileged'
+    with patch('freedombox.modules.gitweb.get_repo_list') as get_repo_list, \
+         patch('freedombox.app.App.get') as app_get, \
          patch(f'{privileged}.create_repo'), \
          patch(f'{privileged}.repo_exists') as repo_exists, \
          patch(f'{privileged}.repo_info') as repo_info, \
@@ -92,7 +92,7 @@ def make_request(request, view, **kwargs):
 
 def test_repos_view(rf):
     """Test that a repo list has correct view data."""
-    with patch('plinth.views.AppView.get_context_data',
+    with patch('freedombox.views.AppView.get_context_data',
                return_value={'is_enabled': True}):
         view = views.GitwebAppView.as_view()
         response, _ = make_request(rf.get(''), view)
@@ -157,7 +157,7 @@ def test_create_repo_failed_view(rf):
     """Test that repo creation failure sends correct error message."""
     general_error_message = "An error occurred while creating the repository."
     error_description = 'some error'
-    with patch('plinth.modules.gitweb.create_repo',
+    with patch('freedombox.modules.gitweb.create_repo',
                side_effect=PermissionError(error_description)):
         form_data = {
             'gitweb-name': 'something_other',
@@ -193,7 +193,7 @@ def test_clone_repo_view(rf):
 
 def test_clone_repo_missing_remote_view(rf):
     """Test that cloning non-existing repo shows correct error message."""
-    with patch('plinth.modules.gitweb.privileged.repo_exists',
+    with patch('freedombox.modules.gitweb.privileged.repo_exists',
                return_value=False):
         form_data = {
             'gitweb-name': 'https://example.com/test.git',
@@ -281,7 +281,7 @@ def test_edit_repository_invalid_name_view(rf):
 
 def test_edit_repository_no_change_view(rf):
     """Test that not changing any values don't edit the repo."""
-    with patch('plinth.modules.gitweb.edit_repo') as edit_repo:
+    with patch('freedombox.modules.gitweb.edit_repo') as edit_repo:
         form_data = {
             'gitweb-name': EXISTING_REPOS[0]['name'],
             'gitweb-description': EXISTING_REPOS[0]['description'],
@@ -301,7 +301,7 @@ def test_edit_repository_no_change_view(rf):
 
 def test_edit_repository_failed_view(rf):
     """Test that failed repo editing sends correct error message."""
-    with patch('plinth.modules.gitweb.edit_repo',
+    with patch('freedombox.modules.gitweb.edit_repo',
                side_effect=PermissionError('Error')):
         form_data = {
             'gitweb-name': 'something_other',
@@ -343,7 +343,7 @@ def test_delete_repository_view(rf):
 def test_delete_repository_fail_view(rf):
     """Test that failed repository deletion sends correct error message."""
 
-    with patch('plinth.modules.gitweb.privileged.delete_repo',
+    with patch('freedombox.modules.gitweb.privileged.delete_repo',
                side_effect=FileNotFoundError('Error')):
         response, messages = make_request(rf.post(''), views.delete,
                                           name=EXISTING_REPOS[0]['name'])

@@ -245,7 +245,7 @@ def test_backup_restore_hooks(backup_restore):
 
 
 @pytest.mark.django_db
-@patch('plinth.modules.backups.privileged.dump_settings')
+@patch('freedombox.modules.backups.privileged.dump_settings')
 def test_backup_restore_backup_pre(dump_settings, backup_restore):
     """Test running backup-pre hook."""
     packet = None
@@ -260,7 +260,7 @@ def test_backup_restore_backup_pre(dump_settings, backup_restore):
     dump_settings.assert_has_calls([call('testapp', {'setting-1': 'value-1'})])
 
 
-@patch('plinth.modules.backups.privileged.delete_before_restore')
+@patch('freedombox.modules.backups.privileged.delete_before_restore')
 def test_backup_restore_restore_pre(delete_before_restore, backup_restore):
     """Test running restore-pre hook."""
     packet = None
@@ -275,7 +275,7 @@ def test_backup_restore_restore_pre(delete_before_restore, backup_restore):
 
 
 @pytest.mark.django_db
-@patch('plinth.modules.backups.privileged.load_settings')
+@patch('freedombox.modules.backups.privileged.load_settings')
 def test_backup_restore_restore_post(load_settings, backup_restore):
     """Test running restore-post hook."""
     packet = None

@@ -10,7 +10,7 @@ from django.urls import resolve
 from freedombox import context_processors as cp
 
 
-@patch('plinth.notification.Notification')
+@patch('freedombox.notification.Notification')
 def test_common(Notification, load_cfg, rf, test_menu):
     """Verify that the common() function returns the correct values."""
     url = '/apps/testapp/create/'

@@ -65,7 +65,7 @@ def test_static_files_mount(mount, load_cfg):
 
 
 @patch('sys.modules')
-@patch('plinth.app.App.list')
+@patch('freedombox.app.App.list')
 def test_resolve_static_path(app_list, sys_modules, tmp_path):
     """Test that resolving a static path works as expected."""
     app_list.return_value = []

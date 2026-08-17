@@ -13,16 +13,16 @@ from django.http.response import Http404
 from freedombox import module_loader
 from freedombox.modules.calibre import views
 
-# For all tests, use plinth.urls instead of urls configured for testing
-pytestmark = pytest.mark.urls('plinth.urls')
+# For all tests, use freedombox.urls instead of urls configured for testing
+pytestmark = pytest.mark.urls('freedombox.urls')
 
 
 @pytest.fixture(autouse=True, scope='module')
 def fixture_calibre_urls():
-    """Make sure calibre app's URLs are part of plinth.urls."""
-    with patch('plinth.module_loader._modules_to_load', new=[]) as modules, \
-            patch('plinth.urls.urlpatterns', new=[]):
-        modules.append('plinth.modules.calibre')
+    """Make sure calibre app's URLs are part of freedombox.urls."""
+    with (patch('freedombox.module_loader._modules_to_load', new=[]) as
+          modules, patch('freedombox.urls.urlpatterns', new=[])):
+        modules.append('freedombox.modules.calibre')
         module_loader.include_urls()
         yield
 
@@ -30,7 +30,7 @@ def fixture_calibre_urls():
 @pytest.fixture(autouse=True)
 def calibre_patch():
     """Patch calibre methods."""
-    with patch('plinth.modules.calibre.privileged.list_libraries'
+    with patch('freedombox.modules.calibre.privileged.list_libraries'
                ) as list_libraries:
         list_libraries.return_value = ['TestExistingLibrary']
 
@@ -47,7 +47,7 @@ def make_request(request, view, **kwargs):
     return response, messages
 
 
-@patch('plinth.modules.calibre.privileged.create_library')
+@patch('freedombox.modules.calibre.privileged.create_library')
 def test_create_library(create_library, rf):
     """Test that create library view works."""
     form_data = {'calibre-name': 'TestLibrary'}
@@ -61,7 +61,7 @@ def test_create_library(create_library, rf):
     create_library.assert_has_calls([call('TestLibrary')])
 
 
-@patch('plinth.modules.calibre.privileged.create_library')
+@patch('freedombox.modules.calibre.privileged.create_library')
 def test_create_library_failed(create_library, rf):
     """Test that create library fails as expected."""
     create_library.side_effect = RuntimeError('TestError')
@@ -100,7 +100,7 @@ def test_create_library_invalid_name(rf):
     assert response.status_code == 200
 
 
-@patch('plinth.app.App.get')
+@patch('freedombox.app.App.get')
 def test_delete_library_confirmation_view(_app, rf):
     """Test that deleting library confirmation shows correct name."""
     response, _ = make_request(rf.get(''), views.delete_library,
@@ -109,8 +109,8 @@ def test_delete_library_confirmation_view(_app, rf):
     assert response.context_data['name'] == 'TestExistingLibrary'
 
 
-@patch('plinth.modules.calibre.privileged.delete_library')
-@patch('plinth.app.App.get')
+@patch('freedombox.modules.calibre.privileged.delete_library')
+@patch('freedombox.app.App.get')
 def test_delete_library(_app, delete_library, rf):
     """Test that deleting a library works."""
     response, messages = make_request(rf.post(''), views.delete_library,
@@ -121,7 +121,7 @@ def test_delete_library(_app, delete_library, rf):
     delete_library.assert_has_calls([call('TestExistingLibrary')])
 
 
-@patch('plinth.modules.calibre.privileged.delete_library')
+@patch('freedombox.modules.calibre.privileged.delete_library')
 def test_delete_library_error(delete_library, rf):
     """Test that deleting a library shows error when operation fails."""
     delete_library.side_effect = ValueError('TestError')

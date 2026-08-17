@@ -8,7 +8,7 @@ from django.utils.translation import gettext_noop
 
 from freedombox import action_utils, app, kvstore
 from freedombox.diagnostic_check import (DiagnosticCheck,
-                                     DiagnosticCheckParameters, Result)
+                                         DiagnosticCheckParameters, Result)
 from freedombox.privileged import service as service_privileged
 
 from . import privileged

@@ -11,7 +11,7 @@ from django.core.exceptions import ValidationError
 from freedombox.modules.tor import forms, utils
 
 
-@patch('plinth.app.App.get')
+@patch('freedombox.app.App.get')
 @pytest.mark.usefixtures('needs_root', 'load_cfg')
 def test_get_status(_app_get):
     """Test that get_status does not raise any unhandled exceptions.

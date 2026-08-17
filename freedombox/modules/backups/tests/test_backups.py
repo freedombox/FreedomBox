@@ -12,13 +12,14 @@ import pytest
 
 from freedombox.modules import backups
 from freedombox.modules.backups import privileged
-from freedombox.modules.backups.repository import BorgRepository, SshBorgRepository
+from freedombox.modules.backups.repository import (BorgRepository,
+                                                   SshBorgRepository)
 from freedombox.tests import config as test_config
 
 pytestmark = pytest.mark.usefixtures('needs_root', 'needs_borg', 'load_cfg',
                                      'mock_privileged')
 
-privileged_modules_to_mock = ['plinth.modules.backups.privileged']
+privileged_modules_to_mock = ['freedombox.modules.backups.privileged']
 
 # try to access a non-existing url and a URL that exists but does not
 # grant access
