@@ -18,9 +18,9 @@ from . import actions
 
 logger = logging.getLogger(__name__)
 
-# Flag on disk to indicate if freedombox package was held by
-# plinth. This is a backup in case the process is interrupted and hold
-# is not released.
+# Flag on disk to indicate if freedombox package was held by FreedomBox
+# Service. This is a backup in case the process is interrupted and hold is not
+# released.
 apt_hold_flag = pathlib.Path('/var/lib/freedombox/package-held')
 
 

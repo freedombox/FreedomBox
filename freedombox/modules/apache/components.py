@@ -66,7 +66,7 @@ class Webserver(app.LeaderComponent):
     def diagnose(self) -> list[DiagnosticCheck]:
         """Check if the web path is accessible by clients.
 
-        See :py:meth:`plinth.app.Component.diagnose`.
+        See :py:meth:`freedombox.app.Component.diagnose`.
         """
         results = []
         for url in self.urls:
@@ -175,7 +175,7 @@ class WebserverRoot(app.FollowerComponent):
     def diagnose(self) -> list[DiagnosticCheck]:
         """Check if the site root path is accessible by clients.
 
-        See :py:meth:`plinth.app.Component.diagnose`.
+        See :py:meth:`freedombox.app.Component.diagnose`.
         """
         results = []
         domain = self.domain_get()

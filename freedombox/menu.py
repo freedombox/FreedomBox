@@ -27,12 +27,13 @@ class Menu(app.FollowerComponent):
         name of an SVG icon from the static/theme/icons directory. In this
         case, the icon name starts with the string 'fa-' (a tribute to the
         fork-awesome project). Alternatively, the icon can also be a file under
-        the directory plinth/modules/<app>/static/icons/, provided without an
-        extension. SVG icons are preferred. Currently, both PNG and SVG icons
-        with the same name are used. For example, if the value of icon is
+        the directory freedombox/modules/<app>/static/icons/, provided without
+        an extension. SVG icons are preferred. Currently, both PNG and SVG
+        icons with the same name are used. For example, if the value of icon is
         'myicon' and app_id in App class is 'myapp', then two icons files
-        plinth/modules/myapp/static/icons/myicon.svg and
-        plinth/modules/myapp/static/icons/myicon.png are used in the interface.
+        freedombox/modules/myapp/static/icons/myicon.svg and
+        freedombox/modules/myapp/static/icons/myicon.png are used in the
+        interface.
 
         tags is a list of tags that describe the app. Tags help users to find
         similar apps or alternatives and discover use cases.

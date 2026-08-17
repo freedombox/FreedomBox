@@ -30,7 +30,7 @@ FreedomBox [Manual](https://wiki.debian.org/FreedomBox/Manual/)'s
 2.  Run FreedomBox Service (Plinth):
 
     ```
-    $ sudo plinth
+    $ sudo systemctl start plinth.service
     ```
 
 3.  Access FreedomBox UI:

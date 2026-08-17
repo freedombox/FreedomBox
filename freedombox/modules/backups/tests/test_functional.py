@@ -177,7 +177,7 @@ def _backup_schedule_set(browser, enable, daily, weekly, monthly, run_at,
 
 
 def _download_file_logged_in(browser, url, suffix=''):
-    """Download a file from Plinth, pretend being logged in via cookies"""
+    """Download a file from FreedomBox, pretend being logged in via cookies."""
     if not url.startswith('http'):
         current_url = urllib.parse.urlparse(browser.url)
         url = '%s://%s%s' % (current_url.scheme, current_url.netloc, url)

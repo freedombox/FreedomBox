@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """
-pytest configuration for all tests in the plinth/tests/ directory.
+pytest configuration for all tests in the freedombox/tests/ directory.
 """
 
 import pathlib

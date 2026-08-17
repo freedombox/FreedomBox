@@ -387,7 +387,7 @@ def get_archive_apps(
 def _get_apps_of_manifest(manifest):
     """Get apps of a manifest.
 
-    Supports both dict format as well as list format of plinth <=0.42
+    Supports both dict format as well as list format of freedombox <=0.42
 
     """
     if isinstance(manifest, list):

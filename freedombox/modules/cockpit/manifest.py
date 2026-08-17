@@ -14,9 +14,9 @@ clients = [{
 }]
 
 # cockpit.conf need not be backed up because add/remove domain signals are
-# triggered on every Plinth domain change (and cockpit application install) and
-# will set the value of allowed domains correctly. This is the only key the is
-# customized in cockpit.conf.
+# triggered on every FreedomBox domain change (and cockpit application install)
+# and will set the value of allowed domains correctly. This is the only key the
+# is customized in cockpit.conf.
 backup: dict = {}
 
 tags = [

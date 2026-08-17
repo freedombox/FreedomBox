@@ -130,7 +130,7 @@ class App:
     def info(self):
         """Return the information component of the app.
 
-        It is mandatory to have one :class:`~plinth.app.Info` component in
+        It is mandatory to have one :class:`~freedombox.app.Info` component in
         every app to provide basic information about the app. Trying to access
         this property without having the Info component will result in a
         KeyError exception being raised. The lookup for the Info component is
@@ -230,7 +230,7 @@ class App:
         """Run diagnostics and return results.
 
         Return value must be a list of results. Each result is a
-        :class:`~plinth.diagnostic_check.DiagnosticCheck` with a
+        :class:`~freedombox.diagnostic_check.DiagnosticCheck` with a
         unique check_id, a user visible description of the test, the result,
         test parameters, and the component ID. The test result is a string
         enumeration from 'failed', 'passed', 'error', 'warning' and 'not_done'.
@@ -380,7 +380,7 @@ class Component:
         """Run diagnostics and return results.
 
         Return value must be a list of results. Each result is a
-        :class:`~plinth.diagnostic_check.DiagnosticCheck` with a
+        :class:`~freedombox.diagnostic_check.DiagnosticCheck` with a
         unique check_id, a user visible description of the test, the result,
         test parameters, and the component ID. The test result is a string
         enumeration from 'failed', 'passed', 'error', 'warning' and 'not_done'.
@@ -533,7 +533,7 @@ class Info(FollowerComponent):
         'clients' is the list of applications that can be used with the
         services provided by this app. This is used to suggest installation of
         compatible clients on desktop, web and mobile. This is a list of
-        dictionaries who structure is documented in plinth.clients.
+        dictionaries who structure is documented in freedombox.clients.
 
         'donation_url' is a link to a webpage that describes how to
         donate to the upstream project.

@@ -78,7 +78,7 @@ development environment inside a systemd-nspawn container.
 1.  To run unit and functional tests for an app:
 
     ```bash
-    host$ ./container run-tests --pytest-args -v --include-functional --splinter-headless plinth/modules/{app-name}
+    host$ ./container run-tests --pytest-args -v --include-functional --splinter-headless freedombox/modules/{app-name}
     ```
 
     Drop the option `--splinter-headless` if you want to see the tests running
@@ -420,11 +420,12 @@ The easiest way to start translating is with your browser, by using
 Your changes will automatically get pushed to the code repository.
 
 Alternatively, you can directly edit the `.po` file in your language directory
-`Plinth/plinth/locale/` and create a pull request (see [CONTRIBUTING.md](CONTRIBUTING.md)).
-In that case, consider introducing yourself on #freedombox IRC (irc.debian.org),
-because some work may have been done already on the [Debian translators
-discussion lists](https://www.debian.org/MailingLists/subscribe)
-or the Weblate localization platform.
+`freedombox/freedombox/locale/` and create a pull request (see
+[CONTRIBUTING.md](CONTRIBUTING.md)). In that case, consider introducing yourself
+on #freedombox IRC (irc.debian.org), because some work may have been done
+already on the [Debian translators discussion
+lists](https://www.debian.org/MailingLists/subscribe) or the Weblate
+localization platform.
 
 For more information on translations: https://wiki.debian.org/FreedomBox/Translate
 
@@ -449,16 +450,16 @@ options. See pytest documentation for further filter options.
 
 ```bash
 # Run tests in a directory
-guest$ py.test-3 plinth/tests
+guest$ py.test-3 freedombox/tests
 
 # Run tests in a module
-guest$ py.test-3 plinth/tests/test_actions.py
+guest$ py.test-3 freedombox/tests/test_actions.py
 
 # Run tests of one class in test module
-guest$ py.test-3 plinth/tests/test_actions.py::TestActions
+guest$ py.test-3 freedombox/tests/test_actions.py::TestActions
 
 # Run one test in a class or module
-guest$ py.test-3 plinth/tests/test_actions.py::TestActions::test_is_package_manager_busy
+guest$ py.test-3 freedombox/tests/test_actions.py::TestActions::test_is_package_manager_busy
 ```
 
 Some tests are skipped by default:
@@ -489,13 +490,13 @@ guest$ sudo EXTENDED_TESTING=1 py.test-3
 To run the coverage tool in the container/VM:
 
 ```bash
-guest$ py.test-3 --cov=plinth
+guest$ py.test-3 --cov=freedombox
 ```
 
 To collect HTML report:
 
 ```bash
-guest$ py.test-3 --cov=plinth --cov-report=html
+guest$ py.test-3 --cov=freedombox --cov-report=html
 ```
 
 Invoking this command generates a HTML report to the `htmlcov` directory.
@@ -519,7 +520,7 @@ executed (red).
 Inside the container run
 
 ```bash
-guest$ cd /freedombox ; sudo plinth/tests/functional/install.sh
+guest$ cd /freedombox ; sudo freedombox/tests/functional/install.sh
 ```
 
 ##### For running tests inside the VM
@@ -565,13 +566,14 @@ on the guest.
 
 #### Setup FreedomBox Service for tests
 
-Via Plinth, create a new user as follows:
+Via FreedomBox web interface, create a new user as follows:
 
 * Username: tester
 * Password: testingtesting
 
-This step is optional if a fresh install of Plinth is being tested. Functional
-tests will create the required user using FreedomBox's first boot process.
+This step is optional if a fresh install of FreedomBox is being tested.
+Functional tests will create the required user using FreedomBox's first boot
+process.
 
 #### Running Functional Tests
 
@@ -620,7 +622,7 @@ In the VM or container, run the following command:
 ```
 guest$ cd /freedombox
 guest$ sudo make build install
-guest$ plinth/tests/functional/enable-all-apps
+guest$ freedombox/tests/functional/enable-all-apps
 ```
 
 [back to index](#hacking)

@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """
-URLs for the plinth api for android app.
+URLs for the FreedomBox API for Android app.
 """
 
 from django.urls import re_path

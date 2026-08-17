@@ -22,7 +22,7 @@ server_dir = '/freedombox'
 host = '127.0.0.1'
 port = 8000
 
-# Enable the following only if Plinth is behind a proxy server.  The
+# Enable the following only if FreedomBox is behind a proxy server.  The
 # proxy server should properly clean and the following HTTP headers:
 #   X-Forwarded-For
 #   X-Forwarded-Host

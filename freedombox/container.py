@@ -121,7 +121,7 @@ class Container(app.LeaderComponent, log.LogEmitter):
     def diagnose(self) -> list[DiagnosticCheck]:
         """Check if the container is running..
 
-        See :py:meth:`plinth.app.Component.diagnose`.
+        See :py:meth:`freedombox.app.Component.diagnose`.
         """
         results = []
         results.append(self._diagnose_unit_is_running())

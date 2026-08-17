@@ -53,14 +53,13 @@
       data stays with the users.
     </para>
     <para>
-      Plinth is a web interface to administer the functions of the
-      FreedomBox.  It is extensible and is made of modules.  Each
-      module provides a simplified user interface to control the
-      underlying functionality of a specific application of
-      FreedomBox.  As FreedomBox can act as a wireless router, it is
-      possible to configure networking from Plinth.  Plinth allows
-      configuration of basic system parameters such as time zone,
-      hostname and automatic upgrade settings.
+      FreedomBox Service (Plinth) has a web interface to administer its
+      functions.  It is extensible and is made of modules.  Each module provides
+      a simplified user interface to control the underlying functionality of a
+      specific application of FreedomBox.  As FreedomBox can act as a wireless
+      router, it is possible to configure networking.  FreedomBox allows
+      configuration of basic system parameters such as time zone, hostname and
+      automatic upgrade settings.
     </para>
   </refsect1>
 
@@ -71,9 +70,9 @@
         <term><option>--server_dir SERVER_DIR</option></term>
         <listitem>
           <para>
-            This the URL fragment under which Plinth will provide its services.
-            Plinth is shipped with a default value of
-            <filename>/freedombox</filename>. This means that Plinth will be
+            This the URL fragment under which FreedomBox will provide its services.
+            FreedomBox is shipped with a default value of
+            <filename>/freedombox</filename>. This means that FreedomBox will be
             available as http://localhost:8000/freedombox by default.
           </para>
         </listitem>
@@ -86,8 +85,8 @@
             from the current working directory.  Enables extra debug messages,
             enable Django debug mode for detailed error pages and turn off
             Django security features.  Monitor source files for changes and
-            restart Plinth on modifications.  Die if there is an error during
-            module initialization.
+            restart FreedomBox Service on modifications.  Die if there is an
+            error during module initialization.
           </para>
         </listitem>
       </varlistentry>
@@ -95,7 +94,7 @@
         <term><option>--diagnose</option></term>
         <listitem>
           <para>
-            If provided, Plinth loads modules, performs initialization
+            If provided, FreedomBox loads modules, performs initialization
             but does start the web server.  Instead it runs diagnostic
             tests on each module and exits.
           </para>
@@ -166,7 +165,7 @@
   <refsect1>
     <title>Configuration</title>
     <para>
-      Plinth reads various configuration options from the files
+      FreedomBox Service reads various configuration options from the files
       <filename>/usr/share/freedombox/freedombox.config</filename>,
       <filename>/usr/share/freedombox/freedombox.config.d/*.config</filename>,
       <filename>/etc/plinth/plinth.config</filename>,
@@ -182,25 +181,25 @@
     <title>Examples</title>
 
     <example>
-      <title>Start Plinth with default options</title>
+      <title>Start FreedomBox Service with default options</title>
       <synopsis>$ plinth</synopsis>
       <para>
-        Run Plinth as guided by configuration file.
+        Run FreedomBox Service as guided by configuration file.
       </para>
     </example>
 
     <example>
-      <title>Run Plinth with different URL prefix</title>
+      <title>Run FreedomBox Service with different URL prefix</title>
       <synopsis>$ plinth --server_dir='/myurl'</synopsis>
       <para>
-        Run Plinth with the '/myurl' prefix. Note that Apache forwards requests
-        to '/freedombox' by default, so /myurl is not accessible outside of your
-        FreedomBox without adapting the apache configuration.
+        Run FreedomBox with the '/myurl' prefix. Note that Apache forwards
+        requests to '/freedombox' by default, so /myurl is not accessible
+        outside of your FreedomBox without adapting the apache configuration.
       </para>
     </example>
 
     <example>
-      <title>Run Plinth in development mode</title>
+      <title>Run FreedomBox Service in development mode</title>
       <synopsis>$ plinth --develop</synopsis>
       <para>
         Run in development mode on the terminal.  Enable auto-reloading and
@@ -213,7 +212,7 @@
     <title>Bugs</title>
     <para>
       See <ulink
-      url="https://salsa.debian.org/freedombox-team/freedombox/issues">Plinth
+      url="https://salsa.debian.org/freedombox-team/freedombox/issues">FreedomBox
       issue tracker</ulink> for a full list of known issues and TODO items.
     </para>
   </refsect1>
@@ -222,7 +221,7 @@
     <title>Author</title>
     <para>
       <author>
-        <firstname>Plinth Developers</firstname>
+        <firstname>FreedomBox Developers</firstname>
         <contrib>Original author</contrib>
       </author>
     </para>

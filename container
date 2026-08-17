@@ -236,7 +236,7 @@ then
     /freedombox/plinth/tests/functional/install.sh
 fi
 
-# Run the plinth server if functional tests are requested
+# Wait for the server to start if functional tests are requested
 if [[ "{pytest_command}" =~ "--include-functional" ]]
 then
     make -C /freedombox wait-while-first-setup

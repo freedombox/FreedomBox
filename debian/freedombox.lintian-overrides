@@ -1,20 +1,19 @@
-# Apache configuration for the Plinth itself is shipped with proper
-# name plinth.conf.  However, due to the nature of the package, Plinth
-# takes the responsibility of configuring various other services
-# behind Apache.  The upstream hence ships various Apache
-# configuration files which are enabled and disabled when user
-# requests.
+# Apache configuration for the FreedomBox service itself is shipped with proper
+# name freedombox.conf. However, due to the nature of the package, FreedomBox
+# takes the responsibility of configuring various other services behind Apache.
+# The upstream hence ships various Apache configuration files which are enabled
+# and disabled when user requests.
 freedombox binary: non-standard-apache2-configuration-name *
 
-# Plinth depends on Apache2 and cannot work with just any web server. Instead of
-# being a simple web application it is an administration console that configures
-# web servers. At some point we would like to work with other web servers but
-# that requires significant effort.
+# FreedomBox depends on Apache2 and cannot work with just any web server.
+# Instead of being a simple web application it is an administration console that
+# configures web servers. At some point we would like to work with other web
+# servers but that requires significant effort.
 freedombox binary: web-application-works-only-with-apache
 
 # Not documentation
 freedombox: package-contains-documentation-outside-usr-share-doc [usr/share/plinth/static/jslicense.html]
-freedombox: package-contains-documentation-outside-usr-share-doc [usr/lib/python3/dist-packages/plinth-*.dist-info/top_level.txt]
+freedombox: package-contains-documentation-outside-usr-share-doc [usr/lib/python3/dist-packages/freedombox-*.dist-info/top_level.txt]
 
 # This executable is meant to executed from systemd service file and is not
 # meant for user. However, don't install to /usr/libexec and follow systemd

@@ -29,7 +29,7 @@ def parse_arguments():
                         help='web server path under which to serve')
     parser.add_argument(
         '--develop', action='store_true', default=None,
-        help=('run Plinth *insecurely* from current folder; '
+        help=('run FreedomBox Service *insecurely* from current folder; '
               'enable auto-reloading and debugging options'))
     parser.add_argument('--setup', default=False, nargs='*',
                         help='run setup tasks on all essential apps and exit')

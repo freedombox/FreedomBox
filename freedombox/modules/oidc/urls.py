@@ -2,9 +2,10 @@
 """URLs for the OpenID Connect module.
 
 All the '/freedombox/o' URLs are implemented in this module by including them
-from django-oauth-toolkit. However, they are included in plinth/urls.py instead
-of here because FreedomBox module loading logic automatically namespaces the
-URL names. This causes problems when metadata view tries to resolve URLs.
+from django-oauth-toolkit. However, they are included in freedombox/urls.py
+instead of here because FreedomBox module loading logic automatically
+namespaces the URL names. This causes problems when metadata view tries to
+resolve URLs.
 
 /.well-known/openid-configuration is proxied to
 /freedombox/o/.well-known/openid-configuration by Apache2. Similarly,

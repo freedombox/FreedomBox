@@ -111,7 +111,7 @@ class Daemon(app.LeaderComponent, log.LogEmitter):
     def diagnose(self) -> list[DiagnosticCheck]:
         """Check if the daemon is running and listening on expected ports.
 
-        See :py:meth:`plinth.app.Component.diagnose`.
+        See :py:meth:`freedombox.app.Component.diagnose`.
 
         """
         results = []
