@@ -88,10 +88,6 @@ def test_invalid_directories_and_files(section):
     [],
     ['service'],
     [{
-        'type': 'uwsgi',
-        'name': 'service'
-    }],
-    [{
         'type': 'system',
         'name': 'service'
     }],

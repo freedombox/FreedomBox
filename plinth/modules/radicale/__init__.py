@@ -10,7 +10,7 @@ from django.utils.translation import gettext_lazy as _
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.config import DropinConfigs
-from plinth.daemon import Daemon
+from plinth.daemon import Daemon, RelatedDaemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
@@ -42,7 +42,7 @@ class RadicaleApp(app_module.App):
 
     app_id = 'radicale'
 
-    _version = 6
+    _version = 7
 
     def __init__(self) -> None:
         """Create components for the app."""
@@ -66,7 +66,8 @@ class RadicaleApp(app_module.App):
                                       tags=info.tags, login_required=True)
         self.add(shortcut)
 
-        packages = Packages('packages-radicale', ['radicale'],
+        packages = Packages('packages-radicale',
+                            ['radicale', 'uwsgi', 'uwsgi-plugin-python3'],
                             rerun_setup_on_upgrade=True)
         self.add(packages)
 
@@ -93,6 +94,10 @@ class RadicaleApp(app_module.App):
         backup_restore = BackupRestore('backup-restore-radicale',
                                        **manifest.backup)
         self.add(backup_restore)
+
+        # To be able to disable the old uwsgi init.d script.
+        related_daemon = RelatedDaemon('related-daemon-radicale', 'uwsgi')
+        self.add(related_daemon)
 
     def enable(self):
         """Fix missing directories before enabling radicale."""

@@ -69,7 +69,7 @@ from plinth import action_utils
 from plinth import app as app_module
 from plinth import cfg
 from plinth.config import DropinConfigs
-from plinth.daemon import Daemon, RelatedDaemon
+from plinth.daemon import Daemon
 from plinth.modules import names
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.letsencrypt.components import LetsEncrypt
@@ -96,10 +96,9 @@ class ApacheApp(app_module.App):
                                is_essential=True, name=_('Apache HTTP Server'))
         self.add(info)
 
-        packages = Packages('packages-apache', [
-            'apache2', 'php-fpm', 'ssl-cert', 'uwsgi-core',
-            'uwsgi-plugin-python3', 'libapache2-mod-auth-openidc'
-        ])
+        packages = Packages(
+            'packages-apache',
+            ['apache2', 'php-fpm', 'ssl-cert', 'libapache2-mod-auth-openidc'])
         self.add(packages)
 
         dropin_configs = DropinConfigs('dropin-configs-apache', [
@@ -133,10 +132,6 @@ class ApacheApp(app_module.App):
 
         daemon = Daemon('daemon-apache', 'apache2')
         self.add(daemon)
-
-        # To be able to disable the old uwsgi init.d script.
-        related_daemon = RelatedDaemon('related-daemon-apache', 'uwsgi')
-        self.add(related_daemon)
 
     @staticmethod
     def post_init():
