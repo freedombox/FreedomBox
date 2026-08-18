@@ -22,17 +22,17 @@ for _ in $(seq 1 120); do
 done
 
 # Print final status in test log
-cat /tmp/fbx_status.json
+cat /tmp/fbx_status.json || true
 
 rm -f /tmp/fbx_status.json
-
-if [ "$SETUP_COMPLETE" -eq 0 ]; then
-    echo "Error: first-boot setup did not complete in the allotted time." >&2
-    exit 1
-fi
 
 journalctl --unit=plinth --unit=freedombox-privileged
 
 # Access FreedomBox interface
 curl --location --cookie "" --fail --write-out "%{response_code}" --insecure \
      --stderr - https://localhost/freedombox/
+
+if [ "$SETUP_COMPLETE" -eq 0 ]; then
+    echo "Error: first-boot setup did not complete in the allotted time." >&2
+    exit 1
+fi
