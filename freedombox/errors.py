@@ -4,22 +4,22 @@ Project specific errors
 """
 
 
-class PlinthError(Exception):
+class FbxError(Exception):
     """Base class for all FreedomBox specific errors."""
 
 
-class PackageNotInstalledError(PlinthError):
+class PackageNotInstalledError(FbxError):
     """Could not complete module setup due to missing package."""
 
 
-class DomainNotRegisteredError(PlinthError):
+class DomainNotRegisteredError(FbxError):
     """
     An action couldn't be performed because this
     FreedomBox doesn't have a registered domain
     """
 
 
-class MissingPackageError(PlinthError):
+class MissingPackageError(FbxError):
     """Package is not available to be installed at this time."""
 
     def __init__(self, name):

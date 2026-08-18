@@ -16,7 +16,7 @@ from django.views.generic.edit import FormView
 
 from freedombox import app as app_module
 from freedombox import views
-from freedombox.errors import PlinthError
+from freedombox.errors import FbxError
 from freedombox.modules import storage
 from freedombox.modules.kiwix import privileged
 from freedombox.views import messages_error
@@ -56,7 +56,7 @@ class AddPackageView(SuccessMessageMixin, FormView):
         # TODO The following is almost duplicated in backups/views.py
         try:
             mount_info = storage.get_mount_info('/')
-        except PlinthError as exception:
+        except FbxError as exception:
             logger.exception(
                 'Error getting information about root partition: %s',
                 exception)

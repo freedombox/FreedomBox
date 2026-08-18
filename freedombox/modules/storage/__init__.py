@@ -12,7 +12,7 @@ from django.utils.translation import gettext_noop
 from freedombox import app as app_module
 from freedombox import cfg, glib, menu
 from freedombox.diagnostic_check import DiagnosticCheck, Result
-from freedombox.errors import PlinthError
+from freedombox.errors import FbxError
 from freedombox.modules.backups.components import BackupRestore
 from freedombox.package import Packages
 from freedombox.utils import format_lazy
@@ -186,7 +186,7 @@ def get_mount_info(mount_point):
         mount for mount in mounts if mount_point == mount['mount_point']
     ]
     if not list_root:
-        raise PlinthError('Mount point {} not found.'.format(mount_point))
+        raise FbxError('Mount point {} not found.'.format(mount_point))
 
     percent_used = list_root[0]['percent_used']
     free_bytes = list_root[0]['free']
@@ -292,7 +292,7 @@ def warn_about_low_disk_space(_data):
 
     try:
         root_info = get_mount_info('/')
-    except PlinthError:
+    except FbxError:
         return
 
     show = False

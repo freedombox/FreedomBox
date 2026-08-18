@@ -19,7 +19,7 @@ from django.utils.translation import gettext_lazy
 from django.views.decorators.http import require_POST
 from django.views.generic import FormView, TemplateView, View
 
-from freedombox.errors import PlinthError
+from freedombox.errors import FbxError
 from freedombox.modules import backups, storage
 from freedombox.views import AppView
 
@@ -201,7 +201,7 @@ class UploadArchiveView(FormView):
         context['title'] = _('Upload and restore a backup')
         try:
             mount_info = storage.get_mount_info('/')
-        except PlinthError as exception:
+        except FbxError as exception:
             logger.exception(
                 'Error getting information about root partition: %s',
                 exception)

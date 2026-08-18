@@ -2,10 +2,10 @@
 
 import subprocess
 
-from freedombox.errors import PlinthError
+from freedombox.errors import FbxError
 
 
-class BorgError(PlinthError):
+class BorgError(FbxError):
     """Generic borg errors."""
 
 
@@ -17,7 +17,7 @@ class SshError(subprocess.CalledProcessError):
     """Error when running an SSH command."""
 
 
-class SshfsError(PlinthError):
+class SshfsError(FbxError):
     """Generic sshfs errors."""
 
 
