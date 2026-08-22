@@ -23,15 +23,13 @@ class TestRadicaleApp(functional.BaseAppTests):
     def assert_app_running(self, session_browser):
         """Assert that the app is running."""
         assert functional.service_is_running(session_browser, self.app_name)
-        assert _calendar_is_available(session_browser)
-        assert _addressbook_is_available(session_browser)
+        assert _web_interface_is_available(session_browser)
 
     def assert_app_not_running(self, session_browser):
         """Assert that the app is not running."""
         assert functional.service_is_not_running(session_browser,
                                                  self.app_name)
-        assert not _calendar_is_available(session_browser)
-        assert not _addressbook_is_available(session_browser)
+        assert not _web_interface_is_available(session_browser)
 
     def test_access_rights(self, session_browser):
         """Test setting the access rights."""
@@ -81,23 +79,13 @@ def _set_access_rights(browser, access_rights_type):
     functional.submit(browser, form_class='form-configuration')
 
 
-def _calendar_is_available(browser):
-    """Return whether calendar is available at well-known URL."""
-    return _well_known_available(browser, '/.well-known/caldav')
-
-
-def _addressbook_is_available(browser):
-    """Return whether addressbook is available at well-known URL."""
-    return _well_known_available(browser, '/.well-known/carddav')
-
-
-def _well_known_available(browser, wellknown_url: str):
-    """Return whether a well-known URL redirects to radicale."""
+def _web_interface_is_available(browser):
+    """Return whether web interface is available at /radicale/."""
     conf = functional.config['DEFAULT']
-    url = functional.base_url + wellknown_url
+    url = functional.base_url + '/radicale/'
     logging.captureWarnings(True)
     request = requests.get(url, auth=(conf['username'], conf['password']),
                            verify=False, allow_redirects=False)
     logging.captureWarnings(False)
-    return (request.status_code == 301
-            and request.headers['Location'].endswith('/radicale/'))
+    return (request.status_code == 302
+            and request.headers['Location'].endswith('/radicale/.web'))
