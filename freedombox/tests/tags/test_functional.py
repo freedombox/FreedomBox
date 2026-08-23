@@ -17,10 +17,21 @@ def _is_app_listed(session_browser, app):
     assert len(app_links) == 1
 
 
+@pytest.fixture(scope='module', autouse=True)
+def fixture_disable_apps(session_browser):
+    """Disable all the apps we expect to see in apps/add page."""
+    apps = [
+        'deluge', 'nextcloud', 'samba', 'sharing', 'syncthing', 'transmission'
+    ]
+    functional.login(session_browser)
+    for app in apps:
+        functional.app_disable(session_browser, app)
+
+
 @pytest.fixture(name='bittorrent_tag')
 def fixture_bittorrent_tag(session_browser):
     """Click on the BitTorrent tag."""
-    bittorrent_tag = '/freedombox/apps/?tag=BitTorrent'
+    bittorrent_tag = '/freedombox/apps/add/?tag=BitTorrent'
     functional.login(session_browser)
     functional.nav_to_module(session_browser, 'transmission')
     with functional.wait_for_page_update(session_browser, timeout=10,
@@ -49,8 +60,8 @@ def test_search_for_tag(session_browser, bittorrent_tag):
     """Test that searching for a tag returns the expected apps."""
     search_input = session_browser.find_by_id('add-tag-input').first
     with functional.wait_for_page_update(
-            session_browser, timeout=10,
-            expected_url='/freedombox/apps/?tag=BitTorrent&tag=File+sharing'):
+            session_browser, timeout=10, expected_url='/freedombox/apps/add/'
+            '?tag=BitTorrent&tag=File+sharing'):
         search_input.click()
         search_input.type('file sharing')
         search_input.type(Keys.ENTER)
@@ -64,7 +75,7 @@ def test_click_on_tag(session_browser, bittorrent_tag):
     search_input = session_browser.find_by_id('add-tag-input').first
     with functional.wait_for_page_update(
             session_browser, timeout=10,
-            expected_url='/freedombox/apps/?tag=BitTorrent&tag=File+sync'):
+            expected_url='/freedombox/apps/add/?tag=BitTorrent&tag=File+sync'):
         search_input.click()
         session_browser.find_by_css(
             ".dropdown-item[data-tag='File sync']").click()
@@ -75,14 +86,14 @@ def test_click_on_tag(session_browser, bittorrent_tag):
 
 def test_tag_localization(session_browser, locale):
     """Test that tags are localized and tests in done localized."""
-    functional.visit(session_browser, '/freedombox/apps/?tag=Sharing')
+    functional.visit(session_browser, '/freedombox/apps/add/?tag=Sharing')
     badge = session_browser.find_by_css('.tag[data-tag="Sharing"]').first
     assert 'Compartir' in badge.text
 
     search_input = session_browser.find_by_id('add-tag-input').first
     with functional.wait_for_page_update(
             session_browser, timeout=10,
-            expected_url='/freedombox/apps/?tag=Sharing&tag=Bookmarks'):
+            expected_url='/freedombox/apps/add/?tag=Sharing&tag=Bookmarks'):
         search_input.click()
         search_input.type('Marcadores')
         search_input.type(Keys.ENTER)
