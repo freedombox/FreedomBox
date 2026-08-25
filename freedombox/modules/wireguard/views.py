@@ -3,8 +3,8 @@
 Views for WireGuard application.
 """
 
-from io import BytesIO
 import urllib.parse
+from io import BytesIO
 
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
@@ -14,7 +14,6 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 from django.views.generic import FormView, TemplateView, View
 
-from freedombox import network
 from freedombox.modules.names.components import DomainName
 from freedombox.views import AppView
 
@@ -381,8 +380,7 @@ class DeleteServerView(SuccessMessageMixin, TemplateView):
 
     def post(self, request, interface):
         """Delete the server."""
-        connection = network.get_connection_by_interface_name(interface)
-        network.delete_connection(connection.get_uuid())
+        utils.delete_server(interface)
         messages.success(request, _('Server deleted.'))
         return redirect('wireguard:index')
 

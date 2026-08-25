@@ -73,23 +73,35 @@ class TestWireguardApp(functional.BaseAppTests):
             with functional.wait_for_page_update(browser):
                 start_server_button.first.click()
 
-        browser.find_by_css('.btn-add-client').first.click()
+        with functional.wait_for_page_update(browser):
+            browser.find_by_css('.btn-add-client').first.click()
+
         browser.find_by_id('id_public_key').fill(key)
         functional.submit(browser, form_class='form-add-client')
 
     def _edit_client(self, browser, key1, key2):
         """Edit a client"""
         functional.nav_to_module(browser, 'wireguard')
-        browser.links.find_by_href(self._get_client_href(key1)).first.click()
-        browser.find_by_css('.btn-edit-client').first.click()
+        with functional.wait_for_page_update(browser):
+            browser.links.find_by_href(
+                self._get_client_href(key1)).first.click()
+
+        with functional.wait_for_page_update(browser):
+            browser.find_by_css('.btn-edit-client').first.click()
+
         browser.find_by_id('id_public_key').fill(key2)
         functional.submit(browser, form_class='form-edit-client')
 
     def _delete_client(self, browser, key):
         """Delete a client"""
         functional.nav_to_module(browser, 'wireguard')
-        browser.links.find_by_href(self._get_client_href(key)).first.click()
-        browser.find_by_css('.btn-delete-client').first.click()
+        with functional.wait_for_page_update(browser):
+            browser.links.find_by_href(
+                self._get_client_href(key)).first.click()
+
+        with functional.wait_for_page_update(browser):
+            browser.find_by_css('.btn-delete-client').first.click()
+
         functional.submit(browser, form_class='form-delete-client')
 
     def test_add_edit_delete_client(self, session_browser):
@@ -124,37 +136,38 @@ class TestWireguardApp(functional.BaseAppTests):
             with functional.wait_for_page_update(session_browser):
                 start_server_button.first.click()
 
-        session_browser.find_by_css('.btn-auto-add-client').first.click()
+        with functional.wait_for_page_update(session_browser):
+            session_browser.find_by_css('.btn-auto-add-client').first.click()
 
         client_pubkey = session_browser.find_by_css(
-                '.pubkey-val').first.text.strip()
+            '.pubkey-val').first.text.strip()
 
         # Verify private key reveal
-        privkey_reveal = session_browser.find_by_css(
-                '.privkey-val')
+        privkey_reveal = session_browser.find_by_css('.privkey-val')
         assert privkey_reveal, "Private key reveal should be present"
         privkey_reveal.click()
         client_privkey = session_browser.find_by_css(
-                '.privkey-val').text.splitlines()[1]
+            '.privkey-val').text.splitlines()[1]
         assert len(client_privkey) == 44, (("Private key should be base64 "
                                             "(44 chars)"))
 
         # Verify config download and QR links
         download_link = session_browser.links.find_by_href(
-                '/freedombox/apps/wireguard/client/auto-add/action/download/')
+            '/freedombox/apps/wireguard/client/auto-add/action/download/')
         qr_link = session_browser.links.find_by_href(
-                '/freedombox/apps/wireguard/client/auto-add/action/qr/')
+            '/freedombox/apps/wireguard/client/auto-add/action/qr/')
         assert download_link, "Download config link should exist"
         assert qr_link, "QR code link should exist"
 
         # Submit to add the client
         with functional.wait_for_page_update(session_browser):
             session_browser.find_by_css(
-                    '.btn-auto-add-connection').first.click()
+                '.btn-auto-add-connection').first.click()
 
         # Verify client was added successfully
-        assert self._client_exists(session_browser, client_pubkey), ((
-            "Auto-generated client should exist"))
+        assert self._client_exists(
+            session_browser,
+            client_pubkey), (("Auto-generated client should exist"))
 
         # Clean up
         self._delete_client(session_browser, client_pubkey)
@@ -179,8 +192,10 @@ class TestWireguardApp(functional.BaseAppTests):
             return browser.find_by_css(f'tr.{key} > td').first.text
 
         functional.nav_to_module(browser, 'wireguard')
-        href = self._get_server_href(browser, config['peer_public_key'])
-        href.first.click()
+        with functional.wait_for_page_update(browser):
+            href = self._get_server_href(browser, config['peer_public_key'])
+            href.first.click()
+
         assert get_value('peer-endpoint') == config['peer_endpoint']
         assert get_value('peer-public-key') == config['peer_public_key']
         assert get_value('server-ip-address-and-network'
@@ -192,7 +207,9 @@ class TestWireguardApp(functional.BaseAppTests):
     def _add_server(browser, config):
         """Add a server."""
         functional.nav_to_module(browser, 'wireguard')
-        browser.find_by_css('.btn-add-server').first.click()
+        with functional.wait_for_page_update(browser):
+            browser.find_by_css('.btn-add-server').first.click()
+
         browser.find_by_id('id_peer_endpoint').fill(config['peer_endpoint'])
         browser.find_by_id('id_peer_public_key').fill(
             config['peer_public_key'])
@@ -205,9 +222,13 @@ class TestWireguardApp(functional.BaseAppTests):
     def _edit_server(self, browser, config1, config2):
         """Edit a server."""
         functional.nav_to_module(browser, 'wireguard')
-        self._get_server_href(browser,
-                              config1['peer_public_key']).first.click()
-        browser.find_by_css('.btn-edit-server').first.click()
+        with functional.wait_for_page_update(browser):
+            href = self._get_server_href(browser, config1['peer_public_key'])
+            href.first.click()
+
+        with functional.wait_for_page_update(browser):
+            browser.find_by_css('.btn-edit-server').first.click()
+
         browser.find_by_id('id_peer_endpoint').fill(config2['peer_endpoint'])
         browser.find_by_id('id_peer_public_key').fill(
             config2['peer_public_key'])
@@ -220,8 +241,13 @@ class TestWireguardApp(functional.BaseAppTests):
     def _delete_server(self, browser, config):
         """Delete a server"""
         functional.nav_to_module(browser, 'wireguard')
-        self._get_server_href(browser, config['peer_public_key']).first.click()
-        browser.find_by_css('.btn-delete-server').first.click()
+        with functional.wait_for_page_update(browser):
+            href = self._get_server_href(browser, config['peer_public_key'])
+            href.first.click()
+
+        with functional.wait_for_page_update(browser):
+            browser.find_by_css('.btn-delete-server').first.click()
+
         functional.submit(browser, form_class='form-delete-server')
 
     def test_add_edit_delete_server(self, session_browser):

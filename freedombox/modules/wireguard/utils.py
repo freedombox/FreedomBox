@@ -79,8 +79,7 @@ def get_nm_info():
         settings_ipv6 = connection.get_setting_ip6_config()
 
         ip_address, ip_address_and_network = _get_nm_address_info(
-                settings_ipv4, settings_ipv6
-        )
+            settings_ipv4, settings_ipv6)
 
         info['ip_address'] = ip_address
         info['ip_address_and_network'] = ip_address_and_network
@@ -162,7 +161,11 @@ def delete_connections():
         connection.delete()
 
 
-def _get_public_key_from_private_key(private_key):
+def _get_public_key_from_private_key(private_key: str | None) -> str | None:
+    """Return public key from private key running wg command."""
+    if not private_key:
+        return None
+
     process = subprocess.run(['wg', 'pubkey'], check=True, capture_output=True,
                              input=private_key.encode())
     return process.stdout.decode().strip()
@@ -207,6 +210,28 @@ def add_server(settings):
 
     network.add_connection(settings)
 
+    # Wait upto 10 seconds for server to appear
+    public_key = settings['wireguard']['peer_public_key']
+    for _ in range(10):
+        info = get_info()
+        if info['my_client'] and info['my_client']['servers']:
+            found = False
+            for _, server in info['my_client']['servers'].items():
+                for _, peer in server['peers'].items():
+                    if peer['public_key'] == public_key:
+                        found = True
+                        break
+
+                if found:
+                    break
+
+            if found:
+                break
+
+        time.sleep(1)
+    else:
+        logging.warning('Could not add server')
+
 
 def edit_server(interface, settings):
     """Edit information for connecting to a server."""
@@ -218,6 +243,22 @@ def edit_server(interface, settings):
     connection = network.get_connection_by_interface_name(interface)
     network.edit_connection(connection, settings)
     network.reactivate_connection(connection.get_uuid())
+
+
+def delete_server(interface):
+    """Delete information for connecting to a server."""
+    connection = network.get_connection_by_interface_name(interface)
+    network.delete_connection(connection.get_uuid())
+
+    # Wait upto 10 seconds for server to disappear
+    for _ in range(10):
+        info = get_nm_info()
+        if interface not in info:
+            break
+
+        time.sleep(1)
+    else:
+        logging.warning('Could not delete server')
 
 
 def setup_server():
@@ -248,6 +289,16 @@ def setup_server():
     }
     network.add_connection(settings)
     logger.info('Created new WireGuard server connection')
+
+    # Wait upto 10 seconds for server to appear
+    for _ in range(10):
+        info = get_info()
+        if info['my_server'] and info['my_server']['public_key']:
+            break
+
+        time.sleep(1)
+    else:
+        logging.warning('Could not add server')
 
 
 def _get_next_available_ip_address(settings):
@@ -311,6 +362,23 @@ def add_client(public_key):
     connection.commit_changes(True)
     network.reactivate_connection(connection.get_uuid())
 
+    # Wait upto 10 seconds for client to appear
+    for _ in range(10):
+        info = get_info()
+        if info['my_server'] and info['my_server']['peers']:
+            found = False
+            for _, peer in info['my_server']['peers'].items():
+                if peer['public_key'] == public_key:
+                    found = True
+                    break
+
+            if found:
+                break
+
+        time.sleep(1)
+    else:
+        logging.warning('Could not add client %s', public_key)
+
 
 def remove_client(public_key):
     """Remove permission for a client to connect our server."""
@@ -324,6 +392,23 @@ def remove_client(public_key):
     settings.remove_peer(peer_index)
     connection.commit_changes(True)
     network.reactivate_connection(connection.get_uuid())
+
+    # Wait upto 10 seconds for client to disappear
+    for _ in range(10):
+        info = get_info()
+        if info['my_server']:
+            found = False
+            for _, peer in info['my_server']['peers'].items():
+                if peer['public_key'] == public_key:
+                    found = True
+                    break
+
+            if not found:
+                break
+
+        time.sleep(1)
+    else:
+        logging.warning('Could not remove client %s', public_key)
 
 
 def build_client_config(client_ip: str, client_privkey: str,
