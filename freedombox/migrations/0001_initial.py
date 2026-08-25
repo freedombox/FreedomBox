@@ -19,9 +19,14 @@ class Migration(migrations.Migration):
 
     dependencies: list = []
 
+    replaces = [
+        ('plinth', '0001_initial'),
+    ]
+
     operations = [
         migrations.CreateModel(
             name='KVStore',
+            options={'db_table': 'plinth_kvstore'},
             fields=[
                 ('key', models.TextField(primary_key=True, serialize=False)),
                 ('value_json', models.TextField()),

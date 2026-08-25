@@ -18,9 +18,14 @@ class Migration(migrations.Migration):
         ('freedombox', '0004_userprofile'),
     ]
 
+    replaces = [
+        ('plinth', '0005_storednotification'),
+    ]
+
     operations = [
         migrations.CreateModel(
             name='StoredNotification',
+            options={'db_table': 'plinth_storednotification'},
             fields=[
                 ('id',
                  models.CharField(max_length=128, primary_key=True,

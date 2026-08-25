@@ -11,9 +11,14 @@ class Migration(migrations.Migration):
         ('freedombox', '0001_initial'),
     ]
 
+    replaces = [
+        ('plinth', '0002_modulestore'),
+    ]
+
     operations = [
         migrations.CreateModel(
             name='Module',
+            options={'db_table': 'plinth_module'},
             fields=[
                 ('name', models.TextField(primary_key=True, serialize=False)),
                 ('setup_version', models.IntegerField()),

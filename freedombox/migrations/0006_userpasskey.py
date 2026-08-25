@@ -19,9 +19,14 @@ class Migration(migrations.Migration):
         ('freedombox', '0005_storednotification'),
     ]
 
+    replaces = [
+        ('plinth', '0006_userpasskey'),
+    ]
+
     operations = [
         migrations.CreateModel(
             name='UserPasskey',
+            options={'db_table': 'plinth_userpasskey'},
             fields=[
                 ('id',
                  models.AutoField(auto_created=True, primary_key=True,

@@ -8,8 +8,6 @@ from __future__ import unicode_literals
 
 from django.db import migrations
 
-from freedombox.models import KVStore
-
 
 def merge_firstboot_finished_fields(apps, schema_editor):
     """
@@ -18,6 +16,8 @@ def merge_firstboot_finished_fields(apps, schema_editor):
     'firstboot_completed' is the most accurate name for now, and by combining
     the fields we do not have to deal with legacy states/fields anymore.
     """
+    KVStore = apps.get_model('freedombox', 'KVStore')
+
     # Get and remove 'firstboot_state'
     firstboot_state = 0
     try:
@@ -60,6 +60,10 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('freedombox', '0002_modulestore'),
+    ]
+
+    replaces = [
+        ('plinth', '0003_merge_firstboot_completed_fields'),
     ]
 
     operations = [

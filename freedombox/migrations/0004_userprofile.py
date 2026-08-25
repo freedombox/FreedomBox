@@ -27,9 +27,14 @@ class Migration(migrations.Migration):
         ('freedombox', '0003_merge_firstboot_completed_fields'),
     ]
 
+    replaces = [
+        ('plinth', '0004_userprofile'),
+    ]
+
     operations = [
         migrations.CreateModel(
             name='UserProfile',
+            options={'db_table': 'plinth_userprofile'},
             fields=[
                 ('id',
                  models.AutoField(auto_created=True, primary_key=True,
