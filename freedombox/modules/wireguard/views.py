@@ -152,11 +152,8 @@ class AutoAddClientView(SuccessMessageMixin, FormView):
 
         if server_info:
             domains = DomainName.list_names(filter_for_service='wireguard')
-            filtered_domains = [
-                domain for domain in domains if not domain.endswith('.local')
-            ]
             port = server_info.get('listen_port', 51820)
-            endpoint = f"{filtered_domains[0]}:{port}"
+            endpoints = [f'{domain}:{port}' for domain in domains]
 
         try:
             client_privkey, client_pubkey = utils.generate_client_keypair()
@@ -167,23 +164,16 @@ class AutoAddClientView(SuccessMessageMixin, FormView):
             settings = connection.get_setting_by_name(setting_name)
             next_ip = utils._get_next_available_ip_address(settings)
 
-            data = {
-                'next_ip': next_ip,
-                'client_privkey': client_privkey,
-                'client_pubkey': client_pubkey,
-                'endpoint': endpoint
-            }
-
             # Add properties to template context
-            context['domains'] = filtered_domains
-            context.update(data)
+            context['client_pubkey'] = client_pubkey
+            context['client_privkey'] = client_privkey
+            context['next_ip'] = next_ip
+            context['endpoints'] = endpoints
 
             # Store info on instance for reuse
-            self.request.session.update(data)
-
-        except Exception as e:
-            messages.warning(f"Client key generation failed: {e}")
-        pass
+            self.request.session['client_pubkey'] = client_pubkey
+        except Exception as exception:
+            messages.warning('Client key generation failed: %s', exception)
 
         return context
 
