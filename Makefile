@@ -104,7 +104,7 @@ install:
         mv $${temp}/freedombox $${temp}/freedombox*.dist-info $(DESTDIR)$${lib_dir} && \
 	rm -f $(DESTDIR)$${lib_dir}/freedombox*.dist-info/licenses/COPYING.md && \
 	rm -f $(DESTDIR)$${lib_dir}/freedombox*.dist-info/direct_url.json && \
-        $(INSTALL) -D -t $(BIN_DIR) bin/plinth
+        $(INSTALL) -D -t $(BIN_DIR) bin/freedombox
 	$(INSTALL) -D -t $(LIB_DIR)/freedombox bin/freedombox-privileged
 	$(INSTALL) -D -t $(BIN_DIR) bin/freedombox-cmd
 	$(INSTALL) -D -t $(BIN_DIR) bin/freedombox-change-password

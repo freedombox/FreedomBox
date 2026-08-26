@@ -5,22 +5,22 @@
 -->
 <refentry>
   <refmeta>
-    <refentrytitle><application>plinth</application></refentrytitle>
+    <refentrytitle><application>freedombox</application></refentrytitle>
     <manvolnum>1</manvolnum>
     <refmiscinfo class="manual">FreedomBox</refmiscinfo>
     <refmiscinfo class="version"> </refmiscinfo>
   </refmeta>
 
   <refnamediv>
-    <refname><application>plinth</application></refname>
+    <refname><application>freedombox</application></refname>
     <refpurpose>
-      a web front end for administering FreedomBox
+      An inexpensive server at home.
     </refpurpose>
   </refnamediv>
 
   <refsynopsisdiv>
     <cmdsynopsis>
-      <command>plinth</command>
+      <command>freedombox</command>
       <arg><option>-h, </option><option>--help</option></arg>
       <arg><option>--server_dir</option><arg choice="req">SERVER_DIR</arg></arg>
       <arg><option>--develop</option></arg>
@@ -182,7 +182,7 @@
 
     <example>
       <title>Start FreedomBox Service with default options</title>
-      <synopsis>$ plinth</synopsis>
+      <synopsis>$ freedombox</synopsis>
       <para>
         Run FreedomBox Service as guided by configuration file.
       </para>
@@ -190,7 +190,7 @@
 
     <example>
       <title>Run FreedomBox Service with different URL prefix</title>
-      <synopsis>$ plinth --server_dir='/myurl'</synopsis>
+      <synopsis>$ freedombox --server_dir='/myurl'</synopsis>
       <para>
         Run FreedomBox with the '/myurl' prefix. Note that Apache forwards
         requests to '/freedombox' by default, so /myurl is not accessible
@@ -200,7 +200,7 @@
 
     <example>
       <title>Run FreedomBox Service in development mode</title>
-      <synopsis>$ plinth --develop</synopsis>
+      <synopsis>$ freedombox --develop</synopsis>
       <para>
         Run in development mode on the terminal.  Enable auto-reloading and
         more extensive debugging.
