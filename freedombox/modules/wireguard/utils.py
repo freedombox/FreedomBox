@@ -165,7 +165,7 @@ def delete_connections():
 def _get_public_key_from_private_key(private_key):
     process = subprocess.run(['wg', 'pubkey'], check=True, capture_output=True,
                              input=private_key.encode())
-    return process.stdout.decode()
+    return process.stdout.decode().strip()
 
 
 def _generate_private_key():
