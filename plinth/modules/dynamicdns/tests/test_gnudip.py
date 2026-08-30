@@ -1,3 +1,8 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+"""
+Tests for GnuDIP based Dynamic DNS updates.
+"""
+
 from unittest.mock import Mock, patch
 
 import pytest
@@ -66,11 +71,18 @@ def test_update_success():
     update_resp = Mock()
     update_resp.text = response_to_update_request
 
-    with patch("plinth.modules.dynamicdns.gnudip.requests.get",
+    with patch('plinth.modules.dynamicdns.gnudip.requests.get',
                side_effect=[salt_resp, update_resp]) as mock_get:
-        result, addr = gnudip.update(server="http://www.2mbit.com:80",
-                                     domain="gnudip.dyn.mpis.net",
-                                     username="gnudip", password="password")
-        assert result
-        assert addr == "24.81.172.128"
+        addr = gnudip.update(server='http://www.2mbit.com:80', ip_type='ipv4',
+                             domain='gnudip.dyn.mpis.net', username='gnudip',
+                             password='password')
+        assert addr == '24.81.172.128'
         assert mock_get.call_count == 2
+
+
+def test_update_ipv6():
+    """Test that updating IPv6 raises and exception."""
+    with pytest.raises(NotImplementedError):
+        gnudip.update(server='http://www.2mbit.com:80', ip_type='ipv6',
+                      domain='gnudip.dyn.mpis.net', username='gnudip',
+                      password='password')

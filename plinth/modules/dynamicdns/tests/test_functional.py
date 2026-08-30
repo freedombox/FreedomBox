@@ -35,7 +35,7 @@ _configs = {
         'domain': 'freedombox3.example.com',
         'username': 'tester3',
         'password': 'testingtesting3',
-        'use_ipv6': True,
+        'ip_type': 'ipv6',
     },
     'freedns.afraid.org': {
         'service_type': 'freedns.afraid.org',
@@ -45,7 +45,7 @@ _configs = {
         'domain': 'freedombox5.example.com',
         'username': '',
         'password': '',
-        'use_ipv6': False,
+        'ip_type': 'ipv4',
     },
     'other': {
         'service_type': 'other',
@@ -55,7 +55,7 @@ _configs = {
         'domain': 'freedombox6.example.com',
         'username': 'tester6',
         'password': 'testingtesting6',
-        'use_ipv6': False,
+        'ip_type': 'both',
     },
 }
 
@@ -115,7 +115,7 @@ def _configure(browser, config):
                                   '/freedombox/sys/dynamicdns/domain/add/')
     for key, value in config.items():
         field_id = f'id_domain-{key}'
-        if key == 'service_type':
+        if key in ('service_type', 'ip_type'):
             browser.find_by_id(field_id).select(value)
         elif isinstance(value, bool):
             if value:

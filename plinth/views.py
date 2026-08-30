@@ -174,12 +174,16 @@ def index(request):
         shortcut for shortcut in shortcuts if shortcut.component_id == selected
     ]
     selected_shortcut = selected_shortcut[0] if selected_shortcut else None
+    tag_search_url = None
+    if selected_shortcut:
+        tag_search_url = _get_tag_search_url(selected_shortcut.app)
 
     return TemplateResponse(
         request, 'index.html', {
             'title': _('FreedomBox'),
             'shortcuts': shortcuts,
             'selected_shortcut': selected_shortcut,
+            'tag_search_url': tag_search_url,
         })
 
 
@@ -266,8 +270,36 @@ def _get_all_tags(menu_items: list[menu.Menu]) -> list[str]:
     return sorted(get_tags(menu_items), key=_)
 
 
-class AppsIndexView(TemplateView):
-    """View for apps index.
+def _get_tag_search_url(app: app_module.App) -> str:
+    """Return the URL to which clicking on tags to redirect to."""
+    default_url = 'apps-add'
+
+    menus = list(app.get_components_of_type(menu.Menu))
+    if not menus:
+        return default_url  # When app has no menu item.
+
+    parent_section = menus[0]
+    for _index in range(10):
+        if parent_section.parent_url_name in ('index', None):
+            break
+
+        try:
+            parent_section = menu.Menu.get_with_url_name(
+                parent_section.parent_url_name)
+        except LookupError:
+            return default_url
+    else:
+        # There was a loop in traversing to the parent menu item.
+        return default_url
+
+    if parent_section.url_name == 'apps':
+        return default_url
+
+    return parent_section.url_name
+
+
+class AppsView(TemplateView):
+    """View for showing installed apps.
 
     This view supports filtering apps by one or more tags. If no tags are
     provided, it will show all the apps. If one or more tags are provided,
@@ -277,11 +309,39 @@ class AppsIndexView(TemplateView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context['show_disabled'] = True
         context['advanced_mode'] = get_advanced_mode()
 
         tags = self.request.GET.getlist('tag', [])
-        menu_items = menu.main_menu.active_item(self.request).items
+        menu_items = [
+            item for item in menu.main_menu.active_item(self.request).items
+            if item.is_enabled()
+        ]
+
+        context['tags'] = tags
+        context['all_tags'] = _get_all_tags(menu_items)
+        context['menu_items'] = _pick_menu_items(menu_items, tags)
+
+        return context
+
+
+class AppsAddView(TemplateView):
+    """View for showing apps that can be installed.
+
+    This view supports filtering apps by one or more tags. If no tags are
+    provided, it will show all the apps. If one or more tags are provided,
+    it will select apps matching any of the provided tags.
+    """
+    template_name = 'apps-add.html'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['advanced_mode'] = get_advanced_mode()
+
+        tags = self.request.GET.getlist('tag', [])
+        menu_items = [
+            item for item in menu.main_menu.active_item(self.request).items
+            if not item.is_enabled()
+        ]
 
         context['tags'] = tags
         context['all_tags'] = _get_all_tags(menu_items)
@@ -479,6 +539,7 @@ class AppView(FormView):
         context['firewall'] = self.app.get_components_of_type(Firewall)
 
         context['has_backup_restore'] = _has_backup_restore(self.app)
+        context['tag_search_url'] = _get_tag_search_url(self.app)
 
         return context
 
@@ -504,6 +565,7 @@ class AppOperationsView(TemplateView):
         context['operations'] = operation.manager.filter(self.app.app_id)
         # Refresh periodically while operations are running
         context['refresh_page_sec'] = 3 if context['operations'] else 0
+        context['tag_search_url'] = _get_tag_search_url(self.app)
 
         return context
 
@@ -540,6 +602,8 @@ class SetupView(TemplateView):
             context['refresh_page_sec'] = 3
         elif context['setup_state'] == app_module.App.SetupState.UP_TO_DATE:
             context['refresh_page_sec'] = 0
+
+        context['tag_search_url'] = _get_tag_search_url(app)
 
         return context
 

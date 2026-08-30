@@ -45,10 +45,18 @@ class DomainForm(forms.Form):
         gettext_lazy('The username that was used when the account was '
                      'created.')
 
+    help_ip_type = \
+        gettext_lazy('Select based on what your ISP provides: a public IPv4 '
+                     'address, a public IPv6 address, or both.')
+
     provider_choices = (('gnudip', gettext_lazy('GnuDIP')),
                         ('noip.com', 'noip.com'), ('freedns.afraid.org',
                                                    'freedns.afraid.org'),
                         ('other', gettext_lazy('Other update URL')))
+
+    ip_type_choices = (('ipv4', gettext_lazy('IPv4 address only')),
+                       ('ipv6', gettext_lazy('IPv6 address only')),
+                       ('both', gettext_lazy('Both IPv4 and IPv6 addresses')))
 
     service_type = forms.ChoiceField(label=gettext_lazy('Service Type'),
                                      help_text=help_service_type,
@@ -89,8 +97,9 @@ class DomainForm(forms.Form):
     show_password = forms.BooleanField(label=gettext_lazy('Show password'),
                                        required=False)
 
-    use_ipv6 = forms.BooleanField(
-        label=gettext_lazy('Use IPv6 instead of IPv4'), required=False)
+    ip_type = forms.ChoiceField(label=gettext_lazy('IP Address Type'),
+                                help_text=help_ip_type,
+                                choices=ip_type_choices)
 
     def clean(self):
         """Further validate and transform field data."""
@@ -124,6 +133,9 @@ class DomainForm(forms.Form):
                 for field_name in ('username', 'password'):
                     if not cleaned_data.get(field_name):
                         self.add_error(field_name, message)
+
+        if service_type == 'gnudip':
+            cleaned_data['ip_type'] = 'ipv4'
 
         del cleaned_data['show_password']
         return cleaned_data

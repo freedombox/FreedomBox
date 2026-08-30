@@ -8,7 +8,7 @@ from django.utils.translation import gettext_lazy as _
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.config import DropinConfigs
-from plinth.daemon import Daemon
+from plinth.daemon import Daemon, RelatedDaemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
@@ -31,7 +31,7 @@ class SearxApp(app_module.App):
 
     app_id = 'searx'
 
-    _version = 7
+    _version = 8
 
     def __init__(self) -> None:
         """Create components for the app."""
@@ -59,7 +59,9 @@ class SearxApp(app_module.App):
 
         # Include libjs-bootstrap to prevent accidental uninstall (see
         # issue #2298).
-        packages = Packages('packages-searx', ['searx', 'libjs-bootstrap'])
+        packages = Packages(
+            'packages-searx',
+            ['searx', 'libjs-bootstrap', 'uwsgi', 'uwsgi-plugin-python3'])
         self.add(packages)
 
         dropin_configs = DropinConfigs('dropin-configs-searx', [
@@ -90,6 +92,10 @@ class SearxApp(app_module.App):
         backup_restore = BackupRestore('backup-restore-searx',
                                        **manifest.backup)
         self.add(backup_restore)
+
+        # To be able to disable the old uwsgi init.d script.
+        related_daemon = RelatedDaemon('related-daemon-searx', 'uwsgi')
+        self.add(related_daemon)
 
     def set_shortcut_login_required(self, login_required):
         """Change the login_required property of shortcut."""

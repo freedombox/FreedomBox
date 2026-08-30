@@ -3,6 +3,7 @@
 
 import logging
 import threading
+from typing import Any
 
 from plinth import cfg
 from plinth.utils import import_from_gi
@@ -40,7 +41,7 @@ _ERRORS: dict[str, str] = {
     'Failed': 'org.freedesktop.UDisks2.Error.Failed',
 }
 
-_jobs = {}
+_jobs: dict[str, Any] = {}
 
 logger = logging.getLogger(__name__)
 

@@ -7,7 +7,7 @@ import json
 import logging
 import subprocess
 import time
-import urllib
+from typing import Any, Literal, Tuple
 
 from django.utils.translation import gettext_lazy as _
 
@@ -20,7 +20,7 @@ from plinth.modules.users.components import UsersAndGroups
 from plinth.signals import domain_added, domain_removed
 from plinth.utils import format_lazy
 
-from . import gnudip, manifest, privileged
+from . import generic, gnudip, manifest
 
 logger = logging.getLogger(__name__)
 
@@ -124,111 +124,100 @@ class DynamicDNSApp(app_module.App):
         if not old_version:
             self.enable()
 
-        if old_version == 1:
-            config = privileged.export_config()
-            if config['enabled']:
-                self.enable()
-            else:
-                self.disable()
 
-            del config['enabled']
-            set_config(config)
-            privileged.clean()
-
-
-def _lookup_public_address(domain):
+def _lookup_public_address(ip_type: Literal['ipv4', 'ipv6']):
     """Return the IP address by querying an external server."""
     try:
-        ip_type = 'ipv6' if domain['use_ipv6'] else 'ipv4'
         return lookup_public_address(ip_type)
     except Exception:
         return None
 
 
-def _query_dns_address(domain):
+def _query_dns_address(domain: str, ip_type: Literal['ipv4',
+                                                     'ipv6']) -> str | None:
     """Return the IP address in the DNS records."""
-    ip_option = 'AAAA' if domain['use_ipv6'] else 'A'
+    ip_option = 'AAAA' if ip_type == 'ipv6' else 'A'
     try:
-        output = subprocess.check_output(
-            ['host', '-t', ip_option, domain['domain']])
+        output = subprocess.check_output(['host', '-t', ip_option, domain])
         return output.decode().split(' ')[-1].strip().lower()
     except subprocess.CalledProcessError as exception:
-        logger.warning('Unable to lookup DNS for host %s: %s',
-                       domain['domain'], exception)
+        logger.warning('Unable to lookup DNS for host %s: %s', domain,
+                       exception)
         return None
 
 
-def _update_using_url(domain, external_address):
-    """Update DNS entry using an update URL."""
-    update_url = domain['update_url']
-    quote = urllib.parse.quote
-    if external_address:
-        update_url = update_url.replace('<Ip>', quote(external_address))
+def _check_uptodate_for_ip_type(
+        domain: dict[str, Any],
+        ip_type: Literal['ipv4', 'ipv6']) -> Tuple[bool, str | None, str]:
+    """Return whether a domain is up-to-date for a given IP address type."""
+    uptodate = False
+    dns_address = _query_dns_address(domain['domain'], ip_type)
+    external_address = _lookup_public_address(ip_type)
+    if dns_address == external_address and dns_address is not None:
+        logger.info('Dynamic domain %s is up-to-date: %s (%s)',
+                    domain['domain'], dns_address, ip_type)
+        uptodate = True
 
-    if domain['domain']:
-        update_url = update_url.replace('<Domain>', quote(domain['domain']))
-
-    if domain['username']:
-        update_url = update_url.replace('<User>', quote(domain['username']))
-
-    if domain['password']:
-        update_url = update_url.replace('<Pass>', quote(domain['password']))
-
-    options = ['-o', '/dev/null', '-t', '3', '-T', '3']
-    if domain['use_http_basic_auth']:
-        options += [
-            '--user', domain['username'], '--password', domain['password']
-        ]
-
-    if domain['disable_ssl_cert_check']:
-        options += ['--no-check-certificate']
-
-    if domain['use_ipv6']:
-        options += ['-6']
-    else:
-        options += ['-4']
-
-    command = ['wget', '-O', '/dev/null'] + options + [update_url]
-    process = subprocess.run(command, check=False)
-    return process.returncode == 0, external_address
+    return uptodate, dns_address, external_address
 
 
-def _update_dns_for_domain(domain):
+def _update_dns_for_domain(domain: dict[str, Any], ip_type: Literal['ipv4',
+                                                                    'ipv6'],
+                           dns_address: str | None,
+                           external_address: str) -> str | None:
     """Update DNS records for a single domain."""
-    result = False
-    ip_address = None
-    error = None
+    logger.info(
+        'Updating dynamic domain %s, DNS address %s, looked up '
+        'external address %s', domain['domain'], dns_address, external_address)
+    if domain['service_type'] == 'gnudip':
+        return gnudip.update(domain['server'], ip_type, domain['domain'],
+                             domain['username'], domain['password'])
+    else:
+        return generic.update(domain, ip_type, external_address)
 
-    try:
-        dns_address = _query_dns_address(domain)
-        external_address = _lookup_public_address(domain)
-        if dns_address == external_address and dns_address is not None:
-            logger.info('Dynamic domain %s is up-to-date: %s',
-                        domain['domain'], dns_address)
-            result = True
+
+def _check_and_update_dns_for_domain(domain: dict[str, Any]):
+    """Update DNS records for a single domain only when it is out-of-date."""
+    result = True
+    ip_addresses: list[str] = []
+    error_code: str | None = None
+    error_message: str | None = None
+
+    ip_types: list[Literal['ipv4', 'ipv6']]
+    if domain['ip_type'] == 'both':
+        ip_types = ['ipv4', 'ipv6']
+    else:
+        ip_types = [domain['ip_type']]
+
+    for ip_type in ip_types:
+        try:
+            uptodate, dns_address, external_address = \
+                _check_uptodate_for_ip_type(domain, ip_type)
+
             ip_address = dns_address
-            error = ValueError('up-to-date')
-        else:
-            logger.info(
-                'Updating dynamic domain %s, DNS address %s, looked up '
-                'external address %s', domain['domain'], dns_address,
-                external_address)
-            if domain['service_type'] == 'gnudip':
-                result, ip_address = gnudip.update(domain['server'],
-                                                   domain['domain'],
-                                                   domain['username'],
-                                                   domain['password'])
-            else:
-                result, ip_address = _update_using_url(domain,
-                                                       external_address)
-    except Exception as exception:
-        logger.exception('Failed to be update Dynamic DNS - %s', exception)
-        error = exception
+            if not uptodate:
+                ip_address = _update_dns_for_domain(domain, ip_type,
+                                                    dns_address,
+                                                    external_address)
 
-    set_status(domain, result, ip_address, error)
+            ip_addresses.append(ip_address)  # type: ignore
+        except subprocess.CalledProcessError as exception:
+            logger.exception('Failed to be update Dynamic DNS - %s', exception)
+            result = False
+            error_code = str(exception.__class__.__name__)
+            error_message = f'Command failed: code={exception.returncode}, ' \
+                f'stderr={exception.stderr.decode()}, ' \
+                f'stdout={exception.stdout.decode()}'
+        except Exception as exception:
+            logger.exception('Failed to be update Dynamic DNS - %s', exception)
+            result = False
+            error_code = str(exception.__class__.__name__)
+            error_message = str(exception.args[0])
+
+    set_status(domain, result, ip_addresses, error_code, error_message)
 
 
-def update_dns(_data):
+def update_dns(_data) -> None:
     """For all configured domains, check and up to date DNS records."""
     config = get_config()
     app = app_module.App.get('dynamicdns')
@@ -237,10 +226,10 @@ def update_dns(_data):
 
     # Update for each domain
     for domain in config['domains'].values():
-        _update_dns_for_domain(domain)
+        _check_and_update_dns_for_domain(domain)
 
 
-def get_status():
+def get_status() -> dict[str, Any]:
     """Return the status of recent update for each domain."""
     status = kvstore.get_default('dynamicdns_status', '{}')
     status = json.loads(status)
@@ -253,16 +242,25 @@ def get_status():
             status['domains'][domain] = {
                 'domain': domain,
                 'result': False,
-                'ip_address': None,
+                'ip_addresses': [],
                 'error_code': None,
                 'error_message': None,
                 'timestamp': 0,
             }
 
+    for domain_name, domain in status['domains'].items():
+        domain.setdefault('ip_addresses', [])
+        if 'ip_address' in domain:
+            if domain['ip_address']:
+                domain['ip_addresses'].append(domain['ip_address'])
+
+            del domain['ip_address']
+
     return status
 
 
-def set_status(domain, result, ip_address, error=None):
+def set_status(domain: dict[str, Any], result: bool, ip_addresses: list[str],
+               error_code: str | None, error_message: str | None):
     """Set the status of most recent update."""
     status = kvstore.get_default('dynamicdns_status', '{}')
     status = json.loads(status)
@@ -270,38 +268,50 @@ def set_status(domain, result, ip_address, error=None):
     domains[domain['domain']] = {
         'domain': domain['domain'],
         'result': result,
-        'ip_address': ip_address,
-        'error_code': str(error.__class__.__name__) if error else None,
-        'error_message': str(error.args[0]) if error and error.args else None,
+        'ip_addresses': ip_addresses,
+        'error_code': error_code,
+        'error_message': error_message,
         'timestamp': int(time.time()),
     }
     kvstore.set('dynamicdns_status', json.dumps(status))
 
 
-def get_config():
+def get_config() -> dict[str, Any]:
     """Return the current configuration."""
-    default_config = {'domains': {}}
+    default_config: dict[str, Any] = {'domains': {}}
     config = kvstore.get_default('dynamicdns_config', '{}')
     config = json.loads(config) or default_config
-    return _fix_corrupt_config(config)
+    return _migrate_old_config(config)
 
 
-def _fix_corrupt_config(config):
-    """Fix malformed configuration result of bug in older version."""
-    if 'null' not in config['domains']:
-        return config
+def _migrate_old_config(config: dict[str, Any]) -> dict[str, Any]:
+    """Upgrade the old configuration to newer format."""
+    updated = False
 
-    del config['domains']['null']
-    set_config(config)
+    # Fix malformed configuration result of bug in older version.
+    if 'null' in config['domains']:
+        del config['domains']['null']
+        updated = True
+
+    # Upgrade from 'use_ipv6' to 'ip_type' key in domain configuration.
+    for domain_name, domain in config['domains'].items():
+        if 'use_ipv6' in domain:
+            domain['ip_type'] = 'ipv6' if domain['use_ipv6'] else 'ipv4'
+            del domain['use_ipv6']
+            updated = True
+
+    if updated:
+        set_config(config)
+
     return config
 
 
-def set_config(config):
+def set_config(config: dict[str, Any]):
     """Set a new configuration."""
     kvstore.set('dynamicdns_config', json.dumps(config))
 
 
-def notify_domain_added(domain_name):
+def notify_domain_added(domain_name: str):
     """Send a signal that domain has been added."""
     if app_module.App.get('dynamicdns').is_enabled():
         domain_added.send_robust(sender='dynamicdns',
@@ -309,7 +319,7 @@ def notify_domain_added(domain_name):
                                  name=domain_name, services='__all__')
 
 
-def notify_domain_removed(domain_name):
+def notify_domain_removed(domain_name: str):
     """Send a signal that domain has been removed."""
     if app_module.App.get('dynamicdns').is_enabled():
         domain_removed.send_robust(sender='dynamicdns',

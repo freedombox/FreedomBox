@@ -42,7 +42,7 @@ def _validate_service(service):
     """Validate a service manifest provided as a dictionary."""
     assert isinstance(service['name'], str)
     assert isinstance(service['type'], str)
-    assert service['type'] in ('apache', 'uwsgi', 'system')
+    assert service['type'] in ('apache', 'system')
     if service['type'] == 'apache':
         assert service['kind'] in ('config', 'site', 'module')
 

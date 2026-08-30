@@ -7,6 +7,7 @@ import hashlib
 import logging
 import socket
 from html.parser import HTMLParser
+from typing import Literal
 
 import requests
 
@@ -67,8 +68,8 @@ def _request_get_ipv4(*args, **kwargs):
         socket.getaddrinfo = original
 
 
-def update(server: str, domain: str, username: str,
-           password: str) -> tuple[bool, str | None]:
+def update(server: str, ip_type: Literal['ipv4', 'ipv6'], domain: str,
+           username: str, password: str) -> str | None:
     """Update Dynamic DNS record using GnuDIP protocol.
 
     Protocol documentation:
@@ -78,6 +79,9 @@ def update(server: str, domain: str, username: str,
     support IPv6 (it does have any code to update AAAA records). So, make a
     request only using IPv4 stack.
     """
+    if ip_type == 'ipv6':
+        raise NotImplementedError
+
     domain = domain.removeprefix(username + '.')
     password_digest = hashlib.md5(password.encode()).hexdigest()
 
@@ -105,4 +109,7 @@ def update(server: str, domain: str, username: str,
     update_result = _extract_content_from_meta_tags(update_response.text)
     _check_required_keys(update_result, ['retc'])
     result = (int(update_result['retc']) == 0)
-    return result, update_result.get('addr')
+    if not result:
+        raise Exception('Server responded with an error')
+
+    return update_result.get('addr')
