@@ -5,7 +5,6 @@ import time
 import urllib
 
 import pytest
-from selenium.webdriver.common.keys import Keys
 
 from freedombox.tests import functional
 
@@ -69,9 +68,16 @@ def _visit_files_app(browser):
     """Login to Nextcloud and visit the files app."""
     _login(browser)
     functional.visit(browser, '/nextcloud/apps/files/files')
-    # Close the welcome model dialog if it is present
-    browser.find_by_tag('html').first.type(Keys.ESCAPE)
-    time.sleep(1)  # Allow the model dialog to close.
+
+    time.sleep(3)  # Wait for the interface to show the first run wizard
+
+    first_run_wizard = browser.find_by_css('.first-run-wizard')
+    if first_run_wizard:
+        selector = '.first-run-wizard button[aria-label="Close"]'
+        functional.eventually(browser.find_by_css, [selector])
+        button = browser.find_by_css(selector)
+        if button:
+            button.click()
 
 
 def _remove_folder(browser, folder_name):
@@ -118,12 +124,12 @@ def _create_folder(browser, folder_name):
 
     # Click on the 'New folder' pop down menu item
     xpath = f'//button[{_class("action-button")} and ' \
-        './span[text()="New folder"]]'
+        './/span[normalize-space(.)="New folder"]]'
     browser.find_by_xpath(xpath).first.click()
 
     # Get the 'Create new folder' dialog box
     xpath = f'//div[{_class("dialog__modal")} and ' \
-        './/h2[text()="Create new folder"]]'
+        './/h2[normalize-space(.)="Create new folder"]]'
     dialog = browser.find_by_xpath(xpath).first
 
     # Enter the folder name into text box 'Folder name'
@@ -131,5 +137,5 @@ def _create_folder(browser, folder_name):
     dialog.find_by_xpath(xpath).first.fill(folder_name)
 
     # Press the 'Create' button
-    xpath = './/button[.//*[contains(text(),"Create")]]'
+    xpath = './/button[.//*[normalize-space(.)="Create"]]'
     dialog.find_by_xpath(xpath).first.click()
