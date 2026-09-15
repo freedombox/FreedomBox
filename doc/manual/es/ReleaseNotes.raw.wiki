@@ -8,6 +8,38 @@ For more technical details, see the [[https://salsa.debian.org/freedombox-team/f
 
 The following are the release notes for each !FreedomBox version.
 
+== FreedomBox 26.12 (2026-09-14) ==
+
+=== Highlights ===
+
+ * locale: Add Lao translation
+ * radicale: Redirect from .well-known URLs only temporarily
+ * wireguard: Fix auto-adding client when no domains are configured
+ * wireguard: Fix issues with newline in public key when adding client
+
+=== Other Changes ===
+
+ * *: Additional import path related changes
+ * *: All other changes need for new import path
+ * *: Miscellaneous changes to work with reduce the use of term 'plinth'
+ * *: Update additional documentation/comments with new import path
+ * *: Update import path in modules-enabled configuration files
+ * *: Update imports statements from plinth to freedombox
+ * bin: Rename main binary from plinth to freedombox
+ * container: Fix failure with defining a new VM
+ * d/copyright: Update copyright file
+ * django: Changes for new import path
+ * django: Rename DB tables from plinth_ to freedombox_
+ * doc/dev: Update developer documentation with new import path
+ * errors: Rename !PlinthError to !FbxError
+ * locale: Move lo to freedombox path
+ * locale: Update translations for Czech, French, Lao, Swedish
+ * nextcloud: test: Fix functional tests with version 26
+ * plinth/*: Rename plinth/ folder to freedombox/
+ * radicale: tests: Don't fail if Nextcloud is enabled
+ * tags: tests: Fix functional tests broken by separate apps/add page
+ * wireguard: Improve reliability functional tests by waiting after ops
+
 == FreedomBox 26.11.1 (2026-08-19) ==
 
  * apache: Stop installing uwsgi by default

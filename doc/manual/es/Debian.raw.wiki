@@ -13,7 +13,7 @@
 
 !FreedomBox is a [[DebianPureBlends|pure blend]] of Debian.  This means that all the work on !FreedomBox is available in Debian as packages.  It also means that any machine running Debian can be turned into a !FreedomBox.
 
-This page describes the process of installing !FreedomBox on a Debian system. Currently, !FreedomBox works in Debian Stable (bookworm), Testing (trixie), and Unstable (sid).
+This page describes the process of installing !FreedomBox on a Debian system. Currently, !FreedomBox works in Debian Stable (trixie), Testing (forky), and Unstable (sid).
 
 '''Important:''' Read [[FreedomBox/Hardware|general advice]] about hardware before building a !FreedomBox with this approach.
 
@@ -21,13 +21,15 @@ This page describes the process of installing !FreedomBox on a Debian system. Cu
 '''Use a fresh Debian installation'''
 
 Installing !FreedomBox changes your Debian system in many important ways.  This includes installing a firewall and regenerating server certificates.  It is hence recommended that you install !FreedomBox on a fresh Debian installation instead of an existing setup.
+
+During installation of Debian, it is recommended that you choose btrfs as the filesystem for the root partition.  Btrfs filesystem is needed for the Snapshots feature to work. 
 }}}
 
-=== Installing on Debian 12 (bookworm) or newer ===
+=== Installing on Debian 13 (trixie) or newer ===
 
 Check the Troubleshooting section below, for any tips or workarounds that might help during the install.
 
- 1. [[InstallingDebianOn|Install Debian]] 12 (Bookworm) or newer on your hardware. During installation choosing "Btrfs" for root filesystem type is recommended as !FreedomBox uses it take regular snapshots of the system.
+ 1. [[InstallingDebianOn|Install Debian]] 13 (Trixie) or newer on your hardware. During installation choosing "Btrfs" for root filesystem type is recommended as !FreedomBox uses it take regular snapshots of the system.
 
  1. Update your package list.
 
@@ -46,6 +48,16 @@ $ sudo DEBIAN_FRONTEND=noninteractive apt-get install freedombox
  1. During the installation, you will be provided a secret key that needs to be entered during the initial configuration process. Note this down. The secret can also be read at a later time from the file `/var/lib/plinth/firstboot-wizard-secret`.
 
  1. You can start [[FreedomBox/Manual/QuickStart|using]] !FreedomBox. During initial wizard, you will need to enter the secret noted above.
+
+=== Difference between Debian Package and Disk Image ===
+
+Following are the differences between setup using a !FreedomBox image vs. installing !FreedomBox using a Debian package on an existing Debian installation:
+
+ 1. '''Filesystem:''' The disk images have btrfs as the filesystem. When installing a Debian package, the existing filesystem is not altered. The snapshots feature is currently only available if btrfs is the filesystem. So, for those wanting to install freedombox .deb package, it is recommended that they install Debian on a btrfs filesystem first.
+
+ 1. '''First Wizard:''' When installing from a Debian package, !FreedomBox will ask for a secret (stored at a path on the disk) during first wizard. The secret is for security and has no relevance after the first wizard is completed. This secret is not asked if first wizard is run from a disk image (as hardware is expected to be in possession of the user and the user won't be able to easily peak the secret on the disk without running the first wizard first).
+
+ 1. '''Networking:''' When disk image is booted, all the Ethernet and Wi-Fi devices are automatically configured to be managed by Network Manager. When !FreedomBox is installed from Debian package, existing network connections are not reconfigured. These network interfaces can later be reconfigured (by commenting out entries in /etc/network/interfaces) to be managed by Network Manager. 
 
 === Tips and Troubleshooting ===
 
