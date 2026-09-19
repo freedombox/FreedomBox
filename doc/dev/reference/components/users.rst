@@ -3,5 +3,5 @@
 Users
 ^^^^^
 
-.. autoclass:: plinth.modules.users.components.UsersAndGroups
+.. autoclass:: freedombox.modules.users.components.UsersAndGroups
    :members:

@@ -101,7 +101,7 @@ the user submits it. Let us implement that in ``views.py``.
 
   from django.contrib import messages
 
-  from plinth import actions, views
+  from freedombox import actions, views
 
   from .forms import TransmissionForm
 
@@ -161,8 +161,8 @@ for transmission daemon. We will do this by creating a file ``privileged.py``.
   import json
   import pathlib
 
-  from plinth import action_utils
-  from plinth.actions import privileged
+  from freedombox import action_utils
+  from freedombox.actions import privileged
 
   _transmission_config = pathlib.Path('/etc/transmission-daemon/settings.json')
 
@@ -187,8 +187,8 @@ for transmission daemon. We will do this by creating a file ``privileged.py``.
       action_utils.service_reload('transmission-daemon')
 
 This is a simple Python3 module but it runs in a separate process with superuser
-privileges due to the :meth:`plinth.actions.privileged` decorator. All such
+privileges due to the :meth:`freedombox.actions.privileged` decorator. All such
 methods must have full type annotations for the method parameters. Further, the
 parameters and return value must be JSON serializable. It may use various helper
-utilities provided by the FreedomBox framework in :obj:`plinth.action_utils` to
-easily perform it's duties.
+utilities provided by the FreedomBox framework in :obj:`freedombox.action_utils`
+to easily perform it's duties.

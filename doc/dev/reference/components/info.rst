@@ -3,5 +3,5 @@
 Info
 ^^^^
 
-.. autoclass:: plinth.app.Info
+.. autoclass:: freedombox.app.Info
    :members:

@@ -233,10 +233,10 @@ DEBIAN_FRONTEND=noninteractive apt-get -yq --with-new-pkgs upgrade
 # Install requirements for tests if not already installed as root
 if ! [[ -e /usr/local/bin/geckodriver ]]
 then
-    /freedombox/plinth/tests/functional/install.sh
+    /freedombox/freedombox/tests/functional/install.sh
 fi
 
-# Run the plinth server if functional tests are requested
+# Wait for the server to start if functional tests are requested
 if [[ "{pytest_command}" =~ "--include-functional" ]]
 then
     make -C /freedombox wait-while-first-setup
@@ -1392,6 +1392,7 @@ class VM(Machine):
 
         with tempfile.NamedTemporaryFile() as file_handle:
             file_handle.write(domain_xml.encode())
+            file_handle.flush()
             logger.info('Running `virsh define %s`', file_handle.name)
             self._virsh(['define', file_handle.name],
                         stdout=subprocess.DEVNULL)

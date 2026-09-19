@@ -3,5 +3,5 @@
 StaticFiles
 ^^^^^^^^^^^
 
-.. autoclass:: plinth.web_server.StaticFiles
+.. autoclass:: freedombox.web_server.StaticFiles
    :members:

@@ -2,7 +2,7 @@
 
 [Unit]
 Description=FreedomBox Service (Plinth)
-Documentation=man:plinth(1)
+Documentation=man:freedombox(1)
 After=network.target
 StartLimitIntervalSec=0
 # Uploaded files in /var/tmp/ are shared with FreedomBox privileged service.
@@ -10,7 +10,7 @@ JoinsNamespaceOf=freedombox-privileged.service
 
 [Service]
 Type=notify
-ExecStart=/usr/bin/plinth
+ExecStart=/usr/bin/freedombox
 TimeoutSec=300s
 Restart=on-failure
 RestartSec=5

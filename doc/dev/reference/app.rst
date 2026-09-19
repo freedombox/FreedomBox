@@ -3,5 +3,5 @@
 App
 ---
 
-.. autoclass:: plinth.app.App
+.. autoclass:: freedombox.app.App
    :members:

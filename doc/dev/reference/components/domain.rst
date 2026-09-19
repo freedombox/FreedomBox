@@ -3,8 +3,8 @@
 Domain Name
 ^^^^^^^^^^^
 
-.. autoclass:: plinth.modules.names.components.DomainName
+.. autoclass:: freedombox.modules.names.components.DomainName
    :members:
 
-.. autoclass:: plinth.modules.names.components.DomainType
+.. autoclass:: freedombox.modules.names.components.DomainType
    :members:

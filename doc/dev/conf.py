@@ -20,7 +20,7 @@ from datetime import datetime
 import django
 
 sys.path.insert(0, os.path.abspath('../../'))
-os.environ['DJANGO_SETTINGS_MODULE'] = 'plinth.settings'
+os.environ['DJANGO_SETTINGS_MODULE'] = 'freedombox.settings'
 django.setup()
 
 # -- Project information -----------------------------------------------------

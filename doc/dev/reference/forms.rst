@@ -3,8 +3,8 @@
 Forms
 -----
 
-.. autoclass:: plinth.forms.DomainSelectionForm
+.. autoclass:: freedombox.forms.DomainSelectionForm
    :members:
 
-.. autoclass:: plinth.forms.CheckboxSelectMultipleWithReadOnly
+.. autoclass:: freedombox.forms.CheckboxSelectMultipleWithReadOnly
    :members:

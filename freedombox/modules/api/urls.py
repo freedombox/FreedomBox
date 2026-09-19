@@ -1,0 +1,13 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+"""
+URLs for the FreedomBox API for Android app.
+"""
+
+from django.urls import re_path
+from stronghold.decorators import public
+
+from freedombox.modules.api import views
+
+urlpatterns = [
+    re_path(r'^api/(?P<version>[0-9]+)/shortcuts/?$', public(views.shortcuts)),
+]

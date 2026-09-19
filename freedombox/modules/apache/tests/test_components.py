@@ -1,0 +1,453 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+"""
+Test module for webserver components.
+"""
+
+import subprocess
+from unittest.mock import Mock, PropertyMock, call, patch
+
+import pytest
+
+from freedombox import app, kvstore
+from freedombox.diagnostic_check import DiagnosticCheck, Result
+from freedombox.modules.apache.components import (Webserver, WebserverRoot,
+                                                  check_url, diagnose_url,
+                                                  diagnose_url_on_all)
+
+
+def test_webserver_init():
+    """Test that webserver component can be initialized."""
+    with pytest.raises(ValueError):
+        Webserver(None, None)
+
+    webserver = Webserver('test-webserver', 'test-config', kind='module',
+                          urls=['url1', 'url2'], expect_redirects=True)
+    assert webserver.component_id == 'test-webserver'
+    assert webserver.web_name == 'test-config'
+    assert webserver.kind == 'module'
+    assert webserver.urls == ['url1', 'url2']
+    assert webserver.expect_redirects
+
+    webserver = Webserver('test-webserver', None)
+    assert webserver.kind == 'config'
+    assert webserver.urls == []
+    assert not webserver.expect_redirects
+
+
+@patch('freedombox.action_utils.webserver_is_enabled')
+def test_webserver_is_enabled(webserver_is_enabled):
+    """Test that checking webserver configuration enabled works."""
+    webserver = Webserver('test-webserver', 'test-config', kind='module')
+
+    webserver_is_enabled.return_value = True
+    assert webserver.is_enabled()
+    webserver_is_enabled.assert_has_calls([call('test-config', kind='module')])
+
+    webserver_is_enabled.reset_mock()
+    webserver_is_enabled.return_value = False
+    assert not webserver.is_enabled()
+    webserver_is_enabled.assert_has_calls([call('test-config', kind='module')])
+
+
+@patch('freedombox.modules.apache.privileged.enable')
+def test_webserver_enable(enable):
+    """Test that enabling webserver configuration works."""
+    webserver = Webserver('test-webserver', 'test-config', kind='module')
+
+    webserver.enable()
+    enable.assert_has_calls([call('test-config', 'module')])
+
+
+@patch('freedombox.modules.apache.privileged.disable')
+def test_webserver_disable(disable):
+    """Test that disabling webserver configuration works."""
+    webserver = Webserver('test-webserver', 'test-config', kind='module')
+
+    webserver.disable()
+    disable.assert_has_calls([call('test-config', 'module')])
+
+
+@patch('freedombox.modules.apache.components.diagnose_url')
+@patch('freedombox.modules.apache.components.diagnose_url_on_all')
+def test_webserver_diagnose(diagnose_url_on_all, diagnose_url):
+    """Test running diagnostics."""
+
+    def on_all_side_effect(url, check_certificate, expect_redirects,
+                           component_id):
+        return [
+            DiagnosticCheck('test-all-id', 'test-result-' + url, 'success', {},
+                            component_id)
+        ]
+
+    def side_effect(url, check_certificate, component_id):
+        return DiagnosticCheck('test-id', 'test-result-' + url, 'success', {},
+                               component_id)
+
+    diagnose_url_on_all.side_effect = on_all_side_effect
+    diagnose_url.side_effect = side_effect
+    webserver1 = Webserver('test-webserver', 'test-config',
+                           urls=['{host}url1', 'url2'], expect_redirects=True)
+    results = webserver1.diagnose()
+    assert results == [
+        DiagnosticCheck('test-all-id', 'test-result-{host}url1', 'success', {},
+                        'test-webserver'),
+        DiagnosticCheck('test-id', 'test-result-url2', 'success', {},
+                        'test-webserver')
+    ]
+    diagnose_url_on_all.assert_has_calls([
+        call('{host}url1', check_certificate=False, expect_redirects=True,
+             component_id='test-webserver')
+    ])
+    diagnose_url.assert_has_calls(
+        [call('url2', check_certificate=False, component_id='test-webserver')])
+
+    diagnose_url_on_all.reset_mock()
+    webserver2 = Webserver('test-webserver', 'test-config',
+                           urls=['{host}url1', 'url2'], expect_redirects=False)
+    results = webserver2.diagnose()
+    diagnose_url_on_all.assert_has_calls([
+        call('{host}url1', check_certificate=False, expect_redirects=False,
+             component_id='test-webserver')
+    ])
+
+
+@patch('freedombox.privileged.service.restart')
+@patch('freedombox.privileged.service.reload')
+def test_webserver_setup(service_reload, service_restart):
+    """Test that component restart/reloads web server during app upgrades."""
+
+    class AppTest(app.App):
+        app_id = 'testapp'
+        enabled = False
+
+        def is_enabled(self):
+            return self.enabled
+
+    app1 = AppTest()
+
+    # Don't fail when last_updated_version is not provided.
+    webserver1 = Webserver('test-webserver1', 'test-config')
+    assert webserver1.last_updated_version == 0
+    webserver1.setup(old_version=10)
+    service_reload.assert_not_called()
+    service_restart.assert_not_called()
+
+    webserver1 = Webserver('test-webserver1', 'test-config',
+                           last_updated_version=5)
+    for version in (0, 5, 6):
+        webserver1.setup(old_version=version)
+        service_reload.assert_not_called()
+        service_restart.assert_not_called()
+
+    app1.enabled = False
+    webserver2 = Webserver('test-webserver2', 'test-config',
+                           last_updated_version=5)
+    app1.add(webserver2)
+    webserver2.setup(old_version=3)
+    service_reload.assert_not_called()
+    service_restart.assert_not_called()
+
+    app1.enabled = True
+    webserver3 = Webserver('test-webserver3', 'test-config',
+                           last_updated_version=5)
+    app1.add(webserver3)
+    webserver3.setup(old_version=3)
+    service_reload.assert_has_calls([call('apache2')])
+    service_restart.assert_not_called()
+    service_reload.reset_mock()
+
+    webserver4 = Webserver('test-webserver', 'test-module', 'module',
+                           last_updated_version=5)
+    app1.add(webserver4)
+    webserver4.setup(old_version=3)
+    service_restart.assert_has_calls([call('apache2')])
+    service_reload.assert_not_called()
+
+
+def test_webserver_root_init():
+    """Test that webserver root component can be initialized."""
+    with pytest.raises(ValueError):
+        WebserverRoot(None, None)
+
+    webserver = WebserverRoot('test-webserverroot', 'test-config',
+                              expect_redirects=True, last_updated_version=10)
+    assert webserver.component_id == 'test-webserverroot'
+    assert webserver.web_name == 'test-config'
+    assert webserver.expect_redirects
+    assert webserver.last_updated_version == 10
+
+    webserver = WebserverRoot('test-webserverroot', None)
+    assert not webserver.expect_redirects
+    assert webserver.last_updated_version == 0
+
+
+@patch('freedombox.modules.apache.privileged.link_root')
+def test_webserver_root_enable(link_root):
+    """Test that enabling webserver root works."""
+    webserver = WebserverRoot('test-webserver', 'test-config')
+
+    with patch('freedombox.modules.apache.components.WebserverRoot.domain_get'
+               ) as get:
+        get.return_value = None
+        webserver.enable()
+        link_root.assert_not_called()
+
+        get.return_value = 'x-domain'
+        webserver.enable()
+        link_root.assert_has_calls([call('x-domain', 'test-config')])
+
+
+@patch('freedombox.modules.apache.privileged.unlink_root')
+def test_webserver_root_disable(unlink_root):
+    """Test that disabling webserver root works."""
+    webserver = WebserverRoot('test-webserver', 'test-config')
+
+    with patch('freedombox.modules.apache.components.WebserverRoot.domain_get'
+               ) as get:
+        get.return_value = None
+        webserver.disable()
+        unlink_root.assert_not_called()
+
+        get.return_value = 'x-domain'
+        webserver.disable()
+        unlink_root.assert_has_calls([call('x-domain')])
+
+
+@pytest.mark.django_db
+def test_webserver_root_domain_get():
+    """Test retrieving webserver root's domain."""
+    webserver = WebserverRoot('test-webserver', 'test-config')
+
+    assert webserver.domain_get() is None
+    kvstore.set('test-webserver_domain', 'test-domain')
+    assert webserver.domain_get() == 'test-domain'
+
+
+@pytest.mark.django_db
+@patch('freedombox.modules.apache.privileged.unlink_root')
+@patch('freedombox.modules.apache.privileged.link_root')
+@patch('freedombox.app.Component.app', new_callable=PropertyMock)
+def test_webserver_root_domain_set(component_app, link_root, unlink_root):
+    """Test setting webserver root's domain."""
+    webserver = WebserverRoot('test-webserver', 'test-config')
+    assert webserver.domain_get() is None
+
+    app = Mock()
+    component_app.return_value = app
+    app.is_enabled.return_value = True
+    webserver.domain_set('test-domain')
+    assert unlink_root.mock_calls == []
+    assert webserver.domain_get() == 'test-domain'
+    assert link_root.mock_calls == [call('test-domain', 'test-config')]
+    link_root.reset_mock()
+
+    app.is_enabled.return_value = False
+    assert not webserver.app.is_enabled()
+    webserver.domain_set('test-domain2')
+    assert unlink_root.mock_calls == [call('test-domain')]
+    assert webserver.domain_get() == 'test-domain2'
+    assert link_root.mock_calls == []
+
+    webserver.domain_set(None)
+    assert webserver.domain_get() is None
+
+
+@pytest.mark.django_db
+@patch('freedombox.modules.apache.components.WebserverRoot.disable')
+@patch('freedombox.modules.apache.components.WebserverRoot.enable')
+@patch('freedombox.modules.apache.components.diagnose_url')
+@patch('freedombox.app.Component.app', new_callable=PropertyMock)
+def test_webserver_root_diagnose(component_app, diagnose_url, enable, disable):
+    """Test running diagnostics on webserver root component."""
+    webserver = WebserverRoot('test-webserver', 'test-config')
+    assert webserver.diagnose() == []
+
+    webserver.domain_set('test-domain')
+    result = DiagnosticCheck('test-all-id', 'test-result', 'success', {},
+                             'message')
+    diagnose_url.return_value = result
+    assert webserver.diagnose() == [result]
+
+
+@patch('freedombox.privileged.service.reload')
+def test_webserver_root_setup(service_reload):
+    """Test that component reloads web server during app upgrades."""
+
+    class AppTest(app.App):
+        app_id = 'testapp'
+        enabled = False
+
+        def is_enabled(self):
+            return self.enabled
+
+    app1 = AppTest()
+
+    # Don't fail when last_updated_version is not provided.
+    webserver1 = WebserverRoot('test-webserverroot1', 'test-config')
+    assert webserver1.last_updated_version == 0
+    webserver1.setup(old_version=10)
+    service_reload.assert_not_called()
+
+    webserver1 = WebserverRoot('test-webserverroot1', 'test-config',
+                               last_updated_version=5)
+    for version in (0, 5, 6):
+        webserver1.setup(old_version=version)
+        service_reload.assert_not_called()
+
+    app1.enabled = False
+    webserver2 = WebserverRoot('test-webserver2', 'test-config',
+                               last_updated_version=5)
+    app1.add(webserver2)
+    webserver2.setup(old_version=3)
+    service_reload.assert_not_called()
+
+    app1.enabled = True
+    webserver3 = WebserverRoot('test-webserver3', 'test-config',
+                               last_updated_version=5)
+    app1.add(webserver3)
+    webserver3.setup(old_version=3)
+    service_reload.assert_has_calls([call('apache2')])
+    service_reload.reset_mock()
+
+
+@pytest.mark.django_db
+@patch('freedombox.modules.apache.components.WebserverRoot.disable')
+@patch('freedombox.modules.apache.components.WebserverRoot.enable')
+@patch('freedombox.app.Component.app', new_callable=PropertyMock)
+def test_webserver_root_uninstall(component_app, enable, disable):
+    """Test that component removes the DB key during uninstall."""
+    webserver = WebserverRoot('test-webserver', 'test-config')
+    webserver.uninstall()
+    assert kvstore.get_default('test-webserver_domain', 'x-value') == 'x-value'
+
+    webserver.domain_set('test-domain')
+    assert kvstore.get('test-webserver_domain') == 'test-domain'
+    webserver.uninstall()
+    assert kvstore.get_default('test-webserver_domain', 'x-value') == 'x-value'
+
+
+@patch('freedombox.modules.apache.components.check_url')
+@patch('freedombox.action_utils.get_addresses')
+def test_diagnose_url(get_addresses, check):
+    """Test diagnosing a URL."""
+    args = {
+        'url': 'https://localhost/test',
+        'kind': '4',
+        'env': {
+            'test': 'value'
+        },
+        'check_certificate': False,
+        'extra_options': {
+            'test-1': 'value-1'
+        },
+        'wrapper': 'test-wrapper',
+        'expected_output': 'test-expected',
+        'component_id': 'test-component',
+    }
+    parameters = {key: args[key] for key in ['url', 'kind']}
+    check.return_value = True
+    result = diagnose_url(**args)
+    assert result == DiagnosticCheck(
+        'apache-url-kind-https://localhost/test-4',
+        'Access URL {url} on tcp{kind}', Result.PASSED, parameters,
+        'test-component')
+
+    check.return_value = False
+    result = diagnose_url(**args)
+    assert result == DiagnosticCheck(
+        'apache-url-kind-https://localhost/test-4',
+        'Access URL {url} on tcp{kind}', Result.FAILED, parameters,
+        'test-component')
+
+    del args['kind']
+    args['url'] = 'https://{host}/test'
+    check.return_value = True
+    get_addresses.return_value = [{
+        'kind': '4',
+        'address': 'test-host-1',
+        'numeric': False,
+        'url_address': 'test-host-1'
+    }, {
+        'kind': '6',
+        'address': 'test-host-2',
+        'numeric': False,
+        'url_address': 'test-host-2'
+    }]
+    parameters = [
+        {
+            'url': 'https://test-host-1/test',
+            'kind': '4'
+        },
+        {
+            'url': 'https://test-host-2/test',
+            'kind': '6'
+        },
+    ]
+    results = diagnose_url_on_all(**args)
+    assert results == [
+        DiagnosticCheck('apache-url-kind-https://test-host-1/test-4',
+                        'Access URL {url} on tcp{kind}', Result.PASSED,
+                        parameters[0], 'test-component'),
+        DiagnosticCheck('apache-url-kind-https://test-host-2/test-6',
+                        'Access URL {url} on tcp{kind}', Result.PASSED,
+                        parameters[1], 'test-component'),
+    ]
+
+
+@patch('subprocess.run')
+def test_check_url(run):
+    """Test checking whether a URL is accessible."""
+    url = 'http://localhost/test'
+    basic_command = [
+        'curl', '--location', '--cookie', '', '--fail', '--write-out',
+        '%{response_code}'
+    ]
+    extra_args = {'env': None, 'check': True, 'stdout': -1, 'stderr': -1}
+
+    # Basic
+    assert check_url(url)
+    run.assert_called_with(basic_command + [url], **extra_args)
+
+    # Wrapper
+    check_url(url, wrapper='test-wrapper')
+    run.assert_called_with(['test-wrapper'] + basic_command + [url],
+                           **extra_args)
+
+    # No certificate check
+    check_url(url, check_certificate=False)
+    run.assert_called_with(basic_command + [url, '-k'], **extra_args)
+
+    # Extra options
+    check_url(url, extra_options=['test-opt1', 'test-opt2'])
+    run.assert_called_with(basic_command + [url, 'test-opt1', 'test-opt2'],
+                           **extra_args)
+
+    # TCP4/TCP6
+    check_url(url, kind='4')
+    run.assert_called_with(basic_command + [url, '-4'], **extra_args)
+    check_url(url, kind='6')
+    run.assert_called_with(basic_command + [url, '-6'], **extra_args)
+
+    # IPv6 Link Local URLs
+    check_url('https://[::2%eth0]/test', kind='6')
+    run.assert_called_with(
+        basic_command + ['--interface', 'eth0', 'https://[::2]/test', '-6'],
+        **extra_args)
+
+    # Failure
+    exception = subprocess.CalledProcessError(returncode=1, cmd=['curl'])
+    run.side_effect = exception
+    run.side_effect.stdout = b'500'
+    assert not check_url(url)
+
+    # Return code 401, 405
+    run.side_effect = exception
+    run.side_effect.stdout = b' 401 '
+    assert check_url(url)
+    run.side_effect.stdout = b'405\n'
+    assert check_url(url)
+
+    # Error
+    run.side_effect = FileNotFoundError()
+    with pytest.raises(FileNotFoundError):
+        assert check_url(url)

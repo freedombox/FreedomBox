@@ -1,0 +1,144 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+"""
+FreedomBox app for radicale.
+"""
+
+import logging
+
+from django.utils.translation import gettext_lazy as _
+
+from freedombox import app as app_module
+from freedombox import cfg, frontpage, menu
+from freedombox.config import DropinConfigs
+from freedombox.daemon import Daemon, RelatedDaemon
+from freedombox.modules.apache.components import Webserver
+from freedombox.modules.backups.components import BackupRestore
+from freedombox.modules.firewall.components import Firewall
+from freedombox.modules.users.components import UsersAndGroups
+from freedombox.package import Packages, install
+from freedombox.privileged import service as service_privileged
+from freedombox.utils import Version, format_lazy
+
+from . import manifest, privileged
+
+_description = [
+    format_lazy(
+        _('Radicale is a CalDAV and CardDAV server. It allows synchronization '
+          'and sharing of scheduling and contact data. To use Radicale, a '
+          '<a href="https://radicale.org/master.html#supported-clients">'
+          'supported client application</a> is needed. Radicale can '
+          'be accessed by any user with a {box_name} login.'),
+        box_name=_(cfg.box_name)),
+    _('Radicale provides a basic web interface, which only supports creating '
+      'new calendars and addressbooks. It does not support adding events or '
+      'contacts, which must be done using a separate client.'),
+]
+
+logger = logging.getLogger(__name__)
+
+
+class RadicaleApp(app_module.App):
+    """FreedomBox app for Radicale."""
+
+    app_id = 'radicale'
+
+    _version = 7
+
+    def __init__(self) -> None:
+        """Create components for the app."""
+        super().__init__()
+
+        info = app_module.Info(app_id=self.app_id, version=self._version,
+                               name=_('Radicale'), icon_filename='radicale',
+                               description=_description,
+                               manual_page='Radicale',
+                               clients=manifest.clients, tags=manifest.tags)
+        self.add(info)
+
+        menu_item = menu.Menu('menu-radicale', info.name, info.icon_filename,
+                              info.tags, 'radicale:index',
+                              parent_url_name='apps')
+        self.add(menu_item)
+
+        shortcut = frontpage.Shortcut('shortcut-radicale', info.name,
+                                      icon=info.icon_filename,
+                                      url='/radicale/', clients=info.clients,
+                                      tags=info.tags, login_required=True)
+        self.add(shortcut)
+
+        packages = Packages('packages-radicale',
+                            ['radicale', 'uwsgi', 'uwsgi-plugin-python3'],
+                            rerun_setup_on_upgrade=True)
+        self.add(packages)
+
+        dropin_configs = DropinConfigs('dropin-configs-radicale', [
+            '/etc/apache2/conf-available/radicale2-freedombox.conf',
+        ])
+        self.add(dropin_configs)
+
+        firewall = Firewall('firewall-radicale', info.name,
+                            ports=['http', 'https'], is_external=True)
+        self.add(firewall)
+
+        webserver = Webserver('webserver-radicale', 'radicale2-freedombox',
+                              urls=['https://{host}/radicale'])
+        self.add(webserver)
+
+        daemon = Daemon('daemon-radicale', 'uwsgi-app@radicale.socket')
+        self.add(daemon)
+
+        users_and_groups = UsersAndGroups('users-and-groups-radicale',
+                                          reserved_usernames=['radicale'])
+        self.add(users_and_groups)
+
+        backup_restore = BackupRestore('backup-restore-radicale',
+                                       **manifest.backup)
+        self.add(backup_restore)
+
+        # To be able to disable the old uwsgi init.d script.
+        related_daemon = RelatedDaemon('related-daemon-radicale', 'uwsgi')
+        self.add(related_daemon)
+
+    def enable(self):
+        """Fix missing directories before enabling radicale."""
+        privileged.fix_paths()
+        super().enable()
+
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        privileged.setup()
+        if not old_version:
+            self.enable()
+
+        if old_version and old_version <= 4:
+            webserver = self.get_component('webserver-radicale')
+            daemon = self.get_component('daemon-radicale')
+            if webserver.is_enabled():
+                daemon.enable()
+
+            # Vanquish the old uwsgi init.d script.
+            service_privileged.disable('uwsgi')
+            service_privileged.mask('uwsgi')
+
+    def force_upgrade(self, packages):
+        """Force upgrade radicale to resolve conffile prompt."""
+        if 'radicale' not in packages:
+            return False
+
+        # Allow upgrade from 3.1.8 (bookworm) to 3.4.1 (trixie) and beyond 3.x.
+        package = packages['radicale']
+        if Version(package['new_version']) > Version('4~'):
+            return False
+
+        rights = privileged.get_rights_value()
+        install(['radicale'], force_configuration='new')
+        privileged.setup()
+        privileged.configure(rights)
+
+        return True
+
+    def uninstall(self):
+        """De-configure and uninstall the app."""
+        super().uninstall()
+        privileged.uninstall()

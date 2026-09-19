@@ -22,7 +22,7 @@ write the following:
   ]
 
 This routes the ``/apps/transmission/`` URL to a view called
-``TransmissionAppView`` defined in ``plinth/modules/transmission/views.py``.
+``TransmissionAppView`` defined in ``freedombox/modules/transmission/views.py``.
 This is no different than how routing URLs is done in Django. See :doc:`Django
 URL dispatcher <django:topics/http/urls>` for more information.
 
@@ -36,7 +36,7 @@ a link in FreedomBox web interface. Let us add a link in the apps list. In
 .. code-block:: python3
   :caption: ``__init__.py``
 
-  from plinth import menu
+  from freedombox import menu
 
   class TransmissionApp(app_module.App):
       ...
@@ -63,7 +63,7 @@ menu item we want to present.
 
 * The third parameter is the name of the icon to use when showing the menu
   item. An SVG file and a PNG should be created in the
-  ``plinth/modules/transmission/static/icons/`` directory.
+  ``freedombox/modules/transmission/static/icons/`` directory.
 
 * The fourth parameter is the list of tags to show on the menu item.
 
@@ -87,15 +87,15 @@ view to show the app page for our app. In ``views.py``, let us add a view.
 .. code-block:: python3
   :caption: ``views.py``
 
-  from plinth import views
-  from plinth.modules import transmission
+  from freedombox import views
+  from freedombox.modules import transmission
 
   class TransmissionAppView(views.AppView):
       """Serve configuration page."""
       app_id = 'transmission'
 
-The base view :class:`~plinth.views.AppView` takes care of a lot of details for
-us. First, it shows basic information about the app like name, description,
+The base view :class:`~freedombox.views.AppView` takes care of a lot of details
+for us. First, it shows basic information about the app like name, description,
 desktop/mobiles clients for the service (described later), link to the manual
 page (described later), link to diagnostics button, etc. Then it shows the
 status of the app whether it is running and can also present a form for

@@ -1192,12 +1192,12 @@ from="## BEGIN_INCLUDE", to="## END_INCLUDE")>>')
     >>> parse_wiki('{{{#!wiki caution\\n\\nOnce some other app is set as the \
 home page, you can only navigate to the !FreedomBox Service (Plinth) by \
 typing https://myfreedombox.rocks/freedombox/ into the browser. <<BR>>\\n\
-''/freedombox'' can also be used as an alias to ''/plinth''\\n}}}')
+''/plinth'' can also be used as an alias to ''/freedombox''\\n}}}')
     [Admonition('caution', [Paragraph([PlainText('Once some other app is set \
 as the home page, you can only navigate to the FreedomBox Service (Plinth) by \
 typing '), Url('https://myfreedombox.rocks/freedombox/'), PlainText(' into the \
-browser. ')]), Paragraph([PlainText('/freedombox can also be used as an alias \
-to /plinth ')])])]
+browser. ')]), Paragraph([PlainText('/plinth can also be used as an alias \
+to /freedombox ')])])]
 
     >>> parse_wiki('{{{\\nmulti-line\\n\
 preformatted text (source code)\\n}}}''')
@@ -1773,8 +1773,8 @@ Code</ulink>'
     '<ulink url="https://bugs.debian.org/1234#">Bug</ulink>'
 
     >>> generate_inner_docbook([Link('DebianPkg:freedombox', \
-[PlainText('Plinth')])])
-    '<ulink url="https://packages.debian.org/freedombox#">Plinth</ulink>'
+[PlainText('FreedomBox')])])
+    '<ulink url="https://packages.debian.org/freedombox#">FreedomBox</ulink>'
 
     >>> generate_inner_docbook([Link('AliothList:freedombox-discuss', \
 [PlainText('Discuss')])])

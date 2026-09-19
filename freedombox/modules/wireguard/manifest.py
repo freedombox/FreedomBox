@@ -1,0 +1,54 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+"""
+Application manifest for WireGuard.
+"""
+
+from django.utils.translation import gettext_lazy as _
+
+from freedombox.clients import store_url
+
+_wireguard_package_id = 'com.wireguard.android'
+
+clients = [{
+    'name':
+        _('WireGuard'),
+    'platforms': [{
+        'type': 'download',
+        'os': 'windows',
+        'url': ('https://download.wireguard.com/'
+                'windows-client/wireguard-installer.exe')
+    }, {
+        'type': 'download',
+        'os': 'macos',
+        'url': 'https://apps.apple.com/us/app/wireguard/id1451685025'
+    }, {
+        'type': 'package',
+        'format': 'deb',
+        'name': 'wireguard'
+    }, {
+        'type': 'package',
+        'format': 'rpm',
+        'name': 'wireguard-tools'
+    }, {
+        'type': 'package',
+        'format': 'brew',
+        'name': 'wireguard-tools'
+    }, {
+        'type': 'download',
+        'os': 'android',
+        'url': ('https://www.wireguard.com/'
+                'install/#android-play-store-direct-apk-file')
+    }, {
+        'type': 'store',
+        'os': 'android',
+        'store_name': 'google-play',
+        'url': store_url('google-play', _wireguard_package_id)
+    }, {
+        'type': 'store',
+        'os': 'ios',
+        'store_name': 'app-store',
+        'url': 'https://apps.apple.com/us/app/wireguard/id1441195209'
+    }]
+}]
+
+tags = [_('VPN client'), _('VPN server'), _('Privacy'), _('Remote access')]

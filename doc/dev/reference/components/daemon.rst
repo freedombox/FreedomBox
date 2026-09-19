@@ -3,11 +3,11 @@
 Daemon
 ^^^^^^
 
-.. autoclass:: plinth.daemon.Daemon
+.. autoclass:: freedombox.daemon.Daemon
    :members:
 
-.. autoclass:: plinth.daemon.RelatedDaemon
+.. autoclass:: freedombox.daemon.RelatedDaemon
    :members:
 
-.. autoclass:: plinth.daemon.SharedDaemon
+.. autoclass:: freedombox.daemon.SharedDaemon
    :members:

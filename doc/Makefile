@@ -13,7 +13,7 @@ SCRIPTS_DIR=scripts
 
 manual-pdfs=$(foreach lang,$(MANUAL_LANGUAGES),manual/$(lang)/freedombox-manual.pdf)
 manual-xmls=$(patsubst %.pdf,%.xml,$(manual-pdfs))
-OUTPUTS=$(manual-pdfs) plinth.1 freedombox-cmd.1
+OUTPUTS=$(manual-pdfs) freedombox.1 freedombox-cmd.1
 
 INSTALL_OPTS=-D --mode=644
 
@@ -33,7 +33,7 @@ endif
 all: $(OUTPUTS) manual-pages
 
 install: all
-	install $(INSTALL_OPTS) -t $(MAN_INSTALL_DIR)/man1 plinth.1
+	install $(INSTALL_OPTS) -t $(MAN_INSTALL_DIR)/man1 freedombox.1
 	for file in $(manual-pages-part-html) $(manual-pdfs); do \
 		install $(INSTALL_OPTS) -t $(INSTALL_DIR)/$$(dirname $${file}) \
 			$${file} ; \

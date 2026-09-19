@@ -3,11 +3,11 @@
 Part 4: Components
 ------------------
 
-Each :class:`~plinth.app.App` contains various :class:`~plinth.app.Component`
-components that each provide one small functionality needed by the app. Each of
-these components are instantiated and added to the app as children. The
-:class:`~plinth.menu.Menu` object added in the previous step is one such
-component.
+Each :class:`~freedombox.app.App` contains various
+:class:`~freedombox.app.Component` components that each provide one small
+functionality needed by the app. Each of these components are instantiated and
+added to the app as children. The :class:`~freedombox.menu.Menu` object added in
+the previous step is one such component.
 
 Providing basic information about the app
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -20,7 +20,7 @@ function normally.
 
   from django.utils.translation import gettext_lazy as _
 
-  from plinth import app as app_module
+  from freedombox import app as app_module
 
   from . import manifest
 
@@ -44,7 +44,7 @@ needs to be called again. name, icon_filename, description, manual_page,
 clients, and tags provide information that is shown on the app's main page. The
 donation_url encourages our users to contribute to upstream projects in order
 ensure their long term sustainability. More information about the parameters is
-available in :class:`~plinth.app.Info` class documentation.
+available in :class:`~freedombox.app.Info` class documentation.
 
 The description of app should provide basic information on what the app is about
 and how to use it. It is impractical, however, to explain everything about the
@@ -82,13 +82,13 @@ running in the system to work. When the app is enabled, the daemon should be
 enabled. When the app is disabled, the daemon should be disabled. We should also
 show the status of whether the daemon is running in the app's view. All of these
 concerns are automatically handled by the framework if a
-:class:`~plinth.daemon.Daemon` component is added to the app. Let us do that in
-our app's class.
+:class:`~freedombox.daemon.Daemon` component is added to the app. Let us do that
+in our app's class.
 
 .. code-block:: python3
   :caption: ``__init__.py``
 
-  from plinth.daemon import Daemon
+  from freedombox.daemon import Daemon
 
   class TransmissionApp(app_module.App):
       ...
@@ -101,8 +101,8 @@ our app's class.
         self.add(daemon)
 
 
-The first argument to instantiate the :class:`~plinth.daemon.Daemon` class is a
-unique ID. The second is the name of the `systemd
+The first argument to instantiate the :class:`~freedombox.daemon.Daemon` class
+is a unique ID. The second is the name of the `systemd
 <https://www.freedesktop.org/wiki/Software/systemd/>`_ unit file which manages
 the daemon. The final argument is the list of ports that this daemon listens on.
 This information is used to check if the daemon is listening on the expected
@@ -113,14 +113,14 @@ Package management
 
 Transmission server is installed through a set of packages fetched from Debian
 package repositories. The packages required for this are passed on to a
-:class:`~plinth.package.Packages` component which takes care of installing,
+:class:`~freedombox.package.Packages` component which takes care of installing,
 upgrading and uninstalling the Debian packages. An app might require one or more
 Debian packages to be installed.
 
 .. code-block:: python3
   :caption: ``__init__.py``
 
-  from plinth.package import Packages
+  from freedombox.package import Packages
 
 
   class TransmissionApp(app_module.App):
@@ -146,13 +146,13 @@ write a configuration snippet for Apache, the default web server on FreedomBox.
 This configuration snippet needs to be activated when our app is enabled. The
 configuration snippet needs to be deactivated when our app is disabled. All of
 these concerns are automatically handled by the framework if a
-:class:`~plinth.modules.apache.components.Webserver` component is added to the
-app. Let us do that in our app's class.
+:class:`~freedombox.modules.apache.components.Webserver` component is added to
+the app. Let us do that in our app's class.
 
 .. code-block:: python3
   :caption: ``__init__.py``
 
-  from plinth.modules.apache.components import Webserver
+  from freedombox.modules.apache.components import Webserver
 
   class TransmissionApp(app_module.App):
       ...
@@ -165,13 +165,13 @@ app. Let us do that in our app's class.
         self.add(webserver)
 
 The first argument to instantiate the
-:class:`~plinth.modules.apache.components.Webserver` class is a unique ID. The
-second is the name of the Apache2 web server configuration snippet that contains
-the directives to proxy Transmission web interface via Apache2. We then need to
-create the configuration file itself in ``transmission-plinth.conf``. The
-final argument is the list of URLs that the app exposes to the users of the app.
-This information is used to check if the URLs are accessible as expected when
-the user requests diagnostic tests on the app.
+:class:`~freedombox.modules.apache.components.Webserver` class is a unique ID.
+The second is the name of the Apache2 web server configuration snippet that
+contains the directives to proxy Transmission web interface via Apache2. We then
+need to create the configuration file itself in ``transmission-plinth.conf``.
+The final argument is the list of URLs that the app exposes to the users of the
+app. This information is used to check if the URLs are accessible as expected
+when the user requests diagnostic tests on the app.
 
 Simply creating and shipping a configuration file into ``/etc`` folder creates
 some hassles. Consider the following scenario: a debian package, either
@@ -181,13 +181,13 @@ debian package provides a newer version of the configuration file with, say,
 more tweaks. As a result, a configuration file prompt is shown to the user
 during package upgrade process. In case of unattended upgrades, the package is
 not upgraded at all. To avoid such problems, FreedomBox provides the
-:class:`~plinth.config.DropinConfigs` component. Let us add it in our app's
+:class:`~freedombox.config.DropinConfigs` component. Let us add it in our app's
 class.
 
 .. code-block:: python3
   :caption: ``__init__.py``
 
-  from plinth.config import DropinConfigs
+  from freedombox.config import DropinConfigs
 
   class TransmissionApp(app_module.App):
       ...
@@ -200,9 +200,9 @@ class.
         ])
         self.add(dropin_configs)
 
-The first argument to instantiate the :class:`~plinth.config.DropinConfigs`
+The first argument to instantiate the :class:`~freedombox.config.DropinConfigs`
 class is the unique ID. The second argument is the list of configuration files
-as paths is ``/etc/``. The :class:`~plinth.config.DropinConfigs` component
+as paths is ``/etc/``. The :class:`~freedombox.config.DropinConfigs` component
 requires that a file be shipped into ``/usr/share/freedombox/etc`` instead of
 ``/etc``. The component will handle the creation of a symlink from ``/usr`` path
 to ``/etc`` path. To ship the file, we can simply create file in the ``data/``
@@ -231,13 +231,13 @@ special port since the web ports are always kept open. However, it is still good
 to specify that we operate on http/https ports so that users can be provided
 this information along with additional information on whether the service is
 available over Internet. Create the
-:class:`~plinth.modules.firewall.components.Firewall` component during app
+:class:`~freedombox.modules.firewall.components.Firewall` component during app
 initialization.
 
 .. code-block:: python3
   :caption: ``__init__.py``
 
-  from plinth.modules.firewall.components import Firewall
+  from freedombox.modules.firewall.components import Firewall
 
   class TransmissionApp(app_module.App):
       ...
@@ -268,7 +268,7 @@ with the FreedomBox framework in ``__init.py__``.
 .. code-block:: python3
   :caption: ``__init__.py``
 
-  from plinth.modules.users.components import UsersAndGroups
+  from freedombox.modules.users.components import UsersAndGroups
 
   class TransmissionApp(app_module.App):
       ...
@@ -303,12 +303,12 @@ since only they can configure the app. Other users who have access to this app
 should have a way of discovering the app. This is done by providing a link in
 the front page of FreedomBox web interface. This is the page that user's see
 when they visit FreedomBox. To provide this shortcut, a
-:class:`~plinth.frontpage.Shortcut` component can added to the app.
+:class:`~freedombox.frontpage.Shortcut` component can added to the app.
 
 .. code-block:: python3
   :caption: ``__init__.py``
 
-  from plinth import frontpage
+  from freedombox import frontpage
 
   group = ('bit-torrent', 'Download files using BitTorrent applications')
 
@@ -344,15 +344,15 @@ Each app in FreedomBox needs to provide the ability to backup and restore its
 configuration and data. Apart from providing durability to users' data, this
 allows the user to migrate from one machine to another. FreedomBox framework
 provides a component for handling these operations. Create the
-:class:`~plinth.modules.backups.components.BackupRestore` component during app
-initialization.
+:class:`~freedombox.modules.backups.components.BackupRestore` component during
+app initialization.
 
 In ``__init__.py``, add:
 
 .. code-block:: python3
   :caption: ``__init__.py``
 
-  from plinth.modules.backups.components import BackupRestore
+  from freedombox.modules.backups.components import BackupRestore
 
   from . import manifest
 

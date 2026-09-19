@@ -3,5 +3,5 @@
 Menu
 ^^^^
 
-.. autoclass:: plinth.menu.Menu
+.. autoclass:: freedombox.menu.Menu
    :members:

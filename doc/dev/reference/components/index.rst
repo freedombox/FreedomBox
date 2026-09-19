@@ -27,20 +27,20 @@ Components
 Base Classes
 ^^^^^^^^^^^^
 
-.. autoclass:: plinth.app.Component
+.. autoclass:: freedombox.app.Component
    :members:
 
-.. autoclass:: plinth.app.LeaderComponent
+.. autoclass:: freedombox.app.LeaderComponent
    :members:
 
-.. autoclass:: plinth.app.FollowerComponent
+.. autoclass:: freedombox.app.FollowerComponent
    :members:
 
 Other Classes
 ^^^^^^^^^^^^^
 
-.. autoclass:: plinth.diagnostic_check.DiagnosticCheck
+.. autoclass:: freedombox.diagnostic_check.DiagnosticCheck
    :members:
 
-.. autoclass:: plinth.diagnostic_check.Result
+.. autoclass:: freedombox.diagnostic_check.Result
    :members:
