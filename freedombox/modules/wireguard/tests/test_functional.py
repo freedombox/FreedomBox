@@ -139,35 +139,23 @@ class TestWireguardApp(functional.BaseAppTests):
         with functional.wait_for_page_update(session_browser):
             session_browser.find_by_css('.btn-auto-add-client').first.click()
 
+        # Verify that a new client was added
+        assert session_browser.find_by_css('.alert-client-added')
+
+        # Read public key
+        session_browser.find_by_css(
+            '.btn-show-config-parameters').first.click()
         client_pubkey = session_browser.find_by_css(
-            '.pubkey-val').first.text.strip()
+            '.client-public-key').first.text.strip()
+        assert client_pubkey
 
-        # Verify private key reveal
-        privkey_reveal = session_browser.find_by_css('.privkey-val')
-        assert privkey_reveal, "Private key reveal should be present"
-        privkey_reveal.click()
-        client_privkey = session_browser.find_by_css(
-            '.privkey-val').text.splitlines()[1]
-        assert len(client_privkey) == 44, (("Private key should be base64 "
-                                            "(44 chars)"))
+        # Verify private key is shown
+        assert session_browser.find_by_css('.client-private-key').first.text
 
-        # Verify config download and QR links
-        download_link = session_browser.links.find_by_href(
-            '/freedombox/apps/wireguard/client/auto-add/action/download/')
-        qr_link = session_browser.links.find_by_href(
-            '/freedombox/apps/wireguard/client/auto-add/action/qr/')
-        assert download_link, "Download config link should exist"
-        assert qr_link, "QR code link should exist"
-
-        # Submit to add the client
-        with functional.wait_for_page_update(session_browser):
-            session_browser.find_by_css(
-                '.btn-auto-add-connection').first.click()
-
-        # Verify client was added successfully
-        assert self._client_exists(
-            session_browser,
-            client_pubkey), (("Auto-generated client should exist"))
+        # Assert that at least one of each buttons are present
+        assert session_browser.find_by_css('.btn-download-config-file')
+        assert session_browser.find_by_css('.btn-show-qr-code')
+        assert session_browser.find_by_css('.btn-show-config-parameters')
 
         # Clean up
         self._delete_client(session_browser, client_pubkey)

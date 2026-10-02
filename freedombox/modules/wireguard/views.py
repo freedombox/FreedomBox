@@ -3,15 +3,18 @@
 Views for WireGuard application.
 """
 
+import base64
 import urllib.parse
 from io import BytesIO
 
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
-from django.http import Http404, HttpResponse
+from django.http import Http404
 from django.shortcuts import redirect
+from django.template.response import TemplateResponse
 from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
+from django.views.decorators.http import require_POST
 from django.views.generic import FormView, TemplateView, View
 
 from freedombox.modules.names.components import DomainName
@@ -82,114 +85,62 @@ class AddClientView(SuccessMessageMixin, FormView):
         return super().form_valid(form)
 
 
-class SessionClientDataMixin:
-    """Shared session data loading for auto-client views."""
+def get_qr_code(config: str) -> bytes:
+    """Return a QR code in SVG format as a string."""
+    import segno
 
-    def get_session_client_data(self, request):
-        """Extract client data from session."""
-        next_ip = request.session.get('next_ip')
-        pubkey = request.session.get('client_pubkey')
-        privkey = request.session.get('client_privkey')
-        endpoint = request.session.get('endpoint')
+    qr_code = segno.make(config)
+    svg_buffer = BytesIO()
+    qr_code.save(svg_buffer, kind='svg', light='white', scale=5)
 
-        if not all([next_ip, privkey, pubkey, endpoint]):
-            raise Http404("Session expired")
+    return svg_buffer.getvalue()
 
-        return {
-            'next_ip': next_ip,
-            'privkey': privkey,
-            'pubkey': pubkey,
-            'endpoint': endpoint
+
+@require_POST
+def auto_add_client_view(request):
+    """Add a new client automatically and show all the config information."""
+    info = utils.get_info()
+    server_info = info['my_server']
+
+    if server_info:
+        domains = DomainName.list_names(filter_for_service='wireguard')
+        port = server_info.get('listen_port', 51820)
+
+    # Generate key pair
+    client_privkey, client_pubkey = utils.generate_client_keypair()
+
+    # Gather information
+    connection = utils._server_connection()
+    setting_name = utils.nm.SETTING_WIREGUARD_SETTING_NAME
+    settings = connection.get_setting_by_name(setting_name)
+    next_ip = utils._get_next_available_ip_address(settings)
+    domains_info = {}
+
+    # Prepare config and QR codes based on endpoint.
+    for domain in domains:
+        endpoint = f'{domain}:{port}'
+        config = utils.build_client_config(next_ip, client_privkey,
+                                           client_pubkey, endpoint)
+        qr_code = get_qr_code(config)
+
+        domains_info[domain] = {
+            'endpoint': endpoint,
+            'qr_code': base64.b64encode(qr_code).decode(),
+            'config': base64.b64encode(config.encode()).decode(),
         }
 
-    def get_client_config(self, request):
-        """Rebuild client config from session."""
-        data = self.get_session_client_data(request)
+    # Add a new client
+    utils.add_client(client_pubkey)
 
-        return utils.build_client_config(data['next_ip'], data['privkey'],
-                                         data['pubkey'], data['endpoint'])
-
-
-class ClientActionsView(SessionClientDataMixin, View):
-    action = None
-
-    def get(self, request):
-        import segno
-
-        config = self.get_client_config(request)
-        if self.action == 'download':
-            response = HttpResponse(config, content_type='text/plain')
-            response['Content-Disposition'] = \
-                'attachment; filename="wg-client.conf"'
-            return response
-        elif self.action == 'qr':
-            qrcode = segno.make(config)
-            buffer = BytesIO()
-            qrcode.save(buffer, kind='svg', scale=5)
-
-            return HttpResponse(buffer.getvalue(),
-                                content_type='image/svg+xml')
-
-        raise Http404("Invalid action")
-
-
-class AutoAddClientView(SuccessMessageMixin, FormView):
-    """View to add a client with keypair generation."""
-    form_class = forms.AutoAddClientForm
-    template_name = 'wireguard_auto_add_client.html'
-    success_url = reverse_lazy('wireguard:index')
-    success_message = _('Added new client.')
-
-    def get_context_data(self, **kwargs):
-        """Return additional context for rendering the template."""
-        context = super().get_context_data(**kwargs)
-        context['title'] = _('Add Allowed Client')
-
-        context['domains'] = []
-        info = utils.get_info()
-        server_info = info['my_server']
-
-        if server_info:
-            domains = DomainName.list_names(filter_for_service='wireguard')
-            port = server_info.get('listen_port', 51820)
-            endpoints = [f'{domain}:{port}' for domain in domains]
-
-        try:
-            client_privkey, client_pubkey = utils.generate_client_keypair()
-
-            # Get next IP
-            connection = utils._server_connection()
-            setting_name = utils.nm.SETTING_WIREGUARD_SETTING_NAME
-            settings = connection.get_setting_by_name(setting_name)
-            next_ip = utils._get_next_available_ip_address(settings)
-
-            # Add properties to template context
-            context['client_pubkey'] = client_pubkey
-            context['client_privkey'] = client_privkey
-            context['next_ip'] = next_ip
-            context['endpoints'] = endpoints
-
-            # Store info on instance for reuse
-            self.request.session['client_pubkey'] = client_pubkey
-        except Exception as exception:
-            messages.warning('Client key generation failed: %s', exception)
-
-        return context
-
-    def form_valid(self, form):
-        """Add client using generated public key."""
-        try:
-            client_pubkey = self.request.session.pop('client_pubkey')
-            utils.add_client(client_pubkey)
-        except KeyError:
-            messages.warning(self.request,
-                             _('Session expired. Please try again.'))
-            return redirect('wireguard:auto-add-client')
-        except ValueError:
-            messages.warning(self.request, _('Client already exists'))
-            return redirect('wireguard:index')
-
-        return super().form_valid(form)
+    return TemplateResponse(
+        request, 'wireguard_auto_add_client.html', {
+            'title': _('Client Added'),
+            'server_pubkey': server_info['public_key'],
+            'client_pubkey': client_pubkey,
+            'client_privkey': client_privkey,
+            'next_ip': next_ip,
+            'domains': domains_info,
+        })
 
 
 class ShowClientView(SuccessMessageMixin, TemplateView):

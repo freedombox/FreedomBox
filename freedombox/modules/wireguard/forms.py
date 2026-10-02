@@ -72,11 +72,6 @@ class AddClientForm(forms.Form):
         validators=[validate_key])
 
 
-class AutoAddClientForm(forms.Form):
-    """Empty form for auto-client addition UX."""
-    pass
-
-
 class AddServerForm(forms.Form):
     """Form to add server."""
     peer_endpoint = forms.CharField(
@@ -127,30 +122,29 @@ class AddServerForm(forms.Form):
     def _build_ipv4_settings(self, iface) -> dict:
         """Build IPv4 NM settings from interfaces."""
         return {
-                'method': 'manual',
-                'address': str(iface.ip),
-                'netmask': str(iface.netmask),
-                'gateway': '',
-                'dns': '',
-                'second_dns': '',
-                }
+            'method': 'manual',
+            'address': str(iface.ip),
+            'netmask': str(iface.netmask),
+            'gateway': '',
+            'dns': '',
+            'second_dns': '',
+        }
 
     def _build_ipv6_settings(self, iface) -> dict:
         """Build IPv6 NM settings from interfaces."""
         return {
-                'method': 'manual',
-                'address': str(iface.ip),
-                'prefix': iface.network.prefixlen,
-                'gateway': '',
-                'dns': '',
-                'second_dns': '',
-                }
+            'method': 'manual',
+            'address': str(iface.ip),
+            'prefix': iface.network.prefixlen,
+            'gateway': '',
+            'dns': '',
+            'second_dns': '',
+        }
 
     def get_settings(self) -> dict[str, dict]:
         """Return NM settings dict from cleaned data."""
         ip_interface = ipaddress.ip_interface(
-            self.cleaned_data['ip_address_and_network']
-        )
+            self.cleaned_data['ip_address_and_network'])
 
         if self.cleaned_data['default_route']:
             allowed_ips = ['0.0.0.0/0', '::/0']
