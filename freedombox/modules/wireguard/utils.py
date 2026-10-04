@@ -218,7 +218,8 @@ def add_server(settings):
             found = False
             for _, server in info['my_client']['servers'].items():
                 for _, peer in server['peers'].items():
-                    if peer['public_key'] == public_key:
+                    if 'public_key' in peer and peer[
+                            'public_key'] == public_key:
                         found = True
                         break
 
@@ -320,22 +321,17 @@ def _get_next_available_ip_address(settings):
 
 
 def _server_connection():
-    """Return a server connection. Create one if necessary."""
+    """Return a server connection."""
     setting_name = nm.SETTING_WIREGUARD_SETTING_NAME
-    connection = network.get_connection_by_interface_name('wg0')
-    if not connection:
-        setup_server()
-
     for _ in range(10):
-        # XXX: Improve this waiting by doing a synchronous D-Bus operation to
-        # add network manager connection instead.
-        time.sleep(1)
         connection = network.get_connection_by_interface_name('wg0')
         if connection:
             break
 
+        time.sleep(1)
+
     if not connection:
-        raise RuntimeError('Unable to create a server connection.')
+        raise RuntimeError('Unable to get a server connection.')
 
     # Retrieve secrets so that when the connection is changed, secrets are
     # preserved properly.
@@ -368,7 +364,7 @@ def add_client(public_key):
         if info['my_server'] and info['my_server']['peers']:
             found = False
             for _, peer in info['my_server']['peers'].items():
-                if peer['public_key'] == public_key:
+                if 'public_key' in peer and peer['public_key'] == public_key:
                     found = True
                     break
 
@@ -399,7 +395,7 @@ def remove_client(public_key):
         if info['my_server']:
             found = False
             for _, peer in info['my_server']['peers'].items():
-                if peer['public_key'] == public_key:
+                if 'public_key' in peer and peer['public_key'] == public_key:
                     found = True
                     break
 
