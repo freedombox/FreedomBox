@@ -380,17 +380,16 @@ def test_is_partition_read_only(disk_partitions):
 
     def partition(*args):
         try:
-            # psutil <= 5.9.8
-            # pylint: disable=protected-access
-            return psutil._common.sdiskpart(*args)
-        except TypeError:
             # psutil >= 7.0
-            return psutil._common.sdiskpart(*args[:-2])
+            return psutil._common.sdiskpart(*args)
+        except AttributeError:
+            # psutil >= 7.2
+            return psutil._ntuples.sdiskpart(*args)
 
     disk_partitions.return_value = [
-        partition('/dev/root', '/', 'btrfs', 'rw,nosuid', 42, 42),
-        partition('/dev/root', '/foo', 'btrfs', 'rw', 321, 321),
-        partition('/dev/foo', '/bar', 'extfs', 'ro', 123, 123)
+        partition('/dev/root', '/', 'btrfs', 'rw,nosuid'),
+        partition('/dev/root', '/foo', 'btrfs', 'rw'),
+        partition('/dev/foo', '/bar', 'extfs', 'ro')
     ]
     assert not storage.is_partition_read_only('/')
     assert not storage.is_partition_read_only('/foo')
