@@ -316,6 +316,12 @@ def delete_archive(path: str, encryption_passphrase: secret_str | None = None):
     _run(['borg', 'delete', path], encryption_passphrase)
 
 
+@privileged
+def compact(path: str):
+    """Compact segments and free repo disk space."""
+    _run(['borg', 'compact', path])
+
+
 def _extract(archive_path, destination, encryption_passphrase, locations=None):
     """Extract archive contents."""
     prev_dir = os.getcwd()

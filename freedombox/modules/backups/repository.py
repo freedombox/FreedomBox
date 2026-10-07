@@ -81,9 +81,9 @@ class BaseBorgRepository(abc.ABC):
     def prepare():
         """Prepare the repository for operations."""
 
-    @staticmethod
-    def cleanup():
+    def cleanup(self):
         """Cleanup the repository after operations."""
+        privileged.compact(self.borg_path)
 
     def get_info(self):
         """Return Borg information about a repository."""
@@ -317,6 +317,7 @@ class SshBorgRepository(BaseBorgRepository):
 
     def cleanup(self):
         """Cleanup the repository after operations by unmounting."""
+        super().cleanup()
         self._umount_ignore_errors()
 
     @property
