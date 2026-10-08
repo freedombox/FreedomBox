@@ -97,7 +97,8 @@ class HomeAssistnatApp(app_module.App):
         self.add(firewall_local_protection)
 
         webserver = WebserverRoot('webserverroot-homeassistant',
-                                  'home-assistant-freedombox')
+                                  'home-assistant-freedombox',
+                                  last_updated_version=2)
         self.add(webserver)
 
         image_name = 'registry.freedombox.org/' \
@@ -138,3 +139,6 @@ class HomeAssistnatApp(app_module.App):
         super().setup(old_version)
 
         privileged.setup(old_version)
+
+        if not old_version:
+            self.enable()
