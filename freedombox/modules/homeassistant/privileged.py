@@ -1,7 +1,9 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """Configure Home Assistant."""
 
+import contextlib
 import functools
+import json
 import pathlib
 import time
 import traceback
@@ -9,10 +11,13 @@ from dataclasses import dataclass
 
 import yaml
 
+from freedombox import action_utils
 from freedombox.actions import privileged
 
-_settings_file = pathlib.Path(
+_old_settings_file = pathlib.Path(
     '/var/lib/home-assistant-freedombox/config/configuration.yaml')
+_settings_file = pathlib.Path(
+    '/var/lib/home-assistant-freedombox/config/.storage/http')
 
 
 @dataclass
@@ -61,44 +66,93 @@ yaml_add_handlers()
 
 
 @privileged
-def setup() -> None:
+def setup(old_version: int) -> None:
     """Setup basic Home Assistant configuration."""
     pathlib.Path('/var/lib/home-assistant-freedombox/').chmod(0o700)
 
-    try:
-        _wait_for_configuration_file()
+    if old_version == 1:
+        _migrate_old_configuration()
 
-        settings = _read_settings()
-        if 'http' not in settings:
-            settings['http'] = {}
+    _wait_for_configuration_file(_settings_file)
 
-        settings['http']['server_host'] = '127.0.0.1'
-        settings['http']['use_x_forwarded_for'] = True
-        settings['http']['trusted_proxies'] = '127.0.0.1'
-        _write_settings(settings)
-    except Exception as exception:
-        raise Exception(
-            traceback.format_tb(exception.__traceback__) +
-            [_settings_file.read_text()])
+    with _ensure_stopped():
+        try:
+            settings = _read_settings()
+            version = settings.get('version', 0)
+            if version != 2:
+                raise Exception(
+                    f'Configuration format not understood: {version}.')
+
+            settings.setdefault('data', {})
+            settings['data'].setdefault('stable', {})
+            settings['data']['stable']['server_host'] = '127.0.0.1'
+            settings['data']['stable']['use_x_forwarded_for'] = True
+            settings['data']['stable']['trusted_proxies'] = ['127.0.0.1']
+            _write_settings(settings)
+        except Exception as exception:
+            raise Exception(
+                traceback.format_tb(exception.__traceback__) +
+                [_settings_file.read_text()])
 
 
-def _wait_for_configuration_file() -> None:
+def _wait_for_configuration_file(settings_file: pathlib.Path) -> None:
     """Wait until the Home Assistant daemon creates a configuration file."""
     start_time = time.time()
     while time.time() < start_time + 300:
-        if _settings_file.exists():
+        if settings_file.exists():
             break
 
         time.sleep(1)
 
 
 def _read_settings() -> dict:
-    """Load settings as dictionary from YAML config file."""
-    with _settings_file.open('rb') as settings_file:
-        return yaml.load(settings_file, Loader=YAMLLoader)
+    """Load internal storage for HTTP configuration."""
+    with _settings_file.open('rb') as file_handle:
+        return json.load(file_handle)
 
 
 def _write_settings(settings: dict):
+    """Write HTTP configuration into internal storage."""
+    with _settings_file.open('w') as file_handle:
+        return json.dump(settings, file_handle, indent=2)
+
+
+def _migrate_old_configuration():
+    """Migrate old configuration file."""
+    _wait_for_configuration_file(_old_settings_file)
+    try:
+        settings = _read_old_settings()
+        if 'http' in settings:
+            del settings['http']
+
+        _write_old_settings(settings)
+    except Exception as exception:
+        print('Unable to upgrade old configuration file.', exception)
+
+
+def _read_old_settings() -> dict:
+    """Load settings as dictionary from YAML config file."""
+    with _old_settings_file.open('rb') as file_handle:
+        return yaml.load(file_handle, Loader=YAMLLoader)
+
+
+def _write_old_settings(settings: dict):
     """Write settings from dictionary to YAML config file."""
-    with _settings_file.open('w', encoding='utf-8') as settings_file:
-        yaml.dump(settings, settings_file, Dumper=YAMLDumper)
+    with _old_settings_file.open('w', encoding='utf-8') as file_handle:
+        yaml.dump(settings, file_handle, Dumper=YAMLDumper)
+
+
+@contextlib.contextmanager
+def _ensure_stopped():
+    """Ensure that the service is stopped."""
+    name = 'home-assistant-freedombox'
+
+    starting_state = action_utils.service_is_running(name)
+    if starting_state:
+        action_utils.service_disable(name)
+
+    try:
+        yield starting_state
+    finally:
+        if starting_state:
+            action_utils.service_enable(name)

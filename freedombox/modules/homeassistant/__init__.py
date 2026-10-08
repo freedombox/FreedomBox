@@ -53,7 +53,7 @@ class HomeAssistnatApp(app_module.App):
 
     app_id = 'homeassistant'
 
-    _version = 1
+    _version = 2
 
     def __init__(self):
         """Create components for the app."""
@@ -133,8 +133,8 @@ class HomeAssistnatApp(app_module.App):
         self.get_component('shortcut-homeassistant').url = url
         self.info.clients[0]['platforms'][0]['url'] = url
 
-    def setup(self, old_version):
+    def setup(self, old_version: int):
         """Install and configure the app."""
         super().setup(old_version)
 
-        privileged.setup()
+        privileged.setup(old_version)
