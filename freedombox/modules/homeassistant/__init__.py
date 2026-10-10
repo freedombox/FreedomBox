@@ -48,7 +48,7 @@ _description = [
 ]
 
 
-class HomeAssistnatApp(app_module.App):
+class HomeAssistantApp(app_module.App):
     """FreedomBox app for Home Assistant."""
 
     app_id = 'homeassistant'
