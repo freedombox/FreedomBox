@@ -3,6 +3,10 @@ include:
   - remote: https://salsa.debian.org/salsa-ci-team/pipeline/raw/master/salsa-ci.yml
   - local: /.ci/functional-tests.yml
 
+default:
+  artifacts:
+    expire_in: 3 mos
+
 image: registry.salsa.debian.org/freedombox-team/freedombox:gitlabci
 
 stages:
