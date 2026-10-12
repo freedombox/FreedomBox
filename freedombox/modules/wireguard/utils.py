@@ -424,6 +424,6 @@ DNS = 10.84.0.1
 
 [Peer]
 PublicKey = {server_pubkey}
-AllowedIPs = 0.0.0.0/0
+AllowedIPs = 0.0.0.0/0, ::0/0
 Endpoint = {endpoint}
 PersistentKeepalive = 25"""
