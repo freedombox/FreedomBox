@@ -355,7 +355,7 @@ def add_client(public_key):
     peer.set_persistent_keepalive(25)  # To keep NAT 'connections' alive
     peer.append_allowed_ip(_get_next_available_ip_address(settings), False)
     settings.append_peer(peer)
-    connection.commit_changes(True)
+    connection.commit_changes_async(True)
     network.reactivate_connection(connection.get_uuid())
 
     # Wait upto 10 seconds for client to appear
@@ -386,7 +386,7 @@ def remove_client(public_key):
         raise KeyError('Client not found')
 
     settings.remove_peer(peer_index)
-    connection.commit_changes(True)
+    connection.commit_changes_async(True)
     network.reactivate_connection(connection.get_uuid())
 
     # Wait upto 10 seconds for client to disappear
