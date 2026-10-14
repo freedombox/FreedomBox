@@ -66,9 +66,11 @@ class AddClientView(SuccessMessageMixin, FormView):
             connection = utils._server_connection()
             setting_name = utils.nm.SETTING_WIREGUARD_SETTING_NAME
             settings = connection.get_setting_by_name(setting_name)
-            context['next_ip'] = utils._get_next_available_ip_address(settings)
+            (context['next_ipv4_address'], context['next_ipv6_address']
+             ) = utils._get_next_available_ip_address(settings)
         except Exception:
-            context['next_ip'] = None
+            context['next_ipv4_address'] = None
+            context['next_ipv6_address'] = None
 
         return context
 
@@ -109,18 +111,18 @@ def auto_add_client_view(request):
     # Generate key pair
     client_privkey, client_pubkey = utils.generate_client_keypair()
 
-    # Gather information
-    connection = utils._server_connection()
-    setting_name = utils.nm.SETTING_WIREGUARD_SETTING_NAME
-    settings = connection.get_setting_by_name(setting_name)
-    next_ip = utils._get_next_available_ip_address(settings)
-    domains_info = {}
+    # Add a new client
+    ipv4_address, ipv6_address = utils.add_client(client_pubkey)
 
     # Prepare config and QR codes based on endpoint.
+    server_ipv4_address = server_info['ipv4_address']
+    server_ipv6_address = server_info['ipv6_address']
+    domains_info = {}
     for domain in domains:
         endpoint = f'{domain}:{port}'
-        config = utils.build_client_config(next_ip, client_privkey,
-                                           client_pubkey, endpoint)
+        config = utils.build_client_config(ipv4_address, ipv6_address,
+                                           client_privkey, client_pubkey,
+                                           endpoint, server_ipv4_address)
         qr_code = get_qr_code(config)
 
         domains_info[domain] = {
@@ -129,17 +131,17 @@ def auto_add_client_view(request):
             'config': base64.b64encode(config.encode()).decode(),
         }
 
-    # Add a new client
-    utils.add_client(client_pubkey)
-
     return TemplateResponse(
         request, 'wireguard_auto_add_client.html', {
             'title': _('Client Added'),
             'server_pubkey': server_info['public_key'],
             'client_pubkey': client_pubkey,
             'client_privkey': client_privkey,
-            'next_ip': next_ip,
+            'ipv4_address': ipv4_address,
+            'ipv6_address': ipv6_address,
             'domains': domains_info,
+            'server_ipv4_address': server_ipv4_address,
+            'server_ipv6_address': server_ipv6_address,
         })
 
 
@@ -287,8 +289,7 @@ class EditServerView(SuccessMessageMixin, FormView):
         if not server:
             raise Http404
 
-        initial['ip_address_and_network'] = server.get(
-            'ip_address_and_network')
+        initial['ip_addresses'] = server['ip_addresses']
         if server['peers']:
             peer = next(peer for peer in server['peers'].values())
             initial['peer_endpoint'] = peer['endpoint']

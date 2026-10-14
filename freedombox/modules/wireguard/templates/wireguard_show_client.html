@@ -23,7 +23,7 @@
           <td>{{ client.public_key }}</td>
         </tr>
         <tr class="client-allowed-ips">
-          <th>{% trans "IP address to use for client:" %}</th>
+          <th>{% trans "IP addresses to use for client:" %}</th>
           <td>{{ client.allowed_ips|join:", " }}</td>
         </tr>
         <tr class="client-preshared-key">
@@ -44,7 +44,11 @@
         </tr>
         <tr class="server-ip">
           <th>{% trans "Server VPN IP address for services:" %}</th>
-          <td>{{ server.ip_address }}</td>
+          <td>{{ server.ipv4_address }}, {{ server.ipv6_address }}</td>
+        </tr>
+        <tr class="server-dns">
+          <th>{% trans "DNS Server:" %}</th>
+          <td>{{ server.ipv4_address }}</td>
         </tr>
       </tbody>
     </table>

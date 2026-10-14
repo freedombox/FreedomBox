@@ -15,14 +15,15 @@
 
     {{ form|bootstrap }}
 
-    {% if next_ip %}
+    {% if next_ipv4_address and next_ipv6_address %}
       <div class="form-group">
-        <label for="id_next_ip" class="control-label">
-          {% trans "IP address that will be assigned to this client" %}
+        <label for="id_next_ip_adresses" class="control-label">
+          {% trans "IP addresses that will be assigned to this client" %}
         </label>
         <div>
-          <input type="text" id="id_next_ip" class="form-control"
-                 value="{{ next_ip }}" disabled="disabled">
+          <input type="text" id="id_next_ip_adresses" class="form-control"
+                 value="{{ next_ipv4_address }}, {{ next_ipv6_address }}"
+                 disabled="disabled">
         </div>
       </div>
     {% endif %}

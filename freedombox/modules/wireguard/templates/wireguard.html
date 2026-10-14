@@ -42,7 +42,15 @@
                 {{ box_name }} VPN IP for services
               {% endblocktrans %}
             </td>
-            <td>{{ server.ip_address }}</td>
+            <td>{{ server.ipv4_address }}, {{ server.ipv6_address }}</td>
+          </tr>
+          <tr>
+            <td>
+              {% blocktrans trimmed %}
+                {{ box_name }} DNS server
+              {% endblocktrans %}
+            </td>
+            <td>{{ server.ipv4_address }}</td>
           </tr>
       </table>
     </div>

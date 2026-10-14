@@ -6,8 +6,9 @@ Tests for wireguard module forms.
 import pytest
 from django.core.exceptions import ValidationError
 
-from freedombox.modules.wireguard.forms import (
-    validate_endpoint, validate_ip_address_with_network, validate_key)
+from freedombox.modules.wireguard.forms import (validate_endpoint,
+                                                validate_ip_addresses,
+                                                validate_key)
 
 
 @pytest.mark.parametrize('key', [
@@ -80,7 +81,7 @@ def test_validate_endpoint_invalid_patterns(endpoint):
 ])
 def test_validate_ip_address_with_network_valid_patterns(value):
     """Test  validating IPv4 address with network works for valid values."""
-    validate_ip_address_with_network(value)
+    validate_ip_addresses(value)
 
 
 @pytest.mark.parametrize('value', [
@@ -101,4 +102,23 @@ def test_validate_ip_address_with_network_valid_patterns(value):
 def test_validate_ip_address_with_network_invalid_patterns(value):
     """Test validating IPv4 address with network works for invalid values."""
     with pytest.raises(ValidationError):
-        validate_ip_address_with_network(value)
+        validate_ip_addresses(value)
+
+
+@pytest.mark.parametrize('value', [
+    '1.2.3.4,5.6.7.8,2001:db8::1',
+    '1.2.3.4, 2001:db8::1',
+])
+def test_validate_ip_addresses_with_multiple_addresses(value):
+    """Test validating multiple IP addresses separated by comma."""
+    validate_ip_addresses(value)
+
+
+@pytest.mark.parametrize('value', [
+    '1.2.3.4 2001:db8::1',
+    '1.2.3.4, 2001:db8::1,',
+])
+def test_validate_ip_addresses_with_invalid_multiple_addresses(value):
+    """Test validating multiple IP addresses separated by comma."""
+    with pytest.raises(ValidationError):
+        validate_ip_addresses(value)

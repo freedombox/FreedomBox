@@ -37,9 +37,9 @@
               <th>{% trans "Public key of this machine:" %}</th>
               <td>{{ server.public_key }}</td>
             </tr>
-            <tr class="server-ip-address-and-network">
-              <th>{% trans "IP address of this machine:" %}</th>
-              <td>{{ server.ip_address_and_network }}</td>
+            <tr class="server-ip-addresses">
+              <th>{% trans "IP addresses of this machine:" %}</th>
+              <td>{{ server.ip_addresses|join:', ' }}</td>
             </tr>
             <tr class="server-default-route">
               <th>

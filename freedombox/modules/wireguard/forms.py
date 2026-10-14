@@ -5,7 +5,7 @@ Forms for wireguard module.
 
 import base64
 import binascii
-import ipaddress
+from ipaddress import IPv4Interface, IPv6Interface, ip_interface
 
 from django import forms
 from django.core.exceptions import ValidationError
@@ -55,12 +55,13 @@ def validate_endpoint(endpoint):
         raise ValidationError('Invalid endpoint.')
 
 
-def validate_ip_address_with_network(value: str):
+def validate_ip_addresses(value: str):
     """Check that value is a valid IP address with an optional network."""
     try:
-        ipaddress.ip_interface(value)
+        for ip_address in value.split(','):
+            ip_interface(ip_address.strip())
     except ValueError:
-        raise ValidationError(_('Not a valid IP address.'))
+        raise ValidationError(_('Not a valid list of IP addresses.'))
 
 
 class AddClientForm(forms.Form):
@@ -86,16 +87,16 @@ class AddServerForm(forms.Form):
             'Example: MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= .'),
         validators=[validate_key])
 
-    ip_address_and_network = forms.CharField(
-        label=_('Client IP address provided by server'), strip=True,
+    ip_addresses = forms.CharField(
+        label=_('Client IP addresses provided by server'), strip=True,
         help_text=_(
-            'IP address assigned to this machine on the VPN after connecting '
-            'to the endpoint. This value is usually provided by the server '
-            'operator. Example: 192.168.0.10 or '
+            'Comma separated list of IP addresses assigned to this machine on '
+            'the VPN after connecting to the endpoint. This value is usually '
+            'provided by server operator. Example: 192.168.0.10, '
             '2a03:7c80:4b2c:91a2:5d41:ffee:9b82:7c17. You can also specify '
             'the network. This will allow reaching machines in the network. '
-            'Examples: 10.68.12.43/24 or 10.68.12.43/255.255.255.0.'),
-        validators=[validate_ip_address_with_network])
+            'Examples: 10.68.12.43/24, 10.68.12.43/255.255.255.0.'),
+        validators=[validate_ip_addresses])
 
     private_key = forms.CharField(
         label=_('Private key of this machine'), strip=True, help_text=_(
@@ -143,13 +144,19 @@ class AddServerForm(forms.Form):
 
     def get_settings(self) -> dict[str, dict]:
         """Return NM settings dict from cleaned data."""
-        ip_interface = ipaddress.ip_interface(
-            self.cleaned_data['ip_address_and_network'])
+        allowed_ips: list[str] = []
+        ipv4_interface: IPv4Interface | None = None
+        ipv6_interface: IPv6Interface | None = None
+        for ip in self.cleaned_data['ip_addresses'].split(','):
+            ip = ip_interface(ip.strip())
+            allowed_ips.append(str(ip))
+            if ip.ip.version == 4:
+                ipv4_interface = ip
+            else:
+                ipv6_interface = ip
 
         if self.cleaned_data['default_route']:
             allowed_ips = ['0.0.0.0/0', '::/0']
-        else:
-            allowed_ips = [str(ip_interface)]
 
         settings = {
             'common': {
@@ -165,9 +172,10 @@ class AddServerForm(forms.Form):
             }
         }
 
-        if ip_interface.version == 4:
-            settings['ipv4'] = self._build_ipv4_settings(ip_interface)
-        else:
-            settings['ipv6'] = self._build_ipv6_settings(ip_interface)
+        if ipv4_interface:
+            settings['ipv4'] = self._build_ipv4_settings(ipv4_interface)
+
+        if ipv6_interface:
+            settings['ipv6'] = self._build_ipv6_settings(ipv6_interface)
 
         return settings
