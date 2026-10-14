@@ -18,37 +18,55 @@
   <div class="table-responsive">
     <table class="table">
       <tbody>
+        <tr>
+          <td colspan="2" class="fs-4">{% trans "Client" %}</td>
+        </tr>
         <tr class="client-public-key">
-          <th>{% trans "Client public key:" %}</th>
+          <th>{% trans "Public Key" %}</th>
           <td>{{ client.public_key }}</td>
         </tr>
+        <tr class="client-public-key">
+          <th>{% trans "Private Key" %}</th>
+          <td>{% trans "(Not stored on server)" %}</td>
+        </tr>
         <tr class="client-allowed-ips">
-          <th>{% trans "IP addresses to use for client:" %}</th>
+          <th>{% trans "IP Addresses" %}</th>
           <td>{{ client.allowed_ips|join:", " }}</td>
         </tr>
         <tr class="client-preshared-key">
-          <th>{% trans "Pre-shared key:" %}</th>
+          <th>{% trans "Pre-shared Key" %}</th>
           <td>{{ client.preshared_key }}</td>
         </tr>
+        <tr class="client-dns">
+          <th>{% trans "DNS Server" %}</th>
+          <td>{{ server.ipv4_address }}</td>
+        </tr>
+        <tr class="client-services-ips">
+          <th>
+            {% blocktrans trimmed %}
+              {{ box_name }} Server
+            {% endblocktrans %}
+          </th>
+          <td>{{ server.ipv4_address }}, {{ server.ipv6_address }}</td>
+        </tr>
+        <tr>
+          <td colspan="2" class="fs-4">{% trans "Server/Peer" %}</td>
+        </tr>
+        <tr class="server-public-key">
+          <th>{% trans "Public Key" %}</th>
+          <td>{{ server.public_key }}</td>
+        </tr>
         <tr class="server-endpoints">
-          <th>{% trans "Server endpoints:" %}</th>
+          <th>{% trans "Endpoint(s)" %}</th>
           <td>
             {% for endpoint in endpoints %}
               <div>{{ endpoint }}</div>
             {% endfor %}
           </td>
         </tr>
-        <tr class="server-public-key">
-          <th>{% trans "Server public key:" %}</th>
-          <td>{{ server.public_key }}</td>
-        </tr>
-        <tr class="server-ip">
-          <th>{% trans "Server VPN IP address for services:" %}</th>
-          <td>{{ server.ipv4_address }}, {{ server.ipv6_address }}</td>
-        </tr>
-        <tr class="server-dns">
-          <th>{% trans "DNS Server:" %}</th>
-          <td>{{ server.ipv4_address }}</td>
+        <tr>
+          <th>{% trans "Allowed IPs" %}</th>
+          <td>0.0.0.0/0, ::0/0</td>
         </tr>
       </tbody>
     </table>
@@ -59,15 +77,15 @@
     <table class="table">
       <tbody>
         <tr class="client-transfer-tx">
-          <th>{% trans "Data transmitted:" %}</th>
+          <th>{% trans "Data transmitted" %}</th>
           <td>{{ client.status.transfer_tx|filesizeformat }}</td>
         </tr>
         <tr class="client-transfer-rx">
-          <th>{% trans "Data received:" %}</th>
+          <th>{% trans "Data received" %}</th>
           <td>{{ client.status.transfer_rx|filesizeformat }}</td>
         </tr>
         <tr class="client-latest-handshake">
-          <th>{% trans "Latest handshake:" %}</th>
+          <th>{% trans "Latest handshake" %}</th>
           <td>{{ client.status.latest_handshake|default:'' }}</td>
         </tr>
       </tbody>

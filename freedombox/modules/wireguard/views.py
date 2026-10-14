@@ -6,6 +6,7 @@ Views for WireGuard application.
 import base64
 import urllib.parse
 from io import BytesIO
+from typing import Tuple
 
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
@@ -55,24 +56,44 @@ class AddClientView(SuccessMessageMixin, FormView):
     template_name = 'wireguard_add_client.html'
     success_url = reverse_lazy('wireguard:index')
     success_message = _('Added new client.')
+    _public_key: str | None = None
+    _private_key: str | None = None
+
+    def _get_client_key_pair(self) -> Tuple[str, str]:
+        """Return a newly generated public/private key pair."""
+        if not self._private_key or not self._public_key:
+            (self._private_key,
+             self._public_key) = utils.generate_client_keypair()
+
+        return self._private_key, self._public_key
 
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
-        context['title'] = _('Add Allowed Client')
+        context['title'] = _('Add Client')
 
-        # Show next available IP.
-        try:
-            connection = utils._server_connection()
-            setting_name = utils.nm.SETTING_WIREGUARD_SETTING_NAME
-            settings = connection.get_setting_by_name(setting_name)
-            (context['next_ipv4_address'], context['next_ipv6_address']
-             ) = utils._get_next_available_ip_address(settings)
-        except Exception:
-            context['next_ipv4_address'] = None
-            context['next_ipv6_address'] = None
+        # Server information
+        context['server'] = utils.get_info()['my_server']
+
+        # Generate key pair
+        (context['client_privkey'],
+         context['client_pubkey']) = self._get_client_key_pair()
+
+        # Get next available IP.
+        context['next_ipv4_address'], context[
+            'next_ipv6_address'] = utils.get_next_available_ip_addresses()
+
+        # Get domains
+        context['server_endpoints'] = DomainName.list_names(
+            filter_for_service='wireguard')
 
         return context
+
+    def get_initial(self):
+        """Return initial form data."""
+        initial = super().get_initial()
+        initial['public_key'] = self._get_client_key_pair()[1]
+        return initial
 
     def form_valid(self, form):
         """Add the client."""
@@ -152,7 +173,7 @@ class ShowClientView(SuccessMessageMixin, TemplateView):
     def get_context_data(self, **kwargs) -> dict[str, object]:
         """Return additional context data for rendering the template."""
         context = super().get_context_data(**kwargs)
-        context['title'] = _('Allowed Client')
+        context['title'] = _('Client')
 
         public_key = urllib.parse.unquote(self.kwargs['public_key'])
         server_info = utils.get_info()['my_server']
@@ -212,7 +233,7 @@ class DeleteClientView(SuccessMessageMixin, TemplateView):
     def get_context_data(self, **kwargs):
         """Return additional context data for rendering the template."""
         context = super().get_context_data(**kwargs)
-        context['title'] = _('Delete Allowed Client')
+        context['title'] = _('Delete Client')
         context['public_key'] = urllib.parse.unquote(self.kwargs['public_key'])
         return context
 

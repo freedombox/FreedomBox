@@ -10,23 +10,74 @@
 
   <h3>{{ title }}</h3>
 
+  <p>
+    {% blocktrans trimmed %}
+      Newly added client can be configured using the following information.
+    {% endblocktrans %}
+  </p>
+
+  <div class="table-responsive">
+    <table class="table table-sm" id="server-info-table">
+      <tbody>
+        <tr>
+          <td colspan="2" class="fs-4">{% trans "Client" %}</td>
+        </tr>
+        <tr>
+          <th>{% trans "Public Key" %}</th>
+          <td class="client-public-key">{{ client_pubkey }}<br>
+            {% trans "(Use this or generate one yourself)" %}
+          </td>
+        </tr>
+        <tr>
+          <th>{% trans "Private Key" %}</th>
+          <td class="client-private-key">{{ client_privkey }}<br>
+            {% trans "(Use this or generate one yourself)" %}
+          </td>
+        </tr>
+        <tr>
+          <th>{% trans "IP Addresses" %}</th>
+          <td>{{ next_ipv4_address }}, {{ next_ipv6_address }}</td>
+        </tr>
+        <tr>
+          <th>{% trans "DNS Server" %}</th>
+          <td>{{ server.ipv4_address }}</td>
+        </tr>
+        <tr>
+          <th>
+            {% blocktrans trimmed %}
+              {{ box_name }} Server
+            {% endblocktrans %}
+          </th>
+          <td>{{ server.ipv4_address }}, {{ server.ipv6_address }}</td>
+        </tr>
+        <tr>
+          <td colspan="2" class="fs-4">{% trans "Server/Peer" %}</td>
+        </tr>
+        <tr>
+          <th>{% trans "Public Key" %}</th>
+          <td>{{ server.public_key }}</td>
+        </tr>
+        <tr>
+          <th>{% trans "Endpoint(s)" %}</th>
+          <td>
+            {% for endpoint in server_endpoints %}
+              <div>{{ endpoint }}</div>
+            {% endfor %}
+            <div>{% trans "(Use one)" %}</div>
+          </td>
+        </tr>
+        <tr>
+          <th>{% trans "Allowed IPs" %}</th>
+          <td>0.0.0.0/0, ::0/0</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
   <form class="form form-add-client" method="post">
     {% csrf_token %}
 
     {{ form|bootstrap }}
-
-    {% if next_ipv4_address and next_ipv6_address %}
-      <div class="form-group">
-        <label for="id_next_ip_adresses" class="control-label">
-          {% trans "IP addresses that will be assigned to this client" %}
-        </label>
-        <div>
-          <input type="text" id="id_next_ip_adresses" class="form-control"
-                 value="{{ next_ipv4_address }}, {{ next_ipv6_address }}"
-                 disabled="disabled">
-        </div>
-      </div>
-    {% endif %}
 
     <input type="submit" class="btn btn-primary"
            value="{% trans "Add Client" %}"/>

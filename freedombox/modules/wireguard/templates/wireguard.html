@@ -10,60 +10,21 @@
 {% block configuration %}
   <h3>{% trans "As a Server" %}</h3>
 
+  <p>
+    {% blocktrans trimmed %}
+      {{ box_name }} acts a VPN server. Devices can connect to it and route traffic
+      safely using {{ box_name }}'s internet connection no matter where they are.
+    {% endblocktrans %}
+  </p>
+
   {% if server.public_key %}
-    <h4>{% trans "Server" %}</h4>
-
-    <p>
-      {% blocktrans trimmed %}
-        Information for this {{ box_name }}:
-      {% endblocktrans %}
-    </p>
-
-    <div class="table-responsive">
-      <table class="table" id="server-info-table">
-        <tr>
-          <th>{% trans "Property" %}</th>
-          <th>{% trans "Value" %}</th>
-        </tr>
-          <tr>
-            <td>{% trans "Public Key" %}</td>
-            <td>{{ server.public_key }}</td>
-          </tr>
-            <tr>
-              <td>{% trans "Endpoint(s)" %}</td>
-              <td>
-                <pre>{% for endpoint in server_endpoints %}{{ endpoint }}
-{% endfor %}</pre>
-              </td>
-          </tr>
-          <tr>
-            <td>
-              {% blocktrans trimmed %}
-                {{ box_name }} VPN IP for services
-              {% endblocktrans %}
-            </td>
-            <td>{{ server.ipv4_address }}, {{ server.ipv6_address }}</td>
-          </tr>
-          <tr>
-            <td>
-              {% blocktrans trimmed %}
-                {{ box_name }} DNS server
-              {% endblocktrans %}
-            </td>
-            <td>{{ server.ipv4_address }}</td>
-          </tr>
-      </table>
-    </div>
-
-    <h4>{% trans "Peers" %}</h4>
-
-    <p>{% trans "Peers allowed to connect to this server:" %}</p>
+    <p>{% trans "Clients allowed to connect to this server:" %}</p>
 
     <div class="table-responsive">
       <table class="table" id="server-peers-list">
         <tr>
           <th>{% trans "Public Key" %}</th>
-          <th>{% trans "Allowed IPs" %}</th>
+          <th>{% trans "Client IP addresses" %}</th>
           <th>{% trans "Last Connected Time" %}</th>
         </tr>
         {% if server.peers %}
@@ -105,7 +66,7 @@
          role="button" class="btn btn-default btn-add-client"
          href="{% url 'wireguard:add-client' %}">
         {% icon 'plus' %}
-        {% trans "Add Allowed Client" %}
+        {% trans "Add Client" %}
       </a>
     </div>
   {% else %}
@@ -125,7 +86,12 @@
   <h3>{% trans "As a Client" %}</h3>
   <p>
     {% blocktrans trimmed %}
-    Servers that {{ box_name }} will connect to:
+      {{ box_name }} can connect to a VPN server and route it's traffic
+      through the internet connection of a VPN provider.
+    {% endblocktrans %}
+  <p>
+    {% blocktrans trimmed %}
+      Servers that {{ box_name }} will connect to:
     {% endblocktrans %}
   </p>
   <div class="table-responsive">

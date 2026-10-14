@@ -327,9 +327,14 @@ def setup_server():
         logging.warning('Could not add server')
 
 
-def _get_next_available_ip_addresses(
+def get_next_available_ip_addresses(
         settings=None) -> Tuple[IPv4Address, IPv6Address]:
     """Get the next available IPv4/IPv6 address to allocate to a client."""
+    if not settings:
+        setting_name = nm.SETTING_WIREGUARD_SETTING_NAME
+        connection = _server_connection()
+        settings = connection.get_setting_by_name(setting_name)
+
     allocated_ips = set()
     for peer_index in range(settings.get_peers_len()):
         peer = settings.get_peer(peer_index)
@@ -389,7 +394,7 @@ def add_client(public_key: str) -> Tuple[IPv4Address, IPv6Address]:
     if peer:
         raise ValueError('Peer with public key already exists')
 
-    ipv4_address, ipv6_address = _get_next_available_ip_addresses(settings)
+    ipv4_address, ipv6_address = get_next_available_ip_addresses(settings)
     peer = nm.WireGuardPeer.new()
     peer.set_public_key(public_key, False)
     peer.set_persistent_keepalive(25)  # To keep NAT 'connections' alive

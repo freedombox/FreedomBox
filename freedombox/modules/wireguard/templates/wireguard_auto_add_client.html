@@ -52,32 +52,46 @@
       <table class="table table-sm">
         <tbody>
           <tr>
-            <td>{% trans "Client Public Key" %}</td>
+            <td colspan="2" class="fs-4">{% trans "Client" %}</td>
+          </tr>
+          <tr>
+            <th>{% trans "Public Key" %}</th>
             <td class="client-public-key">{{ client_pubkey }}</td>
           </tr>
           <tr>
-            <td>{% trans "Client Private Key" %}</td>
+            <th>{% trans "Private Key" %}</th>
             <td class="client-private-key">{{ client_privkey }}</td>
           </tr>
           <tr>
-            <td>{% trans "Client IP Addresses" %}</td>
+            <th>{% trans "IP Addresses" %}</th>
             <td>{{ ipv4_address }}, {{ ipv6_address }}</td>
           </tr>
           <tr>
-            <td>{% trans "Client DNS Server" %}</td>
+            <th>{% trans "DNS Server" %}</th>
             <td>{{ server_ipv4_address }}</td>
           </tr>
           <tr>
-            <td>{% trans "Server/Peer Public Key" %}</td>
+            <th>
+              {% blocktrans trimmed %}
+                {{ box_name }} Server
+              {% endblocktrans %}
+            </th>
+            <td>{{ server_ipv4_address }}, {{ server_ipv6_address }}</td>
+          </tr>
+          <tr>
+            <td colspan="2" class="fs-4">{% trans "Server/Peer" %}</td>
+          </tr>
+          <tr>
+            <th>{% trans "Public Key" %}</th>
             <td>{{ server_pubkey }}</td>
           </tr>
           <tr>
-            <td>{% trans "Server/Peer Endpoint" %}</td>
+            <th>{% trans "Endpoint" %}</th>
             <td>{{ domain_info.endpoint }}</td>
           </tr>
           <tr>
-            <td>{% trans "Server/Peer Allowed IPs" %}</td>
-            <td>0.0.0.0/0,::0/0</td>
+            <th>{% trans "Allowed IPs" %}</th>
+            <td>0.0.0.0/0, ::0/0</td>
           </tr>
         </tbody>
       </table>
