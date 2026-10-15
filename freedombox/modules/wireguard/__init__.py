@@ -37,7 +37,7 @@ class WireguardApp(app_module.App):
 
     app_id = 'wireguard'
 
-    _version = 2
+    _version = 3
 
     def __init__(self) -> None:
         """Create components for the app."""
@@ -95,6 +95,9 @@ class WireguardApp(app_module.App):
     def setup(self, old_version):
         """Install and configure the app."""
         super().setup(old_version)
+        if old_version and old_version <= 2:
+            utils.upgrade_server()
+
         if not old_version:
             self.enable()
 

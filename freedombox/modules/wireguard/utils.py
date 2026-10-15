@@ -4,9 +4,10 @@
 import datetime
 import itertools
 import logging
+import socket
 import subprocess
 import time
-from ipaddress import IPv4Address, IPv6Address
+from ipaddress import IPv4Address, IPv6Address, ip_interface
 from typing import Tuple
 
 from freedombox import app as app_module
@@ -325,6 +326,40 @@ def setup_server():
         time.sleep(1)
     else:
         logging.warning('Could not add server')
+
+
+def upgrade_server():
+    """Upgrade server to add IPv6 address."""
+    info = get_info()
+    if info['my_server']['ipv6_address']:
+        return
+
+    connection = _server_connection()
+
+    # Add an IPv6 address to server
+    settings_ipv6 = connection.get_setting_ip6_config()
+    ip_address = nm.IPAddress.new(socket.AF_INET6, str(_IPV6_ADDRESS), 128)
+    settings_ipv6.add_address(ip_address)
+    settings_ipv6.set_property(nm.SETTING_IP_CONFIG_METHOD,
+                               nm.SETTING_IP6_CONFIG_METHOD_MANUAL)
+
+    # Add an IPv6 address to all clients
+    setting_name = nm.SETTING_WIREGUARD_SETTING_NAME
+    settings = connection.get_setting_by_name(setting_name)
+    for peer_index in range(settings.get_peers_len()):
+        peer = settings.get_peer(peer_index)
+        if peer.get_allowed_ips_len() == 1:
+            allowed_ip = ip_interface(peer.get_allowed_ip(0))
+            if allowed_ip.ip.version == 4:
+                number = int(str(allowed_ip.ip).rpartition('.')[2])
+                ipv6_address = _IPV6_ADDRESS + number - 1
+
+                new_peer = peer.new_clone(True)
+                new_peer.append_allowed_ip(str(ipv6_address), False)
+                settings.set_peer(new_peer, peer_index)
+
+    connection.commit_changes_async(True)
+    network.reactivate_connection(connection.get_uuid())
 
 
 def get_next_available_ip_addresses(
