@@ -373,7 +373,8 @@ def add_client(public_key):
 
         time.sleep(1)
     else:
-        logging.warning('Could not add client %s', public_key)
+        logging.warning('Error adding client %s', public_key)
+        raise RuntimeError('Error adding client')
 
 
 def remove_client(public_key):
