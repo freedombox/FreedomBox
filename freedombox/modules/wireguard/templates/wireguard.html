@@ -11,9 +11,12 @@
   <h3>{% trans "As a Server" %}</h3>
 
   <p>
+    {% url 'bind:index' as bind_url %}
     {% blocktrans trimmed %}
-      {{ box_name }} acts a VPN server. Devices can connect to it and route traffic
-      safely using {{ box_name }}'s internet connection no matter where they are.
+      {{ box_name }} acts a VPN server. Devices can connect to it and route
+      traffic safely using {{ box_name }}'s internet connection no matter
+      where they are. <a href="{{ bind_url }}">Bind</a> app must be installed
+      and enabled for this.
     {% endblocktrans %}
   </p>
 
