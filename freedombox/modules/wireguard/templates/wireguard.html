@@ -59,17 +59,18 @@
     <div class="btn-toolbar">
       <form method="post" action="{% url 'wireguard:auto-add-client' %}">
         {% csrf_token %}
-        <button type="submit" title="{% trans 'Auto add a new peer' %}"
+        <button type="submit"
+                title="{% trans 'Add a client after generating its keys' %}"
                 class="btn btn-primary btn-auto-add-client">
-          {% icon 'magic' %}
-          {% trans "Add Client Automatically" %}
+          {% icon 'plus' %}
+          {% trans "Add Client" %}
         </button>
       </form>
-      <a title="{% trans 'Add a new peer' %}"
+      <a title="{% trans 'Add a client with an existing key' %}"
          role="button" class="btn btn-default btn-add-client"
          href="{% url 'wireguard:add-client' %}">
         {% icon 'plus' %}
-        {% trans "Add Client" %}
+        {% trans "Add Client with an Existing Key" %}
       </a>
     </div>
   {% else %}
