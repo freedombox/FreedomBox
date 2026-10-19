@@ -26,6 +26,7 @@
     <div class="table-responsive">
       <table class="table" id="server-peers-list">
         <tr>
+          <th>{% trans "Name" %}</th>
           <th>{% trans "Public Key" %}</th>
           <th>{% trans "Client IP addresses" %}</th>
           <th>{% trans "Last Connected Time" %}</th>
@@ -36,9 +37,10 @@
               <tr>
                 <td>
                   <a href="{% url 'wireguard:show-client' peer.public_key|urlencode:'' %}">
-                    {{ peer.public_key }}
+                    {{ peer.name }}
                   </a>
                 </td>
+                <td>{{ peer.public_key }}</td>
                 <td>{{ peer.allowed_ips|join:", " }}</td>
                 <td>{{ peer.status.latest_handshake|default:'' }}</td>
               </tr>

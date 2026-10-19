@@ -13,9 +13,18 @@
   <p>
     {% trans "Are you sure that you want to delete this client?" %}
   </p>
-  <p>
-    <b>{{ public_key }}</b>
-  </p>
+  <table class="table">
+    <tbody>
+      <tr class="client-name">
+        <th>{% trans "Name" %}</th>
+        <td>{{ name }}</td>
+      </tr>
+      <tr class="client-public-key">
+        <th>{% trans "Public Key" %}</th>
+        <td>{{ public_key }}</td>
+      </tr>
+    </tbody>
+  </table>
 
   <form class="form form-delete-client" method="post">
     {% csrf_token %}

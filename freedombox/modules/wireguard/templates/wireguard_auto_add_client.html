@@ -12,7 +12,22 @@
   <h3>{{ title }}</h3>
 
   <div class="alert alert-info alert-client-added">
-    {% trans "New client added with public key:" %} {{ client_pubkey }}
+    {% blocktrans trimmed %}
+      New client '{{ client_name }}' added with public key: {{ client_pubkey }}
+    {% endblocktrans %}
+  </div>
+
+  <div class="btn-toolbar">
+    <a class="btn btn-default btn-edit-client"
+       href="{% url 'wireguard:edit-client' client_pubkey|urlencode:'' %}">
+      {% icon 'pencil-square-o' %}
+      {% trans "Edit" %}
+    </a>
+    <a class="btn btn-default btn-delete-client"
+       href="{% url 'wireguard:delete-client' client_pubkey|urlencode:'' %}">
+      {% icon 'trash-o' %}
+      {% trans "Delete" %}
+    </a>
   </div>
 
   <p>

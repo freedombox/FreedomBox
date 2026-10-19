@@ -104,4 +104,5 @@ class WireguardApp(app_module.App):
     def uninstall(self):
         """De-configure and uninstall the app."""
         utils.delete_connections()
+        utils.client_remove_all_names()
         super().uninstall()

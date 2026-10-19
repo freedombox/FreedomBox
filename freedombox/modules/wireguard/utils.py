@@ -3,6 +3,7 @@
 
 import datetime
 import itertools
+import json
 import logging
 import socket
 import subprocess
@@ -10,8 +11,10 @@ import time
 from ipaddress import IPv4Address, IPv6Address, ip_interface
 from typing import Tuple
 
+from django.utils.translation import gettext_lazy as _
+
 from freedombox import app as app_module
-from freedombox import network
+from freedombox import kvstore, network
 from freedombox.utils import import_from_gi
 
 from . import privileged
@@ -22,6 +25,70 @@ _IPV4_ADDRESS = IPv4Address('10.84.0.1')
 _IPV6_ADDRESS = IPv6Address('fd84:8484:8484::1')
 
 logger = logging.getLogger(__name__)
+
+_CLIENT_NAMES_KEY = 'wireguard_client_names'
+
+
+def _client_load_names() -> dict[str, str]:
+    """Return client names as a dictionary of public keys to names."""
+    return json.loads(kvstore.get_default(_CLIENT_NAMES_KEY, '{}'))
+
+
+def _client_save_names(names: dict[str, str]):
+    """Save the dict of public keys to client names."""
+    kvstore.set(_CLIENT_NAMES_KEY, json.dumps(names))
+
+
+def client_get_free_name() -> str:
+    """Return an unused client name."""
+    client_names = _client_load_names()
+    client_names_set = set(client_names.values())
+    for index in range(1, 10000):
+        client_name = _('Client') + ' ' + str(index)
+        if client_name not in client_names_set:
+            return client_name
+    else:
+        raise Exception('Client limit reached')
+
+
+def client_get_name(public_key: str) -> str:
+    """Return a client's name, automatically setting one if not present."""
+    client_names = _client_load_names()
+    try:
+        return client_names[public_key]
+    except KeyError:
+        client_names_set = set(client_names.values())
+        for index in range(1, 10000):
+            client_name = _('Client') + ' ' + str(index)
+            if client_name not in client_names_set:
+                client_names[public_key] = client_name
+                _client_save_names(client_names)
+                return client_name
+        else:
+            raise Exception('Client limit reached')
+
+
+def client_set_name(public_key: str, name: str):
+    """Set a name for a client or remove it."""
+    client_names = _client_load_names()
+    client_names[public_key] = name
+    _client_save_names(client_names)
+
+
+def _client_remove_name(public_key: str):
+    """Remove a name stored for a client."""
+    client_names = _client_load_names()
+    try:
+        del client_names[public_key]
+    except KeyError:
+        return
+
+    _client_save_names(client_names)
+
+
+def client_remove_all_names():
+    """Remove all client names."""
+    kvstore.delete(_CLIENT_NAMES_KEY, ignore_missing=True)
 
 
 def _get_nm_address_info(settings) -> tuple[str, str]:
@@ -59,12 +126,14 @@ def get_nm_info():
         info['peers'] = {}
         for peer_index in range(settings.get_peers_len()):
             peer = settings.get_peer(peer_index)
+            public_key = peer.get_public_key()
             peer_info = {
                 'endpoint': peer.get_endpoint(),
-                'public_key': peer.get_public_key(),
+                'public_key': public_key,
                 'preshared_key': peer.get_preshared_key(),
                 'persistent_keepalive': peer.get_persistent_keepalive(),
-                'allowed_ips': []
+                'allowed_ips': [],
+                'name': client_get_name(public_key)
             }
             for index in range(peer.get_allowed_ips_len()):
                 allowed_ip = peer.get_allowed_ip(index, None)
@@ -230,12 +299,12 @@ def add_server(settings):
 
     # Wait upto 10 seconds for server to appear
     public_key = settings['wireguard']['peer_public_key']
-    for _ in range(10):
+    for _index in range(10):
         info = get_info()
         if info['my_client'] and info['my_client']['servers']:
             found = False
-            for _, server in info['my_client']['servers'].items():
-                for _, peer in server['peers'].items():
+            for _server_index, server in info['my_client']['servers'].items():
+                for _public_key, peer in server['peers'].items():
                     if 'public_key' in peer and peer[
                             'public_key'] == public_key:
                         found = True
@@ -270,7 +339,7 @@ def delete_server(interface):
     network.delete_connection(connection.get_uuid())
 
     # Wait upto 10 seconds for server to disappear
-    for _ in range(10):
+    for _index in range(10):
         info = get_nm_info()
         if interface not in info:
             break
@@ -318,7 +387,7 @@ def setup_server():
     logger.info('Created new WireGuard server connection')
 
     # Wait upto 10 seconds for server to appear
-    for _ in range(10):
+    for _index in range(10):
         info = get_info()
         if info['my_server'] and info['my_server']['public_key']:
             break
@@ -399,7 +468,7 @@ def get_next_available_ip_addresses(
 def _server_connection():
     """Return a server connection."""
     setting_name = nm.SETTING_WIREGUARD_SETTING_NAME
-    for _ in range(10):
+    for _index in range(10):
         connection = network.get_connection_by_interface_name('wg0')
         if connection:
             break
@@ -417,11 +486,13 @@ def _server_connection():
     return connection
 
 
-def add_client(public_key: str) -> Tuple[IPv4Address, IPv6Address]:
+def add_client(public_key: str, name: str) -> Tuple[IPv4Address, IPv6Address]:
     """Add a permission for a client to connect our server.
 
     Return the allocated IPv4 and IPv6 addresses.
     """
+    client_set_name(public_key, name)
+
     setting_name = nm.SETTING_WIREGUARD_SETTING_NAME
     connection = _server_connection()
     settings = connection.get_setting_by_name(setting_name)
@@ -462,6 +533,8 @@ def add_client(public_key: str) -> Tuple[IPv4Address, IPv6Address]:
 
 def remove_client(public_key):
     """Remove permission for a client to connect our server."""
+    _client_remove_name(public_key)
+
     setting_name = nm.SETTING_WIREGUARD_SETTING_NAME
     connection = _server_connection()
     settings = connection.get_setting_by_name(setting_name)
@@ -474,11 +547,11 @@ def remove_client(public_key):
     network.reactivate_connection(connection.get_uuid())
 
     # Wait upto 10 seconds for client to disappear
-    for _ in range(10):
+    for _index in range(10):
         info = get_info()
         if info['my_server']:
             found = False
-            for _, peer in info['my_server']['peers'].items():
+            for _public_key, peer in info['my_server']['peers'].items():
                 if 'public_key' in peer and peer['public_key'] == public_key:
                     found = True
                     break

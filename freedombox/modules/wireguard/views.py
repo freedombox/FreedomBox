@@ -58,6 +58,7 @@ class AddClientView(SuccessMessageMixin, FormView):
     success_message = _('Added new client.')
     _public_key: str | None = None
     _private_key: str | None = None
+    _name: str | None = None
 
     def _get_client_key_pair(self) -> Tuple[str, str]:
         """Return a newly generated public/private key pair."""
@@ -67,6 +68,13 @@ class AddClientView(SuccessMessageMixin, FormView):
 
         return self._private_key, self._public_key
 
+    def _get_name(self) -> str:
+        """Return a name for the client."""
+        if not self._name:
+            self._name = utils.client_get_free_name()
+
+        return self._name
+
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
@@ -74,6 +82,9 @@ class AddClientView(SuccessMessageMixin, FormView):
 
         # Server information
         context['server'] = utils.get_info()['my_server']
+
+        # Get name
+        context['client_name'] = self._get_name()
 
         # Generate key pair
         (context['client_privkey'],
@@ -92,14 +103,16 @@ class AddClientView(SuccessMessageMixin, FormView):
     def get_initial(self):
         """Return initial form data."""
         initial = super().get_initial()
+        initial['name'] = self._get_name()
         initial['public_key'] = self._get_client_key_pair()[1]
         return initial
 
     def form_valid(self, form):
         """Add the client."""
+        name = form.cleaned_data.get('name')
         public_key = form.cleaned_data.get('public_key')
         try:
-            utils.add_client(public_key)
+            utils.add_client(public_key, name)
         except ValueError:
             messages.warning(self.request,
                              _('Client with public key already exists'))
@@ -133,7 +146,8 @@ def auto_add_client_view(request):
     client_privkey, client_pubkey = utils.generate_client_keypair()
 
     # Add a new client
-    ipv4_address, ipv6_address = utils.add_client(client_pubkey)
+    client_name = utils.client_get_free_name()
+    ipv4_address, ipv6_address = utils.add_client(client_pubkey, client_name)
 
     # Prepare config and QR codes based on endpoint.
     server_ipv4_address = server_info['ipv4_address']
@@ -156,6 +170,7 @@ def auto_add_client_view(request):
         request, 'wireguard_auto_add_client.html', {
             'title': _('Client Added'),
             'server_pubkey': server_info['public_key'],
+            'client_name': client_name,
             'client_pubkey': client_pubkey,
             'client_privkey': client_privkey,
             'ipv4_address': ipv4_address,
@@ -206,22 +221,29 @@ class EditClientView(SuccessMessageMixin, FormView):
     def get_initial(self):
         """Get initial form data."""
         initial = super().get_initial()
-        initial['public_key'] = urllib.parse.unquote(self.kwargs['public_key'])
+        public_key = urllib.parse.unquote(self.kwargs['public_key'])
+        initial['public_key'] = public_key
+        initial['name'] = utils.client_get_name(public_key)
         return initial
 
     def form_valid(self, form):
         """Update the client."""
+        old_name = form.initial['name']
+        name = form.cleaned_data.get('name')
+
         old_public_key = form.initial['public_key']
         public_key = form.cleaned_data.get('public_key')
 
         if old_public_key != public_key:
             try:
-                utils.add_client(public_key)
+                utils.add_client(public_key, name)
             except ValueError:
                 messages.warning(self.request,
                                  _('Client with public key already exists'))
 
             utils.remove_client(old_public_key)
+        elif old_name != name:
+            utils.client_set_name(public_key, name)
 
         return super().form_valid(form)
 
@@ -234,7 +256,9 @@ class DeleteClientView(SuccessMessageMixin, TemplateView):
         """Return additional context data for rendering the template."""
         context = super().get_context_data(**kwargs)
         context['title'] = _('Delete Client')
-        context['public_key'] = urllib.parse.unquote(self.kwargs['public_key'])
+        public_key = urllib.parse.unquote(self.kwargs['public_key'])
+        context['public_key'] = public_key
+        context['name'] = utils.client_get_name(public_key)
         return context
 
     def post(self, request, public_key):

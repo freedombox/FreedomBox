@@ -66,6 +66,10 @@ def validate_ip_addresses(value: str):
 
 class AddClientForm(forms.Form):
     """Form to add client."""
+    name = forms.CharField(
+        label=_('Name'), strip=True,
+        help_text=_('A memorable name to associate with the client.'))
+
     public_key = forms.CharField(
         label=_('Public Key'), strip=True, help_text=_(
             'Public key of the client to add. Use the provided value or '
