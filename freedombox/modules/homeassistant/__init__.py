@@ -48,12 +48,12 @@ _description = [
 ]
 
 
-class HomeAssistnatApp(app_module.App):
+class HomeAssistantApp(app_module.App):
     """FreedomBox app for Home Assistant."""
 
     app_id = 'homeassistant'
 
-    _version = 1
+    _version = 2
 
     def __init__(self):
         """Create components for the app."""
@@ -97,7 +97,8 @@ class HomeAssistnatApp(app_module.App):
         self.add(firewall_local_protection)
 
         webserver = WebserverRoot('webserverroot-homeassistant',
-                                  'home-assistant-freedombox')
+                                  'home-assistant-freedombox',
+                                  last_updated_version=2)
         self.add(webserver)
 
         image_name = 'registry.freedombox.org/' \
@@ -133,8 +134,11 @@ class HomeAssistnatApp(app_module.App):
         self.get_component('shortcut-homeassistant').url = url
         self.info.clients[0]['platforms'][0]['url'] = url
 
-    def setup(self, old_version):
+    def setup(self, old_version: int):
         """Install and configure the app."""
         super().setup(old_version)
 
-        privileged.setup()
+        privileged.setup(old_version)
+
+        if not old_version:
+            self.enable()

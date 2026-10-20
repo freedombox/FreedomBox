@@ -14,53 +14,162 @@
 
 !WireGuard es red privada virtual (VPN) extremadamente sencilla aunque rápida y moderna que emplea cifrado de última generación.Puede ser un reemplazo útil para IPSec u [[es/FreedomBox/Manual/OpenVPN|OpenVPN]].
 
+=== Uso ===
+
+En !FreedomBox, al app !WireGuard se puede usar para dos propósitos diferentes.
+
+==== Como servidor ====
+
+El primer propósito es que !FreedomBox haga de servidor VPN.
+
+Imagina que estás en una cafetería conectado a su red Wi-Fi con tu móvil o portátil.
+No quieres que los operadores de la red o sus proveedores de Internet sepan qué sitios web visitas.
+Puedes cifrar todo tu tráfico de Internet incluyendo búsquedas de nombre de dominio y enviarlo a tu !FreedomBox para que lo saque a Internet desde tu casa.
+Esto tiene dos efectos: Por un lado, la cafetería solo verá tráfico cifrado hacia tu !FreedomBox, y por otro, los sitios web que visites pensarán que navegas desde casa, no desde la cafetería.
+
+==== Como cliente ====
+
+El segundo propósito es convertir tu !FreedomBox en un cliente VPN.
+
+Imagina que no quieres que tu proveedor de Internet vea el tráfico que sale de tu !FreedomBox u otros dispositivos de tu hogar.
+Puedes contratar una cuenta en una red VPN en uno de los proveedores de !WireGuard VPN (o pedir a un amigo con !FreedomBox que te deje ser cliente de su servidor !WireGuard).
+Entonces puedes configurar la app !WireGuard en !FreedomBox's como cliente VPN. Todo el tráfico que salga de tu !FreedomBox (incluyendo tráfico !BitTorrent) se cifrará y enviará por tu servidor VPN.
+Allí se descifrará y reenviará hacia Internet. Esto, de nuevo, tiene dos efectos: Tu proveedor de Internet sólo verá tráfico cifrado yendo hacia tu proveedor de VPN y
+los sitios web que visites desde !FreedomBox te verán navegando desde el servidor VPN. Muchos proveedores de VPN reparten sus servidores en países diferentes y te permiten elegir por cual sales.
+Los sitios web que visites desde !FreedomBox te verán navegando desde el país que elegiste.
+
+Además puedes configurar los dispositivos de tu hogar para que usen esta VPN. Para ello tienes que situar a tu router Wi-Fi "detrás" de tu !FreedomBox.
+Tu router Wi-Fi se cableará al puerto "LAN" de tu !FreedomBox y se configurará en modo "repetidor"
+(necesitará instalar !FreedomBox en un dispositivo con dos puertos Ethernet, como la [[FreedomBox/Hardware/LibreCrafts|FreedomBox de Libre Crafts]]).
+Después, el tráfico de red de todos los dispositivos conectados al router Wi-Fi pasarán por la !FreedomBox.
+Si el cliente VPN !WireGuard está configurado en la !FreedomBox, todo el tráfico de esos dispositivos usará la VPN automáticamente. 
+
 === Instalación ===
 
 Puedes instalar !WireGuard desde la sección ''Apps'' de la interfaz de !FreedomBox.
 
-=== Configuración - Debian Peers ===
+=== Configurar FreedomBox como servidor de VPN ===
 
-Nota: !FreedomBox trata estos pasos automáticamente. Así que solo necesitas seguirlos en clientes  Debian que se conecten a !FreedomBox, O en servidores Debian a los que !FreedomBox se conecte.
+Para configurar !FreedomBox como servidor, pulsa el botón "Arrancar un Servidor !WireGuard" si lo ves junto al mensaje "Servidor !WireGuard apagado" en la sección "Como Servidor".
+Esto sólo se necesita hacer una vez y después se muestra información del servidor como su clave pública, URLs, y dirección IP.
 
- * [[WireGuard#Step_1_-_Generating_Keypairs|Paso 1 - Generar los pares de claves]]
- * [[WireGuard#Step_2_-_Configuration|Paso 2 - Alternativa A - Configuración Manual]]
+Si tu !FreedomBox está detrás de un router, necesitas configurarlo para que reenvíe el tráfico que entre por el puerto UDP 51820 al mismo puerto de tu !FreedomBox.
 
+=== Configurar la App móvil para usar el servidor de VPN ===
 
-=== Uso ===
+La app recomendada para Android e iOS es la app oficial "!WireGuard" disponible en sus tiendas. Actualmente la app no está disponible en la tienda de F-Droid, así que usa el APK.
+Hay enlaces Links en la sección "Apps Cliente" de la página !WireGuard.
 
- * Tunel punto a punto
- * Cliente VPN con ruta por omisión
+==== Usando el código QR  ====
 
-=== Configuración - Clientes móviles ===
+Esta es la forma más simple, y la recomendada, para configurar la app móvil de !WireGuard.
 
-!WireGuard tiene una implementación en espacio de usuario para dispositivos móviles disponible en la propia app. Funciona en Android e iOS. [[https://www.wireguard.com/install/|Aquí]] hay una lista completa de sistemas operativos compatibles.
+ 1. En !FreedomBox, en la página de la app de !WireGuard, haz clic en "Añadir Cliente Automáticamente". Luego haz clic en "Mostrar Código QR". !FreedomBox mostrará un código QR.
+ 1. En la app móvil de !WireGuard, haz clic en el botón "+" de la página principal para crear un túnel nuevo. Desde el menú que se muestra, selecciona la opción "Escanear desde código QR".
+    Se mostrará un diálogo pidiendo permiso para que la app de !WireGuard use la cámara. Permíteselo.
+ 1. A continuación, muéstrale a la cámara el código QR que generó la !FreedomBox en el primer paso.
+ 1. Si falla al escanear el código, la app preguntará por el nombre del túnel. Nombra el nuevo túnel y tu configuración estará completa.
+ 1. Habilita el túnel usando el botón deslizante cuando quieras conectar con el servidor VPN de tu !FreedomBox.
+ 1. Mira la sección de Resolución de Problemas para verificar si tu instalación funciona.
 
-El cliente se puede configurar de varias maneras:
+{{attachment:FreedomBox/Manual/WireGuard/wireguard-app.png              |App de WireGuard          |height=400}}
+{{attachment:FreedomBox/Manual/WireGuard/wireguard-app-add-tunnel.png   |Menú de añadir túnel      |height=400}}
+{{attachment:FreedomBox/Manual/WireGuard/wireguard-app-after-qr-code.png|Tras escanear el código QR|height=400}}
+{{attachment:FreedomBox/Manual/WireGuard/wireguard-app-tunnel-added.png |Túnel Añadido             |height=400}}
 
-==== Alternativa A - Crear una configuración a mano ====
+==== Usando un fichero de configuración ====
 
-Esta es autoexplicativa: te creas la configuración en el dispositivo móvil y transfieres las claves apropiadas a la configuración del servidor.
+Si por algún motivo no es posible escanear, prueba esto.
 
-==== Alternativa B - Crear una configuración a partir de un archivo ====
+ 1. En !FreedomBox, en la página de la app de !WireGuard, haz clic en "Añadir Cliente Automáticamente". Luego haz clic en la opción "Descargar fichero de configuración".
+    Se descarga un fichero a tu dispositivo. Si se descarga en un dispositivo que no es el que quieres configurar, transfiérelo al dispositivo correcto (o a la persona que quiere conectar con tu servidor VPN).
+ 1. En la app móvil de !WireGuard, haz clic en el botón "+" de la página principal para crear un túnel nuevo. Desde el menú que se muestra, selecciona la opción "Importar desde fichero o archivo".
+ 1. A continuación, selecciona el fichero que se descargó desde el interfaz web de !FreedomBox (o se transfirió al dispositivo).
+ 1. Si falla al importar, verás el mensaje "Cliente wg importado" y un nuevo túnel con el nombre "wg-client". Puedes renombrarlo.
+ 1. Habilita el túnel usando el botón deslizante cuando quieras conectar con el servidor VPN de tu !FreedomBox.
+ 1. Mira la sección de Resolución de Problemas para verificar si tu instalación funciona. 
 
-Aquí tienes que comprimir a .zip el archivo de configuración del cliente, transferirlo al dispositivo, e importarlo a la app.
+{{attachment:FreedomBox/Manual/WireGuard/wireguard-app.png             |App de WireGuard                  |height=400}}
+{{attachment:FreedomBox/Manual/WireGuard/wireguard-app-add-tunnel.png  |Menú de añadir túnel              |height=400}}
+{{attachment:FreedomBox/Manual/WireGuard/wireguard-app-imported.png    |Fichero de configuración importado|height=400}}
+{{attachment:FreedomBox/Manual/WireGuard/wireguard-app-tunnel-added.png|Túnel Añadido                     |height=400}}
 
-==== Alternativa C - Importarla leyendo un código QR (el método másseguro) ====
+==== Usando configuración manual ====
 
-La versión 0.0.20180724 del cliente móvil soporta lectura de código QR.
+Si por algún motivo no es posible ni escanear ni importar, prueba esto.
 
-Se puede emplear DebianPackage:qrencode para generar códigos QR incluso desde el terminal/la consola usando carácteres UTF-8.
+ 1. En !FreedomBox, en la página de la app de !WireGuard, haz clic en "Añadir Cliente Automáticamente". Anota la Clave Privada y todos los otros detalles de la página.
+ 1. En la app móvil de !WireGuard, haz clic en el botón "+" de la página principal para crear un túnel nuevo. Desde el menú que se muestra, selecciona la opción "Crear desde cero".
+ 1. En la sección Interfaz nombra el nuevo túnel. En "Clave Privada", pon la clave privada que generó tu !FreedomBox en el primer paso.
+    La app rellena la clave pública por sí sola (porque la clave pública se deduce de la privada.
+    Pon como Dirección la dirección IP del primer paso. Y como "Servidores DNS" pon "10.84.0.1".
+ 1. Tras completar la sección Interfaz, haz clic en "Añadir pareja" al final de la página.
+    En "Clave Pública", pon la "Clave pública del servidor" mostrada en la sección "Como servidor" de la página de la app !WireGuard en !FreedomBox.
+    Pon en el campo Endpoint una de las URLs mostradas en el primer paso. Y "0.0.0.0/0,::0/0" como "IPs permitidas".
+ 1. Dále a Grabar. Deberías ver el nuevo túnel.
+ 1. Habilita el túnel usando el botón deslizante cuando quieras conectar con el servidor VPN de tu !FreedomBox.
+ 1. Mira la sección de Resolución de Problemas para verificar si tu instalación funciona. 
 
-La syntaxis es:
+{{attachment:FreedomBox/Manual/WireGuard/wireguard-app.png             |App de WireGuard                  |height=400}}
+{{attachment:FreedomBox/Manual/WireGuard/wireguard-app-add-tunnel.png  |Menú de añadir túnel              |height=400}}
+{{attachment:FreedomBox/Manual/WireGuard/wireguard-app-manual-add-1.png|Rellenar sección de interfaz      |height=400}}
+{{attachment:FreedomBox/Manual/WireGuard/wireguard-app-manual-add-2.png|Rellenar sección de emparejamiento|height=400}}
+{{attachment:FreedomBox/Manual/WireGuard/wireguard-app-tunnel-added.png|Túnel Añadido                     |height=400}}
 
-{{{
-# qrencode -t ansiutf8 < client.conf
-}}}
+=== Configurar la app de escritorio (GNU/Linux) para usar el servidor VPN ===
 
-Esto generará un código QR legible desde el cliente móvil. 
+En un escritorio GNU/Linux como Debian, instala el paquete de software {{{wireguard}}} o {{{wireguard-tools}}}. Más detalles en la página de [[https://www.wireguard.com/install/|instalación]].
 
-La ventaja de este enfoque es que no hay necesidad de software adicional ni de transferir información sensible a través de canales de datos que podrían estar comprometidos.
+ 1. En !FreedomBox, en la página de la app de !WireGuard, haz clic en "Añadir Cliente Automáticamente". Luego haz clic en la opción "Descargar fichero de configuración".
+    Se descarga un fichero a tu dispositivo. Si se descarga en un dispositivo que no es el que quieres configurar, transfiérelo al dispositivo correcto (o a la persona que quiere conectar con tu servidor VPN).
+ 1. Para activar el túnel ejecuta la órden {{{sudo wg-quick up /ruta/a/tu/wg-client.conf}}}. Para desactivar el túnel, ejecuta {{{sudo wg-quick down /ruta/a/tu/wg-client.conf}}}.
+ 1. Mira la sección de Resolución de Problemas para verificar si tu instalación funciona. 
 
+=== Configurar la app de escritorio (Windows) para usar el servidor VPN ===
+
+Descarga e instala el cliente !WireGuard oficial para Windows. Más detalles en la página de  [[https://www.wireguard.com/install/|instalación]]. 
+
+ 1. En !FreedomBox, en la página de la app de !WireGuard, haz clic en "Añadir Cliente Automáticamente". Luego haz clic en la opción "Descargar fichero de configuración".
+    Se descarga un fichero a tu dispositivo. Si se descarga en un dispositivo que no es el que quieres configurar, transfiérelo al dispositivo correcto (o a la persona que quiere conectar con tu servidor VPN).
+ 1. Importa el fichero de configuración a la app Windows de !WireGuard. Después deberías poder activar y desactivar el túnel.
+ 1. Mira la sección de Resolución de Problemas para verificar si el túnel funciona. 
+
+=== Configurar la app de escritorio (MacOS) para usar el servidor VPN ===
+
+Descarga e instala el cliente !WireGuard oficial para MacOS. Más detalles en la página de  [[https://www.wireguard.com/install/|instalación]]. 
+
+ 1. En !FreedomBox, en la página de la app de !WireGuard, haz clic en "Añadir Cliente Automáticamente". Luego haz clic en la opción "Descargar fichero de configuración".
+    Se descarga un fichero a tu dispositivo. Si se descarga en un dispositivo que no es el que quieres configurar, transfiérelo al dispositivo correcto (o a la persona que quiere conectar con tu servidor VPN).
+ 1. Importa el fichero de configuración a la app MacOS de !WireGuard. Después deberías poder activar y desactivar el túnel.
+ 1. Mira la sección de Resolución de Problemas para verificar si el túnel funciona. 
+
+=== Resolución de problemas ===
+
+Tras activar el túnel, todo el tráfico del sistema viajará por la VPN que has configurado. Si hay algún error en la configuración, activar el túnel no fallará porque no hay conexión que valga.
+Nada te avisará de que tu tráfico no llega al servidor. Para asegurarte:
+
+ 1. Activa el túnel.
+ 1. Abre un navegador y accede a un sitio web como https://www.wikipedia.org. Debería funcionar. 
+ 1. Abre un navegador y accede a https://10.84.0.1 (tu !FreedomBox). Esto debería mostrarte la interfaz web de tu !FreedomBox (tras un aviso de seguridad).
+ 1. En !FreedomBox, en la página de la app !WireGuard, en la sección "Como Servidor", en la tabla "Parejas", haz clic en la clave pública del cliente.
+    Esto muestra la página de Clientes Permitidos, que debería mostrarte algún valor para "Última conexión" y un valor mayor que cero para Datos recibidos.
+ 1. En la página de Clientes Permitidos de !FreedomBox debería mostrarte algún valor para "Última conexión" y un valor mayor que cero para Datos recibidos.
+ 1. Si tienes {{{ping}}} instalado en tu máquina cliente, ejecutar {{{ping 9.9.9.9}}} debería recibir respuestas.
+ 1. Si tienes {{{traceroute}}} instalado en tu máquina, ejecutar {{{traceroute 9.9.9.9"}}} debería mostrar "10.84.0.1" como primer paso en la entrega de paquetes de red.
+
+Si lo anterior no funciona, verifica lo siguiente:
+
+ 1. En la sección "Como Servidor" de la app !WireGuard en !FreedomBox debe mostrarse en la lista de Parejas la clave pública del cliente. Y debe coincidir exáctamente.
+ 1. En la app cliente el valor de la dirección IP debe coincidir con la IP Permitida asociada a la clave pública en !FreedomBox.
+ 1. La clave pública del servidor mostrada en la sección "Como Servidor" de la app de !WireGuard del interfaz de !FreedomBox debe coincidir con la clave pública establecida en la sección de emparejamiento de la app cliente. Y debe coincidir exáctamente.
+ 1. En la sección de emparejamiento de la configuración del túnel en la app cliente, las IPs permitidas deben ser "0.0.0.0/0,::0/0".
+ 1. La URL de endpoint de la pareja en la app cliente debería ser el nombre de dominio o la dirección IP del servidor !FreedomBox seguidos de {{{:51820}}}.
+    Tu !FreedomBox también debe ser alcanzable desde esa dirección IP o nombre de dominio. Desactiva el túnel y escribe esa dirección (sin el puerto) en un navegador de la máquina cliente.
+    Debería aparecer la interfaz web de !FreedomBox
+
+=== Problemas conocidos ===
+
+ * La versión 26.12 de !FreedomBox tiene rotas las funciones de Mostrar Códgo QR y Descargar Configuración. La version 26.13 las arreglará.
 
 === Enlaces externos ===
 
@@ -77,4 +186,4 @@ Volver a la [[es/FreedomBox/Features|descripción de Funcionalidades]] o a las p
 <<Include(es/FreedomBox/Portal)>>
 
 ----
-CategoryFreedomBox
+CategoryFreedomBox CategoryAntiSpam
