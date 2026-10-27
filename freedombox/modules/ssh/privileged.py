@@ -81,31 +81,45 @@ def _get_user_homedir(username: str) -> pathlib.Path:
 
 @privileged
 def get_keys(user: str) -> str:
-    """Get SSH authorized keys."""
+    """Get SSH authorized keys.
+
+    Read the file under user account privileges instead of root as symlinks
+    result in user reading files that are not otherwise permitted.
+    """
     path = _get_user_homedir(user) / '.ssh' / 'authorized_keys'
     try:
-        return path.read_text(encoding='utf-8')
+        process = action_utils.run_as_user(['cat', str(path)], username=user,
+                                           capture_output=True)
     except Exception:
         return ''
+
+    return process.stdout.decode()
 
 
 @privileged
 def set_keys(user: str, keys: str, auth_user: str, auth_password: secret_str):
-    """Set SSH authorized keys."""
+    """Set SSH authorized keys.
+
+    Write the file under user account privileges instead of root as symlinks
+    result in user writing to files that are not otherwise permitted.
+    """
     must_be_admin = user != auth_user
     _validate_user(auth_user, auth_password, must_be_admin=must_be_admin)
 
-    ssh_folder = _get_user_homedir(user) / '.ssh'
-    key_file_path = ssh_folder / 'authorized_keys'
-
+    # Ensure home directory exists.
     action_utils.run(['mkhomedir_helper', user], check=True)
 
+    # Ensure that .ssh folder exists
+    ssh_folder = _get_user_homedir(user) / '.ssh'
     if not ssh_folder.exists():
         ssh_folder.mkdir()
         shutil.chown(ssh_folder, user, 'users')
 
-    key_file_path.write_text(keys, encoding='utf-8')
-    shutil.chown(key_file_path, user, 'users')
+    # Write with proper ownership/permissions
+    key_file_path = ssh_folder / 'authorized_keys'
+    action_utils.run_as_user(['tee', str(key_file_path)], username=user,
+                             input=keys.encode(encoding='utf-8'), umask=0o600,
+                             check=True)
     key_file_path.chmod(stat.S_IRUSR | stat.S_IWUSR)
 
 
