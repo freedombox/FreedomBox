@@ -9,13 +9,14 @@ import re
 import shutil
 import subprocess
 import tarfile
+from typing import Annotated
 
 from django.utils.translation import gettext_lazy as _
 
 from freedombox import action_utils, actions
 from freedombox import app as app_module
 from freedombox import module_loader
-from freedombox.actions import privileged, secret_str
+from freedombox.actions import Secret, privileged, secret_str
 from freedombox.utils import Version
 
 from . import errors
@@ -472,7 +473,9 @@ def _assert_app_id(app_id):
 
 @reraise_known_errors
 @privileged
-def dump_settings(app_id: str, settings: dict[str, int | float | bool | str]):
+def dump_settings(app_id: str,
+                  settings: Annotated[dict[str, int | float | bool | str],
+                                      Secret]):
     """Dump an app's settings to a JSON file."""
     _assert_app_id(app_id)
     settings_path = BACKUPS_DATA_PATH / f'{app_id}-settings.json'
