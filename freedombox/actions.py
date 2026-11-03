@@ -23,6 +23,11 @@ socket_path = '/run/freedombox/privileged.socket'
 thread_storage = threading.local()
 
 
+class Secret:
+    """Annotate a arg as containing a secret that should not be logged."""
+    pass
+
+
 # An alias for 'str' to mark some strings as sensitive. Sensitive strings are
 # not logged. Use 'type secret_str = str' when Python 3.11 support is no longer
 # needed.
@@ -251,6 +256,15 @@ class ProcessBufferedReader(io.BufferedReader):
             logger.exception('Closing process failed after raw output')
 
 
+def _is_secret(annotation):
+    """Return whether an argument annotation is a secret."""
+    if annotation in [secret_str, secret_str | None]:
+        return True
+
+    metadata = getattr(annotation, '__metadata__', ())
+    return any(datum == Secret for datum in metadata)
+
+
 def _format_args(func, args, kwargs):
     """Return a loggable representation of arguments."""
     argspec = inspect.getfullargspec(func)
@@ -260,7 +274,7 @@ def _format_args(func, args, kwargs):
     args_str_list = []
     for arg_index, arg_value in enumerate(args):
         arg_name = argspec.args[arg_index]
-        if argspec.annotations[arg_name] in [secret_str, secret_str | None]:
+        if _is_secret(argspec.annotations[arg_name]):
             value = '****'
         else:
             value = json.dumps(arg_value)
@@ -269,7 +283,7 @@ def _format_args(func, args, kwargs):
 
     kwargs_str_list = []
     for arg_name, arg_value in kwargs.items():
-        if argspec.annotations[arg_name] in [secret_str, secret_str | None]:
+        if _is_secret(argspec.annotations[arg_name]):
             value = "****"
         else:
             value = json.dumps(arg_value)
@@ -324,9 +338,10 @@ def _check_privileged_action_arguments(func):
     for arg_name, arg_value in argspec.annotations.items():
         for keyword in ('password', 'passphrase', 'secret'):
             if keyword in arg_name:
-                if arg_value not in [secret_str, secret_str | None]:
+                if not _is_secret(arg_value):
                     raise SyntaxError(
-                        f'Argument {arg_name} should likely be a "secret_str"')
+                        f'Argument {arg_name} should likely be a "secret_str" '
+                        'or "Annotated[str, Secret]"')
 
 
 def _get_privileged_action_module_name(func):
@@ -576,6 +591,10 @@ def _privileged_assert_valid_type(arg_name, value, annotation):
 
         return
 
+    if typing.get_origin(annotation) == typing.Annotated:
+        _privileged_assert_valid_type(arg_name, value, annotation.__origin__)
+        return
+
     # secret_str should be a regular string
     if annotation == secret_str:
         if not isinstance(value, str):
@@ -606,7 +625,7 @@ def _privileged_assert_valid_type(arg_name, value, annotation):
 
         return
 
-    # 'list[dict]' or 'typing.List[dict]'
+    # 'dict[int, str]' or 'typing.Dict[int, str]'
     if getattr(annotation, '__origin__', None) == dict:
         if not isinstance(value, dict):
             raise TypeError(f'Expected type dict for {arg_name}')

@@ -2,7 +2,6 @@
 """Configuration helper for SSH server."""
 
 import grp
-import os
 import pathlib
 import pwd
 import shutil
@@ -72,45 +71,56 @@ def are_users_restricted() -> bool:
     return config_file.exists()
 
 
-def get_user_homedir(username):
+def _get_user_homedir(username: str) -> pathlib.Path:
     """Return the home dir of a user by looking up in password database."""
     try:
-        return pwd.getpwnam(username).pw_dir
+        return pathlib.Path(pwd.getpwnam(username).pw_dir)
     except KeyError:
         raise ValueError('Username not found')
 
 
 @privileged
 def get_keys(user: str) -> str:
-    """Get SSH authorized keys."""
-    path = os.path.join(get_user_homedir(user), '.ssh', 'authorized_keys')
+    """Get SSH authorized keys.
+
+    Read the file under user account privileges instead of root as symlinks
+    result in user reading files that are not otherwise permitted.
+    """
+    path = _get_user_homedir(user) / '.ssh' / 'authorized_keys'
     try:
-        with open(path, 'r', encoding='utf-8') as file_handle:
-            return file_handle.read()
-    except FileNotFoundError:
+        process = action_utils.run_as_user(['cat', str(path)], username=user,
+                                           capture_output=True)
+    except Exception:
         return ''
+
+    return process.stdout.decode()
 
 
 @privileged
 def set_keys(user: str, keys: str, auth_user: str, auth_password: secret_str):
-    """Set SSH authorized keys."""
+    """Set SSH authorized keys.
+
+    Write the file under user account privileges instead of root as symlinks
+    result in user writing to files that are not otherwise permitted.
+    """
     must_be_admin = user != auth_user
     _validate_user(auth_user, auth_password, must_be_admin=must_be_admin)
 
-    ssh_folder = os.path.join(get_user_homedir(user), '.ssh')
-    key_file_path = os.path.join(ssh_folder, 'authorized_keys')
-
+    # Ensure home directory exists.
     action_utils.run(['mkhomedir_helper', user], check=True)
 
-    if not os.path.exists(ssh_folder):
-        os.makedirs(ssh_folder)
+    # Ensure that .ssh folder exists
+    ssh_folder = _get_user_homedir(user) / '.ssh'
+    if not ssh_folder.exists():
+        ssh_folder.mkdir()
         shutil.chown(ssh_folder, user, 'users')
 
-    with open(key_file_path, 'w', encoding='utf-8') as file_handle:
-        file_handle.write(keys)
-
-    shutil.chown(key_file_path, user, 'users')
-    os.chmod(key_file_path, stat.S_IRUSR | stat.S_IWUSR)
+    # Write with proper ownership/permissions
+    key_file_path = ssh_folder / 'authorized_keys'
+    action_utils.run_as_user(['tee', str(key_file_path)], username=user,
+                             input=keys.encode(encoding='utf-8'), umask=0o600,
+                             check=True)
+    key_file_path.chmod(stat.S_IRUSR | stat.S_IWUSR)
 
 
 def _load_augeas():
