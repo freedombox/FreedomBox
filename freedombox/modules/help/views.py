@@ -9,10 +9,12 @@ import pathlib
 
 import apt
 import requests
+from django.contrib import messages
 from django.core.files.base import File
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
+from django.utils.safestring import mark_safe
 from django.utils.translation import get_language_from_request
 from django.utils.translation import gettext as _
 
@@ -123,6 +125,13 @@ def manual(request, lang=None, page=None):
     content = read_file(lang, f'{page}.part.html')
     if not content:
         if lang != 'en':
+            url = 'https://wiki.debian.org/FreedomBox/Manual'
+            messages.info(
+                request,
+                mark_safe(
+                    _('This manual page is not available in your language. '
+                      'Help <a href="%(url)s">translate it</a>.') %
+                    {'url': url}))
             return HttpResponseRedirect(
                 reverse('help:manual-page', kwargs=dict(lang='en', page=page)))
 

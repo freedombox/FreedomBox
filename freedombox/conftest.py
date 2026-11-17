@@ -59,6 +59,26 @@ def pytest_collection_modifyitems(config, items):
                             'Set EXTENDED_TESTING=1 to force run'))
 
 
+@pytest.fixture(name='rf')
+def fixture_rf():
+    """Override pytest-django's rf to accommodate storing messages."""
+    from django.contrib.messages.storage.fallback import FallbackStorage
+    from django.test import RequestFactory
+
+    class RequestFactoryWithMessages(RequestFactory):
+        """Add message storage to each request created."""
+
+        def generic(self, *args, **kwargs):
+            """Construct an arbitrary HTTP request with message storage."""
+            request = super().generic(*args, **kwargs)
+            setattr(request, 'session', 'session')
+            messages = FallbackStorage(request)
+            setattr(request, '_messages', messages)
+            return request
+
+    return RequestFactoryWithMessages()
+
+
 @pytest.fixture(name='load_cfg')
 def fixture_load_cfg():
     """Load test configuration."""
