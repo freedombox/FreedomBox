@@ -62,6 +62,15 @@ def _disable_mod_php(webserver):
         webserver.disable('php' + version, kind='module')
 
 
+def _remove_default_index_html():
+    """Remove Apache's default welcome page."""
+    default_page = pathlib.Path('/var/www/html/index.html')
+    shipped_default_page = pathlib.Path(
+        '/usr/share/apache2/default-site/index.html')
+    if default_page.read_text() == shipped_default_page.read_text():
+        default_page.unlink(missing_ok=True)
+
+
 @privileged
 def setup(old_version: int):
     """Setup Apache configuration."""
@@ -81,6 +90,7 @@ def setup(old_version: int):
                          check=True)
 
     _setup_oidc_config()
+    _remove_default_index_html()
 
     with action_utils.WebserverChange() as webserver:
         # Disable mod_php as we have switched to mod_fcgi + php-fpm. Disable
