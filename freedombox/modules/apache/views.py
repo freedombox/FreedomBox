@@ -5,6 +5,7 @@ from urllib.parse import urlencode, urlparse
 
 from django.http import (HttpResponseBadRequest, HttpResponseRedirect,
                          HttpResponseServerError)
+from django.utils.html import escape
 from django.views import View
 
 from . import setup_oidc_client, validate_host
@@ -36,7 +37,8 @@ class DiscoverIDPView(View):
         oidc_callback = request.GET.get('oidc_callback')
 
         if method != 'get':
-            return HttpResponseBadRequest(f'Cannot handle "{method}" method')
+            return HttpResponseBadRequest(
+                f'Cannot handle "{escape(method)}" method')
 
         oidc_callback_parts = urlparse(oidc_callback)
         request_host = request.get_host()
