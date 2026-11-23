@@ -7,7 +7,6 @@ from unittest.mock import call, patch
 
 import pytest
 from django import urls
-from django.contrib.messages.storage.fallback import FallbackStorage
 from django.http.response import Http404
 
 from freedombox import module_loader
@@ -37,27 +36,17 @@ def calibre_patch():
         yield
 
 
-def make_request(request, view, **kwargs):
-    """Make request with a message storage."""
-    setattr(request, 'session', 'session')
-    messages = FallbackStorage(request)
-    setattr(request, '_messages', messages)
-    response = view(request, **kwargs)
-
-    return response, messages
-
-
 @patch('freedombox.modules.calibre.privileged.create_library')
 def test_create_library(create_library, rf):
     """Test that create library view works."""
     form_data = {'calibre-name': 'TestLibrary'}
     request = rf.post(urls.reverse('calibre:create-library'), data=form_data)
     view = views.CreateLibraryView.as_view()
-    response, messages = make_request(request, view)
+    response = view(request)
 
     assert response.status_code == 302
     assert response.url == urls.reverse('calibre:index')
-    assert list(messages)[0].message == 'Library created.'
+    request.assert_has_message('Library created.')
     create_library.assert_has_calls([call('TestLibrary')])
 
 
@@ -68,12 +57,12 @@ def test_create_library_failed(create_library, rf):
     form_data = {'calibre-name': 'TestLibrary'}
     request = rf.post(urls.reverse('calibre:create-library'), data=form_data)
     view = views.CreateLibraryView.as_view()
-    response, messages = make_request(request, view)
+    response = view(request)
 
     assert response.status_code == 302
     assert response.url == urls.reverse('calibre:index')
-    assert list(messages)[0].message == \
-        'An error occurred while creating the library. TestError'
+    request.assert_has_message(
+        'An error occurred while creating the library. TestError')
 
 
 def test_create_library_existing_library(rf):
@@ -81,7 +70,7 @@ def test_create_library_existing_library(rf):
     form_data = {'calibre-name': 'TestExistingLibrary'}
     request = rf.post(urls.reverse('calibre:create-library'), data=form_data)
     view = views.CreateLibraryView.as_view()
-    response, _ = make_request(request, view)
+    response = view(request)
 
     assert response.context_data['form'].errors['name'][
         0] == 'A library with this name already exists.'
@@ -93,7 +82,7 @@ def test_create_library_invalid_name(rf):
     form_data = {'calibre-name': 'Invalid Library'}
     request = rf.post(urls.reverse('calibre:create-library'), data=form_data)
     view = views.CreateLibraryView.as_view()
-    response, _ = make_request(request, view)
+    response = view(request)
 
     assert response.context_data['form'].errors['name'][
         0] == 'Enter a valid value.'
@@ -103,8 +92,7 @@ def test_create_library_invalid_name(rf):
 @patch('freedombox.app.App.get')
 def test_delete_library_confirmation_view(_app, rf):
     """Test that deleting library confirmation shows correct name."""
-    response, _ = make_request(rf.get(''), views.delete_library,
-                               name='TestExistingLibrary')
+    response = views.delete_library(rf.get(''), name='TestExistingLibrary')
     assert response.status_code == 200
     assert response.context_data['name'] == 'TestExistingLibrary'
 
@@ -113,11 +101,11 @@ def test_delete_library_confirmation_view(_app, rf):
 @patch('freedombox.app.App.get')
 def test_delete_library(_app, delete_library, rf):
     """Test that deleting a library works."""
-    response, messages = make_request(rf.post(''), views.delete_library,
-                                      name='TestExistingLibrary')
+    request = rf.post('')
+    response = views.delete_library(request, name='TestExistingLibrary')
     assert response.status_code == 302
     assert response.url == urls.reverse('calibre:index')
-    assert list(messages)[0].message == 'TestExistingLibrary deleted.'
+    request.assert_has_message('TestExistingLibrary deleted.')
     delete_library.assert_has_calls([call('TestExistingLibrary')])
 
 
@@ -125,20 +113,18 @@ def test_delete_library(_app, delete_library, rf):
 def test_delete_library_error(delete_library, rf):
     """Test that deleting a library shows error when operation fails."""
     delete_library.side_effect = ValueError('TestError')
-    response, messages = make_request(rf.post(''), views.delete_library,
-                                      name='TestExistingLibrary')
+    request = rf.post('')
+    response = views.delete_library(request, name='TestExistingLibrary')
     assert response.status_code == 302
     assert response.url == urls.reverse('calibre:index')
-    assert list(messages)[0].message == \
-        'Could not delete TestExistingLibrary: TestError'
+    request.assert_has_message(
+        'Could not delete TestExistingLibrary: TestError')
 
 
 def test_delete_library_non_existing(rf):
     """Test that deleting a library shows error when operation fails."""
     with pytest.raises(Http404):
-        make_request(rf.post(''), views.delete_library,
-                     name='TestNonExistingLibrary')
+        views.delete_library(rf.post(''), name='TestNonExistingLibrary')
 
     with pytest.raises(Http404):
-        make_request(rf.get(''), views.delete_library,
-                     name='TestNonExistingLibrary')
+        views.delete_library(rf.get(''), name='TestNonExistingLibrary')

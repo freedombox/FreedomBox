@@ -7,7 +7,6 @@ from unittest.mock import Mock, patch
 
 import pytest
 from django import urls
-from django.contrib.messages.storage.fallback import FallbackStorage
 from django.http.response import Http404
 
 from freedombox import module_loader
@@ -80,22 +79,12 @@ def gitweb_patch():
         yield
 
 
-def make_request(request, view, **kwargs):
-    """Make request with a message storage."""
-    setattr(request, 'session', 'session')
-    messages = FallbackStorage(request)
-    setattr(request, '_messages', messages)
-    response = view(request, **kwargs)
-
-    return response, messages
-
-
 def test_repos_view(rf):
     """Test that a repo list has correct view data."""
     with patch('freedombox.views.AppView.get_context_data',
                return_value={'is_enabled': True}):
         view = views.GitwebAppView.as_view()
-        response, _ = make_request(rf.get(''), view)
+        response = view(rf.get(''))
 
         assert response.context_data['repos'] == [{
             'name': EXISTING_REPOS[0]['name']
@@ -115,9 +104,9 @@ def test_create_repo_view(rf):
     }
     request = rf.post(urls.reverse('gitweb:create'), data=form_data)
     view = views.CreateRepoView.as_view()
-    response, messages = make_request(request, view)
+    response = view(request)
 
-    assert list(messages)[0].message == 'Repository created.'
+    request.assert_has_message('Repository created.')
     assert response.status_code == 302
 
 
@@ -130,7 +119,7 @@ def test_create_repo_duplicate_name_view(rf):
     }
     request = rf.post(urls.reverse('gitweb:create'), data=form_data)
     view = views.CreateRepoView.as_view()
-    response, _ = make_request(request, view)
+    response = view(request)
 
     assert response.context_data['form'].errors['name'][
         0] == 'A repository with this name already exists.'
@@ -146,7 +135,7 @@ def test_create_repo_invalid_name_view(rf):
     }
     request = rf.post(urls.reverse('gitweb:create'), data=form_data)
     view = views.CreateRepoView.as_view()
-    response, _ = make_request(request, view)
+    response = view(request)
 
     assert response.context_data['form'].errors['name'][
         0] == 'Invalid repository name.'
@@ -166,10 +155,10 @@ def test_create_repo_failed_view(rf):
         }
         request = rf.post(urls.reverse('gitweb:create'), data=form_data)
         view = views.CreateRepoView.as_view()
-        response, messages = make_request(request, view)
+        response = view(request)
 
-        assert list(messages)[0].message == '{0} {1}'.format(
-            general_error_message, error_description)
+        request.assert_has_message('{0} {1}'.format(general_error_message,
+                                                    error_description))
         assert response.status_code == 302
 
 
@@ -182,12 +171,12 @@ def test_clone_repo_view(rf):
     }
     request = rf.post(urls.reverse('gitweb:create'), data=form_data)
     view = views.CreateRepoView.as_view()
-    response, messages = make_request(request, view)
+    response = view(request)
 
     with pytest.raises(AttributeError):
         getattr(response.context_data['form'], 'errors')
 
-    assert list(messages)[0].message == 'Repository created.'
+    request.assert_has_message('Repository created.')
     assert response.status_code == 302
 
 
@@ -202,7 +191,7 @@ def test_clone_repo_missing_remote_view(rf):
         }
         request = rf.post(urls.reverse('gitweb:create'), data=form_data)
         view = views.CreateRepoView.as_view()
-        response, _ = make_request(request, view)
+        response = view(request)
 
         assert response.context_data['form'].errors['name'][
             0] == 'Remote repository is not available.'
@@ -222,10 +211,9 @@ def test_edit_repository_view(rf):
                        kwargs={'name': EXISTING_REPOS[0]['name']})
     request = rf.post(url, data=form_data)
     view = views.EditRepoView.as_view()
-    response, messages = make_request(request, view,
-                                      name=EXISTING_REPOS[0]['name'])
+    response = view(request, name=EXISTING_REPOS[0]['name'])
 
-    assert list(messages)[0].message == 'Repository edited.'
+    request.assert_has_message('Repository edited.')
     assert response.status_code == 302
 
 
@@ -237,7 +225,7 @@ def test_edit_nonexisting_repository_view(rf):
     view = views.EditRepoView.as_view()
 
     with pytest.raises(Http404):
-        make_request(request, view, **non_existing_repo)
+        view(request, **non_existing_repo)
 
 
 def test_edit_repository_duplicate_name_view(rf):
@@ -254,7 +242,7 @@ def test_edit_repository_duplicate_name_view(rf):
                        kwargs={'name': EXISTING_REPOS[0]['name']})
     request = rf.post(url, data=form_data)
     view = views.EditRepoView.as_view()
-    response, _ = make_request(request, view, **EXISTING_REPOS[0])
+    response = view(request, **EXISTING_REPOS[0])
 
     assert response.context_data['form'].errors['name'][
         0] == 'A repository with this name already exists.'
@@ -272,7 +260,7 @@ def test_edit_repository_invalid_name_view(rf):
                        kwargs={'name': EXISTING_REPOS[0]['name']})
     request = rf.post(url, data=form_data)
     view = views.EditRepoView.as_view()
-    response, _ = make_request(request, view, **EXISTING_REPOS[0])
+    response = view(request, **EXISTING_REPOS[0])
 
     assert response.context_data['form'].errors['name'][
         0] == 'Invalid repository name.'
@@ -293,7 +281,7 @@ def test_edit_repository_no_change_view(rf):
                          kwargs={'name': EXISTING_REPOS[0]['name']}),
             data=form_data)
         view = views.EditRepoView.as_view()
-        response, _ = make_request(request, view, **EXISTING_REPOS[0])
+        response = view(request, **EXISTING_REPOS[0])
 
         assert not edit_repo.called, 'method should not have been called'
         assert response.status_code == 302
@@ -314,17 +302,15 @@ def test_edit_repository_failed_view(rf):
                          kwargs={'name': EXISTING_REPOS[0]['name']}),
             data=form_data)
         view = views.EditRepoView.as_view()
-        response, messages = make_request(request, view, **EXISTING_REPOS[0])
+        response = view(request, **EXISTING_REPOS[0])
 
-        assert list(
-            messages)[0].message == 'An error occurred during configuration.'
+        request.assert_has_message('An error occurred during configuration.')
         assert response.status_code == 302
 
 
 def test_delete_repository_confirmation_view(rf):
     """Test that repo deletion confirmation shows correct repo name."""
-    response, _ = make_request(rf.get(''), views.delete,
-                               name=EXISTING_REPOS[0]['name'])
+    response = views.delete(rf.get(''), name=EXISTING_REPOS[0]['name'])
 
     assert response.context_data['name'] == EXISTING_REPOS[0]['name']
     assert response.status_code == 200
@@ -332,11 +318,10 @@ def test_delete_repository_confirmation_view(rf):
 
 def test_delete_repository_view(rf):
     """Test that repo deletion sends correct success message."""
-    response, messages = make_request(rf.post(''), views.delete,
-                                      name=EXISTING_REPOS[0]['name'])
+    request = rf.post('')
+    response = views.delete(request, name=EXISTING_REPOS[0]['name'])
 
-    assert list(messages)[0].message == '{} deleted.'.format(
-        EXISTING_REPOS[0]['name'])
+    request.assert_has_message('{} deleted.'.format(EXISTING_REPOS[0]['name']))
     assert response.status_code == 302
 
 
@@ -345,16 +330,15 @@ def test_delete_repository_fail_view(rf):
 
     with patch('freedombox.modules.gitweb.privileged.delete_repo',
                side_effect=FileNotFoundError('Error')):
-        response, messages = make_request(rf.post(''), views.delete,
-                                          name=EXISTING_REPOS[0]['name'])
+        request = rf.post('')
+        response = views.delete(request, name=EXISTING_REPOS[0]['name'])
 
-        assert list(
-            messages)[0].message == 'Could not delete {}: Error'.format(
-                EXISTING_REPOS[0]['name'])
+        request.assert_has_message('Could not delete {}: Error'.format(
+            EXISTING_REPOS[0]['name']))
         assert response.status_code == 302
 
 
 def test_delete_non_existing_repository_view(rf):
     """Test that deleting non-existing repository raises 404."""
     with pytest.raises(Http404):
-        make_request(rf.post(''), views.delete, name='unknown_repo')
+        views.delete(rf.post(''), name='unknown_repo')

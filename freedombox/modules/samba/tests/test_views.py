@@ -9,7 +9,6 @@ from unittest.mock import patch
 
 import pytest
 from django import urls
-from django.contrib.messages.storage.fallback import FallbackStorage
 
 from freedombox import module_loader
 from freedombox.modules.samba import views
@@ -81,16 +80,6 @@ def samba_patch_privileged():
         yield
 
 
-def make_request(request, view, **kwargs):
-    """Make request with a message storage."""
-    setattr(request, 'session', 'session')
-    messages = FallbackStorage(request)
-    setattr(request, '_messages', messages)
-    response = view(request, **kwargs)
-
-    return response, messages
-
-
 def test_samba_shares_view(rf):
     """Test that a share list has correct view data."""
     with (patch('freedombox.views.AppView.get_context_data',
@@ -99,7 +88,7 @@ def test_samba_shares_view(rf):
           patch('freedombox.modules.storage.get_mounts', return_value=DISKS),
           patch('freedombox.views.AppView.app', return_value=None)):
         view = views.SambaAppView.as_view()
-        response, _ = make_request(rf.get(''), view)
+        response = view(rf.get(''))
 
         assert response.context_data['disks'] == [DISKS[0]]
         assert response.context_data['shared_mounts'] == {
@@ -121,10 +110,10 @@ def test_enable_samba_share_view(rf):
     """Test that enabling share sends correct success message."""
     form_data = {'filesystem_type': 'ext4', 'open_share': 'enable'}
     mount_point = urllib.parse.quote('/')
-    response, messages = make_request(rf.post('', data=form_data), views.share,
-                                      mount_point=mount_point)
+    request = rf.post('', data=form_data)
+    response = views.share(request, mount_point=mount_point)
 
-    assert list(messages)[0].message == 'Share enabled.'
+    request.assert_has_message('Share enabled.')
     assert response.status_code == 302
     assert response.url == urls.reverse('samba:index')
 
@@ -136,11 +125,11 @@ def test_enable_samba_share_failed_view(rf):
     error_message = 'Sharing failed'
     with patch('freedombox.modules.samba.add_share',
                side_effect=RuntimeError(error_message)):
-        response, messages = make_request(rf.post('', data=form_data),
-                                          views.share, mount_point=mount_point)
+        request = rf.post('', data=form_data)
+        response = views.share(request, mount_point=mount_point)
 
-        assert list(messages)[0].message == 'Error enabling share: {0}'.format(
-            error_message)
+        request.assert_has_message(
+            'Error enabling share: {0}'.format(error_message))
         assert response.status_code == 302
         assert response.url == urls.reverse('samba:index')
 
@@ -149,10 +138,10 @@ def test_disable_samba_share(rf):
     """Test that enabling share sends correct success message."""
     form_data = {'filesystem_type': 'ext4', 'open_share': 'disable'}
     mount_point = urllib.parse.quote('/')
-    response, messages = make_request(rf.post('', data=form_data), views.share,
-                                      mount_point=mount_point)
+    request = rf.post('', data=form_data)
+    response = views.share(request, mount_point=mount_point)
 
-    assert list(messages)[0].message == 'Share disabled.'
+    request.assert_has_message('Share disabled.')
     assert response.status_code == 302
     assert response.url == urls.reverse('samba:index')
 
@@ -164,10 +153,10 @@ def test_disable_samba_share_failed_view(rf):
     error_message = 'Unsharing failed'
     with patch('freedombox.modules.samba.privileged.delete_share',
                side_effect=RuntimeError(error_message)):
-        response, messages = make_request(rf.post('', data=form_data),
-                                          views.share, mount_point=mount_point)
+        request = rf.post('', data=form_data)
+        response = views.share(request, mount_point=mount_point)
 
-        assert list(messages)[
-            0].message == 'Error disabling share: {0}'.format(error_message)
+        request.assert_has_message(
+            'Error disabling share: {0}'.format(error_message))
         assert response.status_code == 302
         assert response.url == urls.reverse('samba:index')

@@ -336,7 +336,7 @@ def test_download_full_manual_file(rf, tmp_path):
     _diff('fallback.pdf', 'translated.pdf', same=False)
 
 
-def test_missing_manual_page_shows_message(client):
+def test_missing_manual_page_shows_message(rf):
     """Test that a message is shown when a manual page is missing.
 
     Expected:
@@ -346,19 +346,14 @@ def test_missing_manual_page_shows_message(client):
     """
     page = 'Coturn'
     lang = 'unknown'
-    manual_url = urls.reverse('help:manual-page', kwargs={
-        'lang': lang,
-        'page': page
-    })
 
-    response = client.get(manual_url)
+    request = rf.get(urls.reverse('help:manual'))
+    response = views.manual(request, lang=lang, page=page)
 
     assert response.status_code == 302
     assert response.url.endswith(f'/help/manual/en/{page}')
 
-    storage = response.wsgi_request._messages
-    messages = list(storage._queued_messages)
-    assert len(messages) == 1
-    message = messages[0].message
-    assert 'https://wiki.debian.org/FreedomBox/Manual' in message
-    assert 'translate it' in message
+    url = 'https://wiki.debian.org/FreedomBox/Manual'
+    request.assert_has_message(
+        'This manual page is not available in your language. '
+        f'Help <a href="{url}">translate it</a>.')

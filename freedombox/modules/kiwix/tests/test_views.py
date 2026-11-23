@@ -7,7 +7,6 @@ from unittest.mock import MagicMock, call, patch
 
 import pytest
 from django import urls
-from django.contrib.messages.storage.fallback import FallbackStorage
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.http.response import Http404
 
@@ -28,16 +27,6 @@ def fixture_kiwix_urls():
         modules.append('freedombox.modules.kiwix')
         module_loader.include_urls()
         yield
-
-
-def make_request(request, view, **kwargs):
-    """Make request with a message storage."""
-    setattr(request, 'session', 'session')
-    messages = FallbackStorage(request)
-    setattr(request, '_messages', messages)
-    response = view(request, **kwargs)
-
-    return response, messages
 
 
 @pytest.fixture(autouse=True)
@@ -78,11 +67,10 @@ def add_package_request(rf, file_path):
 @patch('freedombox.modules.kiwix.privileged.add_package')
 def test_add_package(add_package, file_path, add_package_request):
     """Test that adding content view works."""
-    response, messages = make_request(add_package_request,
-                                      views.AddPackageView.as_view())
+    response = views.AddPackageView.as_view()(add_package_request)
     assert response.status_code == 302
     assert response.url == urls.reverse('kiwix:index')
-    assert list(messages)[0].message == 'Content package added.'
+    add_package_request.assert_has_message('Content package added.')
     add_package.assert_has_calls([call('FreedomBox.zim', file_path)])
 
 
@@ -90,18 +78,17 @@ def test_add_package(add_package, file_path, add_package_request):
 def test_add_package_failed(add_package, add_package_request):
     """Test that adding content package fails in case of an error."""
     add_package.side_effect = RuntimeError('TestError')
-    response, messages = make_request(add_package_request,
-                                      views.AddPackageView.as_view())
+    response = views.AddPackageView.as_view()(add_package_request)
     assert response.status_code == 302
     assert response.url == urls.reverse('kiwix:index')
-    assert list(messages)[0].message.startswith(
-        'Failed to add content package.')
+    add_package_request.assert_has_message('Failed to add content package.',
+                                           exact=False)
 
 
 @patch('freedombox.app.App.get')
 def test_delete_package_confirmation_view(_app, rf):
     """Test that deleting content confirmation shows correct title."""
-    response, _ = make_request(rf.get(''), views.delete_package, zim_id=ZIM_ID)
+    response = views.delete_package(rf.get(''), zim_id=ZIM_ID)
     assert response.status_code == 200
     assert response.context_data['name'] == 'TestExistingPackage'
 
@@ -110,11 +97,11 @@ def test_delete_package_confirmation_view(_app, rf):
 @patch('freedombox.app.App.get')
 def test_delete_package(_app, delete_package, rf):
     """Test that deleting a content package works."""
-    response, messages = make_request(rf.post(''), views.delete_package,
-                                      zim_id=ZIM_ID)
+    request = rf.post('')
+    response = views.delete_package(request, zim_id=ZIM_ID)
     assert response.status_code == 302
     assert response.url == urls.reverse('kiwix:index')
-    assert list(messages)[0].message == 'TestExistingPackage deleted.'
+    request.assert_has_message('TestExistingPackage deleted.')
     delete_package.assert_has_calls([call(ZIM_ID)])
 
 
@@ -122,20 +109,18 @@ def test_delete_package(_app, delete_package, rf):
 def test_delete_package_error(delete_package, rf):
     """Test that deleting content shows an error when operation fails."""
     delete_package.side_effect = ValueError('TestError')
-    response, messages = make_request(rf.post(''), views.delete_package,
-                                      zim_id=ZIM_ID)
+    request = rf.post('')
+    response = views.delete_package(request, zim_id=ZIM_ID)
     assert response.status_code == 302
     assert response.url == urls.reverse('kiwix:index')
-    assert list(messages)[0].message == \
-        'Could not delete TestExistingPackage: TestError'
+    request.assert_has_message(
+        'Could not delete TestExistingPackage: TestError')
 
 
 def test_delete_package_non_existing(rf):
     """Test that deleting content shows error when operation fails."""
     with pytest.raises(Http404):
-        make_request(rf.post(''), views.delete_package,
-                     zim_id='NonExistentZimId')
+        views.delete_package(rf.post(''), zim_id='NonExistentZimId')
 
     with pytest.raises(Http404):
-        make_request(rf.get(''), views.delete_package,
-                     zim_id='NonExistentZimId')
+        views.delete_package(rf.get(''), zim_id='NonExistentZimId')

@@ -8,7 +8,6 @@ from unittest.mock import Mock, patch
 import pytest
 from django import urls
 from django.contrib.auth.models import User
-from django.contrib.messages.storage.fallback import FallbackStorage
 from django.core.exceptions import PermissionDenied
 
 from freedombox import module_loader
@@ -62,10 +61,6 @@ def module_patch():
 
 def make_request(request, view, as_admin=True, **kwargs):
     """Make request with a message storage and users created."""
-    setattr(request, 'session', 'session')
-    messages = FallbackStorage(request)
-    setattr(request, '_messages', messages)
-
     user = User.objects.create(username='tester')
     admin_user = User.objects.create(username='admin')
     admin_user.set_password('adminpassword')
@@ -80,7 +75,7 @@ def make_request(request, view, as_admin=True, **kwargs):
 
         response = view(request, **kwargs)
 
-    return response, messages
+    return response
 
 
 def test_users_list_view(rf):
@@ -89,7 +84,7 @@ def test_users_list_view(rf):
                 return_value={'is_enabled': True}),
           patch('freedombox.views.AppView.app', return_value=None)):
         view = views.UserList.as_view()
-        response, messages = make_request(rf.get('/'), view)
+        response = make_request(rf.get('/'), view)
 
     assert response.status_code == 200
 
@@ -107,9 +102,9 @@ def test_create_user_view(rf, username):
 
     request = rf.post(urls.reverse('users:create'), data=form_data)
     view = views.UserCreate.as_view()
-    response, messages = make_request(request, view)
+    response = make_request(request, view)
 
-    assert list(messages)[0].message == 'User {} created.'.format(username)
+    request.assert_has_message('User {} created.'.format(username))
     assert response.status_code == 302
     assert response.url == urls.reverse('users:index')
 
@@ -134,7 +129,7 @@ def test_create_user_invalid_admin_view(rf, password, error):
 
     request = rf.post(urls.reverse('users:create'), data=form_data)
     view = views.UserCreate.as_view()
-    response, messages = make_request(request, view)
+    response = make_request(request, view)
 
     assert response.context_data['form'].errors == error
 
@@ -143,7 +138,7 @@ def test_create_user_form_view(rf):
     """Test that a username field on create form has correct attributes."""
     request = rf.get(urls.reverse('users:create'))
     view = views.UserCreate.as_view()
-    response, messages = make_request(request, view)
+    response = make_request(request, view)
 
     assert response.context_data['form'].fields['username'].widget.attrs == {
         'maxlength': '150',
@@ -167,7 +162,7 @@ def test_create_user_invalid_username_view(rf, username):
 
     request = rf.post(urls.reverse('users:create'), data=form_data)
     view = views.UserCreate.as_view()
-    response, messages = make_request(request, view)
+    response = make_request(request, view)
 
     assert response.context_data['form'].errors['username'][
         0] == 'Enter a valid username.'
@@ -192,7 +187,7 @@ def test_create_user_taken_or_reserved_username_view(rf, username, error):
 
     request = rf.post(urls.reverse('users:create'), data=form_data)
     view = views.UserCreate.as_view()
-    response, messages = make_request(request, view)
+    response = make_request(request, view)
 
     assert response.context_data['form'].errors['username'][0] == error
     assert response.status_code == 200
@@ -212,9 +207,9 @@ def test_update_user_view(rf):
     url = urls.reverse('users:edit', kwargs={'slug': user})
     request = rf.post(url, data=form_data)
     view = views.UserUpdate.as_view()
-    response, messages = make_request(request, view, as_admin=True, slug=user)
+    response = make_request(request, view, as_admin=True, slug=user)
 
-    assert list(messages)[0].message == 'User {} updated.'.format(new_username)
+    request.assert_has_message('User {} updated.'.format(new_username))
     assert response.status_code == 302
     assert response.url == urls.reverse('users:edit',
                                         kwargs={'slug': new_username})
@@ -242,7 +237,7 @@ def test_update_user_invalid_admin_view(rf, password, error):
     url = urls.reverse('users:edit', kwargs={'slug': user})
     request = rf.post(url, data=form_data)
     view = views.UserUpdate.as_view()
-    response, messages = make_request(request, view, as_admin=True, slug=user)
+    response = make_request(request, view, as_admin=True, slug=user)
 
     assert response.context_data['form'].errors == error
 
@@ -276,9 +271,9 @@ def test_delete_user_view(rf):
     url = urls.reverse('users:edit', kwargs={'slug': user})
     request = rf.post(url, data=form_data)
     view = views.UserUpdate.as_view()
-    response, messages = make_request(request, view, as_admin=True, slug=user)
+    response = make_request(request, view, as_admin=True, slug=user)
 
-    assert list(messages)[0].message == 'User {} deleted.'.format(user)
+    request.assert_has_message('User {} deleted.'.format(user))
     assert response.status_code == 302
     assert response.url == urls.reverse('users:index')
 
@@ -295,9 +290,9 @@ def test_user_change_password_view(rf):
     url = urls.reverse('users:change_password', kwargs={'slug': user})
     request = rf.post(url, data=form_data)
     view = views.UserChangePassword.as_view()
-    response, messages = make_request(request, view, as_admin=True, slug=user)
+    response = make_request(request, view, as_admin=True, slug=user)
 
-    assert list(messages)[0].message == 'Password changed successfully.'
+    request.assert_has_message('Password changed successfully.')
     assert response.status_code == 302
     assert response.url == urls.reverse('users:edit', kwargs={'slug': user})
 
@@ -322,7 +317,7 @@ def test_user_change_password_invalid_admin_view(rf, password, error):
     url = urls.reverse('users:change_password', kwargs={'slug': user})
     request = rf.post(url, data=form_data)
     view = views.UserChangePassword.as_view()
-    response, messages = make_request(request, view, as_admin=True, slug=user)
+    response = make_request(request, view, as_admin=True, slug=user)
 
     assert response.context_data['form'].errors == error
     assert response.status_code == 200

@@ -3,6 +3,7 @@
 pytest configuration for all tests.
 """
 
+import functools
 import importlib
 import os
 import pathlib
@@ -65,6 +66,18 @@ def fixture_rf():
     from django.contrib.messages.storage.fallback import FallbackStorage
     from django.test import RequestFactory
 
+    def _assert_has_message(self, expected_message, exact=True):
+        """Test that a message is present in request."""
+        for message in self._messages:
+            if exact:
+                if expected_message == message.message:
+                    return
+            else:
+                if expected_message in message.message:
+                    return
+        else:
+            raise ValueError('Expected message not found.', expected_message)
+
     class RequestFactoryWithMessages(RequestFactory):
         """Add message storage to each request created."""
 
@@ -74,6 +87,9 @@ def fixture_rf():
             setattr(request, 'session', 'session')
             messages = FallbackStorage(request)
             setattr(request, '_messages', messages)
+
+            request.assert_has_message = functools.partial(
+                _assert_has_message, request)
             return request
 
     return RequestFactoryWithMessages()

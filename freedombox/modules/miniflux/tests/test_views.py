@@ -5,7 +5,6 @@ from unittest.mock import patch
 
 import pytest
 from django import urls
-from django.contrib.messages.storage.fallback import FallbackStorage
 
 from freedombox import module_loader
 from freedombox.modules.miniflux import views
@@ -24,16 +23,6 @@ def fixture_miniflux_urls():
         yield
 
 
-def make_request(request, view, **kwargs):
-    """Make request with a message storage."""
-    setattr(request, 'session', 'session')
-    messages = FallbackStorage(request)
-    setattr(request, '_messages', messages)
-    response = view(request, **kwargs)
-
-    return response, messages
-
-
 ##########################
 # Create Admin User view #
 ##########################
@@ -43,7 +32,7 @@ def test_create_admin_user_view(rf):
     """Test that the create admin user view loads successfully."""
     request = rf.get(urls.reverse('miniflux:create-admin-user'))
     view = views.CreateAdminUserView.as_view()
-    response, _ = make_request(request, view)
+    response = view(request)
 
     assert response.status_code == 200
 
@@ -59,10 +48,10 @@ def test_create_admin_user_form_valid(create_admin_user, rf):
     request = rf.post(urls.reverse('miniflux:create-admin-user'),
                       data=form_data)
     view = views.CreateAdminUserView.as_view()
-    response, messages = make_request(request, view)
+    response = view(request)
 
     assert response.status_code == 302
-    assert list(messages)[0].message == 'Created admin user: admin'
+    request.assert_has_message('Created admin user: admin')
 
 
 def test_passwords_do_not_match(rf):
@@ -75,7 +64,7 @@ def test_passwords_do_not_match(rf):
     request = rf.post(urls.reverse('miniflux:create-admin-user'),
                       data=form_data)
     view = views.CreateAdminUserView.as_view()
-    response, messages = make_request(request, view)
+    response = view(request)
 
     assert response.status_code == 200
     assert response.context_data['form'].errors['password_confirmation'][
@@ -92,7 +81,7 @@ def test_password_too_short(rf):
     request = rf.post(urls.reverse('miniflux:create-admin-user'),
                       data=form_data)
     view = views.CreateAdminUserView.as_view()
-    response, messages = make_request(request, view)
+    response = view(request)
 
     assert response.status_code == 200
     assert response.context_data['form'].errors['password'][
@@ -113,12 +102,12 @@ def test_recreate_existing_user(create_admin_user, rf):
     request = rf.post(urls.reverse('miniflux:create-admin-user'),
                       data=form_data)
     view = views.CreateAdminUserView.as_view()
-    response, messages = make_request(request, view)
+    response = view(request)
 
     error_msg = ('An error occurred while creating the user: Skipping admin '
                  'user creation because it already exists.')
     assert response.status_code == 302
-    assert list(messages)[0].message == error_msg
+    request.assert_has_message(error_msg)
 
 
 ############################
@@ -139,10 +128,10 @@ def test_reset_user_password_form_valid(reset_user_password, rf):
     request = rf.post(urls.reverse('miniflux:reset-user-password'),
                       data=form_data)
     view = views.ResetUserPasswordView.as_view()
-    response, messages = make_request(request, view)
+    response = view(request)
 
     assert response.status_code == 302
-    assert list(messages)[0].message == 'Password reset for user: admin'
+    request.assert_has_message('Password reset for user: admin')
 
 
 @patch('freedombox.modules.miniflux.privileged.reset_user_password')
@@ -158,9 +147,8 @@ def test_reset_user_password_for_invalid_user(reset_user_password, rf):
     request = rf.post(urls.reverse('miniflux:reset-user-password'),
                       data=form_data)
     view = views.ResetUserPasswordView.as_view()
-    response, messages = make_request(request, view)
+    response = view(request)
 
     assert response.status_code == 302
-    assert list(
-        messages
-    )[0].message == 'An error occurred during password reset: user not found.'
+    request.assert_has_message(
+        'An error occurred during password reset: user not found.')
