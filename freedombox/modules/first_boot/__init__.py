@@ -146,6 +146,12 @@ def next_step_or_none():
             return step.get('url')
 
 
+def is_step_done(id: str) -> bool:
+    """Return whether a first boot step is done."""
+    from freedombox import kvstore
+    return bool(kvstore.get_default(id, 0))
+
+
 def mark_step_done(id):
     """Marks the status of a first boot step as done.
 

@@ -261,6 +261,16 @@ class FirstBootView(django.views.generic.CreateView):
 
     def dispatch(self, request, *args, **kwargs):
         """Check if there is no possibility to create a new admin account."""
+        # Don't allow calls if this step is already completed.
+        if first_boot.is_step_done('users_firstboot'):
+            return HttpResponseRedirect(reverse(first_boot.next_step()))
+
+        # Don't allow calls unless the first wizard secret has been provided
+        # (but only if it exists in the first place.)
+        if (first_boot.firstboot_wizard_secret_exists() and
+                not request.session.get('firstboot_secret_provided', False)):
+            return HttpResponseRedirect(reverse('first_boot:welcome'))
+
         if request.method == 'POST' and 'skip' in request.POST:
             first_boot.mark_step_done('users_firstboot')
             return HttpResponseRedirect(reverse(first_boot.next_step()))

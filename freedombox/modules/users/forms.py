@@ -445,6 +445,18 @@ class FirstBootForm(ValidNewUsernameCheckMixin, EmailFieldMixin,
         # field.
         self.fields['username'].widget.attrs.pop('autofocus', None)
 
+    def clean(self):
+        """Don't allow user account creation if an admin already exists."""
+        cleaned_data = super().clean()
+        try:
+            admin_group = auth.models.Group.objects.get(name='admin')
+            if admin_group.user_set.exists():
+                raise ValidationError('Administrator account already exists')
+        except auth.models.Group.DoesNotExist:
+            pass
+
+        return cleaned_data
+
     def save(self, commit=True):
         """Create and log the user in."""
         user = super().save(commit=commit)
