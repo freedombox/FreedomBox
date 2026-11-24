@@ -430,6 +430,11 @@ class PasskeyEdit(ContextMixin, UpdateView):
     pk_url_kwarg = 'passkey_id'
     title = _('Edit Passkey')
 
+    # Match username when querying object with passkey_id
+    query_pk_and_slug = True
+    slug_field = 'user__username'
+    slug_url_kwarg = 'username'
+
     def get_template_names(self):
         """Return the template name to use."""
         return ['users_passkey_edit.html']
@@ -445,6 +450,11 @@ class PasskeyDelete(DeleteView):
     """View to delete a passkey."""
     model = UserPasskey
     pk_url_kwarg = 'passkey_id'
+
+    # Match username when querying object with passkey_id
+    query_pk_and_slug = True
+    slug_field = 'user__username'
+    slug_url_kwarg = 'username'
 
     def get_success_url(self):
         """Return the URL to visit if form edit succeeds."""
