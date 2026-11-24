@@ -52,7 +52,7 @@ class EmailApp(freedombox.app.App):
 
     app_id = 'email'
 
-    _version = 9
+    _version = 10
 
     def __init__(self) -> None:
         """Initialize the email app."""

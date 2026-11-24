@@ -97,7 +97,7 @@ def setup_common_aliases(username):
     aliases = [
         'mailer-daemon', 'postmaster', 'nobody', 'webmaster', 'www',
         'hostmaster', 'info', 'support', 'abuse', 'noc', 'security', 'usenet',
-        'news', 'ftp'
+        'news', 'ftp', 'admin', 'administrator'
     ]
     for alias in aliases:
         if not exists(alias):
