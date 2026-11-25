@@ -4,8 +4,11 @@ Views for the email app.
 """
 
 from django.contrib import messages
+from django.http import HttpResponse
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
+from django.views.decorators.http import require_POST
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView
 
@@ -66,78 +69,32 @@ class DnsView(TemplateView):
 
 
 class AliasView(FormView):
-    """View to create, list, enable, disable and delete aliases.
-
-    This view has two forms. Form to list (and manage) existing aliases, and a
-    form to create a new aliases. When GET operation is used, both forms
-    created and template is rendered. When POST operation is used, the form
-    posted is detected using hidden form values and the appropriate form is
-    initialized for the FormView base class to work with.
-    """
+    """View to list and delete aliases."""
     template_name = 'email-aliases.html'
-    form_classes = (forms.AliasCreateForm, forms.AliasListForm)
+    form_class = forms.AliasCreateForm
     success_url = reverse_lazy('email:aliases')
 
-    def __init__(self, *args, **kwargs):
-        """Initialize the view."""
-        super().__init__(*args, **kwargs)
-        self.posted_form = None
-
-    def get_form_class(self):
-        """Return form class to build."""
-        if self.posted_form == 'create':
-            return forms.AliasCreateForm
-
-        return forms.AliasListForm
-
-    def get_form_kwargs(self):
-        """Send aliases to list form."""
-        kwargs = super().get_form_kwargs()
-        if self.posted_form != 'create':
-            kwargs['aliases'] = self._get_current_aliases()
-
-        return kwargs
-
     def _get_current_aliases(self):
-        """Return current list of aliases."""
-        return aliases_module.get(self.request.user.username)
+        """Return current list of all aliases."""
+        return aliases_module.get()
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        if isinstance(context['form'], forms.AliasCreateForm):
-            context['create_form'] = context['form']
-            aliases = self._get_current_aliases()
-            context['list_form'] = forms.AliasListForm(aliases)
-        else:
-            context['create_form'] = forms.AliasCreateForm()
-            context['list_form'] = context['form']
-
+        context['aliases'] = self._get_current_aliases()
         return context
-
-    def post(self, request, *args, **kwargs):
-        """Find which form was submitted before proceeding."""
-        self.posted_form = request.POST.get('form')
-        return super().post(request, *args, **kwargs)
 
     def form_valid(self, form):
         """Handle a valid submission."""
-        if isinstance(form, forms.AliasListForm):
-            self._list_form_valid(form)
-        elif isinstance(form, forms.AliasCreateForm):
-            self._create_form_valid(form)
+        aliases_module.put(form.cleaned_data['username'],
+                           form.cleaned_data['alias'])
+        return HttpResponse(headers={'HX-Redirect': self.get_success_url()})
 
-        return super().form_valid(form)
 
-    def _list_form_valid(self, form):
-        """Handle a valid alias list form operation."""
-        aliases = form.cleaned_data['aliases']
-        username = self.request.user.username
-        aliases_module.delete(username, aliases)
-
-    def _create_form_valid(self, form):
-        """Handle a valid create alias form operation."""
-        username = self.request.user.username
-        aliases_module.put(username, form.cleaned_data['alias'])
+@require_POST
+def alias_delete(request, alias):
+    """View to delete an email alias."""
+    aliases_module.delete([alias])
+    return redirect(reverse_lazy('email:aliases'))
 
 
 class XmlView(TemplateView):

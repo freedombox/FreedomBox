@@ -5,6 +5,7 @@
 
 {% load bootstrap %}
 {% load i18n %}
+{% load extras %}
 
 {% block content %}
 
@@ -12,26 +13,81 @@
 
   <h2>{% trans 'Manage Aliases' %}</h2>
 
-  {% if not list_form.fields.aliases.choices %}
+  <p>
+    <button type="button" class="btn btn-default" data-bs-toggle="modal"
+            data-bs-target="#email-alias-create-dialog">
+      {% icon 'plus' %}
+      {% trans "Add new alias" %}
+    </button>
+  </p>
+
+  <div id="email-alias-create-dialog" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            {% trans "Create a new email alias" %}
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"
+                  aria-label="{% trans 'Close' %}"></button>
+        </div>
+
+        <div id="email-alias-create-form-container">
+          <form action="{{ request.path }}" hx-post=""
+                hx-target="#email-alias-create-form-container"
+                hx-select="#email-alias-create-form-container"
+                hx-swap="outerHTML">
+            <div class="modal-body">
+              {% csrf_token %}
+              {{ form|bootstrap }}
+            </div>
+            <div class="modal-footer">
+              <input class="btn btn-primary" type="submit"
+                     value="{% trans 'Add' %}">
+              <button type="button" class="btn btn-secondary"
+                      data-bs-dismiss="modal">
+                {% trans "Cancel" %}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% if not aliases %}
     <p>{% trans "You have no email aliases." %}</p>
   {% else %}
-    <form action="{{ request.path }}" method="post">
-      {% csrf_token %}
-      {{ list_form|bootstrap }}
+    <div class="table-responsive">
+      <table class="table w-auto" id="aliases-list">
+        <thead>
+          <tr>
+            <th>{% trans "Email Alias" %}</th>
+            <th>{% trans "User" %}</th>
+            <th></th>
+          </tr>
+        </thead>
 
-      <input type="hidden" name="form" value="list">
-      <input class="btn btn-danger" type="submit" name="btn_delete"
-             value="{% trans 'Delete' %}">
-    </form>
+        <tbody>
+          {% for alias in aliases %}
+            <tr id="alias-{{ alias.name }}" class="password">
+              <td class="alias-alias">{{ alias.name }}@...</td>
+              <td class="alias-username">{{ alias.value }}</td>
+              <td class="alias-operations">
+                <form class="form form-inline" method="post"
+                      action="{% url 'email:alias-delete' alias.name %}">
+                  {% csrf_token %}
+                  <button class="alias-delete btn btn-sm btn-default"
+                          type="submit">
+                    {% icon 'trash-o' %}
+                  </button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
   {% endif %}
-
-  <h4>{% trans "Create a new email alias" %}</h4>
-
-  <form action="{{ request.path }}" method="post">
-    {% csrf_token %}
-    {{ create_form|bootstrap }}
-    <input type="hidden" name="form" value="create">
-    <input class="btn btn-primary" type="submit" value="{% trans 'Add' %}">
-  </form>
 
 {% endblock %}

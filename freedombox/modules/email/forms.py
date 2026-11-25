@@ -5,6 +5,7 @@ import re
 from typing import Iterator
 
 from django import forms
+from django.contrib import auth
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
@@ -29,10 +30,18 @@ class DomainForm(forms.Form):
     )
 
 
+def _get_username_choices() -> list[tuple[str, str]]:
+    """Return a list of all usernames and choices."""
+    return [(user.username, user.username)
+            for user in auth.models.User.objects.order_by('username')]
+
+
 class AliasCreateForm(forms.Form):
     """Form to create a new alias."""
     alias = forms.CharField(label=_('New alias (without @domain)'),
-                            min_length=2, max_length=50)
+                            min_length=2, max_length=50, required=True)
+    username = forms.ChoiceField(label=_('User account to forward email to'),
+                                 choices=_get_username_choices, required=True)
 
     def clean_alias(self):
         """Return the checked value for alias."""
@@ -51,15 +60,3 @@ class AliasCreateForm(forms.Form):
             raise ValidationError('Alias is already taken')
 
         return value
-
-
-class AliasListForm(forms.Form):
-    """Form to list/enable/disable/delete current aliases."""
-    aliases = forms.MultipleChoiceField(label=_('Aliases'),
-                                        widget=forms.CheckboxSelectMultiple)
-
-    def __init__(self, aliases, *args, **kwargs):
-        """Populate the choices for aliases."""
-        super().__init__(*args, **kwargs)
-        choices = [(alias.name, alias.name) for alias in aliases]
-        self.fields['aliases'].choices = choices

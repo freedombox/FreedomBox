@@ -18,7 +18,7 @@ from freedombox.modules.letsencrypt.components import LetsEncrypt
 from freedombox.package import Packages
 from freedombox.privileged import service as service_privileged
 from freedombox.signals import domain_added, domain_removed
-from freedombox.utils import format_lazy, gettext_noop
+from freedombox.utils import format_lazy
 
 from . import aliases, dovecot, manifest, privileged
 
@@ -75,14 +75,6 @@ class EmailApp(freedombox.app.App):
             description=info.description, manual_page=info.manual_page,
             configure_url=reverse_lazy('email:index'), clients=info.clients,
             tags=info.tags, login_required=True)
-        self.add(shortcut)
-
-        tags = [gettext_noop('More emails'), gettext_noop('Same mailbox')]
-        shortcut = frontpage.Shortcut('shortcut-email-aliases',
-                                      _('My Email Aliases'),
-                                      icon=info.icon_filename, tags=tags,
-                                      url=reverse_lazy('email:aliases'),
-                                      login_required=True)
         self.add(shortcut)
 
         # Other likely install conflicts have been discarded:

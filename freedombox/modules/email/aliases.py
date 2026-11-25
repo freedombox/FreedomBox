@@ -29,15 +29,15 @@ def _get_cursor():
         connection.close()
 
 
-def get(username):
+def get() -> list[Alias]:
     """Get all aliases of a user."""
-    query = 'SELECT name, value FROM alias WHERE value=?'
+    query = 'SELECT name, value FROM alias ORDER BY name'
     with _get_cursor() as cursor:
-        rows = cursor.execute(query, (username, ))
+        rows = cursor.execute(query)
         return [Alias(**row) for row in rows]
 
 
-def exists(name):
+def exists(name: str) -> bool:
     """Return whether alias is already taken."""
     try:
         pwd.getpwnam(name)
@@ -51,7 +51,7 @@ def exists(name):
         return cursor.fetchone()[0] != 0
 
 
-def put(username, name):
+def put(username: str, name: str):
     """Insert if not exists a new alias."""
     query = 'INSERT INTO alias (name, value) VALUES (?, ?)'
     with _get_cursor() as cursor:
@@ -61,17 +61,17 @@ def put(username, name):
             pass  # Alias exists, rare since we are already checking
 
 
-def delete(username, aliases):
+def delete(aliases: list[str]):
     """Delete a set of aliases."""
-    query = 'DELETE FROM alias WHERE value=? AND name=?'
-    parameter_seq = ((username, name) for name in aliases)
+    query = 'DELETE FROM alias WHERE name=?'
+    parameter_seq = ((name, ) for name in aliases)
     with _get_cursor() as cursor:
         cursor.execute('BEGIN')
         cursor.executemany(query, parameter_seq)
         cursor.execute('COMMIT')
 
 
-def first_setup():
+def first_setup() -> None:
     """Create the database file and schema inside it."""
     privileged.aliases.setup_aliases()
 
@@ -89,7 +89,7 @@ COMMIT;
         cursor.executescript(query)
 
 
-def setup_common_aliases(username):
+def setup_common_aliases(username: str):
     """Create aliases for common mailboxes described in RFC2142.
 
     See: https://datatracker.ietf.org/doc/html/rfc2142
