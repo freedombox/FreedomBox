@@ -67,8 +67,11 @@ def _remove_default_index_html():
     default_page = pathlib.Path('/var/www/html/index.html')
     shipped_default_page = pathlib.Path(
         '/usr/share/apache2/default-site/index.html')
-    if default_page.read_text() == shipped_default_page.read_text():
-        default_page.unlink(missing_ok=True)
+    try:
+        if default_page.read_text() == shipped_default_page.read_text():
+            default_page.unlink(missing_ok=True)
+    except FileNotFoundError:
+        pass
 
 
 @privileged
