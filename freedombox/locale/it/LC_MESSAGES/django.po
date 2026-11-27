@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-10-07 02:24+0000\n"
-"PO-Revision-Date: 2026-11-12 09:51+0000\n"
+"PO-Revision-Date: 2026-11-27 19:51+0000\n"
 "Last-Translator: Pierfrancesco Passerini "
 "<passero@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/freedombox/"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2026.11.2.dev0\n"
+"X-Generator: Weblate 2026.12.dev0\n"
 
 #: freedombox/config.py:103
 #, python-brace-format
@@ -42,12 +42,12 @@ msgstr "Il servizio {service_name} è in esecuzione"
 #: freedombox/daemon.py:228
 #, python-brace-format
 msgid "Listening on {kind} port {listen_address}:{port}"
-msgstr "In ascolto sulla porta {kind}{listen_address}:{port}"
+msgstr "In ascolto sulla porta {kind} {listen_address}:{port}"
 
 #: freedombox/daemon.py:231
 #, python-brace-format
 msgid "Listening on {kind} port {port}"
-msgstr "In ascolto sulla porta{port}:{kind}"
+msgstr "In ascolto sulla porta {port}:{kind}"
 
 #: freedombox/daemon.py:302
 #, python-brace-format
@@ -711,11 +711,11 @@ msgstr "Pianificazione"
 
 #: freedombox/modules/backups/templates/backups_repository.html:44
 msgid "Unmount Location"
-msgstr "Rimuovi la destinazione"
+msgstr "Smonta destinazione"
 
 #: freedombox/modules/backups/templates/backups_repository.html:55
 msgid "Mount Location"
-msgstr "Punto di montaggio"
+msgstr "Monta destinazione"
 
 #: freedombox/modules/backups/templates/backups_repository.html:66
 msgid "Remove Backup Location. This will not delete the remote backup."
@@ -923,7 +923,7 @@ msgid ""
 "audio, video and PDF documents can be previewed in the browser. Shared files "
 "can be set to expire after a time period."
 msgstr ""
-"bepasty è un applicazione web che permette di caricare e condividere file di "
+"bepasty è un'applicazione web che permette di caricare e condividere file di "
 "grosse dimensioni. Inoltre testo e frammenti di codice possono essere "
 "copiati e condivisi. Dal browser è possibile avere la preview di testo, "
 "immagini, audio, video e documenti PDF. I file condivisi possono essere "
@@ -1142,9 +1142,9 @@ msgid ""
 "machines on local network. It is also incompatible with sharing Internet "
 "connection from {box_name}."
 msgstr ""
-"Attualmente, sul {box_name}, BIND viene usato solamente per risolvere le "
-"richieste DNS di altri dispositivi della rete locale. E' inoltre compatibile "
-"con la condivisione della connessione Internet del {box_name}."
+"Attualmente, sul {box_name}, BIND viene usato solo per risolvere le "
+"richieste DNS di altri dispositivi della rete locale. Inoltre non è "
+"compatibile con la condivisione della connessione Internet del {box_name}."
 
 #: freedombox/modules/bind/__init__.py:40
 msgid "BIND"
@@ -1959,7 +1959,7 @@ msgstr ""
 "La soluzione è assegnare un nome DNS al tuo IP e aggiornare il tuo nome DNS "
 "ogni volta che cambia il tuo indirizzo IP. Il DNS dinamico ti consente di "
 "inviare il tuo IP corrente al server <a href=\"http://"
-"gnudip2.sourceforge.net/\" target=\"_blank\">GnuPID</a>. Successivamente, il "
+"gnudip2.sourceforge.net/\" target=\"_blank\">GnuDIP</a>. Successivamente, il "
 "server assegnerà il tuo nome DNS al nuovo IP; se qualcuno cercherà il tuo "
 "nome DNS in Internet, riceverà come risposta l'indirizzo IP corrente."
 
@@ -1983,9 +1983,9 @@ msgid ""
 "Alternatively, you may find a free update URL based service at <a "
 "href='http://freedns.afraid.org/' target='_blank'>freedns.afraid.org</a>."
 msgstr ""
-"In alternativa, è possibile trovare un servizio gratuito basato su URL di "
-"aggiornamento all'indirizzo <a href=\"‘http://freedns.afraid.org/’\" "
-"target=\"‘_blank’\">freedns.afraid.org</a>."
+"In alternativa, è possibile trovare un servizio di aggiornamento gratuito "
+"basato su URL all'indirizzo <a href=\"http://freedns.afraid.org/\" "
+"target=\"_blank\">freedns.afraid.org</a>."
 
 #: freedombox/modules/dynamicdns/__init__.py:50
 msgid ""
@@ -2009,9 +2009,9 @@ msgid ""
 "used within the URL. For details see the update URL templates of the example "
 "providers."
 msgstr ""
-"Le Variabili &lt;User&gt;, &lt;Pass&gt;, &lt;Ip&gt;, &lt;Dominio&gt; possono "
-"essere usati all'interno dell'URL. Per maggiori dettagli vedi i modelli di "
-"URL del provider d'esempio."
+"Le Variabili &lt;User&gt;, &lt;Pass&gt;, &lt;Ip&gt;, &lt;Domain&gt; possono "
+"essere usate all'interno dell'URL. Per ulteriori dettagli, vedi i modelli di "
+"URL di aggiornamento forniti come esempio."
 
 #: freedombox/modules/dynamicdns/forms.py:24
 msgid ""
@@ -2071,7 +2071,7 @@ msgstr "GnuDIP"
 
 #: freedombox/modules/dynamicdns/forms.py:55
 msgid "Other update URL"
-msgstr "URL aggiornamento alternativo"
+msgstr "URL alternativo per l'aggiornamento"
 
 #: freedombox/modules/dynamicdns/forms.py:57
 msgid "IPv4 address only"
@@ -2083,7 +2083,7 @@ msgstr "Solo indirizzo IPv6"
 
 #: freedombox/modules/dynamicdns/forms.py:59
 msgid "Both IPv4 and IPv6 addresses"
-msgstr "Entra gli indirizzi IPv4 e IPv6"
+msgstr "Entrambi gli indirizzi IPv4 e IPv6"
 
 #: freedombox/modules/dynamicdns/forms.py:61
 msgid "Service Type"
@@ -2099,7 +2099,7 @@ msgstr "Nome Server Invalido"
 
 #: freedombox/modules/dynamicdns/forms.py:72
 msgid "Update URL"
-msgstr "Aggiorna URL"
+msgstr "URL per l'aggiornamento"
 
 #: freedombox/modules/dynamicdns/forms.py:76
 msgid "Accept all SSL certificates"
@@ -2436,10 +2436,10 @@ msgid ""
 "like <i>username@%(domain_name)s</i>. You can setup your domain on the "
 "system <a href=\"%(names_url)s\">Name Services</a> page."
 msgstr ""
-"Il tuo dominio server XMPP è impostato su <b>%(domain_name)s</b>. Gli ID "
-"utente appariranno in forma di <i>username@%(domain_name)s</i>. Puoi "
-"impostare il tuo dominio nel sistema <a href=\"%(names_url)s\">. Configura "
-"la pagina </a>."
+"Il dominio del tuo server XMPP è impostato su <b>%(domain_name)s</b>. Gli ID "
+"utente avranno il formato <i>username@%(domain_name)s</i>. Puoi configurare "
+"il tuo dominio nella pagina <a href=\"%(names_url)s\">Nome Servizi</a> del "
+"sistema."
 
 #: freedombox/modules/ejabberd/templates/ejabberd.html:29
 #, python-format
@@ -2534,7 +2534,7 @@ msgstr ""
 
 #: freedombox/modules/email/forms.py:34
 msgid "New alias (without @domain)"
-msgstr "Nuova alias (senza @dominio)"
+msgstr "Nuovo alias (senza @dominio)"
 
 #: freedombox/modules/email/forms.py:41
 msgid "Contains illegal characters"
@@ -2805,7 +2805,7 @@ msgstr "Wiki"
 #: freedombox/modules/infinoted/manifest.py:46
 #: freedombox/modules/tiddlywiki/manifest.py:20
 msgid "Note taking"
-msgstr "Nota:"
+msgstr "Appunti"
 
 #: freedombox/modules/featherwiki/manifest.py:18
 #: freedombox/modules/ikiwiki/manifest.py:15
@@ -2991,7 +2991,7 @@ msgstr "Porta {name} ({details}) non disponibile per reti esterne"
 #: freedombox/modules/firewall/manifest.py:10
 #: freedombox/modules/tor/templates/tor.html:24
 msgid "Ports"
-msgstr "Ports"
+msgstr "Porte"
 
 #: freedombox/modules/firewall/manifest.py:10
 msgid "Blocking"
@@ -3099,7 +3099,7 @@ msgstr ""
 
 #: freedombox/modules/first_boot/forms.py:19
 msgid "Firstboot Wizard Secret"
-msgstr "Firstboot Wizard Secret"
+msgstr "Segreto al primo avvio"
 
 #: freedombox/modules/first_boot/templates/firstboot_complete.html:15
 msgid "Setup Complete! Next Steps:"
@@ -4015,9 +4015,9 @@ msgid ""
 "client and install it. Then start Gobby and select \"Connect to Server\" and "
 "enter your {box_name}'s domain name."
 msgstr ""
-"Per utilizzarlo, <a href=\"https://gobby.github.io/\">, scaricare Gobby</a>, "
-"client desktop e installarlo. Quindi, avviare Hobby e selezionare \"Connetti "
-"al Server\" ed accedere al proprio nome di dominio {box_name}."
+"Per utilizzarlo, <a href=\"https://gobby.github.io/\"> scaricare Gobby</a>, "
+"client desktop e installarlo. Quindi, avviare Gobby e selezionare \"Connetti "
+"al server\" ed accedere al proprio nome di dominio {box_name}."
 
 #: freedombox/modules/infinoted/__init__.py:41
 msgid "infinoted"
@@ -4038,8 +4038,8 @@ msgid ""
 "Start Gobby and select \"Connect to Server\" and enter your {box_name}'s "
 "domain name."
 msgstr ""
-"Avvia Bobby e selezione \"Connect to Server\", e entra nel nome di dominio "
-"del tuo {box_name}."
+"Avvia Gobby, seleziona «Connetti al server...» e inserisci il nome di "
+"dominio del tuo {box_name}."
 
 #: freedombox/modules/infinoted/manifest.py:46
 msgid "Collaborative editing"
@@ -5122,9 +5122,9 @@ msgid ""
 "href=\"http://mumble.info\">Clients</a> to connect to Mumble from your "
 "desktop and mobile devices are available."
 msgstr ""
-"Non puoi connetterti al tuo server Mumble tramite la porta 64738 usata da "
-"Mumble. Per connettersi a Mumble dai propri dispositivi, desktop e mobile, "
-"sono disponibili dei <a href=\"http://mumble.info\">client</a>."
+"Puoi connetterti al tuo server Mumble sulla porta standard 64738. Sono "
+"disponibili <a href=\"http://mumble.info\">client</a> per connettersi a "
+"Mumble da desktop e dispositivi mobili."
 
 #: freedombox/modules/mumble/__init__.py:46
 #: freedombox/modules/mumble/manifest.py:9
@@ -5161,7 +5161,7 @@ msgstr ""
 
 #: freedombox/modules/mumble/forms.py:48
 msgid "Set the name for the root channel"
-msgstr "Impostar il nome per il canale principale"
+msgstr "Impostare il nome per il canale principale"
 
 #: freedombox/modules/mumble/forms.py:52
 msgid ""
@@ -5643,7 +5643,7 @@ msgstr "SSID"
 
 #: freedombox/modules/networks/forms.py:313
 msgid "The visible name of the network."
-msgstr "Il nome visibile sella rete."
+msgstr "Il nome visibile della rete."
 
 #: freedombox/modules/networks/forms.py:315
 #: freedombox/modules/networks/templates/connection_show.html:153
@@ -5698,7 +5698,7 @@ msgid ""
 "an access point, connect only if the BSSID of the access point matches the "
 "one provided. Example: 00:11:22:aa:bb:cc."
 msgstr ""
-"Valore opzionale. Identifivativo univoco per l'access point. Durante la "
+"Valore opzionale. Identificativo univoco per l'access point. Durante la "
 "connessione verificare che il BSSID dell'access point combaci con quello "
 "fornito. Per esempio: 00:11:22:aa:bb:cc."
 
@@ -5780,11 +5780,11 @@ msgstr ""
 "Possiedo un indirizzo IP pubblico che può cambiare nel tempo<p class=\"help-"
 "block\">Questo significa che puoi essere raggiunto da altri dispositivi "
 "quando sarai connesso ad Internet. Ogni volta che ti connetti ad Internet "
-"con mio ISP (Internet Service Provider - fornitore di servizi Internet), "
-"potrai ottenere un indirizzo IP diverso, specialmente dopo un certo periodo "
-"in cui sarai rimasto scollegato. Molti ISP offrono questo tipo di "
-"connettività. Se si possiede un indirizzo IP pubblico, ma non si è certi se, "
-"nel tempo, esso cambia o meno, è opportuno selezionare questa opzione.</p>"
+"con il proprio ISP (Internet Service Provider), potrai ottenere un indirizzo "
+"IP diverso, specialmente dopo un certo periodo in cui sarai rimasto "
+"scollegato. Molti ISP offrono questo tipo di connettività. Se si possiede un "
+"indirizzo IP pubblico, ma non si è certi se, nel tempo, esso cambia o meno, "
+"è opportuno selezionare questa opzione.</p>"
 
 #: freedombox/modules/networks/forms.py:433
 #, python-brace-format
@@ -5800,12 +5800,11 @@ msgstr ""
 "Possiedo un indirizzo IP pubblico che non cambia nel tempo (raccomandato)<p "
 "class=\"help-block\">Questo significa che puoi essere raggiunto da altri "
 "dispositivi quando sarai connesso ad Internet. Ogni volta che ti connetti ad "
-"Internet con mio ISP (Internet Service Provider - fornitore di servizi "
-"Internet), avrai sempre lo stesso indirizzo IP. Questa è la configurazione "
-"maggiormente libera da problemi per molti servizi di {box_name}, ma molto "
-"pochi ISP offrono questo tipo di connettività. Potrebbe essere possibile "
-"avere questo servizio dal proprio ISP effettuando un pagamento addizionale.</"
-"p>"
+"Internet con il proprio ISP (Internet Service Provider), avrai sempre lo "
+"stesso indirizzo IP. Questa è la configurazione maggiormente libera da "
+"problemi per molti servizi di {box_name}, ma molto pochi ISP offrono questo "
+"tipo di connettività. Potrebbe essere possibile avere questo servizio dal "
+"proprio ISP effettuando un pagamento addizionale.</p>"
 
 #: freedombox/modules/networks/forms.py:446
 #, python-brace-format
@@ -5820,12 +5819,12 @@ msgid ""
 msgstr ""
 "Non possiedo un indirizzo IP pubblico<p class=\"help-block\">Questo "
 "significa che <b>non puoi</b> essere raggiunto da altri dispositivi quando "
-"sarai connesso ad Internet. Ogni volta che ti connetti ad Internet con mio "
-"ISP (Internet Service Provider - fornitore di servizi Internet), otterrai un "
-"indirizzo IP che è visibile solo nelle reti locali. Molti ISP offrono questo "
-"tipo di connettività. Questa è la configurazione più complicata per ospitare "
-"in casa i servizi. {box_name} fornisce alcune soluzioni alternative, ma "
-"ognuna di esse ha delle limitazioni.</p>"
+"sarai connesso ad Internet. Ogni volta che ti connetti ad Internet con il "
+"propio ISP (Internet Service Provider), otterrai un indirizzo IP che è "
+"visibile solo nelle reti locali. Molti ISP offrono questo tipo di "
+"connettività. Questa è la configurazione più complicata per ospitare in casa "
+"i servizi. {box_name} fornisce alcune soluzioni alternative, ma ognuna di "
+"esse ha delle limitazioni.</p>"
 
 #: freedombox/modules/networks/forms.py:459
 msgid ""
@@ -5919,7 +5918,7 @@ msgstr ""
 
 #: freedombox/modules/networks/templates/connection_show.html:41
 msgid "Edit connection"
-msgstr "Modifica Connessione"
+msgstr "Modifica connessione"
 
 #: freedombox/modules/networks/templates/connection_show.html:48
 #: freedombox/modules/networks/templates/connections_list.html:62
@@ -6026,7 +6025,7 @@ msgstr "Metodo"
 #: freedombox/modules/networks/templates/connection_show.html:189
 #: freedombox/modules/networks/templates/connection_show.html:230
 msgid "IP address"
-msgstr "Indirizso IP"
+msgstr "Indirizzo IP"
 
 #: freedombox/modules/networks/templates/connection_show.html:205
 #: freedombox/modules/networks/templates/connection_show.html:246
@@ -6120,7 +6119,7 @@ msgstr "Cancella Connessione"
 #: freedombox/modules/networks/templates/connections_delete.html:14
 #, python-format
 msgid "Delete connection <strong>%(name)s</strong> permanently?"
-msgstr "Cancellare definitivamente <strong>%(name)s</strong> la connessione?"
+msgstr "Cancellare definitivamente la connessione <strong>%(name)s</strong>?"
 
 #: freedombox/modules/networks/templates/connections_diagram.html:16
 #: freedombox/modules/networks/templates/connections_diagram.html:48
@@ -6153,7 +6152,7 @@ msgstr "Computer"
 #: freedombox/modules/networks/views.py:253
 #: freedombox/modules/networks/views.py:341
 msgid "Edit Connection"
-msgstr "Modifica Concessione"
+msgstr "Modifica Connessione"
 
 #: freedombox/modules/networks/templates/connections_fields.html:14
 #: freedombox/modules/oidc/templates/oauth2_provider/authorize.html:64
@@ -7055,7 +7054,7 @@ msgstr "Aggiungi un servizio personalizzato"
 #: freedombox/modules/pagekite/templates/pagekite_configure.html:36
 #, python-format
 msgid "connected to %(backend_host)s:%(backend_port)s"
-msgstr "connesso a %(backend_host)s: %(backend_port)s"
+msgstr "connesso a %(backend_host)s:%(backend_port)s"
 
 #: freedombox/modules/pagekite/templates/pagekite_configure.html:48
 msgid "Delete this service"
@@ -7083,7 +7082,7 @@ msgstr "Server Web (HTTP)"
 #: freedombox/modules/pagekite/utils.py:47
 #, python-brace-format
 msgid "Site will be available at <a href=\"http://{0}\">http://{0}</a>"
-msgstr "Il sito sarà disponibile su <a href=\"http://{0}\">http{0}</a>"
+msgstr "Il sito sarà disponibile su <a href=\"http://{0}\">http://{0}</a>"
 
 #: freedombox/modules/pagekite/utils.py:59
 msgid "Web Server (HTTPS)"
@@ -7432,9 +7431,9 @@ msgid ""
 "<your.freedombox.address>) and your user name. DAVx5 will show all existing "
 "calendars and address books and you can create new."
 msgstr ""
-"Inserisci l'URL del server Radicale (per esempio https://) e il tuo nome "
-"utente. DAVx5 mostrerà tutti i calendari e le rubriche esistenti, e potrai "
-"crearne di nuovi."
+"Enter the URL of the Radicale server (e.g. https://your.freedombox.address) "
+"and your user name. DAVx5 will show all existing calendars and address books "
+"and you can create new ."
 
 #: freedombox/modules/radicale/manifest.py:28
 #: freedombox/modules/sogo/manifest.py:51
@@ -7461,8 +7460,9 @@ msgid ""
 "will list the existing calendars and address books."
 msgstr ""
 "In Evolution aggiungi nuovi calendari e nuove rubriche con WebDAV. Inserisci "
-"l'URL del server Radicale (es. https://) e il tuo nome utente. Cliccando sul "
-"pulsante di ricerca verranno elencati i calendari e le rubriche esistenti."
+"l'URL del server Radicale (es. https://your.freedombox.address) e il tuo "
+"nome utente. Cliccando sul pulsante di ricerca verranno elencati i calendari "
+"e le rubriche esistenti."
 
 #: freedombox/modules/radicale/manifest.py:91
 #: freedombox/modules/sogo/manifest.py:73
@@ -7630,31 +7630,31 @@ msgstr ""
 "Dopo l'installazione, sarà possibile scegliere quali dischi utilizzare per "
 "la condivisione. Le condivisioni abilitate sono accessibili dal file manager "
 "del computer con \\\\{hostname} (su Windows) o smb://{hostname}.local (su "
-"Linux e Mac). Ci sono tre tipi di azioni tra cui scegliere: "
+"Linux e Mac). Ci sono tre tipi di condivisioni tra cui scegliere: "
 
 #: freedombox/modules/samba/__init__.py:31
 msgid "Open share - accessible to everyone in your local network."
-msgstr "Open share - accessibile a tutti nella rete locale."
+msgstr "Condivisione pubblica - accessibile a tutti nella rete locale."
 
 #: freedombox/modules/samba/__init__.py:32
 msgid ""
 "Group share - accessible only to FreedomBox users who are in the freedombox-"
 "share group."
 msgstr ""
-"Group share - accessibile ai soli utenti FreedomBox del gruppo freedombox-"
-"share."
+"Condivisione di gruppo - accessibile solo agli utenti FreedomBox che "
+"appartengono al gruppo freedombox-share."
 
 #: freedombox/modules/samba/__init__.py:34
 msgid ""
 "Home share - every user in the freedombox-share group can have their own "
 "private space."
 msgstr ""
-"Home share - spazio privato a disposizione degli utenti del gruppo "
-"freedombox-share."
+"Condivisione personale - spazio privato a disposizione degli utenti del "
+"gruppo freedombox-share."
 
 #: freedombox/modules/samba/__init__.py:50
 msgid "Access to the private shares"
-msgstr "Accesso allo spazio privato"
+msgstr "Accesso alle condivisioni private"
 
 #: freedombox/modules/samba/__init__.py:53
 msgid "Samba"
@@ -7701,8 +7701,8 @@ msgid ""
 "Note: Only specially created directories will be shared on selected disks, "
 "not the whole disk."
 msgstr ""
-"Nota: saranno condivise solo le directory appositamente create, non "
-"sull'intero disco."
+"Nota: saranno condivise solo le directory appositamente create, non l'intero "
+"disco."
 
 #: freedombox/modules/samba/templates/samba.html:84
 msgid "VFAT partitions are not supported"
@@ -7715,13 +7715,15 @@ msgid ""
 "href=\"%(storage_url)s\">storage</a> module page and configure access to the "
 "shares on the <a href=\"%(users_url)s\">users</a> module page."
 msgstr ""
-"Puoi trovare informazioni aggiuntive sui dischi nella pagina del modulo <a "
-"href=\"%(storage_url)s\">storage</a> e configurare gli accessi condivisi "
-"nella pagina del modulo <a href=\"%(users_url)s\">users</a>."
+"Puoi trovare ulteriori informazioni sui dischi nella pagina del modulo <a "
+"href=\"%(storage_url)s\">archiviazione</a> e configurare l'accesso alle "
+"condivisioni nella pagina del modulo <a href=\"%(users_url)s\">utenti</a>."
 
 #: freedombox/modules/samba/templates/samba.html:120
 msgid "Users who can currently access group and home shares"
-msgstr "Utenti con accesso alle condivisioni di gruppo e cartelle personali"
+msgstr ""
+"Utenti che, attualmente, possono accedere alle condivisioni di gruppo e "
+"personali"
 
 #: freedombox/modules/samba/templates/samba.html:124
 msgid ""
@@ -7729,11 +7731,11 @@ msgid ""
 "access group and home shares"
 msgstr ""
 "Gli utenti devono reinserire le loro password nella pagina di cambio "
-"password per accedere alle condivisioni di gruppo e alle cartelle personali"
+"password per accedere alle condivisioni di gruppo e personali"
 
 #: freedombox/modules/samba/templates/samba.html:129
 msgid "Unavailable Shares"
-msgstr "Shares disponibili"
+msgstr "Condivisioni non disponibili"
 
 #: freedombox/modules/samba/templates/samba.html:131
 msgid ""
@@ -7745,7 +7747,7 @@ msgstr ""
 
 #: freedombox/modules/samba/templates/samba.html:140
 msgid "Share name"
-msgstr "Nome Share"
+msgstr "Nome condivisione"
 
 #: freedombox/modules/samba/templates/samba.html:141
 msgid "Action"
@@ -7757,7 +7759,7 @@ msgstr "Disco del SO di FreedomBox"
 
 #: freedombox/modules/samba/views.py:60 freedombox/modules/storage/forms.py:140
 msgid "Open Share"
-msgstr "Apri Share"
+msgstr "Condivisione pubblica"
 
 #: freedombox/modules/samba/views.py:64 freedombox/modules/storage/forms.py:138
 msgid "Group Share"
@@ -7765,25 +7767,25 @@ msgstr "Condivisione di gruppo"
 
 #: freedombox/modules/samba/views.py:68
 msgid "Home Share"
-msgstr "Sharing di file personali"
+msgstr "Condivisione personale"
 
 #: freedombox/modules/samba/views.py:103
 msgid "Share enabled."
-msgstr "Share abilitato."
+msgstr "Condivisione abilitata."
 
 #: freedombox/modules/samba/views.py:108
 #, python-brace-format
 msgid "Error enabling share: {error_message}"
-msgstr "Errore installazione applicazione: {error_message}"
+msgstr "Errore nell'abilitazione della condivisione: {error_message}"
 
 #: freedombox/modules/samba/views.py:113
 msgid "Share disabled."
-msgstr "Share disabilitato."
+msgstr "Condivisione disabilitata."
 
 #: freedombox/modules/samba/views.py:118
 #, python-brace-format
 msgid "Error disabling share: {error_message}"
-msgstr "Errore installazione applicazione: {error_message}"
+msgstr "Errore nella disabilitazione della condivisione: {error_message}"
 
 #: freedombox/modules/searx/__init__.py:22
 msgid ""
@@ -8111,13 +8113,13 @@ msgstr "Consigliata"
 #: freedombox/modules/shadowsocksserver/forms.py:38
 msgid "Password used to encrypt data. Clients must use the same password."
 msgstr ""
-"Password usata per crittografare i dati. I clienti devono utilizzare la "
+"Password usata per crittografare i dati. I client devono utilizzare la "
 "stessa password."
 
 #: freedombox/modules/shadowsocksserver/forms.py:43
 msgid "Encryption method. Clients must use the same setting."
 msgstr ""
-"Metodo di crittografia. I clienti devono utilizzare la stessa impostazione."
+"Metodo di crittografia. I client devono utilizzare la stessa impostazione."
 
 #: freedombox/modules/shadowsocksserver/manifest.py:20
 msgid "Exit point"
@@ -8755,7 +8757,7 @@ msgstr "il pacchetto grub è configurato"
 
 #: freedombox/modules/storage/forms.py:63
 msgid "Invalid directory name."
-msgstr "Hostname non valido."
+msgstr "Nome directory non valido."
 
 #: freedombox/modules/storage/forms.py:73
 msgid "Directory does not exist."
@@ -8783,7 +8785,7 @@ msgstr "Subdirectory (opzionale)"
 
 #: freedombox/modules/storage/forms.py:136
 msgid "Share"
-msgstr "Partage"
+msgstr "Condivisione"
 
 #: freedombox/modules/storage/forms.py:144
 msgid "Other directory (specify below)"
@@ -9417,7 +9419,7 @@ msgid ""
 "activated now, they can be activated later."
 msgstr ""
 "Si raccomanda vivamente di attivare gli aggiornamenti frequenti delle "
-"funzionalità. E' anche possibile attivali in seguito."
+"funzionalità. E' anche possibile attivarli in seguito."
 
 #: freedombox/modules/upgrades/templates/backports-firstboot.html:39
 msgid ""
@@ -9637,9 +9639,8 @@ msgid ""
 "automatically in %(period)s. You may choose to update manually now, if you "
 "wish."
 msgstr ""
-"È disponibile una nuova distribuzione stable. L'aggiornamento di "
-"%(box_name)s averrà automaticamente entro %(period)s. Se vuoi, puoi "
-"eseguirlo ora."
+"È disponibile una nuova distribuzione stable. L'aggiornamento di %(box_name)"
+"s avverrà automaticamente entro %(period)s. Se vuoi, puoi eseguirlo ora."
 
 #: freedombox/modules/upgrades/templates/upgrades-dist-upgrade.html:137
 #, python-format
@@ -10031,7 +10032,7 @@ msgstr "Modifica l'utente %(username)s"
 
 #: freedombox/modules/users/templates/users_login.html:30
 msgid "Logging in with passkey failed: "
-msgstr "Aaccesso con passkey non riuscito: "
+msgstr "Accesso con passkey non riuscito: "
 
 #: freedombox/modules/users/templates/users_login.html:41
 #: freedombox/modules/users/templates/users_passkeys.html:41
@@ -10113,7 +10114,7 @@ msgstr "Elimina passkey <em class=\"passkey-name\"></em>?"
 #: freedombox/modules/users/templates/users_passkeys.html:145
 msgid "You will need this passkey's device to add it back again."
 msgstr ""
-"Avrai bisogno di questa passkey per aggiungere di nuovo il dispositivo."
+"Avrai bisogno del dispositivo di questa passkey per aggiungerla di nuovo."
 
 #: freedombox/modules/users/templates/users_passkeys.html:152
 msgid "Delete passkey"
@@ -10659,11 +10660,11 @@ msgstr "Aggiornato server."
 
 #: freedombox/modules/wireguard/views.py:278
 msgid "Modify Connection to Server"
-msgstr "Modifica Concessione a server"
+msgstr "Modifica connessione a server"
 
 #: freedombox/modules/wireguard/views.py:316
 msgid "Delete Connection to Server"
-msgstr "Cancella Connessione a server"
+msgstr "Cancella connessione a server"
 
 #: freedombox/modules/wireguard/views.py:335
 msgid "Server deleted."
@@ -11019,7 +11020,7 @@ msgstr ""
 
 #: freedombox/templates/app-header.html:27
 msgid "Installation"
-msgstr "Istallazione"
+msgstr "Installazione"
 
 #: freedombox/templates/app-logs.html:13
 msgid ""
@@ -11216,7 +11217,7 @@ msgid ""
 "Your FreedomBox is <a href=\"%(networks_url)s\">not behind a router</a>. No "
 "action is necessary."
 msgstr ""
-"Il tuo FreedomBox è <a href=\"%(networks_url)s\">non dietro un router</a>. "
+"Il tuo FreedomBox <a href=\"%(networks_url)s\">non è dietro un router</a>. "
 "Non è necessaria alcuna azione."
 
 #: freedombox/templates/port-forwarding-info.html:22
@@ -11226,8 +11227,8 @@ msgid ""
 "are using the DMZ feature to forward all ports. No further router "
 "configuration is necessary."
 msgstr ""
-"La tua FreedomBox è <a href=\"%(networks_url)s\">dietro un router</a> e stai "
-"usando la funzione DMZ per inoltrare tutte le porte. Non è necessaria "
+"La tua FreedomBox <a href=\"%(networks_url)s\"> è dietro un router</a> e "
+"stai usando la funzione DMZ per inoltrare tutte le porte. Non è necessaria "
 "nessuna ulteriore configurazione del router."
 
 #: freedombox/templates/port-forwarding-info.html:31
@@ -11237,7 +11238,7 @@ msgid ""
 "are not using the DMZ feature. You will need to set up port forwarding on "
 "your router. You should forward the following ports for %(service_name)s:"
 msgstr ""
-"La tua FreedomBox è <a href=\"%(networks_url)s\">dietro un router</a> e non "
+"La tua FreedomBox <a href=\"%(networks_url)s\"> è dietro un router</a> e non "
 "stai usando la funzione DMZ. Dovrai configurare l'inoltro delle porte sul "
 "router. Attiva l'inoltro per le seguenti porte %(service_name)s:"
 
